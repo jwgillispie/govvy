@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "88252747867",
+    "project_id": "govvy--dev",
+    "storage_bucket": "govvy--dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88252747867:android:37899b2b8d2b4ee4666f7e",
+        "android_client_info": {
+          "package_name": "com.example.govvy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbr0RK_X-q2y9c2vuuDfFBNiall3RNJkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88252747867:android:76464db7c0c9dbf9666f7e",
+        "android_client_info": {
+          "package_name": "com.govvy.govvy_dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbr0RK_X-q2y9c2vuuDfFBNiall3RNJkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

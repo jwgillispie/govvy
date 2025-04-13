@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:govvy/widgets/auth/signup_form.dart';
+import 'package:provider/provider.dart';
+import 'package:govvy/services/auth_service.dart';
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  final TextEditingController _addressController = TextEditingController();
+  bool _showSignUpForm = false;
+
+  @override
+  void dispose() {
+    _addressController.dispose();
+    super.dispose();
+  }
+
+  void _toggleSignUpForm() {
+    setState(() {
+      _showSignUpForm = !_showSignUpForm;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+    final authService = Provider.of<AuthService>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -50,6 +74,26 @@ class LandingPage extends StatelessWidget {
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
+                      if (authService.currentUser == null)
+                        TextButton(
+                          onPressed: _toggleSignUpForm,
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Theme.of(context).colorScheme.primary,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                          ),
+                          child: const Text('Sign Up'),
+                        )
+                      else
+                        TextButton(
+                          onPressed: () => authService.signOut(),
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: Theme.of(context).colorScheme.primary,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                          ),
+                          child: const Text('Sign Out'),
+                        ),
                     ],
                   ),
                 ],
@@ -59,19 +103,19 @@ class LandingPage extends StatelessWidget {
             // Hero Section
             Container(
               height: screenSize.height * 0.7,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    const Color(0xFF5E35B1), // Deep Purple 600
-                    const Color(0xFF7E57C2), // Deep Purple 400
+                    Color(0xFF5E35B1), // Deep Purple 600
+                    Color(0xFF7E57C2), // Deep Purple 400
                   ],
                 ),
               ),
               child: Stack(
                 children: [
-                  Positioned(
+                  const Positioned(
                     right: -100,
                     top: -100,
                     child: Opacity(
@@ -118,7 +162,7 @@ class LandingPage extends StatelessWidget {
                               Row(
                                 children: [
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: _toggleSignUpForm,
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.white,
                                       foregroundColor:
@@ -147,7 +191,7 @@ class LandingPage extends StatelessWidget {
                           flex: 2,
                           child: Center(
                             child: Container(
-                              padding: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(24),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20),
@@ -159,41 +203,110 @@ class LandingPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Text(
-                                    'Find Your Representatives',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF5E35B1),
+                              child: _showSignUpForm
+                                  ? Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text(
+                                          'Create an Account',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF5E35B1),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 24),
+                                        SignUpForm(
+                                          onSignUpSuccess: () {
+                                            setState(() {
+                                              _showSignUpForm = false;
+                                            });
+                                          },
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            const Text('Already have an account?'),
+                                            TextButton(
+                                              onPressed: () {
+                                                // TODO: Show login form
+                                              },
+                                              child: const Text('Sign In'),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  : Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text(
+                                          'Find Your Representatives',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF5E35B1),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 24),
+                                        TextField(
+                                          controller: _addressController,
+                                          decoration: InputDecoration(
+                                            hintText: 'Enter your address',
+                                            filled: true,
+                                            fillColor: Colors.grey.shade100,
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(12),
+                                              borderSide: BorderSide.none,
+                                            ),
+                                            prefixIcon: const Icon(
+                                              Icons.location_on,
+                                              color: Color(0xFF5E35B1),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16),
+                                        SizedBox(
+                                          width: double.infinity,
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              if (authService.currentUser == null) {
+                                                // If not logged in, show sign up form
+                                                _toggleSignUpForm();
+                                              } else {
+                                                // If logged in, perform search
+                                                // TODO: Implement representative search
+                                              }
+                                            },
+                                            child: const Text('Search'),
+                                          ),
+                                        ),
+                                        if (authService.currentUser == null) ...[
+                                          const SizedBox(height: 16),
+                                          const Divider(),
+                                          const SizedBox(height: 8),
+                                          const Text(
+                                            'Sign up to save your searches and receive updates',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          OutlinedButton(
+                                            onPressed: _toggleSignUpForm,
+                                            style: OutlinedButton.styleFrom(
+                                              side: BorderSide(
+                                                color: Theme.of(context).colorScheme.primary,
+                                              ),
+                                            ),
+                                            child: const Text('Create Account'),
+                                          ),
+                                        ],
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(height: 24),
-                                  TextField(
-                                    decoration: InputDecoration(
-                                      hintText: 'Enter your address',
-                                      filled: true,
-                                      fillColor: Colors.grey.shade100,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      prefixIcon: const Icon(Icons.location_on,
-                                          color: Color(0xFF5E35B1)),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    child: ElevatedButton(
-                                      onPressed: () {},
-                                      child: const Text('Search'),
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
                           ),
                         ),
