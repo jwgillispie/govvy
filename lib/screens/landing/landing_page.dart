@@ -26,6 +26,28 @@ class _LandingPageState extends State<LandingPage> {
     });
   }
 
+  void _onSignUpSuccess() {
+    setState(() {
+      _showSignUpForm = false;
+    });
+    // Show success dialog or message
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Welcome to govvy!'),
+        content: const Text(
+          'Thank you for signing up. You can now track your representatives and stay updated on local government activities.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Get Started'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -85,14 +107,23 @@ class _LandingPageState extends State<LandingPage> {
                           child: const Text('Sign Up'),
                         )
                       else
-                        TextButton(
-                          onPressed: () => authService.signOut(),
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Theme.of(context).colorScheme.primary,
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                          ),
-                          child: const Text('Sign Out'),
+                        Row(
+                          children: [
+                            Text(
+                              'Welcome, ${authService.currentUser?.displayName?.split(' ').first ?? 'User'}',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            const SizedBox(width: 16),
+                            TextButton(
+                              onPressed: () => authService.signOut(),
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Theme.of(context).colorScheme.primary,
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                              ),
+                              child: const Text('Sign Out'),
+                            ),
+                          ],
                         ),
                     ],
                   ),
@@ -191,7 +222,11 @@ class _LandingPageState extends State<LandingPage> {
                           flex: 2,
                           child: Center(
                             child: Container(
-                              padding: const EdgeInsets.all(24),
+                              width: 400, // Fixed width
+                              constraints: BoxConstraints(
+                                maxHeight: 470, // Maximum height to prevent overflow
+                              ),
+                              padding: const EdgeInsets.all(20), // Reduced padding
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20),
@@ -207,34 +242,29 @@ class _LandingPageState extends State<LandingPage> {
                                   ? Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Text(
-                                          'Create an Account',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF5E35B1),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 24),
-                                        SignUpForm(
-                                          onSignUpSuccess: () {
-                                            setState(() {
-                                              _showSignUpForm = false;
-                                            });
-                                          },
-                                        ),
-                                        const SizedBox(height: 16),
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text('Already have an account?'),
-                                            TextButton(
-                                              onPressed: () {
-                                                // TODO: Show login form
-                                              },
-                                              child: const Text('Sign In'),
+                                            const Text(
+                                              'Create an Account',
+                                              style: TextStyle(
+                                                fontSize: 18, // Slightly smaller font
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFF5E35B1),
+                                              ),
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(Icons.close, size: 18),
+                                              padding: EdgeInsets.zero,
+                                              constraints: const BoxConstraints(),
+                                              onPressed: _toggleSignUpForm,
+                                              color: Colors.grey,
                                             ),
                                           ],
+                                        ),
+                                        const SizedBox(height: 16), // Reduced spacing
+                                        SignUpForm(
+                                          onSignUpSuccess: _onSignUpSuccess,
                                         ),
                                       ],
                                     )
@@ -244,12 +274,12 @@ class _LandingPageState extends State<LandingPage> {
                                         const Text(
                                           'Find Your Representatives',
                                           style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 18, // Slightly smaller font
                                             fontWeight: FontWeight.bold,
                                             color: Color(0xFF5E35B1),
                                           ),
                                         ),
-                                        const SizedBox(height: 24),
+                                        const SizedBox(height: 16), // Reduced spacing
                                         TextField(
                                           controller: _addressController,
                                           decoration: InputDecoration(
@@ -260,13 +290,17 @@ class _LandingPageState extends State<LandingPage> {
                                               borderRadius: BorderRadius.circular(12),
                                               borderSide: BorderSide.none,
                                             ),
+                                            contentPadding: const EdgeInsets.symmetric(
+                                              horizontal: 12, 
+                                              vertical: 12
+                                            ),
                                             prefixIcon: const Icon(
                                               Icons.location_on,
                                               color: Color(0xFF5E35B1),
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(height: 16),
+                                        const SizedBox(height: 12), // Reduced spacing
                                         SizedBox(
                                           width: double.infinity,
                                           child: ElevatedButton(
@@ -283,21 +317,25 @@ class _LandingPageState extends State<LandingPage> {
                                           ),
                                         ),
                                         if (authService.currentUser == null) ...[
-                                          const SizedBox(height: 16),
-                                          const Divider(),
-                                          const SizedBox(height: 8),
+                                          const SizedBox(height: 12), // Reduced spacing
+                                          const Divider(height: 12), // Reduced divider height
+                                          const SizedBox(height: 4), // Reduced spacing
                                           const Text(
-                                            'Sign up to save your searches and receive updates',
+                                            'Sign up to save searches and get updates',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 12, // Smaller text
                                               color: Colors.grey,
                                             ),
                                           ),
-                                          const SizedBox(height: 8),
+                                          const SizedBox(height: 8), // Reduced spacing
                                           OutlinedButton(
                                             onPressed: _toggleSignUpForm,
                                             style: OutlinedButton.styleFrom(
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 12, 
+                                                vertical: 8
+                                              ),
                                               side: BorderSide(
                                                 color: Theme.of(context).colorScheme.primary,
                                               ),
@@ -398,27 +436,18 @@ class _LandingPageState extends State<LandingPage> {
                   SizedBox(
                     width: 600,
                     child: Text(
-                      'Understanding your local government is the first step towards active citizenship. Download govvy today and empower yourself with knowledge.',
+                      'Understanding your local government is the first step towards active citizenship. Sign up today and empower yourself with knowledge.',
                       style: Theme.of(context).textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                   ),
                   const SizedBox(height: 32),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.android),
-                        label: const Text('Google Play'),
-                      ),
-                      const SizedBox(width: 16),
-                      ElevatedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(Icons.apple),
-                        label: const Text('App Store'),
-                      ),
-                    ],
+                  ElevatedButton(
+                    onPressed: _toggleSignUpForm,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    ),
+                    child: const Text('Sign Up Now'),
                   ),
                 ],
               ),

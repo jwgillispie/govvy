@@ -25,6 +25,7 @@ class _SignUpFormState extends State<SignUpForm> {
   
   bool _isLoading = false;
   String? _errorMessage;
+  bool _acceptedTerms = false;
 
   @override
   void dispose() {
@@ -37,7 +38,12 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   Future<void> _signUp() async {
-    if (!_formKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate() || !_acceptedTerms) {
+      if (!_acceptedTerms) {
+        setState(() {
+          _errorMessage = 'Please accept the terms and conditions.';
+        });
+      }
       return;
     }
 
@@ -84,13 +90,13 @@ class _SignUpFormState extends State<SignUpForm> {
 
   String _handleAuthError(String errorMessage) {
     if (errorMessage.contains('email-already-in-use')) {
-      return 'This email is already registered. Please use another email.';
+      return 'Email already registered.';
     } else if (errorMessage.contains('weak-password')) {
-      return 'Password is too weak. Please use a stronger password.';
+      return 'Password is too weak.';
     } else if (errorMessage.contains('invalid-email')) {
-      return 'Invalid email format. Please check your email.';
+      return 'Invalid email format.';
     } else {
-      return 'An error occurred. Please try again later.';
+      return 'An error occurred. Please try again.';
     }
   }
 
@@ -103,17 +109,17 @@ class _SignUpFormState extends State<SignUpForm> {
         children: [
           if (_errorMessage != null)
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 8.0),
               child: Container(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 decoration: BoxDecoration(
                   color: Colors.red.shade50,
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(4.0),
                   border: Border.all(color: Colors.red.shade200),
                 ),
                 child: Text(
                   _errorMessage!,
-                  style: TextStyle(color: Colors.red.shade700),
+                  style: TextStyle(color: Colors.red.shade700, fontSize: 12),
                 ),
               ),
             ),
@@ -124,10 +130,12 @@ class _SignUpFormState extends State<SignUpForm> {
               filled: true,
               fillColor: Colors.grey.shade100,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(Icons.person_outline),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              prefixIcon: const Icon(Icons.person_outline, size: 18),
+              isDense: true,
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -136,7 +144,7 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           TextFormField(
             controller: _emailController,
             decoration: InputDecoration(
@@ -144,10 +152,12 @@ class _SignUpFormState extends State<SignUpForm> {
               filled: true,
               fillColor: Colors.grey.shade100,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(Icons.email_outlined),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              prefixIcon: const Icon(Icons.email_outlined, size: 18),
+              isDense: true,
             ),
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
@@ -160,7 +170,7 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           TextFormField(
             controller: _passwordController,
             decoration: InputDecoration(
@@ -168,10 +178,14 @@ class _SignUpFormState extends State<SignUpForm> {
               filled: true,
               fillColor: Colors.grey.shade100,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(Icons.lock_outline),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              prefixIcon: const Icon(Icons.lock_outline, size: 18),
+              isDense: true,
+              helperText: 'Min 6 characters',
+              helperStyle: TextStyle(fontSize: 10),
             ),
             obscureText: true,
             validator: (value) {
@@ -184,7 +198,7 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           TextFormField(
             controller: _addressController,
             decoration: InputDecoration(
@@ -192,10 +206,12 @@ class _SignUpFormState extends State<SignUpForm> {
               filled: true,
               fillColor: Colors.grey.shade100,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(Icons.location_on_outlined),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              prefixIcon: const Icon(Icons.location_on_outlined, size: 18),
+              isDense: true,
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -204,7 +220,7 @@ class _SignUpFormState extends State<SignUpForm> {
               return null;
             },
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           TextFormField(
             controller: _phoneController,
             decoration: InputDecoration(
@@ -212,18 +228,65 @@ class _SignUpFormState extends State<SignUpForm> {
               filled: true,
               fillColor: Colors.grey.shade100,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
               ),
-              prefixIcon: const Icon(Icons.phone_outlined),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              prefixIcon: const Icon(Icons.phone_outlined, size: 18),
+              isDense: true,
             ),
             keyboardType: TextInputType.phone,
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              SizedBox(
+                height: 20,
+                width: 20,
+                child: Checkbox(
+                  value: _acceptedTerms,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  visualDensity: VisualDensity.compact,
+                  onChanged: (value) {
+                    setState(() {
+                      _acceptedTerms = value ?? false;
+                      if (_acceptedTerms) {
+                        _errorMessage = null;
+                      }
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _acceptedTerms = !_acceptedTerms;
+                      if (_acceptedTerms) {
+                        _errorMessage = null;
+                      }
+                    });
+                  },
+                  child: Text(
+                    'I agree to the Terms and Privacy Policy',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: _isLoading ? null : _signUp,
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+              ),
               child: _isLoading
                   ? const SizedBox(
                       height: 20,
