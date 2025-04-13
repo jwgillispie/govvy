@@ -1,0 +1,42 @@
+name: govvy
+description: A local government transparency app connecting citizens with their representatives.
+
+# Publication information
+publish_to: 'none' # Do not publish to pub.dev
+
+# App version information
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.5
+  # State management
+  provider: ^6.0.5
+  # UI components
+  google_fonts: ^5.1.0
+  flutter_svg: ^2.0.7
+  # Data handling
+  http: ^1.1.0
+  shared_preferences: ^2.2.0
+  # Location services
+  geolocator: ^10.0.0
+  geocoding: ^2.1.0
+  # Utils
+  url_launcher: ^6.1.12
+  intl: ^0.18.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.2
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/
