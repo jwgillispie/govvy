@@ -30,7 +30,7 @@ class _LandingPageState extends State<LandingPage> {
       _isMenuOpen = !_isMenuOpen;
     });
   }
-  
+
   Future<void> _launchEmail() async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
@@ -39,7 +39,7 @@ class _LandingPageState extends State<LandingPage> {
         'subject': 'govvy Feedback',
       },
     );
-    
+
     if (await canLaunchUrl(emailLaunchUri)) {
       await launchUrl(emailLaunchUri);
     }
@@ -50,7 +50,7 @@ class _LandingPageState extends State<LandingPage> {
       scheme: 'tel',
       path: '3523271969',
     );
-    
+
     if (await canLaunchUrl(callLaunchUri)) {
       await launchUrl(callLaunchUri);
     }
@@ -71,8 +71,7 @@ class _LandingPageState extends State<LandingPage> {
             _buildResponsiveAppBar(context, authService, isMobile),
 
             // Expanded Mobile Menu (when open)
-            if (isMobile && _isMenuOpen)
-              _buildMobileMenu(context, authService),
+            if (isMobile && _isMenuOpen) _buildMobileMenu(context, authService),
 
             // Hero Section
             _buildHeroSection(context, screenSize, isMobile, authService),
@@ -82,7 +81,7 @@ class _LandingPageState extends State<LandingPage> {
 
             // Founder Contact Section
             _buildFounderContactSection(context, isMobile),
-            
+
             // Call to Action
             _buildCallToAction(context, isMobile),
 
@@ -94,7 +93,8 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget _buildResponsiveAppBar(BuildContext context, AuthService authService, bool isMobile) {
+  Widget _buildResponsiveAppBar(
+      BuildContext context, AuthService authService, bool isMobile) {
     return Container(
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -234,7 +234,8 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget _buildHeroSection(BuildContext context, Size screenSize, bool isMobile, AuthService authService) {
+  Widget _buildHeroSection(BuildContext context, Size screenSize, bool isMobile,
+      AuthService authService) {
     return Container(
       constraints: BoxConstraints(
         minHeight: isMobile ? screenSize.height * 0.6 : screenSize.height * 0.7,
@@ -274,7 +275,8 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget _buildMobileHeroContent(BuildContext context, AuthService authService) {
+  Widget _buildMobileHeroContent(
+      BuildContext context, AuthService authService) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -349,7 +351,8 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
-  Widget _buildDesktopHeroContent(BuildContext context, AuthService authService) {
+  Widget _buildDesktopHeroContent(
+      BuildContext context, AuthService authService) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -359,7 +362,7 @@ class _LandingPageState extends State<LandingPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Know Your Local Government',
+              'Get inside the minds of your local reps',
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     color: Colors.white,
                     fontSize: 42,
@@ -370,7 +373,7 @@ class _LandingPageState extends State<LandingPage> {
             SizedBox(
               width: 700,
               child: Text(
-                'Undeniable clarity into the actions and responsibilities of your local politicians.',
+                'Undeniable, unbiased visibility into the actions and responsibilities of your local representatives.',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: Colors.white,
                       fontSize: 18,
@@ -384,7 +387,8 @@ class _LandingPageState extends State<LandingPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: Theme.of(context).colorScheme.primary,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               ),
               child: const Text('Join The Movement'),
             ),
@@ -634,14 +638,12 @@ class _LandingPageState extends State<LandingPage> {
   Widget _buildFounderContactSection(BuildContext context, bool isMobile) {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 32 : 40, 
-        horizontal: isMobile ? 20 : 32
-      ),
+          vertical: isMobile ? 32 : 40, horizontal: isMobile ? 20 : 32),
       color: const Color(0xFFD1C4E9), // Deep Purple 100
       child: Column(
         children: [
           Text(
-            'Hear From The Founder',
+            'Get in touch with us, we genuinely want to hear from you',
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
@@ -649,7 +651,7 @@ class _LandingPageState extends State<LandingPage> {
           SizedBox(
             width: isMobile ? double.infinity : 600,
             child: Text(
-              'Does this idea suck? Are you curious about what you see? I\'d lovvy to hear from you, like seriously',
+              'Does this idea suck? Are you curious about what you see? We\'d lovvy to hear from you, like seriously',
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
@@ -678,7 +680,7 @@ class _LandingPageState extends State<LandingPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
-                                    'Email Me',
+                                    'Email Us',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -690,7 +692,22 @@ class _LandingPageState extends State<LandingPage> {
                                     child: Text(
                                       'jordangillispie@outlook.com',
                                       style: TextStyle(
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  InkWell(
+                                    onTap: _launchEmail,
+                                    child: Text(
+                                      'caitlyng129@gmail.com',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         decoration: TextDecoration.underline,
                                       ),
                                     ),
@@ -723,7 +740,7 @@ class _LandingPageState extends State<LandingPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
-                                    'Call Me',
+                                    'Call or Text Us',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -735,7 +752,22 @@ class _LandingPageState extends State<LandingPage> {
                                     child: Text(
                                       '(352) 327-1969',
                                       style: TextStyle(
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  InkWell(
+                                    onTap: _launchCall,
+                                    child: Text(
+                                      '(352) 327-1969',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         decoration: TextDecoration.underline,
                                       ),
                                     ),
@@ -783,7 +815,8 @@ class _LandingPageState extends State<LandingPage> {
                                   child: Text(
                                     'jordangillispie@outlook.com',
                                     style: TextStyle(
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       decoration: TextDecoration.underline,
                                     ),
                                   ),
@@ -826,7 +859,8 @@ class _LandingPageState extends State<LandingPage> {
                                   child: Text(
                                     '(352) 327-1969',
                                     style: TextStyle(
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       decoration: TextDecoration.underline,
                                     ),
                                   ),
@@ -847,9 +881,7 @@ class _LandingPageState extends State<LandingPage> {
   Widget _buildCallToAction(BuildContext context, bool isMobile) {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: isMobile ? 40 : 64, 
-        horizontal: isMobile ? 24 : 32
-      ),
+          vertical: isMobile ? 40 : 64, horizontal: isMobile ? 24 : 32),
       color: const Color(0xFFEDE7F6), // Deep Purple 50
       child: Column(
         children: [
@@ -870,9 +902,7 @@ class _LandingPageState extends State<LandingPage> {
           const SizedBox(height: 32),
           Container(
             padding: EdgeInsets.symmetric(
-              vertical: 16, 
-              horizontal: isMobile ? 24 : 32
-            ),
+                vertical: 16, horizontal: isMobile ? 24 : 32),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
