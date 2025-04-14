@@ -285,7 +285,7 @@ class _LandingPageState extends State<LandingPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Get inside your governments head',
+              'Get inside the mind of your local reps',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: Colors.white,
                     fontSize: 28,
@@ -293,7 +293,7 @@ class _LandingPageState extends State<LandingPage> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Undeniable clarity into the actions and responsibilities of your local politicians.',
+              'Undeniable, unbiased visibility into the actions and responsibilities of your local politicians.',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Colors.white,
                     fontSize: 16,
@@ -803,7 +803,7 @@ class _LandingPageState extends State<LandingPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Email Me',
+                                  'Email Us',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
@@ -814,6 +814,18 @@ class _LandingPageState extends State<LandingPage> {
                                   onTap: _launchEmail,
                                   child: Text(
                                     'jordangillispie@outlook.com',
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                InkWell(
+                                  onTap: _launchEmail,
+                                  child: Text(
+                                    'caitlyng129@gmail.com',
                                     style: TextStyle(
                                       color:
                                           Theme.of(context).colorScheme.primary,
@@ -847,7 +859,7 @@ class _LandingPageState extends State<LandingPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Call Me',
+                                  'Call Us',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
@@ -858,6 +870,18 @@ class _LandingPageState extends State<LandingPage> {
                                   onTap: _launchCall,
                                   child: Text(
                                     '(352) 327-1969',
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                InkWell(
+                                  onTap: _launchCall,
+                                  child: Text(
+                                    '(443) 223-6741',
                                     style: TextStyle(
                                       color:
                                           Theme.of(context).colorScheme.primary,
