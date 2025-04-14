@@ -51,6 +51,73 @@ class AuthService with ChangeNotifier {
     }
   }
   
+  // Phone number authentication methods
+  
+  // Step 1: Request verification code via SMS
+  Future<void> verifyPhoneNumber({
+    required String phoneNumber,
+    required Function(PhoneAuthCredential) verificationCompleted,
+    required Function(FirebaseAuthException) verificationFailed,
+    required Function(String, int?) codeSent,
+    required Function(String) codeAutoRetrievalTimeout,
+  }) async {
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: verificationCompleted,
+        verificationFailed: verificationFailed,
+        codeSent: codeSent,
+        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+        timeout: const Duration(seconds: 60),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error verifying phone number: $e');
+      }
+      rethrow;
+    }
+  }
+  
+  // Step 2: Sign in with verification code
+  Future<UserCredential?> signInWithPhoneCredential(
+    PhoneAuthCredential credential, {
+    String? name,
+    String? address,
+  }) async {
+    try {
+      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      
+      // Check if this is a new user
+      if (userCredential.additionalUserInfo?.isNewUser == true && 
+          userCredential.user != null && 
+          name != null && 
+          address != null) {
+        // Save additional user data to Firestore
+        await _saveUserData(
+          uid: userCredential.user!.uid,
+          email: userCredential.user!.email ?? '',
+          name: name,
+          address: address,
+          phone: userCredential.user!.phoneNumber,
+        );
+        
+        // Update display name in Firebase Auth
+        await userCredential.user!.updateDisplayName(name);
+      } else if (userCredential.user != null) {
+        // Update last login for existing users
+        await updateLastLogin(userCredential.user!.uid);
+      }
+      
+      notifyListeners();
+      return userCredential;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error signing in with phone credential: $e');
+      }
+      rethrow;
+    }
+  }
+  
   // Sign in with email and password
   Future<UserCredential?> signInWithEmailAndPassword({
     required String email,

@@ -2,55 +2,64 @@ import 'package:flutter/material.dart';
 import 'package:govvy/widgets/auth/signup_form.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({Key? key}) : super(key: key);
+  const LandingPage({super.key});
 
   @override
   State<LandingPage> createState() => _LandingPageState();
 }
 
 class _LandingPageState extends State<LandingPage> {
-  final TextEditingController _addressController = TextEditingController();
   bool _showSignUpForm = false;
-
-  @override
-  void dispose() {
-    _addressController.dispose();
-    super.dispose();
-  }
+  bool _isMenuOpen = false; // For mobile menu
 
   void _toggleSignUpForm() {
     setState(() {
       _showSignUpForm = !_showSignUpForm;
+      // Close menu when toggling sign up
+      if (_isMenuOpen) {
+        _isMenuOpen = false;
+      }
     });
   }
 
-  void _onSignUpSuccess() {
+  void _toggleMenu() {
     setState(() {
-      _showSignUpForm = false;
+      _isMenuOpen = !_isMenuOpen;
     });
-    // Show success dialog or message
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Welcome to govvy!'),
-        content: const Text(
-          'Thank you for signing up. You can now track your representatives and stay updated on local government activities.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Get Started'),
-          ),
-        ],
-      ),
+  }
+  
+  Future<void> _launchEmail() async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'jordangillispie@outlook.com',
+      queryParameters: {
+        'subject': 'govvy Feedback',
+      },
     );
+    
+    if (await canLaunchUrl(emailLaunchUri)) {
+      await launchUrl(emailLaunchUri);
+    }
+  }
+
+  Future<void> _launchCall() async {
+    final Uri callLaunchUri = Uri(
+      scheme: 'tel',
+      path: '3523271969',
+    );
+    
+    if (await canLaunchUrl(callLaunchUri)) {
+      await launchUrl(callLaunchUri);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+    final isMobile = screenSize.width < 768;
     final authService = Provider.of<AuthService>(context);
 
     return Scaffold(
@@ -58,444 +67,515 @@ class _LandingPageState extends State<LandingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // App Bar
-            Container(
-              color: Theme.of(context).colorScheme.primary,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'govvy',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'About',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Features',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Contact',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      if (authService.currentUser == null)
-                        TextButton(
-                          onPressed: _toggleSignUpForm,
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Theme.of(context).colorScheme.primary,
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                          ),
-                          child: const Text('Sign Up'),
-                        )
-                      else
-                        Row(
-                          children: [
-                            Text(
-                              'Welcome, ${authService.currentUser?.displayName?.split(' ').first ?? 'User'}',
-                              style: const TextStyle(color: Colors.white),
-                            ),
-                            const SizedBox(width: 16),
-                            TextButton(
-                              onPressed: () => authService.signOut(),
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Theme.of(context).colorScheme.primary,
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                              ),
-                              child: const Text('Sign Out'),
-                            ),
-                          ],
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            // Responsive App Bar
+            _buildResponsiveAppBar(context, authService, isMobile),
+
+            // Expanded Mobile Menu (when open)
+            if (isMobile && _isMenuOpen)
+              _buildMobileMenu(context, authService),
 
             // Hero Section
-            Container(
-              height: screenSize.height * 0.7,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFF5E35B1), // Deep Purple 600
-                    Color(0xFF7E57C2), // Deep Purple 400
-                  ],
-                ),
-              ),
-              child: Stack(
-                children: [
-                  const Positioned(
-                    right: -100,
-                    top: -100,
-                    child: Opacity(
-                      opacity: 0.1,
-                      child: Icon(
-                        Icons.account_balance,
-                        size: 500,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Know Your Local Government',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineLarge
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                      fontSize: 42,
-                                    ),
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                'Track representatives, understand legislation, and engage with your local democracy - all in one place.',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                    ),
-                              ),
-                              const SizedBox(height: 32),
-                              Row(
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: _toggleSignUpForm,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                      foregroundColor:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                    child: const Text('Get Started'),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  TextButton.icon(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.play_circle_outline,
-                                      color: Colors.white,
-                                    ),
-                                    label: const Text(
-                                      'How it works',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Center(
-                            child: Container(
-                              width: 400, // Fixed width
-                              constraints: BoxConstraints(
-                                maxHeight: 470, // Maximum height to prevent overflow
-                              ),
-                              padding: const EdgeInsets.all(20), // Reduced padding
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 15,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: _showSignUpForm
-                                  ? Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text(
-                                              'Create an Account',
-                                              style: TextStyle(
-                                                fontSize: 18, // Slightly smaller font
-                                                fontWeight: FontWeight.bold,
-                                                color: Color(0xFF5E35B1),
-                                              ),
-                                            ),
-                                            IconButton(
-                                              icon: const Icon(Icons.close, size: 18),
-                                              padding: EdgeInsets.zero,
-                                              constraints: const BoxConstraints(),
-                                              onPressed: _toggleSignUpForm,
-                                              color: Colors.grey,
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 16), // Reduced spacing
-                                        SignUpForm(
-                                          onSignUpSuccess: _onSignUpSuccess,
-                                        ),
-                                      ],
-                                    )
-                                  : Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Text(
-                                          'Find Your Representatives',
-                                          style: TextStyle(
-                                            fontSize: 18, // Slightly smaller font
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF5E35B1),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 16), // Reduced spacing
-                                        TextField(
-                                          controller: _addressController,
-                                          decoration: InputDecoration(
-                                            hintText: 'Enter your address',
-                                            filled: true,
-                                            fillColor: Colors.grey.shade100,
-                                            border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(12),
-                                              borderSide: BorderSide.none,
-                                            ),
-                                            contentPadding: const EdgeInsets.symmetric(
-                                              horizontal: 12, 
-                                              vertical: 12
-                                            ),
-                                            prefixIcon: const Icon(
-                                              Icons.location_on,
-                                              color: Color(0xFF5E35B1),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 12), // Reduced spacing
-                                        SizedBox(
-                                          width: double.infinity,
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              if (authService.currentUser == null) {
-                                                // If not logged in, show sign up form
-                                                _toggleSignUpForm();
-                                              } else {
-                                                // If logged in, perform search
-                                                // TODO: Implement representative search
-                                              }
-                                            },
-                                            child: const Text('Search'),
-                                          ),
-                                        ),
-                                        if (authService.currentUser == null) ...[
-                                          const SizedBox(height: 12), // Reduced spacing
-                                          const Divider(height: 12), // Reduced divider height
-                                          const SizedBox(height: 4), // Reduced spacing
-                                          const Text(
-                                            'Sign up to save searches and get updates',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 12, // Smaller text
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 8), // Reduced spacing
-                                          OutlinedButton(
-                                            onPressed: _toggleSignUpForm,
-                                            style: OutlinedButton.styleFrom(
-                                              padding: const EdgeInsets.symmetric(
-                                                horizontal: 12, 
-                                                vertical: 8
-                                              ),
-                                              side: BorderSide(
-                                                color: Theme.of(context).colorScheme.primary,
-                                              ),
-                                            ),
-                                            child: const Text('Create Account'),
-                                          ),
-                                        ],
-                                      ],
-                                    ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildHeroSection(context, screenSize, isMobile, authService),
 
             // Features Section
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 32),
-              child: Column(
-                children: [
-                  Text(
-                    'Why Use govvy',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Breaking down the barriers between you and your local government',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 48),
-                  Row(
-                    children: [
-                      _buildFeatureCard(
-                        context,
-                        Icons.people_outline,
-                        'Identify Your Representatives',
-                        'Find all your local representatives by simply entering your address.',
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        Icons.how_to_vote_outlined,
-                        'Track Voting Records',
-                        'See how your representatives vote on issues that matter to you.',
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        Icons.monetization_on_outlined,
-                        'Follow the Money',
-                        'Understand who funds your representatives with transparent donation data.',
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 32),
-                  Row(
-                    children: [
-                      _buildFeatureCard(
-                        context,
-                        Icons.account_balance_outlined,
-                        'Committee Insights',
-                        'Learn which committees your representatives serve on and how they influence policy.',
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        Icons.contact_mail_outlined,
-                        'Direct Communication',
-                        'Easily contact your representatives through provided contact information.',
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        Icons.notifications_outlined,
-                        'Stay Updated',
-                        'Receive notifications about important votes and activities in your area.',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            _buildFeaturesSection(context, isMobile),
 
+            // Founder Contact Section
+            _buildFounderContactSection(context, isMobile),
+            
             // Call to Action
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 32),
-              color: const Color(0xFFEDE7F6), // Deep Purple 50
-              child: Column(
-                children: [
-                  Text(
-                    'Democracy Starts Locally',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  SizedBox(
-                    width: 600,
-                    child: Text(
-                      'Understanding your local government is the first step towards active citizenship. Sign up today and empower yourself with knowledge.',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  ElevatedButton(
-                    onPressed: _toggleSignUpForm,
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                    ),
-                    child: const Text('Sign Up Now'),
-                  ),
-                ],
-              ),
-            ),
+            _buildCallToAction(context, isMobile),
 
             // Footer
-            Container(
-              padding: const EdgeInsets.all(32),
-              color: const Color(0xFF4527A0), // Deep Purple 800
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'govvy',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon:
-                                const Icon(Icons.facebook, color: Colors.white),
-                            onPressed: () {},
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.web, color: Colors.white),
-                            onPressed: () {},
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.web, color: Colors.white),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Divider(color: Colors.white24, height: 32),
-                  const Text(
-                    '© 2025 govvy. All rights reserved.',
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                ],
+            _buildFooter(context, isMobile),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildResponsiveAppBar(BuildContext context, AuthService authService, bool isMobile) {
+    return Container(
+      color: Theme.of(context).colorScheme.primary,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'govvy',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          if (isMobile)
+            // Mobile menu icon
+            IconButton(
+              icon: Icon(
+                _isMenuOpen ? Icons.close : Icons.menu,
+                color: Colors.white,
               ),
+              onPressed: _toggleMenu,
+            )
+          else
+            // Desktop navigation
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'About',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Features',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Contact',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                if (authService.currentUser == null)
+                  TextButton(
+                    onPressed: _toggleSignUpForm,
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Theme.of(context).colorScheme.primary,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                    ),
+                    child: const Text('Sign Up'),
+                  )
+                else
+                  TextButton(
+                    onPressed: () => authService.signOut(),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Theme.of(context).colorScheme.primary,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                    ),
+                    child: const Text('Sign Out'),
+                  ),
+              ],
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileMenu(BuildContext context, AuthService authService) {
+    return Container(
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.9),
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Column(
+        children: [
+          ListTile(
+            title: const Text(
+              'About',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              _toggleMenu();
+              // Navigate to about page
+            },
+          ),
+          ListTile(
+            title: const Text(
+              'Features',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              _toggleMenu();
+              // Navigate to features page
+            },
+          ),
+          ListTile(
+            title: const Text(
+              'Contact',
+              style: TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              _toggleMenu();
+              // Navigate to contact page
+            },
+          ),
+          const Divider(color: Colors.white24),
+          ListTile(
+            title: Text(
+              authService.currentUser == null ? 'Sign Up' : 'Sign Out',
+              style: const TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              _toggleMenu();
+              if (authService.currentUser == null) {
+                _toggleSignUpForm();
+              } else {
+                authService.signOut();
+              }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHeroSection(BuildContext context, Size screenSize, bool isMobile, AuthService authService) {
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: isMobile ? screenSize.height * 0.6 : screenSize.height * 0.7,
+      ),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF5E35B1), // Deep Purple 600
+            Color(0xFF7E57C2), // Deep Purple 400
+          ],
+        ),
+      ),
+      child: Stack(
+        children: [
+          const Positioned(
+            right: -100,
+            top: -100,
+            child: Opacity(
+              opacity: 0.1,
+              child: Icon(
+                Icons.account_balance,
+                size: 500,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: isMobile
+                ? _buildMobileHeroContent(context, authService)
+                : _buildDesktopHeroContent(context, authService),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileHeroContent(BuildContext context, AuthService authService) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Get inside your governments head',
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: Colors.white,
+                    fontSize: 28,
+                  ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Undeniable clarity into the actions and responsibilities of your local politicians.',
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: _toggleSignUpForm,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Theme.of(context).colorScheme.primary,
+              ),
+              child: const Text('Join The Movement'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 32),
+        if (_showSignUpForm)
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 15,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Create an Account',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF5E35B1),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                SignUpForm(
+                  onSignUpSuccess: () {
+                    setState(() {
+                      _showSignUpForm = false;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildDesktopHeroContent(BuildContext context, AuthService authService) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Know Your Local Government',
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    color: Colors.white,
+                    fontSize: 42,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: 700,
+              child: Text(
+                'Undeniable clarity into the actions and responsibilities of your local politicians.',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton(
+              onPressed: _toggleSignUpForm,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Theme.of(context).colorScheme.primary,
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              ),
+              child: const Text('Join The Movement'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 40),
+        if (_showSignUpForm)
+          Container(
+            width: 450,
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 15,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Create an Account',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF5E35B1),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                SignUpForm(
+                  onSignUpSuccess: () {
+                    setState(() {
+                      _showSignUpForm = false;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildFeaturesSection(BuildContext context, bool isMobile) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+      child: Column(
+        children: [
+          Text(
+            'Why Use govvy',
+            style: Theme.of(context).textTheme.headlineMedium,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Breaking down the barriers between you and your local government',
+            style: Theme.of(context).textTheme.bodyLarge,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 32),
+          isMobile
+              ? _buildMobileFeatureCards(context)
+              : _buildDesktopFeatureCards(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileFeatureCards(BuildContext context) {
+    return Column(
+      children: [
+        _buildFeatureCardMobile(
+          context,
+          Icons.people_outline,
+          'Identify Your Representatives',
+          'Find all your local representatives by simply entering your address.',
+        ),
+        _buildFeatureCardMobile(
+          context,
+          Icons.how_to_vote_outlined,
+          'Track Voting Records',
+          'See how your representatives vote on issues that matter to you.',
+        ),
+        _buildFeatureCardMobile(
+          context,
+          Icons.monetization_on_outlined,
+          'Follow the Money',
+          'Understand who funds your representatives with transparent donation data.',
+        ),
+        _buildFeatureCardMobile(
+          context,
+          Icons.account_balance_outlined,
+          'Committee Insights',
+          'Learn which committees your representatives serve on and how they influence policy.',
+        ),
+        _buildFeatureCardMobile(
+          context,
+          Icons.contact_mail_outlined,
+          'Direct Communication',
+          'Easily contact your representatives through provided contact information.',
+        ),
+        _buildFeatureCardMobile(
+          context,
+          Icons.notifications_outlined,
+          'Stay Updated',
+          'Receive notifications about important votes and activities in your area.',
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDesktopFeatureCards(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            _buildFeatureCard(
+              context,
+              Icons.people_outline,
+              'Identify Your Representatives',
+              'Find all your local representatives by simply entering your address.',
+            ),
+            _buildFeatureCard(
+              context,
+              Icons.how_to_vote_outlined,
+              'Track Voting Records',
+              'See how your representatives vote on issues that matter to you.',
+            ),
+            _buildFeatureCard(
+              context,
+              Icons.monetization_on_outlined,
+              'Follow the Money',
+              'Understand who funds your representatives with transparent donation data.',
+            ),
+          ],
+        ),
+        const SizedBox(height: 32),
+        Row(
+          children: [
+            _buildFeatureCard(
+              context,
+              Icons.account_balance_outlined,
+              'Committee Insights',
+              'Learn which committees your representatives serve on and how they influence policy.',
+            ),
+            _buildFeatureCard(
+              context,
+              Icons.contact_mail_outlined,
+              'Direct Communication',
+              'Easily contact your representatives through provided contact information.',
+            ),
+            _buildFeatureCard(
+              context,
+              Icons.notifications_outlined,
+              'Stay Updated',
+              'Receive notifications about important votes and activities in your area.',
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFeatureCardMobile(
+      BuildContext context, IconData icon, String title, String description) {
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.only(bottom: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 48,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              description,
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -539,6 +619,360 @@ class _LandingPageState extends State<LandingPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildFounderContactSection(BuildContext context, bool isMobile) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: isMobile ? 32 : 40, 
+        horizontal: isMobile ? 20 : 32
+      ),
+      color: const Color(0xFFD1C4E9), // Deep Purple 100
+      child: Column(
+        children: [
+          Text(
+            'Hear From The Founder',
+            style: Theme.of(context).textTheme.headlineMedium,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: isMobile ? double.infinity : 600,
+            child: Text(
+              'Does this idea suck? Are you curious about what you see? I\'d lovvy to hear from you, like seriously',
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 24),
+          isMobile
+              ? Column(
+                  children: [
+                    Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.email_outlined,
+                              color: Color(0xFF5E35B1),
+                              size: 28,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Email Me',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  InkWell(
+                                    onTap: _launchEmail,
+                                    child: Text(
+                                      'jordangillispie@outlook.com',
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.primary,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.phone_outlined,
+                              color: Color(0xFF5E35B1),
+                              size: 28,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Call Me',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  InkWell(
+                                    onTap: _launchCall,
+                                    child: Text(
+                                      '(352) 327-1969',
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.primary,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.email_outlined,
+                              color: Color(0xFF5E35B1),
+                              size: 28,
+                            ),
+                            const SizedBox(width: 12),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Email Me',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                InkWell(
+                                  onTap: _launchEmail,
+                                  child: Text(
+                                    'jordangillispie@outlook.com',
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.primary,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 24),
+                    Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.phone_outlined,
+                              color: Color(0xFF5E35B1),
+                              size: 28,
+                            ),
+                            const SizedBox(width: 12),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Call Me',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                InkWell(
+                                  onTap: _launchCall,
+                                  child: Text(
+                                    '(352) 327-1969',
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.primary,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCallToAction(BuildContext context, bool isMobile) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: isMobile ? 40 : 64, 
+        horizontal: isMobile ? 24 : 32
+      ),
+      color: const Color(0xFFEDE7F6), // Deep Purple 50
+      child: Column(
+        children: [
+          Text(
+            'Democracy Starts Locally',
+            style: Theme.of(context).textTheme.headlineMedium,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: isMobile ? double.infinity : 600,
+            child: Text(
+              'Understanding your local government is the first step towards active citizenship. Download govvy when we launch and empower yourself with knowledge!',
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 32),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 16, 
+              horizontal: isMobile ? 24 : 32
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.upcoming_outlined,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 28,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  'Mobile Apps Coming Soon',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFooter(BuildContext context, bool isMobile) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      color: const Color(0xFF4527A0), // Deep Purple 800
+      child: Column(
+        children: [
+          isMobile
+              ? Column(
+                  children: [
+                    const Text(
+                      'govvy',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.facebook, color: Colors.white),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.web, color: Colors.white),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.web, color: Colors.white),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'govvy',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.facebook, color: Colors.white),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.web, color: Colors.white),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.web, color: Colors.white),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+          const Divider(color: Colors.white24, height: 32),
+          const Text(
+            '© 2025 govvy. All rights reserved.',
+            style: TextStyle(color: Colors.white70),
+          ),
+        ],
       ),
     );
   }
