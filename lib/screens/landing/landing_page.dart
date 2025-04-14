@@ -643,7 +643,7 @@ class _LandingPageState extends State<LandingPage> {
       child: Column(
         children: [
           Text(
-            'Get in touch with us, we genuinely want to hear from you',
+            'Hit us up about anything',
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
@@ -651,7 +651,7 @@ class _LandingPageState extends State<LandingPage> {
           SizedBox(
             width: isMobile ? double.infinity : 600,
             child: Text(
-              'Does this idea suck? Are you curious about what you see? We\'d lovvy to hear from you, like seriously',
+              'Where do you get ',
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),

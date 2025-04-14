@@ -1,7 +1,9 @@
+// lib/widgets/auth/phone_auth_form.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class PhoneAuthForm extends StatefulWidget {
   final VoidCallback? onAuthSuccess;
@@ -60,6 +62,13 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
       String phoneNumber = _phoneController.text.trim();
       if (!phoneNumber.startsWith('+')) {
         phoneNumber = '+1$phoneNumber'; // Default to US country code
+      }
+      
+      // Show reCAPTCHA information if on web
+      if (kIsWeb) {
+        setState(() {
+          _debugStatus = 'Starting reCAPTCHA verification (required for web)...';
+        });
       }
       
       await authService.verifyPhoneNumber(
@@ -185,6 +194,8 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
       return 'Too many requests. Please try again later.';
     } else if (errorMessage.contains('quota-exceeded')) {
       return 'SMS quota exceeded. Please try again tomorrow.';
+    } else if (errorMessage.contains('missing-recaptcha-token')) {
+      return 'Please complete the reCAPTCHA verification.';
     } else {
       return 'An error occurred. Please try again later. (${errorMessage.split(']').last.trim()})';
     }
@@ -234,6 +245,8 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
                     Text('Verification ID: ${_debugVerificationId.substring(0, 8)}...'),
                   if (_debugResendToken != null)
                     Text('Resend Token: $_debugResendToken'),
+                  if (kIsWeb)
+                    Text('Platform: Web (reCAPTCHA required)', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue)),
                 ],
               ),
             ),
@@ -313,6 +326,34 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
               },
             ),
             const SizedBox(height: 20),
+            if (kIsWeb)
+              Container(
+                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.yellow.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.yellow.shade200),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'reCAPTCHA Verification',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    ),
+                    Text(
+                      'Please complete the reCAPTCHA verification when prompted.',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    // This div will be used for the invisible reCAPTCHA
+                    Container(
+                      height: 1,
+                      width: 1,
+                    ),
+                  ],
+                ),
+              ),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
