@@ -285,7 +285,7 @@ class _LandingPageState extends State<LandingPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Get inside the mind of your local reps',
+              'Get inside the mind of your local government',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     color: Colors.white,
                     fontSize: 28,
@@ -362,7 +362,7 @@ class _LandingPageState extends State<LandingPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Get inside the minds of your local reps',
+              'Get inside the minds of your local government',
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     color: Colors.white,
                     fontSize: 42,
@@ -442,16 +442,58 @@ class _LandingPageState extends State<LandingPage> {
       child: Column(
         children: [
           Text(
-            'Why Use govvy',
+            'How Well Do You Know Your Government?',
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(16),
+            margin: const EdgeInsets.only(bottom: 24),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              ),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'Questions to consider:',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Who represents you locally? What do they actually do? Have you ever contacted them? How do learn about your government?',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
           Text(
-            'Breaking down the barriers between you and your local government',
+            'Why Use govvy',
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontSize: 24,
+                ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 6),
+          Text(
+            'We are breaking down any barriers between you and your local government',
             style: Theme.of(context).textTheme.bodyLarge,
             textAlign: TextAlign.center,
           ),
+          const SizedBox(height: 24),
           const SizedBox(height: 32),
           isMobile
               ? _buildMobileFeatureCards(context)
@@ -643,7 +685,7 @@ class _LandingPageState extends State<LandingPage> {
       child: Column(
         children: [
           Text(
-            'Hit us up about anything',
+            'Let us know your thoughts!',
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
@@ -651,7 +693,7 @@ class _LandingPageState extends State<LandingPage> {
           SizedBox(
             width: isMobile ? double.infinity : 600,
             child: Text(
-              'Where do you get ',
+              'For those who\'ve signed up: What do you like, or dislike, about the app idea? What would keep you coming back to an app like this? We asked some questions in that little purple box up there -let us know what kind of answers you come up with. ',
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
