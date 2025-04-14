@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
+import 'package:govvy/utils/phone_formatter.dart';
 
 class SignUpForm extends StatefulWidget {
   final VoidCallback? onSignUpSuccess;
@@ -18,10 +20,10 @@ class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
   
   bool _isLoading = false;
   String? _errorMessage;
@@ -30,10 +32,10 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   void dispose() {
     _nameController.dispose();
+    _phoneController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _addressController.dispose();
-    _phoneController.dispose();
     super.dispose();
   }
 
@@ -55,12 +57,15 @@ class _SignUpFormState extends State<SignUpForm> {
     try {
       final authService = Provider.of<AuthService>(context, listen: false);
       
+      // Normalize phone number to E.164 format for Firebase
+      String normalizedPhone = normalizePhoneNumber(_phoneController.text);
+      
       await authService.registerWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text,
         name: _nameController.text.trim(),
         address: _addressController.text.trim(),
-        phone: _phoneController.text.isEmpty ? null : _phoneController.text.trim(),
+        phone: normalizedPhone,
       );
       
       if (widget.onSignUpSuccess != null) {
@@ -146,6 +151,39 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           const SizedBox(height: 8),
           TextFormField(
+            controller: _phoneController,
+            decoration: InputDecoration(
+              labelText: 'Phone Number',
+              hintText: '(XXX) XXX-XXXX',
+              filled: true,
+              fillColor: Colors.grey.shade100,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: BorderSide.none,
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              prefixIcon: const Icon(Icons.phone_outlined, size: 18),
+              isDense: true,
+              helperText: 'Required for important notifications',
+              helperStyle: const TextStyle(fontSize: 10),
+            ),
+            keyboardType: TextInputType.phone,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              PhoneInputFormatter(),
+            ],
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your phone number';
+              }
+              if (!isValidPhoneNumber(value)) {
+                return 'Please enter a complete phone number';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 8),
+          TextFormField(
             controller: _emailController,
             decoration: InputDecoration(
               labelText: 'Email',
@@ -185,7 +223,7 @@ class _SignUpFormState extends State<SignUpForm> {
               prefixIcon: const Icon(Icons.lock_outline, size: 18),
               isDense: true,
               helperText: 'Min 6 characters',
-              helperStyle: TextStyle(fontSize: 10),
+              helperStyle: const TextStyle(fontSize: 10),
             ),
             obscureText: true,
             validator: (value) {
@@ -219,23 +257,6 @@ class _SignUpFormState extends State<SignUpForm> {
               }
               return null;
             },
-          ),
-          const SizedBox(height: 8),
-          TextFormField(
-            controller: _phoneController,
-            decoration: InputDecoration(
-              labelText: 'Phone (optional)',
-              filled: true,
-              fillColor: Colors.grey.shade100,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide.none,
-              ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              prefixIcon: const Icon(Icons.phone_outlined, size: 18),
-              isDense: true,
-            ),
-            keyboardType: TextInputType.phone,
           ),
           const SizedBox(height: 8),
           Row(

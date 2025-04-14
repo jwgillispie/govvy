@@ -207,20 +207,28 @@ class _LandingPageState extends State<LandingPage> {
             },
           ),
           const Divider(color: Colors.white24),
-          ListTile(
-            title: Text(
-              authService.currentUser == null ? 'Sign Up' : 'Sign Out',
-              style: const TextStyle(color: Colors.white),
-            ),
-            onTap: () {
-              _toggleMenu();
-              if (authService.currentUser == null) {
+          if (authService.currentUser == null)
+            ListTile(
+              title: const Text(
+                'Sign Up',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                _toggleMenu();
                 _toggleSignUpForm();
-              } else {
+              },
+            )
+          else
+            ListTile(
+              title: const Text(
+                'Sign Out',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                _toggleMenu();
                 authService.signOut();
-              }
-            },
-          ),
+              },
+            ),
         ],
       ),
     );

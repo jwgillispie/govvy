@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:govvy/models/user_model.dart';
 
 class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -11,6 +12,18 @@ class AuthService with ChangeNotifier {
   
   // Stream of auth state changes
   Stream<User?> get authStateChanges => _auth.authStateChanges();
+
+  // Constructor to listen for auth state changes
+  AuthService() {
+    _auth.authStateChanges().listen((User? user) {
+      // Update UI when auth state changes
+      notifyListeners();
+      if (user != null) {
+        // Update last login timestamp for the user
+        updateLastLogin(user.uid);
+      }
+    });
+  }
 
   // Register a new user with email and password
   Future<UserCredential?> registerWithEmailAndPassword({
@@ -62,12 +75,36 @@ class AuthService with ChangeNotifier {
     required Function(String) codeAutoRetrievalTimeout,
   }) async {
     try {
+      if (kDebugMode) {
+        print('Verifying phone number: $phoneNumber');
+      }
+      
       await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
-        verificationCompleted: verificationCompleted,
-        verificationFailed: verificationFailed,
-        codeSent: codeSent,
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+        verificationCompleted: (PhoneAuthCredential credential) {
+          if (kDebugMode) {
+            print('Auto-verification completed');
+          }
+          verificationCompleted(credential);
+        },
+        verificationFailed: (FirebaseAuthException error) {
+          if (kDebugMode) {
+            print('Verification failed: ${error.code} - ${error.message}');
+          }
+          verificationFailed(error);
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          if (kDebugMode) {
+            print('Verification code sent - ID: $verificationId, Token: $resendToken');
+          }
+          codeSent(verificationId, resendToken);
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          if (kDebugMode) {
+            print('Auto retrieval timeout - ID: $verificationId');
+          }
+          codeAutoRetrievalTimeout(verificationId);
+        },
         timeout: const Duration(seconds: 60),
       );
     } catch (e) {
@@ -85,13 +122,28 @@ class AuthService with ChangeNotifier {
     String? address,
   }) async {
     try {
+      if (kDebugMode) {
+        print('Attempting to sign in with phone credential');
+        print('Name: $name, Address: $address');
+      }
+      
       final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      
+      if (kDebugMode) {
+        print('User signed in: ${userCredential.user?.uid}');
+        print('Is new user: ${userCredential.additionalUserInfo?.isNewUser}');
+      }
       
       // Check if this is a new user
       if (userCredential.additionalUserInfo?.isNewUser == true && 
           userCredential.user != null && 
           name != null && 
           address != null) {
+        
+        if (kDebugMode) {
+          print('New user detected, saving user data to Firestore');
+        }
+        
         // Save additional user data to Firestore
         await _saveUserData(
           uid: userCredential.user!.uid,
@@ -103,7 +155,15 @@ class AuthService with ChangeNotifier {
         
         // Update display name in Firebase Auth
         await userCredential.user!.updateDisplayName(name);
+        
+        if (kDebugMode) {
+          print('Display name updated: $name');
+        }
       } else if (userCredential.user != null) {
+        if (kDebugMode) {
+          print('Existing user, updating last login');
+        }
+        
         // Update last login for existing users
         await updateLastLogin(userCredential.user!.uid);
       }
@@ -128,6 +188,11 @@ class AuthService with ChangeNotifier {
         email: email,
         password: password,
       );
+      
+      // Update last login
+      if (userCredential.user != null) {
+        await updateLastLogin(userCredential.user!.uid);
+      }
       
       notifyListeners();
       return userCredential;
@@ -161,14 +226,26 @@ class AuthService with ChangeNotifier {
     String? phone,
   }) async {
     try {
+      // Ensure phone number is in the right format if provided
+      String? formattedPhone = phone;
+      if (phone != null && phone.isNotEmpty && !phone.startsWith('+')) {
+        // If no country code is provided, default to US (+1)
+        formattedPhone = '+1${phone.replaceAll(RegExp(r'[^0-9]'), '')}';
+      }
+      
       await _firestore.collection('users').doc(uid).set({
         'email': email,
         'name': name,
         'address': address,
-        'phone': phone,
+        'phone': formattedPhone,
         'created_at': FieldValue.serverTimestamp(),
         'last_login': FieldValue.serverTimestamp(),
       });
+      
+      if (kDebugMode) {
+        print('User data saved to Firestore: $uid');
+        print('Phone number saved: $formattedPhone');
+      }
     } catch (e) {
       if (kDebugMode) {
         print('Error saving user data: $e');
@@ -183,6 +260,10 @@ class AuthService with ChangeNotifier {
       await _firestore.collection('users').doc(uid).update({
         'last_login': FieldValue.serverTimestamp(),
       });
+      
+      if (kDebugMode) {
+        print('Last login updated for user: $uid');
+      }
     } catch (e) {
       if (kDebugMode) {
         print('Error updating last login: $e');
@@ -191,15 +272,26 @@ class AuthService with ChangeNotifier {
   }
   
   // Get user data from Firestore
-  Future<Map<String, dynamic>?> getUserData(String uid) async {
+  Future<UserModel?> getUserData(String uid) async {
     try {
       DocumentSnapshot doc = await _firestore.collection('users').doc(uid).get();
-      return doc.data() as Map<String, dynamic>?;
+      
+      if (doc.exists) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        return UserModel.fromMap(uid, data);
+      }
+      return null;
     } catch (e) {
       if (kDebugMode) {
         print('Error getting user data: $e');
       }
       return null;
     }
+  }
+  
+  // Get current user data from Firestore
+  Future<UserModel?> getCurrentUserData() async {
+    if (currentUser == null) return null;
+    return getUserData(currentUser!.uid);
   }
 }

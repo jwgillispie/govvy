@@ -28,6 +28,11 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
   bool _codeSent = false;
   String _verificationId = '';
   
+  // Debug information
+  String _debugStatus = 'Not started';
+  String _debugVerificationId = '';
+  int? _debugResendToken;
+  
   @override
   void dispose() {
     _nameController.dispose();
@@ -45,6 +50,7 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
+      _debugStatus = 'Sending verification code...';
     });
 
     try {
@@ -60,12 +66,16 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {
           // Auto-verification completed (Android only)
+          setState(() {
+            _debugStatus = 'Auto-verification completed';
+          });
           await _signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
           setState(() {
             _isLoading = false;
             _errorMessage = _handleAuthError(e.message ?? e.code);
+            _debugStatus = 'Verification failed: ${e.code}';
           });
         },
         codeSent: (String verificationId, int? resendToken) {
@@ -73,17 +83,22 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
             _verificationId = verificationId;
             _codeSent = true;
             _isLoading = false;
+            _debugStatus = 'Code sent';
+            _debugVerificationId = verificationId;
+            _debugResendToken = resendToken;
           });
         },
         codeAutoRetrievalTimeout: (String verificationId) {
-          // Usually, you don't need to do anything here
-          _verificationId = verificationId;
+          setState(() {
+            _debugStatus = 'Code auto retrieval timeout';
+          });
         },
       );
     } catch (e) {
       setState(() {
         _isLoading = false;
         _errorMessage = _handleAuthError(e.toString());
+        _debugStatus = 'Error: ${e.toString()}';
       });
     }
   }
@@ -99,6 +114,7 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
+      _debugStatus = 'Verifying code...';
     });
 
     try {
@@ -113,6 +129,7 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
       setState(() {
         _isLoading = false;
         _errorMessage = _handleAuthError(e.toString());
+        _debugStatus = 'Verification error: ${e.toString()}';
       });
     }
   }
@@ -126,6 +143,10 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
         name: _nameController.text.trim(),
         address: _addressController.text.trim(),
       );
+      
+      setState(() {
+        _debugStatus = 'Sign in successful';
+      });
       
       if (widget.onAuthSuccess != null) {
         widget.onAuthSuccess!();
@@ -142,6 +163,7 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
     } catch (e) {
       setState(() {
         _errorMessage = _handleAuthError(e.toString());
+        _debugStatus = 'Sign in error: ${e.toString()}';
       });
     } finally {
       if (mounted) {
@@ -161,13 +183,18 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
       return 'Invalid verification code. Please check and try again.';
     } else if (errorMessage.contains('too-many-requests')) {
       return 'Too many requests. Please try again later.';
+    } else if (errorMessage.contains('quota-exceeded')) {
+      return 'SMS quota exceeded. Please try again tomorrow.';
     } else {
-      return 'An error occurred. Please try again later.';
+      return 'An error occurred. Please try again later. (${errorMessage.split(']').last.trim()})';
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDebugMode = true; // Set to false in production
+
     return Form(
       key: _formKey,
       child: Column(
@@ -189,6 +216,27 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
                 ),
               ),
             ),
+          if (isDebugMode)
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              margin: const EdgeInsets.only(bottom: 16.0),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(8.0),
+                border: Border.all(color: Colors.grey.shade300),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Debug Info:', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('Status: $_debugStatus'),
+                  if (_debugVerificationId.isNotEmpty)
+                    Text('Verification ID: ${_debugVerificationId.substring(0, 8)}...'),
+                  if (_debugResendToken != null)
+                    Text('Resend Token: $_debugResendToken'),
+                ],
+              ),
+            ),
           if (!_codeSent) ...[
             TextFormField(
               controller: _nameController,
@@ -197,10 +245,12 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
                 filled: true,
                 fillColor: Colors.grey.shade100,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
                 ),
-                prefixIcon: const Icon(Icons.person_outline),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                prefixIcon: const Icon(Icons.person_outline, size: 18),
+                isDense: true,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -217,11 +267,15 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
                 filled: true,
                 fillColor: Colors.grey.shade100,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
                 ),
-                prefixIcon: const Icon(Icons.phone_outlined),
-                hintText: '+1 (XXX) XXX-XXXX',
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                prefixIcon: const Icon(Icons.phone_outlined, size: 18),
+                isDense: true,
+                hintText: '(123) 456-7890',
+                helperText: 'U.S. numbers will have +1 added automatically',
+                helperStyle: TextStyle(fontSize: 10),
               ),
               keyboardType: TextInputType.phone,
               validator: (value) {
@@ -244,10 +298,12 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
                 filled: true,
                 fillColor: Colors.grey.shade100,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
                 ),
-                prefixIcon: const Icon(Icons.location_on_outlined),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                prefixIcon: const Icon(Icons.location_on_outlined, size: 18),
+                isDense: true,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -261,6 +317,9 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _isLoading ? null : _verifyPhoneNumber,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                ),
                 child: _isLoading
                     ? const SizedBox(
                         height: 20,
@@ -275,14 +334,22 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
             ),
           ] else ...[
             // Code verification UI
-            Text(
-              'Verification code sent to ${_phoneController.text}',
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.green,
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              decoration: BoxDecoration(
+                color: Colors.green.shade50,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.green.shade200),
+              ),
+              child: Text(
+                'Verification code sent to ${_phoneController.text}',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.green.shade700,
+                ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             TextFormField(
               controller: _verificationCodeController,
               decoration: InputDecoration(
@@ -290,10 +357,12 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
                 filled: true,
                 fillColor: Colors.grey.shade100,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                   borderSide: BorderSide.none,
                 ),
-                prefixIcon: const Icon(Icons.security_outlined),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                prefixIcon: const Icon(Icons.security_outlined, size: 18),
+                isDense: true,
               ),
               keyboardType: TextInputType.number,
               maxLength: 6,
@@ -303,6 +372,9 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _isLoading ? null : _verifyCode,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                ),
                 child: _isLoading
                     ? const SizedBox(
                         height: 20,
@@ -316,9 +388,10 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
               ),
             ),
             const SizedBox(height: 12),
-            TextButton(
+            TextButton.icon(
               onPressed: _isLoading ? null : _verifyPhoneNumber,
-              child: const Text('Resend Code'),
+              icon: const Icon(Icons.refresh, size: 16),
+              label: const Text('Resend Code'),
             ),
           ],
         ],
