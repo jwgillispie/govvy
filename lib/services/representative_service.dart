@@ -31,16 +31,16 @@ class Representative {
 
   factory Representative.fromJson(Map<String, dynamic> json) {
     return Representative(
-      name: json['name'] ?? '',
-      bioGuideId: json['bioGuideId'] ?? '',
-      party: json['party'] ?? '',
-      chamber: json['chamber'] ?? '',
-      state: json['state'] ?? '',
-      district: json['district'],
-      imageUrl: json['imageUrl'],
-      office: json['office'],
-      phone: json['phone'],
-      website: json['website'],
+      name: json['name']?.toString() ?? '',
+      bioGuideId: json['bioGuideId']?.toString() ?? '',
+      party: json['party']?.toString() ?? '',
+      chamber: json['chamber']?.toString() ?? '',
+      state: json['state']?.toString() ?? '',
+      district: json['district']?.toString(),
+      imageUrl: json['imageUrl']?.toString(),
+      office: json['office']?.toString(),
+      phone: json['phone']?.toString(),
+      website: json['website']?.toString(),
     );
   }
 }
@@ -102,6 +102,14 @@ class RepresentativeService {
 
   // Helper function to safely take a substring
   int min(int a, int b) => a < b ? a : b;
+
+  // Helper function to safely convert any value to string
+  String? safeToString(dynamic value) {
+    if (value == null) {
+      return null;
+    }
+    return value.toString();
+  }
 
   // Get congressional district from address using Google's Geocoding API and Civic Information API
   Future<Map<String, dynamic>> getDistrictFromAddress(String address) async {
@@ -210,7 +218,8 @@ class RepresentativeService {
     }
   }
   
-  Future<List<Representative>> getCurrentRepresentatives(String state, [String? district]) async {
+  // Get representatives by state and district (if provided)
+  Future<List<Representative>> getRepresentativesByStateDistrict(String state, [String? district]) async {
     try {
       if (!hasCongressApiKey) {
         if (kDebugMode) {
@@ -221,17 +230,26 @@ class RepresentativeService {
       
       List<Representative> representatives = [];
       
-      // Fetch members from the API with improved URL construction
-      final url = Uri.parse('$_baseUrl/member')
-          .replace(queryParameters: {
-            'state': state,
-            'format': 'json',
-            'limit': '100',
-            'api_key': _apiKey!
-          });
+      // IMPROVED: Use direct state and district endpoints
+      final Uri url;
+      if (district != null) {
+        // Endpoint specifically for members by state and district
+        url = Uri.parse('$_baseUrl/member/$state/$district')
+            .replace(queryParameters: {
+              'format': 'json',
+              'api_key': _apiKey!
+            });
+      } else {
+        // Endpoint specifically for members by state
+        url = Uri.parse('$_baseUrl/member/$state')
+            .replace(queryParameters: {
+              'format': 'json',
+              'api_key': _apiKey!
+            });
+      }
       
       if (kDebugMode) {
-        print('Fetching representatives from API for state: $state');
+        print('Fetching representatives from API for state: $state, district: $district');
         print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
       }
       
@@ -240,65 +258,52 @@ class RepresentativeService {
       if (response.statusCode == 200) {
         if (kDebugMode) {
           print('API response received. Status: ${response.statusCode}');
-          // Print first 100 chars of response to debug
-          print('Response preview: ${response.body.substring(0, min(100, response.body.length))}...');
         }
         
-        final data = json.decode(response.body);
+        final Map<String, dynamic> data = json.decode(response.body);
         
-        // Check if the response contains members
-        if (data.containsKey('members') && data['members'] != null) {
+        // Process members based on API response structure
+        if (data.containsKey('members')) {
           final members = data['members'];
           
-          if (kDebugMode) {
-            print('Members data type: ${members.runtimeType}');
-            print('Members data: ${members.toString().substring(0, min(200, members.toString().length))}...');
-          }
-          
-          // Handle different response structures
           if (members is List) {
-            // Direct list of members
-            if (kDebugMode) {
-              print('Processing members as a List with ${members.length} items');
+            // Process direct list of members
+            for (var memberRaw in members) {
+              final member = Map<String, dynamic>.from(memberRaw);
+              representatives.add(_processMember(member));
             }
-            for (var member in members) {
-              _processMemberData(member, state, district, representatives);
-            }
-          } else if (members is Map && members.containsKey('item') && members['item'] is List) {
-            // Members inside 'item' array
-            if (kDebugMode) {
-              print('Processing members as a Map with item array: ${members['item'].length} items');
-            }
-            for (var member in members['item']) {
-              _processMemberData(member, state, district, representatives);
+          } else if (members is Map && members.containsKey('item')) {
+            // Process members inside 'item' array
+            final items = members['item'];
+            if (items is List) {
+              for (var itemRaw in items) {
+                final item = Map<String, dynamic>.from(itemRaw);
+                representatives.add(_processMember(item));
+              }
+            } else if (items is Map) {
+              // Single item
+              final item = Map<String, dynamic>.from(items);
+              representatives.add(_processMember(item));
             }
           } else if (members is Map) {
-            // Just try to process the map directly as a single member
-            if (kDebugMode) {
-              print('Processing members as a single Map');
-            }
-            _processMemberData(members, state, district, representatives);
-          } else {
-            if (kDebugMode) {
-              print('Unexpected members data structure: ${members.runtimeType}');
-            }
-          }
-        } else {
-          if (kDebugMode) {
-            print('No members found in API response');
+            // Single member object
+            final member = Map<String, dynamic>.from(members);
+            representatives.add(_processMember(member));
           }
         }
       } else {
         if (kDebugMode) {
           print('API error: ${response.statusCode} - ${response.body}');
         }
+        throw Exception('Failed to fetch representatives data: ${response.statusCode}');
       }
       
       if (representatives.isEmpty) {
         if (kDebugMode) {
-          print('No representatives found in API. Falling back to mock data.');
+          print('No representatives found. Trying alternate method with query parameters.');
         }
-        return _getMockRepresentatives(state, district);
+        // Fall back to query parameter method if needed
+        return await _getRepresentativesByQueryParams(state, district);
       }
       
       if (kDebugMode) {
@@ -309,157 +314,211 @@ class RepresentativeService {
     } catch (e) {
       if (kDebugMode) {
         print('Error fetching representatives from API: $e');
-        print('Falling back to mock data');
+        print('Trying alternate method with query parameters.');
       }
-      return _getMockRepresentatives(state, district);
+      // Try alternative method before falling back to mock data
+      try {
+        return await _getRepresentativesByQueryParams(state, district);
+      } catch (e2) {
+        if (kDebugMode) {
+          print('Error with alternate method: $e2');
+          print('Falling back to mock data');
+        }
+        return _getMockRepresentatives(state, district);
+      }
     }
   }
   
-  // Helper method to process member data and add to representatives list
-  void _processMemberData(
-    dynamic memberData, 
-    String state, 
-    String? district, 
-    List<Representative> representatives
-  ) {
+  // Alternative method using query parameters instead of path parameters
+  Future<List<Representative>> _getRepresentativesByQueryParams(String state, [String? district]) async {
     try {
-      // Convert dynamic map to Map<String, dynamic> for better type safety
-      final Map<String, dynamic> member = Map<String, dynamic>.from(memberData as Map);
+      if (!hasCongressApiKey) {
+        return _getMockRepresentatives(state, district);
+      }
+      
+      List<Representative> representatives = [];
+      
+      // Build query parameters
+      Map<String, String> queryParams = {
+        'format': 'json',
+        'limit': '100',
+        'state': state,
+        'api_key': _apiKey!
+      };
+      
+      // Add district if provided
+      if (district != null) {
+        queryParams['district'] = district;
+      }
+      
+      // Use the generic members endpoint with filters
+      final url = Uri.parse('$_baseUrl/member').replace(queryParameters: queryParams);
       
       if (kDebugMode) {
-        print('Processing member: ${member['bioguideId'] ?? 'unknown ID'} - ${member['name'] ?? 'unnamed'}');
-        print('Member data: ${member.toString().substring(0, min(150, member.toString().length))}...');
+        print('Trying alternate API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
       }
       
-      String chamber = '';
-      String memberState = '';
-      String? memberDistrict;
-      String? office;
-      String? phone;
-      String? website;
-      String party = '';
+      final response = await http.get(url);
       
-      // Extract the chamber, state, and district information
-      if (member.containsKey('terms')) {
-        final terms = member['terms'];
+      if (response.statusCode != 200) {
+        throw Exception('API error: ${response.statusCode}');
+      }
+      
+      final Map<String, dynamic> data = json.decode(response.body);
+      
+      // Process members (similar logic as before)
+      if (data.containsKey('members')) {
+        final members = data['members'];
         
-        if (kDebugMode) {
-          print('Terms data type: ${terms.runtimeType}');
-          if (terms != null) {
-            print('Terms data: ${terms.toString().substring(0, min(150, terms.toString().length))}...');
-          } else {
-            print('Terms data is null');
+        if (members is List) {
+          for (var memberRaw in members) {
+            final member = Map<String, dynamic>.from(memberRaw);
+            representatives.add(_processMember(member));
           }
-        }
-        
-        if (terms is List && terms.isNotEmpty) {
-          // Direct list of terms
-          final term = Map<String, dynamic>.from(terms[0] as Map);  // Get the most recent term
-          chamber = term['chamber'] ?? '';
-          memberState = term['state'] ?? '';
-          memberDistrict = term['district']?.toString();
-          office = term['office'];
-          phone = term['phone'];
-          website = term['website'];
-        } else if (terms is Map && terms.containsKey('item')) {
-          final items = terms['item'];
-          if (items is List && items.isNotEmpty) {
-            // Get the most recent term (usually the first one in the list)
-            final term = Map<String, dynamic>.from(items[0] as Map);
-            chamber = term['chamber'] ?? '';
-            memberState = term['state'] ?? '';
-            memberDistrict = term['district']?.toString();
-            office = term['office'];
-            phone = term['phone'];
-            website = term['website'];
+        } else if (members is Map && members.containsKey('item')) {
+          final items = members['item'];
+          if (items is List) {
+            for (var itemRaw in items) {
+              final item = Map<String, dynamic>.from(itemRaw);
+              representatives.add(_processMember(item));
+            }
+          } else if (items is Map) {
+            final item = Map<String, dynamic>.from(items);
+            representatives.add(_processMember(item));
           }
+        } else if (members is Map) {
+          final member = Map<String, dynamic>.from(members);
+          representatives.add(_processMember(member));
         }
       }
       
-      // Try to get party information from different sources
+      if (representatives.isEmpty) {
+        throw Exception('No representatives found in API response');
+      }
+      
+      return representatives;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error in alternate method: $e');
+      }
+      throw e; // Let the caller handle the error or fall back to mock data
+    }
+  }
+  
+  // Helper method to process a member object into a Representative
+  Representative _processMember(Map<String, dynamic> member) {
+    String chamber = '';
+    String state = '';
+    String? district;
+    String? office;
+    String? phone;
+    String? website;
+    String party = '';
+    
+    // Extract the most recent term information
+    if (member.containsKey('terms') && member['terms'] != null) {
+      final terms = member['terms'];
+      
+      if (terms is List && terms.isNotEmpty) {
+        // Cast to Map<String, dynamic> to satisfy Dart type system
+        final Map<String, dynamic> term = Map<String, dynamic>.from(terms[0] as Map);
+        chamber = term['chamber']?.toString() ?? '';
+        state = term['state']?.toString() ?? '';
+        district = term['district']?.toString(); // Handle district as int or string
+        office = term['office']?.toString();
+        phone = term['phone']?.toString();
+        website = term['website']?.toString();
+        party = term['party']?.toString() ?? '';
+      } else if (terms is Map && terms.containsKey('item')) {
+        final items = terms['item'];
+        if (items is List && items.isNotEmpty) {
+          // Cast to Map<String, dynamic> to satisfy Dart type system
+          final Map<String, dynamic> term = Map<String, dynamic>.from(items[0] as Map);
+          chamber = term['chamber']?.toString() ?? '';
+          state = term['state']?.toString() ?? '';
+          district = term['district']?.toString(); // Handle district as int or string
+          office = term['office']?.toString();
+          phone = term['phone']?.toString();
+          website = term['website']?.toString();
+          party = term['party']?.toString() ?? '';
+        }
+      }
+    }
+    
+    // Alternative sources for party information
+    if (party.isEmpty) {
       if (member.containsKey('partyName')) {
-        party = member['partyName'] ?? '';
+        party = member['partyName']?.toString() ?? '';
       } else if (member.containsKey('party')) {
-        party = member['party'] ?? '';
+        party = member['party']?.toString() ?? '';
       } else if (member.containsKey('current') && member['current'] is Map) {
-        final current = Map<String, dynamic>.from(member['current'] as Map);
+        // Cast to Map<String, dynamic> to satisfy Dart type system
+        final Map<String, dynamic> current = Map<String, dynamic>.from(member['current'] as Map);
         if (current.containsKey('party')) {
-          party = current['party'] ?? '';
+          party = current['party']?.toString() ?? '';
         }
       }
+    }
+    
+    // Try to get address and phone information
+    if (office == null && member.containsKey('addressInformation') && member['addressInformation'] is Map) {
+      final Map<String, dynamic> addressInfo = Map<String, dynamic>.from(member['addressInformation'] as Map);
+      office = addressInfo['officeAddress']?.toString();
       
-      // Log state information for debugging
-      if (kDebugMode) {
-        print('Member state: $memberState, requested state: $state');
-        print('Member chamber: $chamber, district: $memberDistrict');
+      if (phone == null) {
+        phone = addressInfo['phoneNumber']?.toString();
       }
-      
-      // Skip if state doesn't match - but be flexible with capitalization and whitespace
-      if (memberState.trim().toUpperCase() != state.trim().toUpperCase()) {
-        if (kDebugMode) {
-          print('Skipping member: state mismatch');
-        }
-        return;
+    }
+    
+    // Get image URL
+    String? imageUrl;
+    if (member.containsKey('depiction') && member['depiction'] != null) {
+      if (member['depiction'] is Map) {
+        // Cast to Map<String, dynamic> to satisfy Dart type system
+        final Map<String, dynamic> depiction = Map<String, dynamic>.from(member['depiction'] as Map);
+        imageUrl = depiction['imageUrl']?.toString();
       }
-      
-      // For House representatives, filter by district if provided
-      if ((chamber == 'House of Representatives' || chamber == 'House') && 
-          district != null && 
-          memberDistrict != district) {
-        if (kDebugMode) {
-          print('Skipping House member: district mismatch');
-        }
-        return;
+    }
+    
+    // Get official website URL
+    if (website == null && member.containsKey('officialWebsiteUrl')) {
+      website = member['officialWebsiteUrl']?.toString();
+    }
+    
+    // If bioguideId is available but image isn't, construct standard image URL
+    if (imageUrl == null && member.containsKey('bioguideId') && member['bioguideId'] != null) {
+      final bioguideId = member['bioguideId'].toString();
+      if (bioguideId.isNotEmpty) {
+        imageUrl = 'https://bioguide.congress.gov/bioguide/photo/${bioguideId[0]}/$bioguideId.jpg';
       }
-      
-      // Get image URL if available
-      String? imageUrl;
-      if (member.containsKey('depiction') && member['depiction'] != null) {
-        if (member['depiction'] is Map) {
-          final depiction = Map<String, dynamic>.from(member['depiction'] as Map);
-          imageUrl = depiction['imageUrl'];
-        }
-      }
-      
-      // If no chamber is specified but we have a district, assume House
-      if (chamber.isEmpty && memberDistrict != null) {
+    }
+    
+    // Make educated guesses for chamber if missing
+    if (chamber.isEmpty) {
+      if (district != null) {
         chamber = 'House';
-      }
-      // If no chamber is specified and no district, guess based on bioguideId
-      else if (chamber.isEmpty) {
-        String bioguideId = member['bioguideId'] ?? '';
+      } else if (member.containsKey('bioguideId')) {
+        String bioguideId = member['bioguideId']?.toString() ?? '';
         if (bioguideId.startsWith('S')) {
           chamber = 'Senate';
         } else if (bioguideId.startsWith('H')) {
           chamber = 'House';
         }
       }
-      
-      // Extract representative information
-      final rep = Representative(
-        name: member['name'] ?? '',
-        bioGuideId: member['bioguideId'] ?? '',
-        party: party,
-        chamber: chamber,
-        state: memberState,
-        district: memberDistrict,
-        imageUrl: imageUrl,
-        office: office,
-        phone: phone,
-        website: website,
-      );
-      
-      representatives.add(rep);
-      
-      if (kDebugMode) {
-        print('✅ Added representative: ${rep.name} (${rep.party}) - ${rep.chamber}');
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error processing member data: $e');
-        print(e.toString());
-      }
     }
+    
+    return Representative(
+      name: member['name']?.toString() ?? member['invertedOrderName']?.toString() ?? member['directOrderName']?.toString() ?? '',
+      bioGuideId: member['bioguideId']?.toString() ?? '',
+      party: party,
+      chamber: chamber,
+      state: state,
+      district: district,
+      imageUrl: imageUrl,
+      office: office,
+      phone: phone,
+      website: website,
+    );
   }
 
   // Get representatives based on address
@@ -483,14 +542,14 @@ class RepresentativeService {
 
       // Get district info
       final districtInfo = await getDistrictFromAddress(address);
-      final district = districtInfo['district'];
+      final district = districtInfo['district']?.toString();
 
       if (kDebugMode) {
         print('DistrictInfo: $districtInfo');
       }
 
-      // Now use the API with our key
-      return await getCurrentRepresentatives(stateCode, district);
+      // Use the improved method to get representatives
+      return await getRepresentativesByStateDistrict(stateCode, district);
     } catch (e) {
       if (kDebugMode) {
         print('Error getting representatives by address: $e');
@@ -614,20 +673,67 @@ class RepresentativeService {
       final response = await http.get(url);
       
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+        final Map<String, dynamic> data = json.decode(response.body);
         
         if (kDebugMode) {
           print('Successfully received representative details');
         }
         
-        // Fetch sponsored bills
-        final sponsoredBills = await _fetchSponsoredBills(bioGuideId);
+        // Make sure we have a proper Map<String, dynamic> for the member details
+        final Map<String, dynamic> memberDetails = data.containsKey('member') && data['member'] is Map
+            ? Map<String, dynamic>.from(data['member'] as Map)
+            : {};
+            
+        // Extract the sponsored and cosponsored legislation URLs
+        String? sponsoredUrl;
+        String? cosponsoredUrl;
+        int currentCongress = 118; // Default to current Congress (2023-2025)
         
-        // Fetch cosponsored bills
-        final cosponsoredBills = await _fetchCosponsoredBills(bioGuideId);
+        if (memberDetails.containsKey('sponsoredLegislation') && 
+            memberDetails['sponsoredLegislation'] is Map) {
+          final sponsoredData = Map<String, dynamic>.from(
+              memberDetails['sponsoredLegislation'] as Map);
+          sponsoredUrl = sponsoredData['url']?.toString();
+        }
+        
+        if (memberDetails.containsKey('cosponsoredLegislation') && 
+            memberDetails['cosponsoredLegislation'] is Map) {
+          final cosponsoredData = Map<String, dynamic>.from(
+              memberDetails['cosponsoredLegislation'] as Map);
+          cosponsoredUrl = cosponsoredData['url']?.toString();
+        }
+        
+        // Find current Congress from terms
+        if (memberDetails.containsKey('terms') && memberDetails['terms'] is List) {
+          final terms = memberDetails['terms'] as List;
+          for (var termData in terms) {
+            if (termData is Map) {
+              final term = Map<String, dynamic>.from(termData);
+              final startYear = term['startYear'];
+              final endYear = term['endYear'];
+              
+              // Get the most recent congress number
+              if (term.containsKey('congress')) {
+                int congress = int.tryParse(term['congress'].toString()) ?? 0;
+                if (congress > currentCongress) {
+                  currentCongress = congress;
+                }
+              }
+            }
+          }
+        }
+        
+        // Use URLs from response or build URLs with Congress number
+        final sponsoredBills = sponsoredUrl != null 
+            ? await _fetchBillsFromUrl(sponsoredUrl)
+            : await _fetchSponsoredBills(bioGuideId, currentCongress);
+        
+        final cosponsoredBills = cosponsoredUrl != null
+            ? await _fetchBillsFromUrl(cosponsoredUrl)
+            : await _fetchCosponsoredBills(bioGuideId, currentCongress);
         
         return {
-          'details': data['member'] ?? {},
+          'details': memberDetails,
           'sponsoredBills': sponsoredBills,
           'cosponsoredBills': cosponsoredBills,
         };
@@ -646,11 +752,75 @@ class RepresentativeService {
     }
   }
   
+  // Helper method to fetch bills from a URL
+  Future<List<dynamic>> _fetchBillsFromUrl(String url) async {
+    try {
+      // Add API key and format to the URL
+      final Uri uri = Uri.parse(url).replace(
+        queryParameters: {
+          'format': 'json',
+          'limit': '10',
+          'api_key': _apiKey!
+        }
+      );
+      
+      if (kDebugMode) {
+        print('Fetching bills from URL: ${uri.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+      }
+      
+      final response = await http.get(uri);
+      
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        
+        // Handle different response structures
+        if (data.containsKey('sponsoredLegislation')) {
+          return _processBillsList(data['sponsoredLegislation']);
+        } else if (data.containsKey('cosponsoredLegislation')) {
+          return _processBillsList(data['cosponsoredLegislation']);
+        } else if (data.containsKey('bills')) {
+          return _processBillsList(data['bills']);
+        }
+      } else {
+        if (kDebugMode) {
+          print('Error fetching bills from URL: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching bills from URL: $e');
+      }
+    }
+    
+    return [];
+  }
+  
+  // Helper method to process bills list from different response structures
+  List<dynamic> _processBillsList(dynamic billsData) {
+    if (billsData is List) {
+      // Convert each map in the list to ensure they're Map<String, dynamic>
+      return billsData.map((item) => 
+        item is Map ? Map<String, dynamic>.from(item) : item).toList();
+    } else if (billsData is Map && billsData.containsKey('item')) {
+      final items = billsData['item'];
+      if (items is List) {
+        // Convert each map in the list to ensure they're Map<String, dynamic>
+        return items.map((item) => 
+          item is Map ? Map<String, dynamic>.from(item) : item).toList();
+      } else if (items is Map) {
+        // Convert to Map<String, dynamic> and return as a single-item list
+        return [Map<String, dynamic>.from(items)];
+      }
+    }
+    
+    return [];
+  }
+  
   // Helper method to fetch sponsored bills
-  Future<List<dynamic>> _fetchSponsoredBills(String bioGuideId) async {
+  Future<List<dynamic>> _fetchSponsoredBills(String bioGuideId, [int congress = 118]) async {
     try {
       // Build URL for sponsored legislation
-      final url = Uri.parse('$_baseUrl/member/$bioGuideId/sponsored-legislation')
+      final url = Uri.parse('$_baseUrl/member/$bioGuideId/sponsored-legislation/$congress')
           .replace(queryParameters: {
             'format': 'json',
             'limit': '10',
@@ -658,18 +828,40 @@ class RepresentativeService {
           });
       
       if (kDebugMode) {
-        print('Fetching sponsored bills');
+        print('Fetching sponsored bills for Congress $congress');
       }
       
       final response = await http.get(url);
       
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return data['sponsoredLegislation'] ?? [];
+        final Map<String, dynamic> data = json.decode(response.body);
+        return _processBillsList(data['sponsoredLegislation'] ?? data['bills'] ?? []);
       } else {
         if (kDebugMode) {
           print('Error fetching sponsored bills: ${response.statusCode}');
         }
+        
+        // Try without Congress number if 404
+        if (response.statusCode == 404) {
+          final fallbackUrl = Uri.parse('$_baseUrl/member/$bioGuideId/sponsored-legislation')
+              .replace(queryParameters: {
+                'format': 'json',
+                'limit': '10',
+                'api_key': _apiKey!
+              });
+              
+          if (kDebugMode) {
+            print('Trying without Congress number');
+          }
+          
+          final fallbackResponse = await http.get(fallbackUrl);
+          
+          if (fallbackResponse.statusCode == 200) {
+            final Map<String, dynamic> fallbackData = json.decode(fallbackResponse.body);
+            return _processBillsList(fallbackData['sponsoredLegislation'] ?? fallbackData['bills'] ?? []);
+          }
+        }
+        
         return [];
       }
     } catch (e) {
@@ -681,10 +873,10 @@ class RepresentativeService {
   }
   
   // Helper method to fetch cosponsored bills
-  Future<List<dynamic>> _fetchCosponsoredBills(String bioGuideId) async {
+  Future<List<dynamic>> _fetchCosponsoredBills(String bioGuideId, [int congress = 118]) async {
     try {
       // Build URL for cosponsored legislation
-      final url = Uri.parse('$_baseUrl/member/$bioGuideId/cosponsored-legislation')
+      final url = Uri.parse('$_baseUrl/member/$bioGuideId/cosponsored-legislation/$congress')
           .replace(queryParameters: {
             'format': 'json',
             'limit': '10',
@@ -692,18 +884,40 @@ class RepresentativeService {
           });
       
       if (kDebugMode) {
-        print('Fetching cosponsored bills');
+        print('Fetching cosponsored bills for Congress $congress');
       }
       
       final response = await http.get(url);
       
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return data['cosponsoredLegislation'] ?? [];
+        final Map<String, dynamic> data = json.decode(response.body);
+        return _processBillsList(data['cosponsoredLegislation'] ?? data['bills'] ?? []);
       } else {
         if (kDebugMode) {
           print('Error fetching cosponsored bills: ${response.statusCode}');
         }
+        
+        // Try without Congress number if 404
+        if (response.statusCode == 404) {
+          final fallbackUrl = Uri.parse('$_baseUrl/member/$bioGuideId/cosponsored-legislation')
+              .replace(queryParameters: {
+                'format': 'json',
+                'limit': '10',
+                'api_key': _apiKey!
+              });
+              
+          if (kDebugMode) {
+            print('Trying without Congress number');
+          }
+          
+          final fallbackResponse = await http.get(fallbackUrl);
+          
+          if (fallbackResponse.statusCode == 200) {
+            final Map<String, dynamic> fallbackData = json.decode(fallbackResponse.body);
+            return _processBillsList(fallbackData['cosponsoredLegislation'] ?? fallbackData['bills'] ?? []);
+          }
+        }
+        
         return [];
       }
     } catch (e) {

@@ -17,13 +17,21 @@ class RepresentativeBill {
   });
 
   factory RepresentativeBill.fromMap(Map<String, dynamic> map) {
+    // Extract latestAction text if it exists and handle properly
+    String? latestActionText;
+    if (map['latestAction'] is Map) {
+      final actionMap = Map<String, dynamic>.from(map['latestAction'] as Map);
+      latestActionText = actionMap['text']?.toString();
+    }
+
+    // Convert all values to strings to prevent type errors
     return RepresentativeBill(
-      congress: map['congress'] ?? '',
-      billType: map['billType'] ?? '',
-      billNumber: map['billNumber'] ?? '',
-      title: map['title'] ?? '',
-      introducedDate: map['introducedDate'],
-      latestAction: map['latestAction']?['text'],
+      congress: map['congress']?.toString() ?? '',
+      billType: map['billType']?.toString() ?? '',
+      billNumber: map['billNumber']?.toString() ?? '',
+      title: map['title']?.toString() ?? '',
+      introducedDate: map['introducedDate']?.toString(),
+      latestAction: latestActionText,
     );
   }
 }
@@ -66,29 +74,92 @@ class RepresentativeDetails {
     required List<dynamic> sponsoredBills,
     required List<dynamic> cosponsoredBills,
   }) {
-    final currentTerm = details['terms'] != null && details['terms'].isNotEmpty 
-        ? details['terms'][0] : {};
-        
+    // Extract current term information from terms list or map
+    Map<String, dynamic> termMap = {};
+    
+    if (details.containsKey('terms')) {
+      final terms = details['terms'];
+      
+      if (terms is List && terms.isNotEmpty) {
+        // Get the most recent term (usually first in the list)
+        termMap = Map<String, dynamic>.from(terms[0] as Map);
+      } else if (terms is Map && terms.containsKey('item')) {
+        final items = terms['item'];
+        if (items is List && items.isNotEmpty) {
+          termMap = Map<String, dynamic>.from(items[0] as Map);
+        } else if (items is Map) {
+          termMap = Map<String, dynamic>.from(items as Map);
+        }
+      }
+    }
+    
+    // Extract address information if available
+    String? office;
+    String? phone;
+    
+    if (details.containsKey('addressInformation') && details['addressInformation'] is Map) {
+      final addressInfo = Map<String, dynamic>.from(details['addressInformation'] as Map);
+      office = addressInfo['officeAddress']?.toString();
+      phone = addressInfo['phoneNumber']?.toString();
+    }
+    
+    // Use term data for contact info if not found in address info
+    if (office == null && termMap.containsKey('office')) {
+      office = termMap['office']?.toString();
+    }
+    
+    if (phone == null && termMap.containsKey('phone')) {
+      phone = termMap['phone']?.toString();
+    }
+    
+    // Get website either from term or from official website URL
+    String? website = termMap['website']?.toString();
+    if (website == null && details.containsKey('officialWebsiteUrl')) {
+      website = details['officialWebsiteUrl']?.toString();
+    }
+    
+    // Handle image URL
+    String? imageUrl;
+    if (details.containsKey('depiction') && details['depiction'] is Map) {
+      final depiction = Map<String, dynamic>.from(details['depiction'] as Map);
+      imageUrl = depiction['imageUrl']?.toString();
+    }
+    
+    // If no image URL but we have bioGuideId, construct a standard one
+    if (imageUrl == null && details.containsKey('bioGuideId')) {
+      final bioId = details['bioGuideId']?.toString();
+      if (bioId != null && bioId.isNotEmpty) {
+        imageUrl = 'https://bioguide.congress.gov/bioguide/photo/${bioId[0]}/$bioId.jpg';
+      }
+    }
+
+    // Convert all values to strings to handle both int and string types from API
     return RepresentativeDetails(
-      bioGuideId: details['bioGuideId'] ?? '',
-      name: details['name'] ?? '',
-      party: currentTerm['party'] ?? '',
-      state: currentTerm['state'] ?? '',
-      district: currentTerm['district'],
-      chamber: currentTerm['chamber'] ?? '',
-      dateOfBirth: details['birthDate'],
-      gender: details['gender'],
-      office: currentTerm['office'],
-      phone: currentTerm['phone'],
-      website: currentTerm['website'],
-      imageUrl: details['bioGuideId'] != null 
-          ? 'https://bioguide.congress.gov/bioguide/photo/${details['bioGuideId'][0]}/${details['bioGuideId']}.jpg'
-          : null,
+      bioGuideId: details['bioGuideId']?.toString() ?? '',
+      name: details['name']?.toString() ?? 
+            details['invertedOrderName']?.toString() ?? 
+            details['directOrderName']?.toString() ?? '',
+      party: termMap['party']?.toString() ?? 
+             termMap['partyName']?.toString() ?? 
+             details['partyName']?.toString() ?? '',
+      state: termMap['state']?.toString() ?? 
+             termMap['stateCode']?.toString() ?? 
+             details['state']?.toString() ?? '',
+      district: termMap['district']?.toString(), // Convert int to string
+      chamber: termMap['chamber']?.toString() ?? '',
+      dateOfBirth: details['birthYear']?.toString() ?? details['birthDate']?.toString(),
+      gender: details['gender']?.toString(),
+      office: office,
+      phone: phone,
+      website: website,
+      imageUrl: imageUrl,
       sponsoredBills: sponsoredBills
-          .map((bill) => RepresentativeBill.fromMap(bill))
+          .map((bill) => RepresentativeBill.fromMap(
+              bill is Map ? Map<String, dynamic>.from(bill) : {}))
           .toList(),
       cosponsoredBills: cosponsoredBills
-          .map((bill) => RepresentativeBill.fromMap(bill))
+          .map((bill) => RepresentativeBill.fromMap(
+              bill is Map ? Map<String, dynamic>.from(bill) : {}))
           .toList(),
     );
   }

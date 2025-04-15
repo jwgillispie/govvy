@@ -24,7 +24,11 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    _fetchRepresentativeDetails();
+    
+    // Fix: Use addPostFrameCallback to defer API call until after build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchRepresentativeDetails();
+    });
   }
   
   @override
