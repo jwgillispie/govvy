@@ -1,11 +1,14 @@
 // lib/providers/representative_provider.dart
 import 'package:flutter/foundation.dart';
+import 'package:govvy/services/cicero_service.dart';
 import 'package:govvy/services/representative_service.dart';
 import 'package:govvy/models/representative_model.dart';
+import 'package:govvy/models/local_representative_model.dart';
 
 class RepresentativeProvider with ChangeNotifier {
   final RepresentativeService _representativeService;
-  
+  final CiceroService _ciceroService = CiceroService();
+
   List<Representative> _representatives = [];
   bool _isLoading = false;
   String? _errorMessage;
@@ -55,6 +58,41 @@ class RepresentativeProvider with ChangeNotifier {
     }
   }
   
+  // Add this new method to fetch only local representatives
+  Future<void> fetchLocalRepresentativesByAddress(String address) async {
+    try {
+      _isLoading = true;
+      _errorMessage = null;
+      _lastSearchedAddress = address;
+      notifyListeners();
+      
+      // Clear existing representatives before new search
+      _representatives = [];
+      
+      // Add a small delay to make loading state visible to users
+      await Future.delayed(const Duration(milliseconds: 800));
+      
+      // Use the new Cicero service for local data
+      // Convert LocalRepresentative to Representative
+      final localReps = await _ciceroService.getLocalRepresentativesByAddress(address);
+      _representatives = localReps.map((local) => local.toRepresentative()).toList();
+      
+      if (_representatives.isEmpty) {
+        _errorMessage = 'No local representatives found for this address. Please check the address and try again.';
+      }
+      
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _errorMessage = 'Error loading local representatives: ${e.toString()}';
+      if (kDebugMode) {
+        print(_errorMessage);
+      }
+      notifyListeners();
+    }
+  }
+
   // Fetch representative details
   Future<void> fetchRepresentativeDetails(String bioGuideId) async {
     try {

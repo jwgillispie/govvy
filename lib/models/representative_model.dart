@@ -1,4 +1,81 @@
 // lib/models/representative_model.dart
+
+
+class Representative {
+  final String name;
+  final String bioGuideId;
+  final String party;
+  final String chamber;
+  final String state;
+  final String? district;
+  final String? imageUrl;
+  final String? office;
+  final String? phone;
+  final String? website;
+
+  Representative({
+    required this.name,
+    required this.bioGuideId,
+    required this.party,
+    required this.chamber,
+    required this.state,
+    this.district,
+    this.imageUrl,
+    this.office,
+    this.phone,
+    this.website,
+  });
+
+  // lib/models/representative_model.dart - Add these methods to your existing Representative class
+
+// Convert to map for storage
+Map<String, dynamic> toMap() {
+  return {
+    'name': name,
+    'bioGuideId': bioGuideId,
+    'party': party,
+    'chamber': chamber,
+    'state': state,
+    'district': district,
+    'office': office,
+    'phone': phone,
+    'website': website,
+    'imageUrl': imageUrl,
+  };
+}
+
+// Create from map (e.g., from cache)
+static Representative fromMap(String id, Map<String, dynamic> map) {
+  return Representative(
+    name: map['name'] ?? '',
+    bioGuideId: map['bioGuideId'] ?? id,
+    party: map['party'] ?? '',
+    chamber: map['chamber'] ?? '',
+    state: map['state'] ?? '',
+    district: map['district'],
+    office: map['office'],
+    phone: map['phone'],
+    website: map['website'],
+    imageUrl: map['imageUrl'],
+  );
+}
+
+  factory Representative.fromJson(Map<String, dynamic> json) {
+    return Representative(
+      name: json['name']?.toString() ?? '',
+      bioGuideId: json['bioGuideId']?.toString() ?? '',
+      party: json['party']?.toString() ?? '',
+      chamber: json['chamber']?.toString() ?? '',
+      state: json['state']?.toString() ?? '',
+      district: json['district']?.toString(),
+      imageUrl: json['imageUrl']?.toString(),
+      office: json['office']?.toString(),
+      phone: json['phone']?.toString(),
+      website: json['website']?.toString(),
+    );
+  }
+}
+
 class RepresentativeBill {
   final String congress;
   final String billType;
@@ -163,4 +240,6 @@ class RepresentativeDetails {
           .toList(),
     );
   }
+
+  
 }

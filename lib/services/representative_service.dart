@@ -1,49 +1,10 @@
 // lib/services/representative_service.dart
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:govvy/models/representative_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class Representative {
-  final String name;
-  final String bioGuideId;
-  final String party;
-  final String chamber;
-  final String state;
-  final String? district;
-  final String? imageUrl;
-  final String? office;
-  final String? phone;
-  final String? website;
-
-  Representative({
-    required this.name,
-    required this.bioGuideId,
-    required this.party,
-    required this.chamber,
-    required this.state,
-    this.district,
-    this.imageUrl,
-    this.office,
-    this.phone,
-    this.website,
-  });
-
-  factory Representative.fromJson(Map<String, dynamic> json) {
-    return Representative(
-      name: json['name']?.toString() ?? '',
-      bioGuideId: json['bioGuideId']?.toString() ?? '',
-      party: json['party']?.toString() ?? '',
-      chamber: json['chamber']?.toString() ?? '',
-      state: json['state']?.toString() ?? '',
-      district: json['district']?.toString(),
-      imageUrl: json['imageUrl']?.toString(),
-      office: json['office']?.toString(),
-      phone: json['phone']?.toString(),
-      website: json['website']?.toString(),
-    );
-  }
-}
 
 class RepresentativeService {
   final String _baseUrl = 'https://api.congress.gov/v3';
