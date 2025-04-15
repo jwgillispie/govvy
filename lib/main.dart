@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:govvy/firebase_options.dart';
-import 'package:govvy/screens/landing/landing_page.dart';
+import 'package:govvy/screens/auth/auth_wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:govvy/services/representative_service.dart';
@@ -11,12 +11,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize dotenv with an empty map to avoid null errors
-  dotenv.env = {};
-  
   // Try loading .env, but continue if it fails
   try {
-    await dotenv.load();
+    await dotenv.load(fileName: "assets/.env");
     debugPrint(".env file loaded successfully");
   } catch (e) {
     debugPrint("Warning: .env file not found or could not be loaded: $e");
@@ -82,7 +79,7 @@ class RepresentativeApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const LandingPage(),
+        home: const AuthWrapper(),
       ),
     );
   }

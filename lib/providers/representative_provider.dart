@@ -11,6 +11,7 @@ class RepresentativeProvider with ChangeNotifier {
   String? _errorMessage;
   RepresentativeDetails? _selectedRepresentative;
   bool _isLoadingDetails = false;
+  String? _lastSearchedAddress;
   
   // Getters
   List<Representative> get representatives => _representatives;
@@ -18,6 +19,7 @@ class RepresentativeProvider with ChangeNotifier {
   String? get errorMessage => _errorMessage;
   RepresentativeDetails? get selectedRepresentative => _selectedRepresentative;
   bool get isLoadingDetails => _isLoadingDetails;
+  String? get lastSearchedAddress => _lastSearchedAddress;
   
   RepresentativeProvider(this._representativeService);
   
@@ -26,9 +28,20 @@ class RepresentativeProvider with ChangeNotifier {
     try {
       _isLoading = true;
       _errorMessage = null;
+      _lastSearchedAddress = address;
       notifyListeners();
       
+      // Clear existing representatives before new search
+      _representatives = [];
+      
+      // Add a small delay to make loading state visible to users
+      await Future.delayed(const Duration(milliseconds: 800));
+      
       _representatives = await _representativeService.getRepresentativesByAddress(address);
+      
+      if (_representatives.isEmpty) {
+        _errorMessage = 'No representatives found for this address. Please check the address and try again.';
+      }
       
       _isLoading = false;
       notifyListeners();
@@ -46,7 +59,11 @@ class RepresentativeProvider with ChangeNotifier {
   Future<void> fetchRepresentativeDetails(String bioGuideId) async {
     try {
       _isLoadingDetails = true;
+      _errorMessage = null;
       notifyListeners();
+      
+      // Add a small delay to make loading state visible to users
+      await Future.delayed(const Duration(milliseconds: 800));
       
       final detailsResponse = await _representativeService.getRepresentativeDetails(bioGuideId);
       
@@ -77,6 +94,15 @@ class RepresentativeProvider with ChangeNotifier {
   // Clear error message
   void clearError() {
     _errorMessage = null;
+    notifyListeners();
+  }
+  
+  // Clear all data (for use when signing out)
+  void clearAll() {
+    _representatives = [];
+    _errorMessage = null;
+    _selectedRepresentative = null;
+    _lastSearchedAddress = null;
     notifyListeners();
   }
 }

@@ -24,32 +24,21 @@ class WelcomeDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Header
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
-              children: [
-                // Purple circle behind the icon
-                Positioned(
-                  top: -60,
-                  child: Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.celebration,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                  ),
-                ),
-              ],
+            // Header with icon
+            Container(
+              height: 80,
+              width: 80,
+              margin: const EdgeInsets.only(top: 10, bottom: 20),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.celebration,
+                color: Colors.white,
+                size: 40,
+              ),
             ),
-            
-            const SizedBox(height: 32),
             
             // Welcome message
             Text(
@@ -91,6 +80,7 @@ class WelcomeDialog extends StatelessWidget {
             
             // Buttons
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
                   child: OutlinedButton(

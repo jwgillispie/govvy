@@ -5,16 +5,18 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ShareAppWidget extends StatelessWidget {
   final bool isCompact;
-  
+
   const ShareAppWidget({
     Key? key,
     this.isCompact = false,
   }) : super(key: key);
 
   Future<void> _shareApp() async {
-    const String appUrl = 'https://govvy.app'; // Replace with your actual URL
-    const String message = 'Check out govvy - an app that helps you connect with your local representatives and stay informed about government activities! Download it here: $appUrl';
-    
+    const String appUrl =
+        'https://govvy--dev.web.app/'; // Replace with your actual URL
+    const String message =
+        'Check out govvy - an app that helps you connect with your local representatives and stay informed about government activities! Download it here: $appUrl';
+
     try {
       await Share.share(message);
     } catch (e) {
@@ -23,8 +25,9 @@ class ShareAppWidget extends StatelessWidget {
   }
 
   Future<void> _copyLink() async {
-    const String appUrl = 'https://govvy.app'; // Replace with your actual URL
-    
+    const String appUrl =
+        'https://govvy--dev.web.app/'; // Replace with your actual URL
+
     await Clipboard.setData(const ClipboardData(text: appUrl));
   }
 
@@ -33,10 +36,10 @@ class ShareAppWidget extends StatelessWidget {
     if (isCompact) {
       return _buildCompactVersion(context);
     }
-    
+
     return _buildFullVersion(context);
   }
-  
+
   Widget _buildCompactVersion(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.share),
@@ -44,7 +47,7 @@ class ShareAppWidget extends StatelessWidget {
       onPressed: _shareApp,
     );
   }
-  
+
   Widget _buildFullVersion(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),

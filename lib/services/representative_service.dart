@@ -151,13 +151,31 @@ class RepresentativeService {
       };
     }
   }
-  
   // Get representatives based on address
   Future<List<Representative>> getRepresentativesByAddress(String address) async {
     try {
+      if (kDebugMode) {
+        print('Searching for representatives at address: $address');
+      }
+      
+      // Parse state from address
+      final String? stateCode = _extractStateFromAddress(address);
+      
+      if (stateCode == null) {
+        throw Exception('Could not identify a US state in the provided address. Please include state in your address.');
+      }
+      
+      if (kDebugMode) {
+        print('Extracted state: $stateCode');
+      }
+      
+      // Get district info
       final districtInfo = await getDistrictFromAddress(address);
-      final stateCode = districtInfo['state'];
       final district = districtInfo['district'];
+      
+      if (kDebugMode) {
+        print('DistrictInfo: $districtInfo');
+      }
       
       // For now, just use mock data while developing the UI
       return _getMockRepresentatives(stateCode, district);
@@ -168,11 +186,55 @@ class RepresentativeService {
       if (kDebugMode) {
         print('Error getting representatives by address: $e');
       }
-      // Return mock data on error for development
-      return _getMockRepresentatives('FL', '1');
+      rethrow; // Propagate error to allow proper handling in UI
     }
   }
   
+  // Helper method to extract state code from address
+  String? _extractStateFromAddress(String address) {
+    // Map of state names to their abbreviations
+    const stateMap = {
+      'alabama': 'AL', 'alaska': 'AK', 'arizona': 'AZ', 'arkansas': 'AR', 'california': 'CA',
+      'colorado': 'CO', 'connecticut': 'CT', 'delaware': 'DE', 'florida': 'FL', 'georgia': 'GA',
+      'hawaii': 'HI', 'idaho': 'ID', 'illinois': 'IL', 'indiana': 'IN', 'iowa': 'IA',
+      'kansas': 'KS', 'kentucky': 'KY', 'louisiana': 'LA', 'maine': 'ME', 'maryland': 'MD',
+      'massachusetts': 'MA', 'michigan': 'MI', 'minnesota': 'MN', 'mississippi': 'MS', 'missouri': 'MO',
+      'montana': 'MT', 'nebraska': 'NE', 'nevada': 'NV', 'new hampshire': 'NH', 'new jersey': 'NJ',
+      'new mexico': 'NM', 'new york': 'NY', 'north carolina': 'NC', 'north dakota': 'ND', 'ohio': 'OH',
+      'oklahoma': 'OK', 'oregon': 'OR', 'pennsylvania': 'PA', 'rhode island': 'RI', 'south carolina': 'SC',
+      'south dakota': 'SD', 'tennessee': 'TN', 'texas': 'TX', 'utah': 'UT', 'vermont': 'VT',
+      'virginia': 'VA', 'washington': 'WA', 'west virginia': 'WV', 'wisconsin': 'WI', 'wyoming': 'WY',
+      'district of columbia': 'DC'
+    };
+    
+    // First check for state abbreviations
+    final components = address.split(RegExp(r'[,\s]')).where((s) => s.isNotEmpty).toList();
+    for (final component in components) {
+      final upperComp = component.toUpperCase();
+      if (stateMap.values.contains(upperComp)) {
+        return upperComp;
+      }
+    }
+    
+    // Then check for state names
+    final lowerAddress = address.toLowerCase();
+    for (final entry in stateMap.entries) {
+      if (lowerAddress.contains(entry.key)) {
+        return entry.value;
+      }
+    }
+    
+    // Handle special cases like "New York, NY" where the state name is split
+    final lowerComponents = components.map((s) => s.toLowerCase()).toList();
+    for (int i = 0; i < lowerComponents.length - 1; i++) {
+      final twoWords = '${lowerComponents[i]} ${lowerComponents[i+1]}';
+      if (stateMap.containsKey(twoWords)) {
+        return stateMap[twoWords];
+      }
+    }
+    
+    return null;
+  }
   // Get representative details
   Future<Map<String, dynamic>> getRepresentativeDetails(String bioGuideId) async {
     try {

@@ -6,9 +6,11 @@ class LandingPageShareSection extends StatelessWidget {
   const LandingPageShareSection({Key? key}) : super(key: key);
 
   Future<void> _shareApp() async {
-    const String appUrl = 'https://govvy.app'; // Replace with your actual URL
-    const String message = 'Check out govvy - an app that helps you connect with your local representatives and stay informed about government activities! Download it here: $appUrl';
-    
+    const String appUrl =
+        'https://govvy--dev.web.app/'; // Replace with your actual URL
+    const String message =
+        'Check out govvy - an app that helps you connect with your local representatives and stay informed about government activities! Download it here: $appUrl';
+
     try {
       await Share.share(message);
     } catch (e) {
@@ -17,10 +19,11 @@ class LandingPageShareSection extends StatelessWidget {
   }
 
   Future<void> _copyLink(BuildContext context) async {
-    const String appUrl = 'https://govvy.app'; // Replace with your actual URL
-    
+    const String appUrl =
+        'https://govvy--dev.web.app/'; // Replace with your actual URL
+
     await Clipboard.setData(const ClipboardData(text: appUrl));
-    
+
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -35,7 +38,7 @@ class LandingPageShareSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final isMobile = screenSize.width < 768;
-    
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
@@ -60,7 +63,7 @@ class LandingPageShareSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          
+
           // Social sharing buttons
           isMobile
               ? Column(
