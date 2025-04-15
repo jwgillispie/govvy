@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:govvy/widgets/welcome/signup_success_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:govvy/utils/phone_formatter.dart';
@@ -38,60 +39,84 @@ class _SignUpFormState extends State<SignUpForm> {
     _addressController.dispose();
     super.dispose();
   }
+// Update _signUp method in the SignUpForm widget to show welcome dialog
+// This code snippet is part of lib/widgets/auth/signup_form.dart
 
-  Future<void> _signUp() async {
-    if (!_formKey.currentState!.validate() || !_acceptedTerms) {
-      if (!_acceptedTerms) {
-        setState(() {
-          _errorMessage = 'Please accept the terms and conditions.';
-        });
-      }
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    try {
-      final authService = Provider.of<AuthService>(context, listen: false);
-      
-      // Normalize phone number to E.164 format for Firebase
-      String normalizedPhone = normalizePhoneNumber(_phoneController.text);
-      
-      await authService.registerWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-        name: _nameController.text.trim(),
-        address: _addressController.text.trim(),
-        phone: normalizedPhone,
-      );
-      
-      if (widget.onSignUpSuccess != null) {
-        widget.onSignUpSuccess!();
-      }
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Account created successfully!'),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
-    } catch (e) {
+Future<void> _signUp() async {
+  if (!_formKey.currentState!.validate() || !_acceptedTerms) {
+    if (!_acceptedTerms) {
       setState(() {
-        _errorMessage = _handleAuthError(e.toString());
+        _errorMessage = 'Please accept the terms and conditions.';
       });
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
+    }
+    return;
+  }
+
+  setState(() {
+    _isLoading = true;
+    _errorMessage = null;
+  });
+
+  try {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    
+    // Normalize phone number to E.164 format for Firebase
+    String normalizedPhone = normalizePhoneNumber(_phoneController.text);
+    
+    await authService.registerWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
+      name: _nameController.text.trim(),
+      address: _addressController.text.trim(),
+      phone: normalizedPhone,
+    );
+    
+    // Show success dialog before triggering onSignUpSuccess
+    if (mounted) {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => SignupSuccessDialog(
+          name: _nameController.text.trim().split(' ').first, // Use first name
+          onDismiss: () {
+            Navigator.of(context).pop();
+          },
+          onContinue: () {
+            Navigator.of(context).pop();
+            if (widget.onSignUpSuccess != null) {
+              widget.onSignUpSuccess!();
+            }
+          },
+        ),
+      );
+    }
+    
+    // Only call onSignUpSuccess if dialog was dismissed with 'Close'
+    // If 'Continue' was pressed, the callback is already handled in the dialog
+    if (mounted && widget.onSignUpSuccess != null) {
+      widget.onSignUpSuccess!();
+    }
+    
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Account created successfully!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  } catch (e) {
+    setState(() {
+      _errorMessage = _handleAuthError(e.toString());
+    });
+  } finally {
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
+}
 
   String _handleAuthError(String errorMessage) {
     if (errorMessage.contains('email-already-in-use')) {

@@ -3,6 +3,7 @@ import 'package:govvy/widgets/auth/signup_form.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -29,6 +30,17 @@ class _LandingPageState extends State<LandingPage> {
     setState(() {
       _isMenuOpen = !_isMenuOpen;
     });
+  }
+
+  Future<void> _shareApp() async {
+    const String appUrl = 'https://govvy--dev.web.app/';
+    const String message = 'Check out govvy - an app that helps you connect with your local representatives and stay informed about government activities! Download it here: https://govvy--dev.web.app/';
+
+    try {
+      await Share.share(message);
+    } catch (e) {
+      debugPrint('Error sharing app: $e');
+    }
   }
 
   Future<void> _launchEmail() async {
@@ -300,13 +312,29 @@ class _LandingPageState extends State<LandingPage> {
                   ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: _toggleSignUpForm,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Theme.of(context).colorScheme.primary,
-              ),
-              child: const Text('Join The Movement'),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _toggleSignUpForm,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Theme.of(context).colorScheme.primary,
+                    ),
+                    child: const Text('Press for magic'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                OutlinedButton.icon(
+                  onPressed: _shareApp,
+                  icon: const Icon(Icons.share, color: Colors.white),
+                  label: const Text('Share'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    side: const BorderSide(color: Colors.white),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -382,15 +410,30 @@ class _LandingPageState extends State<LandingPage> {
               ),
             ),
             const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: _toggleSignUpForm,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Theme.of(context).colorScheme.primary,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              ),
-              child: const Text('Join The Movement'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: _toggleSignUpForm,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Theme.of(context).colorScheme.primary,
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  ),
+                  child: const Text('Press for magic'),
+                ),
+                const SizedBox(width: 16),
+                OutlinedButton.icon(
+                  onPressed: _shareApp,
+                  icon: const Icon(Icons.share),
+                  label: const Text('Share'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    side: const BorderSide(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -692,7 +735,7 @@ class _LandingPageState extends State<LandingPage> {
           SizedBox(
             width: isMobile ? double.infinity : 600,
             child: Text(
-              'We asked some questions in that little purple box up there - you can literally email or call us whenever you want to have any of these conversations :)',
+              'We asked some questions in that little purple box up there - you can literally email or call us whenever you want to have any these conversations :)',
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
@@ -804,7 +847,7 @@ class _LandingPageState extends State<LandingPage> {
                                   InkWell(
                                     onTap: _launchCall,
                                     child: Text(
-                                      '(352) 327-1969',
+                                      '(443) 223-674',
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme

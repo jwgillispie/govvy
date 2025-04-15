@@ -1,6 +1,7 @@
-// lib/screens/dashboard/dashboard_screen.dart
+// lib/screens/dashboards/dashboard_screen.dart
 import 'package:flutter/material.dart';
 import 'package:govvy/widgets/share/share_app_widget.dart.dart';
+import 'package:govvy/widgets/share/share_reminder_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:govvy/screens/representatives/find_representatives_screen.dart';
@@ -16,12 +17,15 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final WelcomeService _welcomeService = WelcomeService();
+  bool _showShareReminder = false;
   
   @override
   void initState() {
     super.initState();
     // Check if we should show the welcome dialog
     _checkWelcomeMessage();
+    // Check if we should show the share reminder
+    _checkShareReminder();
   }
   
   Future<void> _checkWelcomeMessage() async {
@@ -50,6 +54,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
         });
       }
     }
+  }
+  
+  Future<void> _checkShareReminder() async {
+    // Don't show share reminder if welcome message is shown
+    final welcomeShouldShow = await _welcomeService.shouldShowWelcomeMessage();
+    if (welcomeShouldShow) return;
+    
+    // Check if we should show the share reminder
+    final shouldShowReminder = await ShareReminderWidget.shouldShowReminder();
+    
+    if (shouldShowReminder && mounted) {
+      setState(() {
+        _showShareReminder = true;
+      });
+    }
+  }
+  
+  void _dismissShareReminder() {
+    setState(() {
+      _showShareReminder = false;
+    });
   }
 
   @override
@@ -88,7 +113,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 'Your local government transparency companion',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
+              
+              // Share reminder (if needed)
+              if (_showShareReminder)
+                ShareReminderWidget(
+                  onDismiss: _dismissShareReminder,
+                ),
+                
+              const SizedBox(height: 16),
               
               // Features grid
               GridView.count(

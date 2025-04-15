@@ -1,5 +1,6 @@
 // lib/widgets/auth/phone_auth_form.dart
 import 'package:flutter/material.dart';
+import 'package:govvy/widgets/welcome/signup_success_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -143,45 +144,67 @@ class _PhoneAuthFormState extends State<PhoneAuthForm> {
     }
   }
   
-  Future<void> _signInWithCredential(PhoneAuthCredential credential) async {
-    try {
-      final authService = Provider.of<AuthService>(context, listen: false);
-      
-      await authService.signInWithPhoneCredential(
-        credential,
-        name: _nameController.text.trim(),
-        address: _addressController.text.trim(),
+Future<void> _signInWithCredential(PhoneAuthCredential credential) async {
+  try {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    
+    await authService.signInWithPhoneCredential(
+      credential,
+      name: _nameController.text.trim(),
+      address: _addressController.text.trim(),
+    );
+    
+    setState(() {
+      _debugStatus = 'Sign in successful';
+    });
+    
+    // Show success dialog before triggering onAuthSuccess
+    if (mounted) {
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => SignupSuccessDialog(
+          name: _nameController.text.trim().split(' ').first, // Use first name
+          onDismiss: () {
+            Navigator.of(context).pop();
+          },
+          onContinue: () {
+            Navigator.of(context).pop();
+            if (widget.onAuthSuccess != null) {
+              widget.onAuthSuccess!();
+            }
+          },
+        ),
       );
-      
+    }
+    
+    // Only call onAuthSuccess if dialog was dismissed with 'Close'
+    // If 'Continue' was pressed, the callback is already handled in the dialog
+    if (mounted && widget.onAuthSuccess != null) {
+      widget.onAuthSuccess!();
+    }
+    
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Authentication successful!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  } catch (e) {
+    setState(() {
+      _errorMessage = _handleAuthError(e.toString());
+      _debugStatus = 'Sign in error: ${e.toString()}';
+    });
+  } finally {
+    if (mounted) {
       setState(() {
-        _debugStatus = 'Sign in successful';
+        _isLoading = false;
       });
-      
-      if (widget.onAuthSuccess != null) {
-        widget.onAuthSuccess!();
-      }
-      
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Authentication successful!'),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
-    } catch (e) {
-      setState(() {
-        _errorMessage = _handleAuthError(e.toString());
-        _debugStatus = 'Sign in error: ${e.toString()}';
-      });
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
     }
   }
+}
 
   String _handleAuthError(String errorMessage) {
     if (errorMessage.contains('invalid-phone-number')) {

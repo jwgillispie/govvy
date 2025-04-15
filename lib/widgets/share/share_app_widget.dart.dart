@@ -1,3 +1,4 @@
+// lib/widgets/share/share_app_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -5,17 +6,21 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ShareAppWidget extends StatelessWidget {
   final bool isCompact;
+  final bool isPostSignup;
 
   const ShareAppWidget({
     Key? key,
     this.isCompact = false,
+    this.isPostSignup = false,
   }) : super(key: key);
 
   Future<void> _shareApp() async {
-    const String appUrl =
-        'https://govvy--dev.web.app/'; // Replace with your actual URL
-    const String message =
-        'Check out govvy - an app that helps you connect with your local representatives and stay informed about government activities! Download it here: $appUrl';
+    final String appUrl = 'https://govvy--dev.web.app/';
+    
+    // Different share messages for different contexts
+    final String message = isPostSignup
+        ? 'I just joined govvy - a local government transparency app that connects citizens with their representatives. Join me and get involved in local democracy! Download it here: $appUrl'
+        : 'Check out govvy - an app that helps you connect with your local representatives and stay informed about government activities! Download it here: $appUrl';
 
     try {
       await Share.share(message);
@@ -25,8 +30,7 @@ class ShareAppWidget extends StatelessWidget {
   }
 
   Future<void> _copyLink() async {
-    const String appUrl =
-        'https://govvy--dev.web.app/'; // Replace with your actual URL
+    const String appUrl = 'https://govvy--dev.web.app/';
 
     await Clipboard.setData(const ClipboardData(text: appUrl));
   }
@@ -58,17 +62,27 @@ class ShareAppWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Help spread the word!',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+          Row(
+            children: [
+              Icon(
+                Icons.share,
+                color: Theme.of(context).colorScheme.primary,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Help spread the word!',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           const Text(
-            'Share govvy with friends and family to help everyone stay connected with their local government.',
+            'Share govvy with friends and family to help everyone stay connected with their local government and increase democratic participation in your community.',
             style: TextStyle(fontSize: 14),
           ),
           const SizedBox(height: 16),
