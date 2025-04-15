@@ -692,7 +692,7 @@ class _LandingPageState extends State<LandingPage> {
           SizedBox(
             width: isMobile ? double.infinity : 600,
             child: Text(
-              'We asked some questions in that little purple box up there - you can literally email or call us whenever you want to have any these conversations :)',
+              'We asked some questions in that little purple box up there - you can literally email or call us whenever you want to have any of these conversations :)',
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),

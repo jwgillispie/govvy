@@ -1,9 +1,10 @@
-// Updated main.dart with improved .env file loading
-
+// lib/main.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:govvy/firebase_options.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
+import 'package:govvy/screens/landing/landing_page.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:govvy/services/representative_service.dart';
@@ -111,7 +112,9 @@ class RepresentativeApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const AuthWrapper(),
+        // For web, show only the landing page
+        // For mobile, show the full app with auth wrapper
+        home: kIsWeb ? const LandingPage() : const AuthWrapper(),
       ),
     );
   }
