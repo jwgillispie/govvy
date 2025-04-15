@@ -4,12 +4,29 @@ import 'package:govvy/firebase_options.dart';
 import 'package:govvy/screens/landing/landing_page.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
+import 'package:govvy/services/representative_service.dart';
+import 'package:govvy/providers/representative_provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize dotenv with an empty map to avoid null errors
+  dotenv.env = {};
+  
+  // Try loading .env, but continue if it fails
+  try {
+    await dotenv.load();
+    debugPrint(".env file loaded successfully");
+  } catch (e) {
+    debugPrint("Warning: .env file not found or could not be loaded: $e");
+    debugPrint("Continuing without environment variables. API features may be limited.");
+  }
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
   runApp(const RepresentativeApp());
 }
 
@@ -21,6 +38,11 @@ class RepresentativeApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
+        Provider(create: (_) => RepresentativeService()),
+        ChangeNotifierProxyProvider<RepresentativeService, RepresentativeProvider>(
+          create: (context) => RepresentativeProvider(context.read<RepresentativeService>()),
+          update: (context, service, previous) => previous ?? RepresentativeProvider(service),
+        ),
       ],
       child: MaterialApp(
         title: 'govvy',

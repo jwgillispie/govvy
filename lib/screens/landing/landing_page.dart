@@ -362,7 +362,7 @@ class _LandingPageState extends State<LandingPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Get inside the minds of your local government',
+              'Get inside the mind of your local government',
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     color: Colors.white,
                     fontSize: 42,
@@ -494,7 +494,6 @@ class _LandingPageState extends State<LandingPage> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
-          const SizedBox(height: 32),
           isMobile
               ? _buildMobileFeatureCards(context)
               : _buildDesktopFeatureCards(context),
@@ -685,7 +684,7 @@ class _LandingPageState extends State<LandingPage> {
       child: Column(
         children: [
           Text(
-            'Let us know your thoughts!',
+            'Hit up the govvy team!! We wanna hear from you ',
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
@@ -693,7 +692,7 @@ class _LandingPageState extends State<LandingPage> {
           SizedBox(
             width: isMobile ? double.infinity : 600,
             child: Text(
-              'For those who\'ve signed up: What do you like, or dislike, about the app idea? What would keep you coming back to an app like this? We asked some questions in that little purple box up there -let us know what kind of answers you come up with. ',
+              'We asked some questions in that little purple box up there - you can literally email or call us whenever you want to have any these conversations :)',
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
