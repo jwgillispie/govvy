@@ -1,4 +1,4 @@
-// lib/providers/representative_provider.dart
+// lib/providers/representative_provider.dart - Add this method
 import 'package:flutter/foundation.dart';
 import 'package:govvy/services/cicero_service.dart';
 import 'package:govvy/services/representative_service.dart';
@@ -15,6 +15,7 @@ class RepresentativeProvider with ChangeNotifier {
   RepresentativeDetails? _selectedRepresentative;
   bool _isLoadingDetails = false;
   String? _lastSearchedAddress;
+  String? _lastSearchedCity;
   
   // Getters
   List<Representative> get representatives => _representatives;
@@ -23,8 +24,45 @@ class RepresentativeProvider with ChangeNotifier {
   RepresentativeDetails? get selectedRepresentative => _selectedRepresentative;
   bool get isLoadingDetails => _isLoadingDetails;
   String? get lastSearchedAddress => _lastSearchedAddress;
+  String? get lastSearchedCity => _lastSearchedCity;
   
   RepresentativeProvider(this._representativeService);
+  
+  // New method: Fetch local representatives by city name
+  Future<void> fetchLocalRepresentativesByCity(String city) async {
+    try {
+      _isLoading = true;
+      _errorMessage = null;
+      _lastSearchedCity = city;
+      notifyListeners();
+      
+      // Clear existing representatives before new search
+      _representatives = [];
+      
+      // Add a small delay to make loading state visible to users
+      await Future.delayed(const Duration(milliseconds: 500));
+      
+      // Use the new CiceroService method to get local reps by city
+      final localReps = await _ciceroService.getLocalRepresentativesByCity(city);
+      
+      // Convert LocalRepresentative objects to Representative objects
+      _representatives = localReps.map((local) => local.toRepresentative()).toList();
+      
+      if (_representatives.isEmpty) {
+        _errorMessage = 'No local representatives found for $city. Please check the city name and try again.';
+      }
+      
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _errorMessage = 'Error loading local representatives: ${e.toString()}';
+      if (kDebugMode) {
+        print(_errorMessage);
+      }
+      notifyListeners();
+    }
+  }
   
   // Fetch representatives by address
   Future<void> fetchRepresentativesByAddress(String address) async {
@@ -58,7 +96,7 @@ class RepresentativeProvider with ChangeNotifier {
     }
   }
   
-  // Add this new method to fetch only local representatives
+  // Fetch only local representatives by address
   Future<void> fetchLocalRepresentativesByAddress(String address) async {
     try {
       _isLoading = true;
@@ -72,7 +110,7 @@ class RepresentativeProvider with ChangeNotifier {
       // Add a small delay to make loading state visible to users
       await Future.delayed(const Duration(milliseconds: 800));
       
-      // Use the new Cicero service for local data
+      // Use the CiceroService for local data
       // Convert LocalRepresentative to Representative
       final localReps = await _ciceroService.getLocalRepresentativesByAddress(address);
       _representatives = localReps.map((local) => local.toRepresentative()).toList();
@@ -141,6 +179,7 @@ class RepresentativeProvider with ChangeNotifier {
     _errorMessage = null;
     _selectedRepresentative = null;
     _lastSearchedAddress = null;
+    _lastSearchedCity = null;
     notifyListeners();
   }
 }

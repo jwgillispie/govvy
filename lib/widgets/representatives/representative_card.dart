@@ -1,7 +1,6 @@
-// lib/widgets/representatives/representative_card.dart
+// lib/widgets/representatives/representative_card.dart - Update the build method
 import 'package:flutter/material.dart';
 import 'package:govvy/models/representative_model.dart';
-import 'package:govvy/services/representative_service.dart';
 
 class RepresentativeCard extends StatelessWidget {
   final Representative representative;
@@ -13,7 +12,6 @@ class RepresentativeCard extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
-  
   Widget _buildRepresentativeBadge(Representative representative) {
     // Determine if this is a local representative by the chamber/bioGuideId
     final bool isLocal = representative.bioGuideId.startsWith('cicero-') ||
@@ -42,30 +40,30 @@ class RepresentativeCard extends StatelessWidget {
   }
 
   Widget _buildLocalBadge(Representative representative) {
-  // Determine if this is a local representative by the bioGuideId
-  final bool isLocal = representative.bioGuideId.startsWith('cicero-');
-  
-  if (isLocal) {
-    return Container(
-      margin: const EdgeInsets.only(left: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: Colors.teal.shade100,
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        'LOCAL',
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-          color: Colors.teal.shade800,
+    // Determine if this is a local representative by the bioGuideId
+    final bool isLocal = representative.bioGuideId.startsWith('cicero-');
+    
+    if (isLocal) {
+      return Container(
+        margin: const EdgeInsets.only(left: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+        decoration: BoxDecoration(
+          color: Colors.teal.shade100,
+          borderRadius: BorderRadius.circular(4),
         ),
-      ),
-    );
+        child: Text(
+          'LOCAL',
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: Colors.teal.shade800,
+          ),
+        ),
+      );
+    }
+    
+    return const SizedBox.shrink(); // No badge for federal/state reps
   }
-  
-  return const SizedBox.shrink(); // No badge for federal/state reps
-}
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +90,7 @@ class RepresentativeCard extends StatelessWidget {
         break;
       default:
         partyColor = Colors.grey;
-        partyName = representative.party;
+        partyName = representative.party.isEmpty ? 'Unknown' : representative.party;
     }
 
     return Card(
@@ -109,16 +107,39 @@ class RepresentativeCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Representative image
+              // Representative image - handle image loading safely
               CircleAvatar(
                 radius: 32,
                 backgroundColor: Colors.grey.shade200,
-                backgroundImage: representative.imageUrl != null
-                    ? NetworkImage(representative.imageUrl!)
-                    : null,
-                child: representative.imageUrl == null
-                    ? Icon(Icons.person, size: 32, color: Colors.grey.shade400)
-                    : null,
+                // Only try to load the image if we have a valid URL
+                // Also, handle image loading errors gracefully
+                child: (representative.imageUrl != null && representative.imageUrl!.isNotEmpty) 
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(32),
+                        child: Image.network(
+                          representative.imageUrl!,
+                          width: 64,
+                          height: 64,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            // If the image fails to load, show a fallback icon
+                            return Icon(Icons.person, size: 32, color: Colors.grey.shade400);
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded / 
+                                      loadingProgress.expectedTotalBytes!
+                                    : null,
+                                strokeWidth: 2,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Icon(Icons.person, size: 32, color: Colors.grey.shade400),
               ),
               const SizedBox(width: 12),
 
@@ -159,9 +180,7 @@ class RepresentativeCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      representative.chamber == 'Senate'
-                          ? 'U.S. Senator, ${representative.state}'
-                          : 'U.S. Representative, ${representative.state}${representative.district != null ? '-${representative.district}' : ''}',
+                      _buildPositionText(representative),
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey.shade800,
@@ -200,5 +219,25 @@ class RepresentativeCard extends StatelessWidget {
         ),
       ),
     );
+  }
+  
+  // Helper method to build a position text based on representative type
+  String _buildPositionText(Representative representative) {
+    final bool isLocal = representative.bioGuideId.startsWith('cicero-');
+    
+    if (isLocal) {
+      // For local representatives, use chamber (CITY, COUNTY) and district
+      if (representative.chamber.toLowerCase() == 'city') {
+        return 'City Official, ${representative.district ?? representative.state}';
+      } else if (representative.chamber.toLowerCase() == 'county') {
+        return 'County Official, ${representative.district ?? representative.state}';
+      } else {
+        return '${representative.chamber} Official, ${representative.district ?? representative.state}';
+      }
+    } else if (representative.chamber == 'Senate') {
+      return 'U.S. Senator, ${representative.state}';
+    } else {
+      return 'U.S. Representative, ${representative.state}${representative.district != null ? '-${representative.district}' : ''}';
+    }
   }
 }

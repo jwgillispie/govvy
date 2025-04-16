@@ -1,4 +1,4 @@
-// lib/providers/combined_representative_provider.dart
+// lib/providers/combined_representative_provider.dart - Add these methods
 import 'package:flutter/foundation.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/models/local_representative_model.dart';
@@ -18,6 +18,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   String? _errorMessageFederal;
   String? _errorMessageLocal;
   String? _lastSearchedAddress;
+  String? _lastSearchedCity;
   
   // Getters
   List<Representative> get federalRepresentatives => _federalRepresentatives;
@@ -37,8 +38,42 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   String? get errorMessageLocal => _errorMessageLocal;
   
   String? get lastSearchedAddress => _lastSearchedAddress;
+  String? get lastSearchedCity => _lastSearchedCity;
   
   CombinedRepresentativeProvider(this._federalService);
+  
+  // New method: Fetch local representatives by city only
+  Future<void> fetchLocalRepresentativesByCity(String city) async {
+    try {
+      _isLoadingLocal = true;
+      _errorMessageLocal = null;
+      _lastSearchedCity = city;
+      notifyListeners();
+      
+      // Clear existing local representatives
+      _localRepresentativesRaw = [];
+      
+      // Add a small delay to make loading state visible
+      await Future.delayed(const Duration(milliseconds: 300));
+      
+      // Fetch from CiceroService with the new city search method
+      _localRepresentativesRaw = await _localService.getLocalRepresentativesByCity(city);
+      
+      _isLoadingLocal = false;
+      
+      // Save to cache
+      _saveLocalCityToCache();
+      
+      notifyListeners();
+    } catch (e) {
+      _isLoadingLocal = false;
+      _errorMessageLocal = 'Error loading local representatives: ${e.toString()}';
+      if (kDebugMode) {
+        print(_errorMessageLocal);
+      }
+      notifyListeners();
+    }
+  }
   
   // Fetch both federal and local representatives
   Future<void> fetchAllRepresentativesByAddress(String address) async {
@@ -83,7 +118,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     }
   }
   
-  // Fetch only local representatives
+  // Fetch only local representatives by address
   Future<void> fetchLocalRepresentativesByAddress(String address) async {
     try {
       _isLoadingLocal = true;
@@ -140,6 +175,29 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     }
   }
   
+  // New method: Cache city search results
+  Future<void> _saveLocalCityToCache() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      
+      // Save city and timestamp
+      if (_lastSearchedCity != null) {
+        await prefs.setString('last_city', _lastSearchedCity!);
+        await prefs.setInt('last_city_search_time', DateTime.now().millisecondsSinceEpoch);
+        
+        // Save local representatives
+        if (_localRepresentativesRaw.isNotEmpty) {
+          final localData = _localRepresentativesRaw.map((rep) => rep.toMap()).toList();
+          await prefs.setString('local_city_reps_cache', json.encode(localData));
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error saving city cache: $e');
+      }
+    }
+  }
+  
   // Load cache to avoid unnecessary API calls
   Future<bool> loadFromCache() async {
     try {
@@ -176,10 +234,66 @@ class CombinedRepresentativeProvider with ChangeNotifier {
         return true;
       }
       
+      // If no address cache, try city cache
+      final lastCity = prefs.getString('last_city');
+      final lastCitySearchTime = prefs.getInt('last_city_search_time') ?? 0;
+      
+      if (lastCity != null && (currentTime - lastCitySearchTime) < 86400000) {
+        _lastSearchedCity = lastCity;
+        
+        // Load local representatives from city search
+        final localCityCache = prefs.getString('local_city_reps_cache');
+        if (localCityCache != null) {
+          final localData = json.decode(localCityCache) as List<dynamic>;
+          _localRepresentativesRaw = localData
+              .map((item) => LocalRepresentative.fromMap(Map<String, dynamic>.from(item)))
+              .toList();
+          
+          notifyListeners();
+          return true;
+        }
+      }
+      
       return false;
     } catch (e) {
       if (kDebugMode) {
         print('Error loading cache: $e');
+      }
+      return false;
+    }
+  }
+  
+  // New method: Load only city cache
+  Future<bool> loadCityCache() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      
+      // Check if we have cached city data
+      final lastCity = prefs.getString('last_city');
+      final lastCitySearchTime = prefs.getInt('last_city_search_time') ?? 0;
+      final currentTime = DateTime.now().millisecondsSinceEpoch;
+      
+      // Only use cache if it's less than 24 hours old
+      if (lastCity != null && (currentTime - lastCitySearchTime) < 86400000) {
+        _lastSearchedCity = lastCity;
+        
+        // Load local representatives from city search
+        final localCityCache = prefs.getString('local_city_reps_cache');
+        if (localCityCache != null) {
+          final localData = json.decode(localCityCache) as List<dynamic>;
+          _localRepresentativesRaw = localData
+              .map((item) => LocalRepresentative.fromMap(Map<String, dynamic>.from(item)))
+              .toList();
+          
+          notifyListeners();
+          return true;
+        }
+      }
+      
+      return false;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading city cache: $e');
       }
       return false;
     }
@@ -224,6 +338,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     _errorMessageFederal = null;
     _errorMessageLocal = null;
     _lastSearchedAddress = null;
+    _lastSearchedCity = null;
     notifyListeners();
   }
 }

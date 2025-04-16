@@ -1,5 +1,6 @@
 // lib/screens/dashboards/dashboard_screen.dart
 import 'package:flutter/material.dart';
+import 'package:govvy/screens/representatives/find_local_representatives_screen.dart';
 import 'package:govvy/widgets/share/share_app_widget.dart.dart';
 import 'package:govvy/widgets/share/share_reminder_widget.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final WelcomeService _welcomeService = WelcomeService();
   bool _showShareReminder = false;
-  
+
   @override
   void initState() {
     super.initState();
@@ -27,14 +28,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // Check if we should show the share reminder
     _checkShareReminder();
   }
-  
+
   Future<void> _checkWelcomeMessage() async {
     final shouldShow = await _welcomeService.shouldShowWelcomeMessage();
-    
+
     if (shouldShow && mounted) {
       // Get personalized data for the welcome message
       final welcomeData = await _welcomeService.getPersonalizedWelcomeData();
-      
+
       // Show the welcome dialog
       if (mounted) {
         // Use a slight delay to ensure the screen is fully built
@@ -55,22 +56,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
     }
   }
-  
+
   Future<void> _checkShareReminder() async {
     // Don't show share reminder if welcome message is shown
     final welcomeShouldShow = await _welcomeService.shouldShowWelcomeMessage();
     if (welcomeShouldShow) return;
-    
+
     // Check if we should show the share reminder
     final shouldShowReminder = await ShareReminderWidget.shouldShowReminder();
-    
+
     if (shouldShowReminder && mounted) {
       setState(() {
         _showShareReminder = true;
       });
     }
   }
-  
+
   void _dismissShareReminder() {
     setState(() {
       _showShareReminder = false;
@@ -80,7 +81,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('govvy'),
@@ -114,106 +115,105 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 16),
-              
+
               // Share reminder (if needed)
               if (_showShareReminder)
                 ShareReminderWidget(
                   onDismiss: _dismissShareReminder,
                 ),
-                
+
               const SizedBox(height: 16),
-              
+
               // Features grid
-              GridView.count(
-                crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                children: [
-                  _buildFeatureCard(
-                    context,
-                    Icons.people_outline,
-                    'Representatives',
-                    'Find and learn about your elected officials',
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FindRepresentativesScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildFeatureCard(
-                    context,
-                    Icons.how_to_vote_outlined,
-                    'Voting Records',
-                    'Track how your representatives vote',
-                    () {
-                      // Navigate to voting records screen (to be implemented)
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Coming soon!'),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildFeatureCard(
-                    context,
-                    Icons.monetization_on_outlined,
-                    'Campaign Finance',
-                    'Follow the money in politics',
-                    () {
-                      // Navigate to campaign finance screen (to be implemented)
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Coming soon!'),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildFeatureCard(
-                    context,
-                    Icons.account_balance_outlined,
-                    'Committees',
-                    'Explore legislative committees',
-                    () {
-                      // Navigate to committees screen (to be implemented)
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Coming soon!'),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              
+          GridView.count(
+  crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
+  shrinkWrap: true,
+  physics: const NeverScrollableScrollPhysics(),
+  crossAxisSpacing: 16,
+  mainAxisSpacing: 16,
+  children: [
+    _buildFeatureCard(
+      context,
+      Icons.people_outline,
+      'Representatives',
+      'Find and learn about your elected officials',
+      () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const FindRepresentativesScreen(),
+          ),
+        );
+      },
+    ),
+    _buildFeatureCard(
+      context,
+      Icons.location_city_outlined,
+      'Local Representatives',
+      'Find officials in your city or town',
+      () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const FindLocalRepresentativesScreen(),
+          ),
+        );
+      },
+    ),
+    _buildFeatureCard(
+      context,
+      Icons.how_to_vote_outlined,
+      'Voting Records',
+      'Track how your representatives vote',
+      () {
+        // Navigate to voting records screen (to be implemented)
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Coming soon!'),
+          ),
+        );
+      },
+    ),
+    _buildFeatureCard(
+      context,
+      Icons.monetization_on_outlined,
+      'Campaign Finance',
+      'Follow the money in politics',
+      () {
+        // Navigate to campaign finance screen (to be implemented)
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Coming soon!'),
+          ),
+        );
+      },
+    ),
+  ],
+),
               const SizedBox(height: 32),
-              
+
               // Share section
               Text(
                 'Share govvy',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 16),
-              
+
               const ShareAppWidget(),
-              
+
               const SizedBox(height: 32),
-              
+
               // Recent activity section
               Text(
                 'Recent Activity',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 16),
-              
+
               // Placeholder for recent activity
               Container(
                 padding: const EdgeInsets.all(16),
@@ -256,7 +256,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
-  
+
   Widget _buildFeatureCard(
     BuildContext context,
     IconData icon,
