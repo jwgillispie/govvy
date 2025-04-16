@@ -178,116 +178,146 @@ class CiceroService {
       return _getMockLocalRepresentatives();
     }
   }
-  
-  // Common method to fetch representatives from API
   Future<List<LocalRepresentative>> _fetchRepresentatives(Uri url, String? cityFilter) async {
-    try {
-      final response = await http.get(url);
+  try {
+    final response = await http.get(url);
+    
+    if (kDebugMode) {
+      print('Cicero API response received. Status: ${response.statusCode}');
+      print('Response body preview: ${response.body.substring(0, min(200, response.body.length))}...');
+    }
+    
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      List<LocalRepresentative> representatives = [];
       
-      if (kDebugMode) {
-        print('Cicero API response received. Status: ${response.statusCode}');
-        print('Response body: ${response.body.substring(0, min(200, response.body.length))}...');
+      // Check for errors in response
+      if (data.containsKey('response') && 
+          data['response'].containsKey('errors') && 
+          data['response']['errors'] is List && 
+          (data['response']['errors'] as List).isNotEmpty) {
+        throw Exception('Cicero API error: ${data['response']['errors']}');
       }
       
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
+      // Direct officials array in response
+      if (data.containsKey('response') && 
+          data['response'].containsKey('officials') && 
+          data['response']['officials'] is List) {
         
-        // Check for errors in response - these could be in the errors array
-        if (data.containsKey('response') && 
-            data['response'].containsKey('errors') && 
-            data['response']['errors'].isNotEmpty) {
-          throw Exception('Cicero API error: ${data['response']['errors']}');
-        }
-        
-        // Check if we have candidates or officials in the response
-        List<LocalRepresentative> representatives = [];
-        
-        // Method 1: Officials may be directly in results
-        if (data.containsKey('response') && 
-            data['response'].containsKey('results') && 
-            data['response']['results'].containsKey('officials') &&
-            data['response']['results']['officials'] is List) {
-          
-          final officials = data['response']['results']['officials'] as List<dynamic>;
-          
-          for (var officialData in officials) {
-            final official = Map<String, dynamic>.from(officialData);
-            representatives.add(_processCiceroOfficial(official));
+        final officials = data['response']['officials'] as List;
+        for (var officialData in officials) {
+          if (officialData is Map) {
+            representatives.add(_processCiceroOfficial(Map<String, dynamic>.from(officialData)));
           }
-        } 
-        // Method 2: Officials may be inside candidates list
-        else if (data.containsKey('response') && 
-                data['response'].containsKey('results') && 
-                data['response']['results'].containsKey('candidates') &&
-                data['response']['results']['candidates'] is List) {
+        }
+      } 
+      // Officials in results
+      else if (data.containsKey('response') && 
+              data['response'].containsKey('results') && 
+              data['response']['results'] is Map) {
+        
+        final results = Map<String, dynamic>.from(data['response']['results'] as Map);
+        
+        // Check for officials directly in results
+        if (results.containsKey('officials') && results['officials'] is List) {
+          final officials = results['officials'] as List;
+          for (var officialData in officials) {
+            if (officialData is Map) {
+              representatives.add(_processCiceroOfficial(Map<String, dynamic>.from(officialData)));
+            }
+          }
+        }
+        // Check for candidates with officials
+        else if (results.containsKey('candidates') && results['candidates'] is List) {
+          final candidates = results['candidates'] as List;
           
-          final candidates = data['response']['results']['candidates'] as List<dynamic>;
-          
-          if (candidates.isNotEmpty) {
-            // Process each candidate - usually the first one is the best match
-            for (var candidateData in candidates) {
+          for (var candidateData in candidates) {
+            if (candidateData is Map) {
               final candidate = Map<String, dynamic>.from(candidateData);
               
-              // Check if this candidate has districts
+              // Check for districts with officials
               if (candidate.containsKey('districts') && candidate['districts'] is List) {
-                final districts = candidate['districts'] as List<dynamic>;
+                final districts = candidate['districts'] as List;
                 
-                // For each district, get its officials
                 for (var districtData in districts) {
-                  final district = Map<String, dynamic>.from(districtData);
-                  
-                  if (district.containsKey('officials') && district['officials'] is List) {
-                    final officials = district['officials'] as List<dynamic>;
+                  if (districtData is Map) {
+                    final district = Map<String, dynamic>.from(districtData);
                     
-                    for (var officialData in officials) {
-                      final official = Map<String, dynamic>.from(officialData);
-                      representatives.add(_processCiceroOfficial(official));
+                    // Process officials in this district
+                    if (district.containsKey('officials') && district['officials'] is List) {
+                      final officials = district['officials'] as List;
+                      
+                      for (var officialData in officials) {
+                        if (officialData is Map) {
+                          representatives.add(_processCiceroOfficial(Map<String, dynamic>.from(officialData)));
+                        }
+                      }
                     }
+                  }
+                }
+              }
+              
+              // Also check if the candidate itself has officials
+              if (candidate.containsKey('officials') && candidate['officials'] is List) {
+                final officials = candidate['officials'] as List;
+                
+                for (var officialData in officials) {
+                  if (officialData is Map) {
+                    representatives.add(_processCiceroOfficial(Map<String, dynamic>.from(officialData)));
                   }
                 }
               }
             }
           }
         }
+      }
+      
+      // Filter out duplicates (sometimes the API returns the same official multiple times)
+      Map<String, LocalRepresentative> uniqueReps = {};
+      for (var rep in representatives) {
+        uniqueReps[rep.bioGuideId] = rep;
+      }
+      
+      // If we found representatives, return them
+      if (uniqueReps.isNotEmpty) {
+        return uniqueReps.values.toList();
+      }
+      
+      // No officials found - check if it's a geocoding error
+      if (data.containsKey('response') && 
+          data['response'].containsKey('results') && 
+          data['response']['results'] is Map) {
         
-        // If still no representatives and there are no errors in the error array,
-        // check if candidates array is empty, which would indicate no geocoding results
-        if (representatives.isEmpty && 
-            data.containsKey('response') && 
-            data['response'].containsKey('results') && 
-            data['response']['results'].containsKey('candidates') &&
-            (data['response']['results']['candidates'] as List).isEmpty) {
+        final results = Map<String, dynamic>.from(data['response']['results'] as Map);
+        
+        // Check if candidates array is empty (no geocoding results)
+        if (results.containsKey('candidates') && 
+            results['candidates'] is List && 
+            (results['candidates'] as List).isEmpty) {
           throw Exception('No geocoding results found for this location');
         }
-        
-        // Return officials if found
-        if (representatives.isNotEmpty) {
-          return representatives;
-        }
-        
-        // If we get here, we didn't find any representatives
-        if (kDebugMode) {
-          print('No representatives found in API response structure. Falling back to mock data.');
-        }
-        if (cityFilter != null) {
-          return _getMockLocalRepresentatives(city: cityFilter);
-        } else {
-          return _getMockLocalRepresentatives();
-        }
-      } else {
-        if (kDebugMode) {
-          print('Cicero API error: ${response.statusCode} - ${response.body}');
-        }
-        throw Exception('Failed to fetch representatives: ${response.statusCode}');
       }
-    } catch (e) {
+      
+      // If we get here, we found no representatives in a seemingly valid response
       if (kDebugMode) {
-        print('Error fetching representatives: $e');
+        print('No representatives found in API response structure.');
       }
-      // Don't automatically fall back to mock data - let the caller decide
-      throw e;
+      
+      // Return empty list - caller will handle fallback
+      return [];
+    } else {
+      if (kDebugMode) {
+        print('Cicero API error: ${response.statusCode} - ${response.body}');
+      }
+      throw Exception('Failed to fetch representatives: ${response.statusCode}');
     }
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error fetching representatives: $e');
+    }
+    throw e;
   }
+}
   
   // Helper method to extract district name from official
   String _getOfficialDistrict(Map<String, dynamic> official) {
@@ -315,30 +345,44 @@ class CiceroService {
     
     return false;
   }
-  
   // Convert Cicero official format to LocalRepresentative model
-  LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
-    // Extract name components
-    String firstName = official['first_name']?.toString() ?? '';
-    String lastName = official['last_name']?.toString() ?? '';
-    String middleInitial = official['middle_initial']?.toString() ?? '';
+LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
+  // Extract basic information
+  String firstName = official['first_name']?.toString() ?? '';
+  String lastName = official['last_name']?.toString() ?? '';
+  String middleInitial = official['middle_initial']?.toString() ?? '';
+  String preferredName = official['preferred_name']?.toString() ?? '';
+  
+  // Use preferred name if available, otherwise use first name
+  String displayFirstName = preferredName.isNotEmpty ? preferredName : firstName;
+  
+  // Build full name with middle initial if available
+  String fullName = displayFirstName;
+  if (middleInitial.isNotEmpty) {
+    fullName += ' $middleInitial';
+  }
+  fullName += ' $lastName';
+  
+  // Extract party
+  String party = official['party']?.toString() ?? '';
+  
+  // Extract district info from office object
+  String level = 'Local';
+  String district = '';
+  String state = '';
+  String officeName = '';
+  
+  if (official.containsKey('office') && official['office'] is Map) {
+    final officeInfo = Map<String, dynamic>.from(official['office'] as Map);
     
-    // Build full name with middle initial if available
-    String fullName = firstName;
-    if (middleInitial.isNotEmpty) {
-      fullName += ' $middleInitial';
+    // Extract role/position
+    if (officeInfo.containsKey('role')) {
+      officeName = officeInfo['role']?.toString() ?? '';
     }
-    fullName += ' $lastName';
     
-    // Extract district info
-    String level = 'Local';
-    String district = '';
-    String state = '';
-    
-    if (official.containsKey('office') && 
-        official['office'].containsKey('district')) {
-      
-      final districtInfo = official['office']['district'];
+    // Extract district information
+    if (officeInfo.containsKey('district') && officeInfo['district'] is Map) {
+      final districtInfo = Map<String, dynamic>.from(officeInfo['district'] as Map);
       
       if (districtInfo.containsKey('district_type')) {
         level = districtInfo['district_type']?.toString() ?? 'Local';
@@ -350,131 +394,118 @@ class CiceroService {
       
       if (districtInfo.containsKey('state')) {
         state = districtInfo['state']?.toString() ?? '';
-      } else if (official.containsKey('state')) {
-        // Fallback to official's state if district doesn't have it
-        state = official['state']?.toString() ?? '';
+      }
+    }
+  }
+  
+  // Fallback for state if not found in district
+  if (state.isEmpty && official.containsKey('state')) {
+    state = official['state']?.toString() ?? '';
+  }
+  
+  // Extract contact information
+  String? phone;
+  String? email;
+  String? website;
+  List<String>? socialMedia;
+  
+  // Handle addresses array for contact info
+  if (official.containsKey('addresses') && official['addresses'] is List) {
+    final addresses = official['addresses'] as List;
+    for (var addressObj in addresses) {
+      if (addressObj is Map) {
+        final address = Map<String, dynamic>.from(addressObj);
+        
+        // Get the first phone number we find
+        if (phone == null && address.containsKey('phone')) {
+          phone = address['phone']?.toString();
+        }
+        
+        // Get the first fax number as fallback if no phone
+        if (phone == null && address.containsKey('fax')) {
+          phone = address['fax']?.toString();
+        }
+      }
+    }
+  }
+  
+  // Handle email addresses array
+  if (official.containsKey('email_addresses') && 
+      official['email_addresses'] is List && 
+      (official['email_addresses'] as List).isNotEmpty) {
+    email = (official['email_addresses'] as List)[0]?.toString();
+  }
+  
+  // Handle URLs array
+  if (official.containsKey('urls') && 
+      official['urls'] is List && 
+      (official['urls'] as List).isNotEmpty) {
+    website = (official['urls'] as List)[0]?.toString();
+  } else if (official.containsKey('web_form_url')) {
+    website = official['web_form_url']?.toString();
+  }
+  
+  // Extract social media from identifiers
+  if (official.containsKey('identifiers') && official['identifiers'] is List) {
+    final identifiers = official['identifiers'] as List;
+    socialMedia = [];
+    
+    for (var idObj in identifiers) {
+      if (idObj is Map) {
+        final identifier = Map<String, dynamic>.from(idObj);
+        if (identifier.containsKey('identifier_type') && identifier.containsKey('identifier')) {
+          final type = identifier['identifier_type']?.toString() ?? '';
+          final id = identifier['identifier']?.toString() ?? '';
+          
+          // Only add social media identifiers
+          if (['twitter', 'facebook', 'instagram', 'youtube', 'linkedin'].contains(type.toLowerCase())) {
+            socialMedia.add('$type: $id');
+          }
+        }
       }
     }
     
-    // Extract contact info
-    String? phone;
-    String? email;
-    String? website;
-    List<String>? socialMedia;
-    
-    // Handle different possible formats for phone numbers
-    if (official.containsKey('phone_numbers') && 
-        official['phone_numbers'] is List && 
-        official['phone_numbers'].isNotEmpty) {
-      phone = official['phone_numbers'][0].toString();
-    } else if (official.containsKey('phone')) {
-      phone = official['phone']?.toString();
-    } else if (official.containsKey('contact_info') && 
-               official['contact_info'] is Map &&
-               official['contact_info'].containsKey('phone')) {
-      phone = official['contact_info']['phone']?.toString();
+    // If no social media was found, set to null
+    if (socialMedia.isEmpty) {
+      socialMedia = null;
     }
-    
-    // Handle different possible formats for email
-    if (official.containsKey('email_addresses') && 
-        official['email_addresses'] is List && 
-        official['email_addresses'].isNotEmpty) {
-      email = official['email_addresses'][0].toString();
-    } else if (official.containsKey('email')) {
-      email = official['email']?.toString();
-    } else if (official.containsKey('contact_info') && 
-               official['contact_info'] is Map &&
-               official['contact_info'].containsKey('email')) {
-      email = official['contact_info']['email']?.toString();
-    }
-    
-    // Handle different possible formats for website
-    if (official.containsKey('urls') && 
-        official['urls'] is List && 
-        official['urls'].isNotEmpty) {
-      website = official['urls'][0].toString();
-    } else if (official.containsKey('url')) {
-      website = official['url']?.toString();
-    } else if (official.containsKey('website')) {
-      website = official['website']?.toString();
-    } else if (official.containsKey('contact_info') && 
-               official['contact_info'] is Map &&
-               official['contact_info'].containsKey('url')) {
-      website = official['contact_info']['url']?.toString();
-    }
-    
-    // Extract social media
-    if (official.containsKey('channels') && 
-        official['channels'] is List && 
-        official['channels'].isNotEmpty) {
-      socialMedia = (official['channels'] as List)
-          .map((channel) {
-            if (channel is Map) {
-              final type = channel['type']?.toString() ?? '';
-              final id = channel['id']?.toString() ?? '';
-              return '$type: $id';
-            }
-            return channel.toString();
-          })
-          .cast<String>()
-          .toList();
-    }
-    
-    // Extract party info
-    String party = '';
-    if (official.containsKey('party')) {
-      party = official['party']?.toString() ?? '';
-    } else if (official.containsKey('political_party')) {
-      party = official['political_party']?.toString() ?? '';
-    }
-    
-    // Extract image URL
-    String? imageUrl;
-    if (official.containsKey('photo_url')) {
-      imageUrl = official['photo_url']?.toString();
-    } else if (official.containsKey('photo')) {
-      imageUrl = official['photo']?.toString();
-    }
-    
-    // Extract office title/position
-    String officeName = '';
-    if (official.containsKey('office') && 
-        official['office'].containsKey('name')) {
-      officeName = official['office']['name']?.toString() ?? '';
-    } else if (official.containsKey('title')) {
-      officeName = official['title']?.toString() ?? '';
-    } else if (official.containsKey('position')) {
-      officeName = official['position']?.toString() ?? '';
-    }
-    
-    // Create a unique ID from official ID or from district and name
-    String bioGuideId = 'cicero-';
-    if (official.containsKey('id')) {
-      bioGuideId += official['id'].toString();
-    } else if (official.containsKey('identifier')) {
-      bioGuideId += official['identifier'].toString();
-    } else {
-      // Create a unique identifier from name and district
-      String sanitizedDistrict = district.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
-      String sanitizedName = fullName.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
-      bioGuideId += '${sanitizedDistrict}-${sanitizedName}';
-    }
-    
-    return LocalRepresentative(
-      name: fullName,
-      bioGuideId: bioGuideId,
-      party: party,
-      level: level,
-      state: state,
-      district: district,
-      office: officeName,
-      phone: phone,
-      email: email,
-      website: website,
-      imageUrl: imageUrl,
-      socialMedia: socialMedia,
-    );
   }
+  
+  // Extract image URL
+  String? imageUrl;
+  if (official.containsKey('photo_origin_url')) {
+    imageUrl = official['photo_origin_url']?.toString();
+  }
+  
+  // Create a unique ID using either id or sk field
+  String bioGuideId = 'cicero-';
+  if (official.containsKey('id')) {
+    bioGuideId += official['id'].toString();
+  } else if (official.containsKey('sk')) {
+    // The surrogate key is more stable between terms
+    bioGuideId += 'sk-${official['sk'].toString()}';
+  } else {
+    // Create a fallback ID from name and district
+    String sanitizedDistrict = district.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
+    String sanitizedName = fullName.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
+    bioGuideId += '${sanitizedDistrict}-${sanitizedName}';
+  }
+  
+  return LocalRepresentative(
+    name: fullName,
+    bioGuideId: bioGuideId,
+    party: party,
+    level: level,
+    state: state,
+    district: district,
+    office: officeName,
+    phone: phone,
+    email: email,
+    website: website,
+    imageUrl: imageUrl,
+    socialMedia: socialMedia,
+  );
+}
   
   // Helper method with hardcoded coordinates for common US cities
   Map<String, double>? _getHardcodedCoordinatesForCity(String cityName) {
