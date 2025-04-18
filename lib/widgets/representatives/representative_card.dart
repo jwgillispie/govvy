@@ -1,6 +1,7 @@
 // lib/widgets/representatives/representative_card.dart
 import 'package:flutter/material.dart';
 import 'package:govvy/models/representative_model.dart';
+import 'package:govvy/utils/district_type_formatter.dart';
 
 class RepresentativeCard extends StatelessWidget {
   final Representative representative;
@@ -20,7 +21,7 @@ class RepresentativeCard extends StatelessWidget {
     }
     
     // Check if the chamber/level indicates a local position
-    if (['COUNTY', 'CITY', 'PLACE', 'TOWNSHIP', 'BOROUGH', 'TOWN', 'VILLAGE']
+    if (['COUNTY', 'CITY', 'PLACE', 'TOWNSHIP', 'BOROUGH', 'TOWN', 'VILLAGE', 'LOCAL', 'LOCAL_EXEC']
         .contains(rep.chamber.toUpperCase())) {
       return true;
     }
@@ -136,7 +137,10 @@ class RepresentativeCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    // Use a Row with flexible widgets to prevent overflow
+                    Wrap(
+                      spacing: 8,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         Container(
                           width: 12,
@@ -146,7 +150,6 @@ class RepresentativeCard extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                         ),
-                        const SizedBox(width: 8),
                         Text(
                           partyName,
                           style: TextStyle(
@@ -165,6 +168,8 @@ class RepresentativeCard extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -173,10 +178,15 @@ class RepresentativeCard extends StatelessWidget {
                         fontSize: 14,
                         color: Colors.grey.shade800,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     if (representative.phone != null) ...[
                       const SizedBox(height: 8),
-                      Row(
+                      // Use a Wrap for phone number to prevent overflow
+                      Wrap(
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Icon(Icons.phone,
                               size: 14,
@@ -188,6 +198,7 @@ class RepresentativeCard extends StatelessWidget {
                               fontSize: 12,
                               color: Theme.of(context).colorScheme.primary,
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -209,26 +220,50 @@ class RepresentativeCard extends StatelessWidget {
     );
   }
   
-  // Helper method to build a position text based on representative type
-  String _buildPositionText(Representative representative) {
-    // Determine if this is a local representative
-    final bool isLocal = _isLocalRepresentative(representative);
-    
-    if (isLocal) {
-      // For local representatives, use chamber (CITY, COUNTY) and district
-      final String level = representative.chamber.toUpperCase();
-      
-      if (level == 'CITY') {
-        return 'City Official, ${representative.district ?? representative.state}';
-      } else if (level == 'COUNTY') {
-        return 'County Official, ${representative.district ?? representative.state}';
-      } else {
-        return '${representative.chamber} Official, ${representative.district ?? representative.state}';
-      }
-    } else if (representative.chamber.toLowerCase() == 'senate') {
-      return 'U.S. Senator, ${representative.state}';
+// Helper method to build a position text based on representative type
+// Helper method to build a position text based on representative type
+String _buildPositionText(Representative representative) {
+  // Determine if this is a local representative
+  final bool isLocal = _isLocalRepresentative(representative);
+  
+  // Get the user-friendly role description
+  final String formattedLevel = DistrictTypeFormatter.formatDistrictType(representative.chamber);
+  
+  // Handle federal representatives
+  if (representative.chamber.toLowerCase() == 'senate' || 
+      representative.chamber.toUpperCase() == 'NATIONAL_UPPER') {
+    return 'U.S. Senator, ${representative.state}';
+  } 
+  else if (representative.chamber.toLowerCase() == 'house' || 
+           representative.chamber.toUpperCase() == 'NATIONAL_LOWER') {
+    return 'U.S. Representative, ${representative.state}${representative.district != null ? '-${representative.district}' : ''}';
+  }
+  // Handle state representatives 
+  else if (representative.chamber.toUpperCase().startsWith('STATE_')) {
+    // For state representatives, show State role, State name, and district if available
+    if (representative.office != null && representative.office!.isNotEmpty) {
+      // If we have an office title, use it
+      return '${representative.office}, ${representative.state}${representative.district != null ? ' District ${representative.district}' : ''}';
     } else {
-      return 'U.S. Representative, ${representative.state}${representative.district != null ? '-${representative.district}' : ''}';
+      // Otherwise use the formatted level
+      return '$formattedLevel, ${representative.state}${representative.district != null ? ' District ${representative.district}' : ''}';
     }
   }
+  // Handle local representatives
+  else if (isLocal) {
+    // For local representatives, create a more descriptive position text
+    if (representative.office != null && representative.office!.isNotEmpty) {
+      // If we have an office title, use it
+      return '${representative.office}, ${representative.district ?? representative.state}';
+    } else {
+      // Otherwise use the formatted level
+      return '$formattedLevel, ${representative.district ?? representative.state}';
+    }
+  } 
+  // Handle any other case
+  else {
+    // For other roles, use the formatted level
+    return '$formattedLevel, ${representative.state}${representative.district != null ? ' District ${representative.district}' : ''}';
+  }
+}
 }

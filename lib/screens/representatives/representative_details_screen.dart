@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';  // For clipboard functionality
+import 'package:govvy/utils/district_type_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/models/representative_model.dart';
@@ -585,41 +586,89 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
       ),
     );
   }
-  
   Widget _buildProfileTab(RepresentativeDetails rep) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // The main contact info is now in its own dedicated section
-          
-          // Show other profile details
-          if (rep.dateOfBirth != null)
-            _buildInfoSection('Date of Birth', rep.dateOfBirth),
-          if (rep.gender != null)
-            _buildInfoSection('Gender', rep.gender),
-          
-          const SizedBox(height: 16),
-          const Divider(),
-          const SizedBox(height: 16),
-          
-          Text(
-            'About',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+  return SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // The main contact info is now in its own dedicated section
+        
+        // Show other profile details
+        if (rep.dateOfBirth != null)
+          _buildInfoSection('Date of Birth', rep.dateOfBirth),
+        if (rep.gender != null)
+          _buildInfoSection('Gender', rep.gender),
+        
+        const SizedBox(height: 16),
+        const Divider(),
+        const SizedBox(height: 16),
+        
+        Text(
+          'About',
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
           ),
-          const SizedBox(height: 8),
-          Text(
-            '${rep.name} is a member of the ${rep.chamber} representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          // Additional biographical information would go here
-        ],
-      ),
-    );
+        ),
+        const SizedBox(height: 8),
+        
+        // Build a more descriptive About text
+        _buildAboutText(rep),
+      ],
+    ),
+  );
+}
+
+// Helper to build a descriptive About text
+Widget _buildAboutText(RepresentativeDetails rep) {
+  final String formattedLevel = DistrictTypeFormatter.formatDistrictType(rep.chamber);
+  String aboutText;
+  
+  // Federal representatives
+  if (rep.chamber.toUpperCase() == 'NATIONAL_UPPER' || rep.chamber.toLowerCase() == 'senate') {
+    aboutText = '${rep.name} is a United States Senator representing ${rep.state}.';
+  } 
+  else if (rep.chamber.toUpperCase() == 'NATIONAL_LOWER' || rep.chamber.toLowerCase() == 'house') {
+    aboutText = '${rep.name} is a member of the U.S. House of Representatives representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
   }
+  // State representatives
+  else if (rep.chamber.toUpperCase().startsWith('STATE_')) {
+    if (rep.chamber.toUpperCase() == 'STATE_UPPER') {
+      aboutText = '${rep.name} is a State Senator representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
+    } 
+    else if (rep.chamber.toUpperCase() == 'STATE_LOWER') {
+      aboutText = '${rep.name} is a State Representative serving in the ${rep.state} House of Representatives${rep.district != null ? ' for District ${rep.district}' : ''}.';
+    }
+    else if (rep.chamber.toUpperCase() == 'STATE_EXEC') {
+      aboutText = '${rep.name} serves in the executive branch of ${rep.state} state government.';
+    }
+    else {
+      aboutText = '${rep.name} is a member of the ${formattedLevel} representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
+    }
+  }
+  // Local representatives
+  else if (rep.chamber.toUpperCase() == 'LOCAL_EXEC' || rep.chamber.toUpperCase() == 'MAYOR') {
+    aboutText = '${rep.name} is the Mayor of ${rep.district ?? rep.state}.';
+  }
+  else if (rep.chamber.toUpperCase() == 'LOCAL' || rep.chamber.toUpperCase() == 'CITY') {
+    aboutText = '${rep.name} is a member of the City Council for ${rep.district ?? rep.state}.';
+  }
+  else if (rep.chamber.toUpperCase() == 'COUNTY') {
+    aboutText = '${rep.name} is a County Commissioner for ${rep.district ?? rep.state}.';
+  }
+  else if (rep.chamber.toUpperCase() == 'SCHOOL') {
+    aboutText = '${rep.name} is a member of the School Board for ${rep.district ?? rep.state}.';
+  }
+  // Fallback for other types
+  else {
+    aboutText = '${rep.name} is a member of the ${formattedLevel} representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
+  }
+  
+  return Text(
+    aboutText,
+    style: Theme.of(context).textTheme.bodyLarge,
+  );
+}
   
   Widget _buildInfoSection(String title, String? content) {
     if (content == null || content.isEmpty) {

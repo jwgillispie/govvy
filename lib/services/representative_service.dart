@@ -1303,4 +1303,5 @@ class RepresentativeService {
     socialMedia: socialMediaLinks.isEmpty ? null : socialMediaLinks, // Added social media
   );
 }
+
 }

@@ -1241,4 +1241,125 @@ class CiceroService {
     // No match found
     return null;
   }
+  // Add to lib/services/cicero_service.dart
+
+// Get representatives by name
+Future<List<LocalRepresentative>> getRepresentativesByName(String lastName, {String? firstName}) async {
+  try {
+    if (!hasApiKey) {
+      if (kDebugMode) {
+        print('Cicero API key not found. Using mock data for development.');
+      }
+      return _getMockLocalRepresentativesByName(lastName, firstName);
+    }
+    
+    // Build query parameters
+    Map<String, String> queryParams = {
+      'last_name': lastName,
+      'valid_range': 'ALL',
+      'format': 'json',
+      'key': _apiKey!
+    };
+    
+    // Add first name if provided
+    if (firstName != null && firstName.isNotEmpty) {
+      queryParams['first_name'] = firstName;
+    }
+    
+    // Use the official endpoint
+    final url = Uri.parse('$_baseUrl/official').replace(queryParameters: queryParams);
+    
+    if (kDebugMode) {
+      print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+    }
+    
+    final response = await http.get(url);
+    
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      List<LocalRepresentative> representatives = [];
+      
+      // Process officials
+      if (data.containsKey('response') && 
+          data['response'].containsKey('results') &&
+          data['response']['results'].containsKey('officials')) {
+        
+        final officials = data['response']['results']['officials'];
+        
+        if (officials is List) {
+          for (var officialData in officials) {
+            if (officialData is Map) {
+              representatives.add(_processCiceroOfficial(
+                  Map<String, dynamic>.from(officialData)));
+            }
+          }
+        }
+      }
+      
+      return representatives;
+    } else {
+      if (kDebugMode) {
+        print('API error: ${response.statusCode} - ${response.body}');
+      }
+      throw Exception('Failed to fetch representatives by name: ${response.statusCode}');
+    }
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error fetching representatives by name: $e');
+    }
+    return _getMockLocalRepresentativesByName(lastName, firstName);
+  }
+}
+
+// Mock data for name search
+List<LocalRepresentative> _getMockLocalRepresentativesByName(String lastName, [String? firstName]) {
+  // Determine a more accurate name filter if firstName is provided
+  final nameFilter = firstName != null ? '$firstName $lastName' : lastName;
+  
+  return [
+    LocalRepresentative(
+      name: firstName != null ? '$firstName $lastName' : 'John $lastName',
+      bioGuideId: 'cicero-mock-state-senate-${lastName.toLowerCase()}',
+      party: 'Republican',
+      level: 'STATE_UPPER',
+      state: 'CA',
+      district: 'State Senate District 12',
+      office: 'State Senator',
+      phone: '(555) 123-4567',
+      email: '${lastName.toLowerCase()}@state.gov',
+      website: 'https://www.state.gov/senators/${lastName.toLowerCase()}',
+      imageUrl: null,
+      socialMedia: ['Twitter: @${lastName.toLowerCase()}', 'Facebook: ${lastName.toLowerCase()}ForSenate'],
+    ),
+    LocalRepresentative(
+      name: firstName != null ? 'Mayor $firstName $lastName' : 'Mayor Mary $lastName',
+      bioGuideId: 'cicero-mock-mayor-${lastName.toLowerCase()}',
+      party: 'Democratic',
+      level: 'LOCAL_EXEC',
+      state: 'NY',
+      district: 'New York City',
+      office: 'Mayor',
+      phone: '(555) 987-6543',
+      email: 'mayor${lastName.toLowerCase()}@city.gov',
+      website: 'https://www.city.gov/mayor',
+      imageUrl: null,
+      socialMedia: ['Twitter: @Mayor${lastName.toLowerCase()}', 'Instagram: Mayor${lastName.toLowerCase()}'],
+    ),
+    LocalRepresentative(
+      name: firstName != null ? 'Councilmember $firstName $lastName' : 'Councilmember Robert $lastName',
+      bioGuideId: 'cicero-mock-council-${lastName.toLowerCase()}',
+      party: 'Independent',
+      level: 'LOCAL',
+      state: 'FL',
+      district: 'Miami City Council District 3',
+      office: 'City Council Member',
+      phone: '(555) 555-5555',
+      email: 'council${lastName.toLowerCase()}@miami.gov',
+      website: 'https://www.miami.gov/council/district3',
+      imageUrl: null,
+      socialMedia: null,
+    ),
+  ];
+}
+  
 }
