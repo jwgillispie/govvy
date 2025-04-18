@@ -12,10 +12,11 @@ class FindRepresentativesScreen extends StatefulWidget {
   const FindRepresentativesScreen({Key? key}) : super(key: key);
 
   @override
-  State<FindRepresentativesScreen> createState() => _FindRepresentativesScreenState();
+  State<FindRepresentativesScreen> createState() =>
+      _FindRepresentativesScreenState();
 }
 
-class _FindRepresentativesScreenState extends State<FindRepresentativesScreen> 
+class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     with SingleTickerProviderStateMixin {
   String? _userState;
   String? _userCity;
@@ -24,7 +25,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
   bool _isSearching = false;
   bool _showCitySearch = false;
   late TabController _tabController;
-  
+
   // US States mapping for dropdown
   final List<Map<String, String>> _usStates = [
     {"name": "Alabama", "code": "AL"},
@@ -82,38 +83,39 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
 
   String? _selectedState;
   String? _districtNumber;
-  
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _fetchStateAndLoadCache();
   }
-  
+
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
   }
-  
+
   // Fetch state from profile and try to load from cache
   Future<void> _fetchStateAndLoadCache() async {
     try {
       setState(() {
         _initialLoadComplete = false;
       });
-      
+
       // Try to load from provider's cache first
-      final provider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
+      final provider =
+          Provider.of<CombinedRepresentativeProvider>(context, listen: false);
       final cacheLoaded = await provider.loadFromCache();
-      
+
       if (cacheLoaded) {
         setState(() {
           _userState = provider.lastSearchedState;
           _userCity = provider.lastSearchedCity;
           _selectedState = _userState;
         });
-        
+
         // If we have city data from the cache, show city search UI
         if (_userCity != null && _userCity!.isNotEmpty) {
           setState(() {
@@ -124,7 +126,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
         // If no cache, try to get from user profile
         final authService = Provider.of<AuthService>(context, listen: false);
         final userData = await authService.getCurrentUserData();
-        
+
         if (userData != null && userData.address.isNotEmpty) {
           // Try to extract state from address
           final addressParts = userData.address.split(',');
@@ -132,22 +134,22 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
             final stateZipPart = addressParts[addressParts.length - 1].trim();
             final statePattern = RegExp(r'([A-Za-z]{2})');
             final match = statePattern.firstMatch(stateZipPart);
-            
+
             if (match != null) {
               final stateCode = match.group(1)!.toUpperCase();
-              
+
               // Find the full state name
               final stateData = _usStates.firstWhere(
                 (state) => state["code"] == stateCode,
                 orElse: () => {"name": "", "code": ""},
               );
-              
+
               setState(() {
                 _userState = stateCode;
                 _selectedState = stateCode;
               });
             }
-            
+
             // Try to extract city from address
             if (addressParts.length > 1) {
               _userCity = addressParts[1].trim();
@@ -155,7 +157,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
           }
         }
       }
-      
+
       setState(() {
         _initialLoadComplete = true;
       });
@@ -163,11 +165,12 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
       debugPrint('Error fetching state: $e');
       setState(() {
         _initialLoadComplete = true;
-        _validationError = 'Could not load your saved state. Please select a state manually.';
+        _validationError =
+            'Could not load your saved state. Please select a state manually.';
       });
     }
   }
-  
+
   // Fetch representatives based on state and optional district
   Future<void> _fetchRepresentativesByState() async {
     if (_selectedState == null || _selectedState!.isEmpty) {
@@ -176,29 +179,32 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
       });
       return;
     }
-    
+
     setState(() {
       _isSearching = true;
       _validationError = null;
       // Clear any previous error message
-      final provider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
+      final provider =
+          Provider.of<CombinedRepresentativeProvider>(context, listen: false);
       provider.clearErrors();
     });
-    
+
     try {
       // Clear any previous errors
-      final provider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
+      final provider =
+          Provider.of<CombinedRepresentativeProvider>(context, listen: false);
       provider.clearErrors();
-      
+
       // Fetch representatives by state and optional district
-      await provider.fetchRepresentativesByState(_selectedState!, _districtNumber);
-      
+      await provider.fetchRepresentativesByState(
+          _selectedState!, _districtNumber);
+
       if (provider.errorMessage != null && mounted) {
         setState(() {
           _validationError = provider.errorMessage;
         });
       }
-      
+
       // Switch to the appropriate tab
       _tabController.animateTo(1); // Federal/State tab
     } catch (e) {
@@ -215,7 +221,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
       }
     }
   }
-  
+
   // Fetch local representatives by city name
   Future<void> _fetchLocalRepresentativesByCity(String city) async {
     if (city.isEmpty) {
@@ -224,23 +230,24 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
       });
       return;
     }
-    
+
     setState(() {
       _isSearching = true;
       _validationError = null;
       _userCity = city;
     });
-    
+
     try {
       // Get the provider and fetch local reps by city
-      final provider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
+      final provider =
+          Provider.of<CombinedRepresentativeProvider>(context, listen: false);
       provider.clearErrors();
-      
+
       await provider.fetchLocalRepresentativesByCity(city);
-      
+
       // Navigate to the Local tab after search completes
       _tabController.animateTo(2); // Index 2 is the Local tab
-      
+
       if (provider.errorMessage != null && mounted) {
         setState(() {
           _validationError = provider.errorMessage;
@@ -260,11 +267,11 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
       }
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CombinedRepresentativeProvider>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Find Your Representatives'),
@@ -308,21 +315,21 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                         ],
                       ),
                       const SizedBox(height: 16),
-                      
+
                       // Show either state search or city search based on toggle
                       _showCitySearch
-                        ? CitySearchInput(
-                            initialCity: _userCity,
-                            isLoading: _isSearching,
-                            onCitySubmitted: (cityName) {
-                              _fetchLocalRepresentativesByCity(cityName);
-                            },
-                          )
-                        : _buildStateSearchForm(),
+                          ? CitySearchInput(
+                              initialCity: _userCity,
+                              isLoading: _isSearching,
+                              onCitySubmitted: (cityName) {
+                                _fetchLocalRepresentativesByCity(cityName);
+                              },
+                            )
+                          : _buildStateSearchForm(),
                     ],
                   ),
                 ),
-                
+
                 // Tab bar
                 TabBar(
                   controller: _tabController,
@@ -335,7 +342,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                   unselectedLabelColor: Colors.grey,
                   indicatorColor: Theme.of(context).colorScheme.primary,
                 ),
-                
+
                 // Error message if any
                 if (_validationError != null || provider.errorMessage != null)
                   Padding(
@@ -353,7 +360,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                       ),
                     ),
                   ),
-                
+
                 // Loading indicators
                 if (provider.isLoading)
                   Padding(
@@ -373,7 +380,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                       ],
                     ),
                   ),
-                
+
                 // Tab content
                 Expanded(
                   child: TabBarView(
@@ -381,25 +388,21 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                     children: [
                       // All representatives tab
                       _buildRepresentativesList(
-                        provider.allRepresentatives,
-                        _showCitySearch 
-                          ? 'Enter a city to find your representatives'
-                          : 'Select a state to find your representatives'
-                      ),
-                      
+                          provider.allRepresentatives,
+                          _showCitySearch
+                              ? 'Enter a city to find your representatives'
+                              : 'Select a state to find your representatives'),
+
                       // Federal/State representatives tab
-                      _buildRepresentativesList(
-                        provider.federalRepresentatives,
-                        'Select a state to find your federal and state representatives'
-                      ),
-                      
+                      _buildRepresentativesList(provider.federalRepresentatives,
+                          'Select a state to find your federal and state representatives'),
+
                       // Local representatives tab
                       _buildRepresentativesList(
-                        provider.localRepresentatives,
-                        _showCitySearch
-                          ? 'Enter a city to find your local representatives'
-                          : 'Select a state and enter district for your local representatives'
-                      ),
+                          provider.localRepresentatives,
+                          _showCitySearch
+                              ? 'Enter a city to find your local representatives'
+                              : 'Select a state and enter district for your local representatives'),
                     ],
                   ),
                 ),
@@ -408,7 +411,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     );
   }
 
-  // Build state and district search form  
+  // Build state and district search form
   Widget _buildStateSearchForm() {
     return Form(
       child: Column(
@@ -425,7 +428,8 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
               prefixIcon: const Icon(Icons.public),
             ),
             items: _usStates.map((Map<String, String> state) {
@@ -440,9 +444,9 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
               });
             },
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // District number input (optional)
           TextFormField(
             decoration: InputDecoration(
@@ -454,7 +458,8 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
               prefixIcon: const Icon(Icons.grid_3x3),
             ),
             keyboardType: TextInputType.number,
@@ -464,9 +469,9 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
               });
             },
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Search button
           SizedBox(
             width: double.infinity,
@@ -495,20 +500,20 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
               ),
             ),
           ),
-          
+
           // Popular states chips
           const SizedBox(height: 16),
           Wrap(
             spacing: 8,
             runSpacing: 8,
             children: [
-              const Text(
-                'Popular: ',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              // const Text(
+              //   'Popular: ',
+              //   style: TextStyle(
+              //     fontSize: 14,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
               ..._buildPopularStateChips(),
             ],
           ),
@@ -516,7 +521,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
       ),
     );
   }
-  
+
   // Helper to build popular state chips
   List<Widget> _buildPopularStateChips() {
     final List<String> popularStates = ['CA', 'TX', 'NY', 'FL', 'IL'];
@@ -541,7 +546,9 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
         .toList();
   }
 
-  Widget _buildRepresentativesList(List<Representative> representatives, String emptyMessage) {
+// Updated _buildRepresentativesList method in FindRepresentativesScreen
+  Widget _buildRepresentativesList(
+      List<Representative> representatives, String emptyMessage) {
     if (representatives.isEmpty) {
       return Center(
         child: Padding(
@@ -565,11 +572,15 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
         ),
       );
     }
-    
+
+    // Sort representatives by name for consistency
+    final sortedReps = List<Representative>.from(representatives)
+      ..sort((a, b) => a.name.compareTo(b.name));
+
     return ListView.builder(
-      itemCount: representatives.length,
+      itemCount: sortedReps.length,
       itemBuilder: (context, index) {
-        final rep = representatives[index];
+        final rep = sortedReps[index];
         return RepresentativeCard(
           representative: rep,
           onTap: () {

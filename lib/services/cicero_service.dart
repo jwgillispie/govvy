@@ -9,11 +9,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CiceroService {
   final String _baseUrl = 'https://cicero.azavea.com/v3.1';
-  
+
   // Get API key from environment variables
   String? get _apiKey {
     final key = dotenv.env['CICERO_API_KEY'];
-    
+
     if (kDebugMode) {
       if (key == null) {
         print('WARNING: CICERO_API_KEY not found in .env file');
@@ -21,16 +21,17 @@ class CiceroService {
         print('WARNING: CICERO_API_KEY is empty in .env file');
       } else {
         // Only show first few chars for security
-        print('CICERO_API_KEY found: ${key.substring(0, min(3, key.length))}...');
+        print(
+            'CICERO_API_KEY found: ${key.substring(0, min(3, key.length))}...');
       }
     }
-    
+
     return key;
   }
-  
+
   String? get _googleApiKey {
     final key = dotenv.env['GOOGLE_MAPS_API_KEY'];
-    
+
     if (kDebugMode) {
       if (key == null) {
         print('WARNING: GOOGLE_MAPS_API_KEY not found in .env file');
@@ -38,13 +39,14 @@ class CiceroService {
         print('WARNING: GOOGLE_MAPS_API_KEY is empty in .env file');
       } else {
         // Only show first few chars for security
-        print('GOOGLE_MAPS_API_KEY found: ${key.substring(0, min(3, key.length))}...');
+        print(
+            'GOOGLE_MAPS_API_KEY found: ${key.substring(0, min(3, key.length))}...');
       }
     }
-    
+
     return key;
   }
-  
+
   // Check if API key is available
   bool get hasApiKey {
     final hasKey = _apiKey != null && _apiKey!.isNotEmpty;
@@ -53,7 +55,7 @@ class CiceroService {
     }
     return hasKey;
   }
-  
+
   bool get hasGoogleApiKey {
     final hasKey = _googleApiKey != null && _googleApiKey!.isNotEmpty;
     if (kDebugMode && !hasKey) {
@@ -61,13 +63,14 @@ class CiceroService {
     }
     return hasKey;
   }
-  
+
   // NEW: Function to geocode a city name to coordinates
   Future<Map<String, double>?> geocodeCityToCoordinates(String city) async {
     try {
       if (!hasGoogleApiKey) {
         if (kDebugMode) {
-          print('Google Maps API key not found. Using hardcoded coordinates for city.');
+          print(
+              'Google Maps API key not found. Using hardcoded coordinates for city.');
         }
         // Try using hardcoded coordinates first
         final hardcodedCoordinates = _getHardcodedCoordinatesForCity(city);
@@ -76,7 +79,7 @@ class CiceroService {
         }
         return null;
       }
-      
+
       // First, check if the city has a state code (e.g., "Atlanta, GA")
       String searchCity = city;
       if (city.contains(',')) {
@@ -91,45 +94,43 @@ class CiceroService {
           searchCity = '$city, USA';
         }
       }
-      
+
       if (kDebugMode) {
         print('Geocoding city: $searchCity');
       }
-      
+
       // Call Google's Geocoding API
       final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
-          .replace(queryParameters: {
-            'address': searchCity,
-            'key': _googleApiKey!
-          });
-          
+          .replace(
+              queryParameters: {'address': searchCity, 'key': _googleApiKey!});
+
       final response = await http.get(url);
-      
+
       if (response.statusCode != 200) {
         throw Exception('Geocoding API error: ${response.statusCode}');
       }
-      
+
       final data = jsonDecode(response.body);
-      
+
       if (data['status'] != 'OK' || data['results'].isEmpty) {
         throw Exception('Geocoding error: ${data['status']}');
       }
-      
+
       // Extract latitude and longitude
       final location = data['results'][0]['geometry']['location'];
       final lat = location['lat'] as double;
       final lng = location['lng'] as double;
-      
+
       if (kDebugMode) {
         print('Successfully geocoded $searchCity to lat: $lat, lng: $lng');
       }
-      
+
       return {'lat': lat, 'lng': lng};
     } catch (e) {
       if (kDebugMode) {
         print('Error geocoding city: $e');
       }
-      
+
       // Fallback to hardcoded coordinates
       final hardcodedCoordinates = _getHardcodedCoordinatesForCity(city);
       if (hardcodedCoordinates != null) {
@@ -138,13 +139,14 @@ class CiceroService {
         }
         return hardcodedCoordinates;
       }
-      
+
       return null;
     }
   }
-  
+
   // Get local representatives by city name
-  Future<List<LocalRepresentative>> getLocalRepresentativesByCity(String city) async {
+  Future<List<LocalRepresentative>> getLocalRepresentativesByCity(
+      String city) async {
     try {
       if (!hasApiKey) {
         if (kDebugMode) {
@@ -152,39 +154,38 @@ class CiceroService {
         }
         return _getMockLocalRepresentatives(city: city);
       }
-      
+
       if (kDebugMode) {
         print('Searching for local representatives in city: $city');
       }
-      
+
       // UPDATED APPROACH: First geocode the city to get coordinates
       final coordinates = await geocodeCityToCoordinates(city);
-      
+
       if (coordinates == null) {
         throw Exception('Could not geocode city: $city');
       }
-      
+
       // Use coordinates to search for representatives
-      final url = Uri.parse('$_baseUrl/official')
-          .replace(queryParameters: {
-            'lat': coordinates['lat'].toString(),
-            'lon': coordinates['lng'].toString(),
-            'format': 'json',
-            'key': _apiKey!,
-            'max': '100',
-          });
-      
+      final url = Uri.parse('$_baseUrl/official').replace(queryParameters: {
+        'lat': coordinates['lat'].toString(),
+        'lon': coordinates['lng'].toString(),
+        'format': 'json',
+        'key': _apiKey!,
+        'max': '100',
+      });
+
       if (kDebugMode) {
         print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
       }
-      
+
       // Use the fetchRepresentatives method to handle the API call
       final representatives = await _fetchRepresentatives(url, city);
-      
+
       if (kDebugMode) {
         print('Found ${representatives.length} representatives for $city');
       }
-      
+
       return representatives;
     } catch (e) {
       if (kDebugMode) {
@@ -195,9 +196,10 @@ class CiceroService {
       return _getMockLocalRepresentatives(city: city);
     }
   }
-  
+
   // Original method, kept for backward compatibility
-  Future<List<LocalRepresentative>> getLocalRepresentativesByAddress(String address) async {
+  Future<List<LocalRepresentative>> getLocalRepresentativesByAddress(
+      String address) async {
     try {
       if (!hasApiKey) {
         if (kDebugMode) {
@@ -205,53 +207,52 @@ class CiceroService {
         }
         return _getMockLocalRepresentatives();
       }
-      
+
       // Check if this looks like just a city
       final trimmedAddress = address.trim();
       if (!trimmedAddress.contains(',') && !trimmedAddress.contains(' ')) {
         // This might be just a city name
         return getLocalRepresentativesByCity(trimmedAddress);
       }
-      
+
       // IMPROVED APPROACH: Try to geocode the address first
       final coordinates = await geocodeAddressToCoordinates(address);
-      
+
       if (coordinates != null) {
         // Use coordinates to search for representatives
-        final url = Uri.parse('$_baseUrl/official')
-            .replace(queryParameters: {
-              'lat': coordinates['lat'].toString(),
-              'lon': coordinates['lng'].toString(),
-              'format': 'json',
-              'key': _apiKey!,
-              'max': '100',
-              // Add filters to only get local data if needed
-              'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
-            });
-        
+        final url = Uri.parse('$_baseUrl/official').replace(queryParameters: {
+          'lat': coordinates['lat'].toString(),
+          'lon': coordinates['lng'].toString(),
+          'format': 'json',
+          'key': _apiKey!,
+          'max': '100',
+          // Add filters to only get local data if needed
+          'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
+        });
+
         if (kDebugMode) {
-          print('Using coordinates-based API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+          print(
+              'Using coordinates-based API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
         }
-        
+
         return await _fetchRepresentatives(url, null);
       }
-      
+
       // Fallback to traditional search_loc approach
-      final url = Uri.parse('$_baseUrl/official')
-          .replace(queryParameters: {
-            'search_loc': address,
-            'key': _apiKey!,
-            'format': 'json',
-            'max': '100',
-            // Add filters to only get local data
-            'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
-          });
-      
+      final url = Uri.parse('$_baseUrl/official').replace(queryParameters: {
+        'search_loc': address,
+        'key': _apiKey!,
+        'format': 'json',
+        'max': '100',
+        // Add filters to only get local data
+        'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
+      });
+
       if (kDebugMode) {
         print('Calling Cicero API with address: $address');
         print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
       }
-      
+
       return await _fetchRepresentatives(url, null);
     } catch (e) {
       if (kDebugMode) {
@@ -261,46 +262,45 @@ class CiceroService {
       return _getMockLocalRepresentatives();
     }
   }
-  
+
   // NEW: Helper to geocode an address to coordinates
-  Future<Map<String, double>?> geocodeAddressToCoordinates(String address) async {
+  Future<Map<String, double>?> geocodeAddressToCoordinates(
+      String address) async {
     try {
       if (!hasGoogleApiKey) {
         return null;
       }
-      
+
       if (kDebugMode) {
         print('Geocoding address: $address');
       }
-      
+
       // Call Google's Geocoding API
       final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
-          .replace(queryParameters: {
-            'address': address,
-            'key': _googleApiKey!
-          });
-          
+          .replace(
+              queryParameters: {'address': address, 'key': _googleApiKey!});
+
       final response = await http.get(url);
-      
+
       if (response.statusCode != 200) {
         throw Exception('Geocoding API error: ${response.statusCode}');
       }
-      
+
       final data = jsonDecode(response.body);
-      
+
       if (data['status'] != 'OK' || data['results'].isEmpty) {
         throw Exception('Geocoding error: ${data['status']}');
       }
-      
+
       // Extract latitude and longitude
       final location = data['results'][0]['geometry']['location'];
       final lat = location['lat'] as double;
       final lng = location['lng'] as double;
-      
+
       if (kDebugMode) {
         print('Successfully geocoded address to lat: $lat, lng: $lng');
       }
-      
+
       return {'lat': lat, 'lng': lng};
     } catch (e) {
       if (kDebugMode) {
@@ -309,347 +309,390 @@ class CiceroService {
       return null;
     }
   }
-  
-  Future<List<LocalRepresentative>> _fetchRepresentatives(Uri url, String? cityFilter) async {
-  try {
-    final response = await http.get(url);
-    
-    if (kDebugMode) {
-      print('Cicero API response received. Status: ${response.statusCode}');
-      print('Response body preview: ${response.body.substring(0, min(200, response.body.length))}...');
-    }
-    
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      List<LocalRepresentative> representatives = [];
-      
-      // Check for errors in response
-      if (data.containsKey('response') && 
-          data['response'].containsKey('errors') && 
-          data['response']['errors'] is List && 
-          (data['response']['errors'] as List).isNotEmpty) {
-        throw Exception('Cicero API error: ${data['response']['errors']}');
+
+  Future<List<LocalRepresentative>> _fetchRepresentatives(
+      Uri url, String? cityFilter) async {
+    try {
+      final response = await http.get(url);
+
+      if (kDebugMode) {
+        print('Cicero API response received. Status: ${response.statusCode}');
+        print(
+            'Response body preview: ${response.body.substring(0, min(200, response.body.length))}...');
       }
-      
-      // Direct officials array in response
-      if (data.containsKey('response') && 
-          data['response'].containsKey('officials') && 
-          data['response']['officials'] is List) {
-        
-        final officials = data['response']['officials'] as List;
-        for (var officialData in officials) {
-          if (officialData is Map) {
-            representatives.add(_processCiceroOfficial(Map<String, dynamic>.from(officialData)));
-          }
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        List<LocalRepresentative> representatives = [];
+
+        // Check for errors in response
+        if (data.containsKey('response') &&
+            data['response'].containsKey('errors') &&
+            data['response']['errors'] is List &&
+            (data['response']['errors'] as List).isNotEmpty) {
+          throw Exception('Cicero API error: ${data['response']['errors']}');
         }
-      } 
-      // Officials in results
-      else if (data.containsKey('response') && 
-              data['response'].containsKey('results') && 
-              data['response']['results'] is Map) {
-        
-        final results = Map<String, dynamic>.from(data['response']['results'] as Map);
-        
-        // Check for officials directly in results
-        if (results.containsKey('officials') && results['officials'] is List) {
-          final officials = results['officials'] as List;
+
+        // Direct officials array in response
+        if (data.containsKey('response') &&
+            data['response'].containsKey('officials') &&
+            data['response']['officials'] is List) {
+          final officials = data['response']['officials'] as List;
           for (var officialData in officials) {
             if (officialData is Map) {
-              representatives.add(_processCiceroOfficial(Map<String, dynamic>.from(officialData)));
+              representatives.add(_processCiceroOfficial(
+                  Map<String, dynamic>.from(officialData)));
             }
           }
         }
-        // Check for candidates with officials
-        else if (results.containsKey('candidates') && results['candidates'] is List) {
-          final candidates = results['candidates'] as List;
-          
-          for (var candidateData in candidates) {
-            if (candidateData is Map) {
-              final candidate = Map<String, dynamic>.from(candidateData);
-              
-              // Check for districts with officials
-              if (candidate.containsKey('districts') && candidate['districts'] is List) {
-                final districts = candidate['districts'] as List;
-                
-                for (var districtData in districts) {
-                  if (districtData is Map) {
-                    final district = Map<String, dynamic>.from(districtData);
-                    
-                    // Process officials in this district
-                    if (district.containsKey('officials') && district['officials'] is List) {
-                      final officials = district['officials'] as List;
-                      
-                      for (var officialData in officials) {
-                        if (officialData is Map) {
-                          representatives.add(_processCiceroOfficial(Map<String, dynamic>.from(officialData)));
+        // Officials in results
+        else if (data.containsKey('response') &&
+            data['response'].containsKey('results') &&
+            data['response']['results'] is Map) {
+          final results =
+              Map<String, dynamic>.from(data['response']['results'] as Map);
+
+          // Check for officials directly in results
+          if (results.containsKey('officials') &&
+              results['officials'] is List) {
+            final officials = results['officials'] as List;
+            for (var officialData in officials) {
+              if (officialData is Map) {
+                representatives.add(_processCiceroOfficial(
+                    Map<String, dynamic>.from(officialData)));
+              }
+            }
+          }
+          // Check for candidates with officials
+          else if (results.containsKey('candidates') &&
+              results['candidates'] is List) {
+            final candidates = results['candidates'] as List;
+
+            for (var candidateData in candidates) {
+              if (candidateData is Map) {
+                final candidate = Map<String, dynamic>.from(candidateData);
+
+                // Check for districts with officials
+                if (candidate.containsKey('districts') &&
+                    candidate['districts'] is List) {
+                  final districts = candidate['districts'] as List;
+
+                  for (var districtData in districts) {
+                    if (districtData is Map) {
+                      final district = Map<String, dynamic>.from(districtData);
+
+                      // Process officials in this district
+                      if (district.containsKey('officials') &&
+                          district['officials'] is List) {
+                        final officials = district['officials'] as List;
+
+                        for (var officialData in officials) {
+                          if (officialData is Map) {
+                            representatives.add(_processCiceroOfficial(
+                                Map<String, dynamic>.from(officialData)));
+                          }
                         }
                       }
                     }
                   }
                 }
-              }
-              
-              // Also check if the candidate itself has officials
-              if (candidate.containsKey('officials') && candidate['officials'] is List) {
-                final officials = candidate['officials'] as List;
-                
-                for (var officialData in officials) {
-                  if (officialData is Map) {
-                    representatives.add(_processCiceroOfficial(Map<String, dynamic>.from(officialData)));
+
+                // Also check if the candidate itself has officials
+                if (candidate.containsKey('officials') &&
+                    candidate['officials'] is List) {
+                  final officials = candidate['officials'] as List;
+
+                  for (var officialData in officials) {
+                    if (officialData is Map) {
+                      representatives.add(_processCiceroOfficial(
+                          Map<String, dynamic>.from(officialData)));
+                    }
                   }
                 }
               }
             }
           }
         }
-      }
-      
-      // Filter out duplicates (sometimes the API returns the same official multiple times)
-      Map<String, LocalRepresentative> uniqueReps = {};
-      for (var rep in representatives) {
-        uniqueReps[rep.bioGuideId] = rep;
-      }
-      
-      // If we found representatives, return them
-      if (uniqueReps.isNotEmpty) {
-        return uniqueReps.values.toList();
-      }
-      
-      // No officials found - check if it's a geocoding error
-      if (data.containsKey('response') && 
-          data['response'].containsKey('results') && 
-          data['response']['results'] is Map) {
-        
-        final results = Map<String, dynamic>.from(data['response']['results'] as Map);
-        
-        // Check if candidates array is empty (no geocoding results)
-        if (results.containsKey('candidates') && 
-            results['candidates'] is List && 
-            (results['candidates'] as List).isEmpty) {
-          throw Exception('No geocoding results found for this location');
+
+        // Filter out duplicates (sometimes the API returns the same official multiple times)
+        Map<String, LocalRepresentative> uniqueReps = {};
+        for (var rep in representatives) {
+          uniqueReps[rep.bioGuideId] = rep;
         }
+
+        // If we found representatives, return them
+        if (uniqueReps.isNotEmpty) {
+          return uniqueReps.values.toList();
+        }
+
+        // No officials found - check if it's a geocoding error
+        if (data.containsKey('response') &&
+            data['response'].containsKey('results') &&
+            data['response']['results'] is Map) {
+          final results =
+              Map<String, dynamic>.from(data['response']['results'] as Map);
+
+          // Check if candidates array is empty (no geocoding results)
+          if (results.containsKey('candidates') &&
+              results['candidates'] is List &&
+              (results['candidates'] as List).isEmpty) {
+            throw Exception('No geocoding results found for this location');
+          }
+        }
+
+        // If we get here, we found no representatives in a seemingly valid response
+        if (kDebugMode) {
+          print('No representatives found in API response structure.');
+        }
+
+        // Return empty list - caller will handle fallback
+        return [];
+      } else {
+        if (kDebugMode) {
+          print('Cicero API error: ${response.statusCode} - ${response.body}');
+        }
+        throw Exception(
+            'Failed to fetch representatives: ${response.statusCode}');
       }
-      
-      // If we get here, we found no representatives in a seemingly valid response
+    } catch (e) {
       if (kDebugMode) {
-        print('No representatives found in API response structure.');
+        print('Error fetching representatives: $e');
       }
-      
-      // Return empty list - caller will handle fallback
-      return [];
-    } else {
-      if (kDebugMode) {
-        print('Cicero API error: ${response.statusCode} - ${response.body}');
-      }
-      throw Exception('Failed to fetch representatives: ${response.statusCode}');
+      throw e;
     }
-  } catch (e) {
-    if (kDebugMode) {
-      print('Error fetching representatives: $e');
-    }
-    throw e;
   }
-}
-  
+
   // Helper method to extract district name from official
   String _getOfficialDistrict(Map<String, dynamic> official) {
-    if (official.containsKey('office') && 
-        official['office'].containsKey('district') && 
+    if (official.containsKey('office') &&
+        official['office'].containsKey('district') &&
         official['office']['district'].containsKey('name')) {
-      
       return official['office']['district']['name'].toString();
     }
     return '';
   }
-  
+
   // Helper method to check if an official is local (county or city level)
   bool _isLocalOfficial(Map<String, dynamic> official) {
-    if (official.containsKey('office') && 
-        official['office'].containsKey('district') && 
+    if (official.containsKey('office') &&
+        official['office'].containsKey('district') &&
         official['office']['district'].containsKey('district_type')) {
-      
-      final districtType = official['office']['district']['district_type'].toString().toUpperCase();
-      
+      final districtType = official['office']['district']['district_type']
+          .toString()
+          .toUpperCase();
+
       // These are the district types we consider "local"
-      return ['COUNTY', 'CITY', 'PLACE', 'TOWNSHIP', 'BOROUGH', 'TOWN', 'VILLAGE']
-          .contains(districtType);
+      return [
+        'COUNTY',
+        'CITY',
+        'PLACE',
+        'TOWNSHIP',
+        'BOROUGH',
+        'TOWN',
+        'VILLAGE'
+      ].contains(districtType);
     }
-    
+
     return false;
   }
+
   // Convert Cicero official format to LocalRepresentative model
-LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
-  // Extract basic information
-  String firstName = official['first_name']?.toString() ?? '';
-  String lastName = official['last_name']?.toString() ?? '';
-  String middleInitial = official['middle_initial']?.toString() ?? '';
-  String preferredName = official['preferred_name']?.toString() ?? '';
-  
-  // Use preferred name if available, otherwise use first name
-  String displayFirstName = preferredName.isNotEmpty ? preferredName : firstName;
-  
-  // Build full name with middle initial if available
-  String fullName = displayFirstName;
-  if (middleInitial.isNotEmpty) {
-    fullName += ' $middleInitial';
-  }
-  fullName += ' $lastName';
-  
-  // Extract party
-  String party = official['party']?.toString() ?? '';
-  
-  // Extract district info from office object
-  String level = 'Local';
-  String district = '';
-  String state = '';
-  String officeName = '';
-  
-  if (official.containsKey('office') && official['office'] is Map) {
-    final officeInfo = Map<String, dynamic>.from(official['office'] as Map);
-    
-    // Extract role/position
-    if (officeInfo.containsKey('role')) {
-      officeName = officeInfo['role']?.toString() ?? '';
+// Updated _processCiceroOfficial method in lib/services/cicero_service.dart
+  LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
+    // Extract basic information
+    String firstName = official['first_name']?.toString() ?? '';
+    String lastName = official['last_name']?.toString() ?? '';
+    String middleInitial = official['middle_initial']?.toString() ?? '';
+    String preferredName = official['preferred_name']?.toString() ?? '';
+
+    // Use preferred name if available, otherwise use first name
+    String displayFirstName =
+        preferredName.isNotEmpty ? preferredName : firstName;
+
+    // Build full name with middle initial if available
+    String fullName = displayFirstName;
+    if (middleInitial.isNotEmpty) {
+      fullName += ' $middleInitial';
     }
-    
-    // Extract district information
-    if (officeInfo.containsKey('district') && officeInfo['district'] is Map) {
-      final districtInfo = Map<String, dynamic>.from(officeInfo['district'] as Map);
-      
-      if (districtInfo.containsKey('district_type')) {
-        level = districtInfo['district_type']?.toString() ?? 'Local';
+    fullName += ' $lastName';
+
+    // Extract party
+    String party = official['party']?.toString() ?? '';
+
+    // Extract district info from office object
+    String level = 'LOCAL'; // Default to LOCAL as the base level
+    String district = '';
+    String state = '';
+    String officeName = '';
+
+    if (official.containsKey('office') && official['office'] is Map) {
+      final officeInfo = Map<String, dynamic>.from(official['office'] as Map);
+
+      // Extract role/position
+      if (officeInfo.containsKey('role')) {
+        officeName = officeInfo['role']?.toString() ?? '';
       }
-      
-      if (districtInfo.containsKey('name')) {
-        district = districtInfo['name']?.toString() ?? '';
-      }
-      
-      if (districtInfo.containsKey('state')) {
-        state = districtInfo['state']?.toString() ?? '';
-      }
-    }
-  }
-  
-  // Fallback for state if not found in district
-  if (state.isEmpty && official.containsKey('state')) {
-    state = official['state']?.toString() ?? '';
-  }
-  
-  // Extract contact information
-  String? phone;
-  String? email;
-  String? website;
-  List<String>? socialMedia;
-  
-  // Handle addresses array for contact info
-  if (official.containsKey('addresses') && official['addresses'] is List) {
-    final addresses = official['addresses'] as List;
-    for (var addressObj in addresses) {
-      if (addressObj is Map) {
-        final address = Map<String, dynamic>.from(addressObj);
-        
-        // Get the first phone number we find
-        if (phone == null && address.containsKey('phone')) {
-          phone = address['phone']?.toString();
+
+      // Extract district information
+      if (officeInfo.containsKey('district') && officeInfo['district'] is Map) {
+        final districtInfo =
+            Map<String, dynamic>.from(officeInfo['district'] as Map);
+
+        if (districtInfo.containsKey('district_type')) {
+          // Convert district_type to proper level format (COUNTY, CITY, etc.)
+          String districtType =
+              districtInfo['district_type']?.toString() ?? 'LOCAL';
+          level = districtType.toUpperCase();
+
+          // Ensure it's one of our recognized local levels
+          if (![
+            'COUNTY',
+            'CITY',
+            'PLACE',
+            'TOWNSHIP',
+            'BOROUGH',
+            'TOWN',
+            'VILLAGE'
+          ].contains(level)) {
+            // If not one of our recognized local levels, set to a generic LOCAL
+            level = 'LOCAL';
+          }
         }
-        
-        // Get the first fax number as fallback if no phone
-        if (phone == null && address.containsKey('fax')) {
-          phone = address['fax']?.toString();
+
+        if (districtInfo.containsKey('name')) {
+          district = districtInfo['name']?.toString() ?? '';
+        }
+
+        if (districtInfo.containsKey('state')) {
+          state = districtInfo['state']?.toString() ?? '';
         }
       }
     }
-  }
-  
-  // Handle email addresses array
-  if (official.containsKey('email_addresses') && 
-      official['email_addresses'] is List && 
-      (official['email_addresses'] as List).isNotEmpty) {
-    email = (official['email_addresses'] as List)[0]?.toString();
-  }
-  
-  // Handle URLs array
-  if (official.containsKey('urls') && 
-      official['urls'] is List && 
-      (official['urls'] as List).isNotEmpty) {
-    website = (official['urls'] as List)[0]?.toString();
-  } else if (official.containsKey('web_form_url')) {
-    website = official['web_form_url']?.toString();
-  }
-  
-  // Extract social media from identifiers
-  if (official.containsKey('identifiers') && official['identifiers'] is List) {
-    final identifiers = official['identifiers'] as List;
-    socialMedia = [];
-    
-    for (var idObj in identifiers) {
-      if (idObj is Map) {
-        final identifier = Map<String, dynamic>.from(idObj);
-        if (identifier.containsKey('identifier_type') && identifier.containsKey('identifier')) {
-          final type = identifier['identifier_type']?.toString() ?? '';
-          final id = identifier['identifier']?.toString() ?? '';
-          
-          // Only add social media identifiers
-          if (['twitter', 'facebook', 'instagram', 'youtube', 'linkedin'].contains(type.toLowerCase())) {
-            socialMedia.add('$type: $id');
+
+    // Fallback for state if not found in district
+    if (state.isEmpty && official.containsKey('state')) {
+      state = official['state']?.toString() ?? '';
+    }
+
+    // Extract contact information
+    String? phone;
+    String? email;
+    String? website;
+    List<String>? socialMedia;
+
+    // Handle addresses array for contact info
+    if (official.containsKey('addresses') && official['addresses'] is List) {
+      final addresses = official['addresses'] as List;
+      for (var addressObj in addresses) {
+        if (addressObj is Map) {
+          final address = Map<String, dynamic>.from(addressObj);
+
+          // Get the first phone number we find
+          if (phone == null && address.containsKey('phone')) {
+            phone = address['phone']?.toString();
+          }
+
+          // Get the first fax number as fallback if no phone
+          if (phone == null && address.containsKey('fax')) {
+            phone = address['fax']?.toString();
           }
         }
       }
     }
-    
-    // If no social media was found, set to null
-    if (socialMedia.isEmpty) {
-      socialMedia = null;
+
+    // Handle email addresses array
+    if (official.containsKey('email_addresses') &&
+        official['email_addresses'] is List &&
+        (official['email_addresses'] as List).isNotEmpty) {
+      email = (official['email_addresses'] as List)[0]?.toString();
     }
+
+    // Handle URLs array
+    if (official.containsKey('urls') &&
+        official['urls'] is List &&
+        (official['urls'] as List).isNotEmpty) {
+      website = (official['urls'] as List)[0]?.toString();
+    } else if (official.containsKey('web_form_url')) {
+      website = official['web_form_url']?.toString();
+    }
+
+    // Extract social media from identifiers
+    if (official.containsKey('identifiers') &&
+        official['identifiers'] is List) {
+      final identifiers = official['identifiers'] as List;
+      socialMedia = [];
+
+      for (var idObj in identifiers) {
+        if (idObj is Map) {
+          final identifier = Map<String, dynamic>.from(idObj);
+          if (identifier.containsKey('identifier_type') &&
+              identifier.containsKey('identifier')) {
+            final type = identifier['identifier_type']?.toString() ?? '';
+            final id = identifier['identifier']?.toString() ?? '';
+
+            // Only add social media identifiers
+            if (['twitter', 'facebook', 'instagram', 'youtube', 'linkedin']
+                .contains(type.toLowerCase())) {
+              socialMedia.add('$type: $id');
+            }
+          }
+        }
+      }
+
+      // If no social media was found, set to null
+      if (socialMedia.isEmpty) {
+        socialMedia = null;
+      }
+    }
+
+    // Extract image URL
+    String? imageUrl;
+    if (official.containsKey('photo_origin_url')) {
+      imageUrl = official['photo_origin_url']?.toString();
+    }
+
+    // Create a unique ID using either id or sk field
+    String bioGuideId = 'cicero-';
+    if (official.containsKey('id')) {
+      bioGuideId += official['id'].toString();
+    } else if (official.containsKey('sk')) {
+      // The surrogate key is more stable between terms
+      bioGuideId += 'sk-${official['sk'].toString()}';
+    } else {
+      // Create a fallback ID from name and district
+      String sanitizedDistrict =
+          district.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
+      String sanitizedName = fullName.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
+      bioGuideId += '${sanitizedDistrict}-${sanitizedName}';
+    }
+
+    return LocalRepresentative(
+      name: fullName,
+      bioGuideId: bioGuideId,
+      party: party,
+      level: level,
+      state: state,
+      district: district,
+      office: officeName,
+      phone: phone,
+      email: email,
+      website: website,
+      imageUrl: imageUrl,
+      socialMedia: socialMedia,
+    );
   }
-  
-  // Extract image URL
-  String? imageUrl;
-  if (official.containsKey('photo_origin_url')) {
-    imageUrl = official['photo_origin_url']?.toString();
-  }
-  
-  // Create a unique ID using either id or sk field
-  String bioGuideId = 'cicero-';
-  if (official.containsKey('id')) {
-    bioGuideId += official['id'].toString();
-  } else if (official.containsKey('sk')) {
-    // The surrogate key is more stable between terms
-    bioGuideId += 'sk-${official['sk'].toString()}';
-  } else {
-    // Create a fallback ID from name and district
-    String sanitizedDistrict = district.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
-    String sanitizedName = fullName.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
-    bioGuideId += '${sanitizedDistrict}-${sanitizedName}';
-  }
-  
-  return LocalRepresentative(
-    name: fullName,
-    bioGuideId: bioGuideId,
-    party: party,
-    level: level,
-    state: state,
-    district: district,
-    office: officeName,
-    phone: phone,
-    email: email,
-    website: website,
-    imageUrl: imageUrl,
-    socialMedia: socialMedia,
-  );
-}
-  
+
   // Helper method with hardcoded coordinates for common US cities
   Map<String, double>? _getHardcodedCoordinatesForCity(String cityName) {
     // Normalize input
     final normalized = cityName.toLowerCase().trim();
-    
+
     // Extract just the city if it has a state code (e.g. "Atlanta, GA" -> "atlanta")
     String cityToLookup = normalized;
     if (normalized.contains(',')) {
       cityToLookup = normalized.split(',')[0].trim();
     }
-    
+
     // Map of city names to their coordinates
     final Map<String, Map<String, double>> cityCoordinates = {
       'new york': {'lat': 40.7128, 'lng': -74.0060},
@@ -701,43 +744,44 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
       'washington dc': {'lat': 38.9072, 'lng': -77.0369},
       'dc': {'lat': 38.9072, 'lng': -77.0369},
     };
-    
+
     // Look for exact match
     if (cityCoordinates.containsKey(cityToLookup)) {
       return cityCoordinates[cityToLookup];
     }
-    
+
     // If no exact match, try to find partial matches
     for (final entry in cityCoordinates.entries) {
-      if (cityToLookup.contains(entry.key) || entry.key.contains(cityToLookup)) {
+      if (cityToLookup.contains(entry.key) ||
+          entry.key.contains(cityToLookup)) {
         return entry.value;
       }
     }
-    
+
     // No match found
     return null;
   }
-  
+
   // Provide mock data for testing or when API is unavailable
+// Updated mock data generator in CiceroService
   List<LocalRepresentative> _getMockLocalRepresentatives({String? city}) {
     // Return city-specific mock data if a city is provided
     if (city != null) {
       final cityName = city.toLowerCase();
-      
+
       if (cityName == 'atlanta' || cityName.contains('atlanta')) {
         return [
           LocalRepresentative(
             name: 'Jane Smith',
             bioGuideId: 'cicero-mock-fulton-commission-1',
             party: 'Democratic',
-            level: 'COUNTY',
+            level: 'COUNTY', // Explicitly using COUNTY
             state: 'GA',
             district: 'Fulton County Commission District 1',
             office: 'County Commissioner',
             phone: '(404) 555-1234',
             email: 'jane.smith@fultoncountyga.gov',
             website: 'https://www.fultoncountyga.gov/commissioners/district1',
-            // Use a placeholder instead of a real URL to avoid 404 errors
             imageUrl: null,
             socialMedia: ['Twitter: @janesmith', 'Facebook: JaneSmithFulton'],
           ),
@@ -745,22 +789,24 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
             name: 'Maria Rodriguez',
             bioGuideId: 'cicero-mock-atlanta-council-5',
             party: 'Democratic',
-            level: 'CITY',
+            level: 'CITY', // Explicitly using CITY
             state: 'GA',
             district: 'Atlanta City Council District 5',
             office: 'City Council Member',
             phone: '(404) 555-9012',
             email: 'maria.rodriguez@atlantaga.gov',
             website: 'https://www.atlantaga.gov/government/council/district-5',
-            // Use a placeholder instead of a real URL to avoid 404 errors
             imageUrl: null,
-            socialMedia: ['Twitter: @mariarodriguez', 'Instagram: mariarodriguezatl'],
+            socialMedia: [
+              'Twitter: @mariarodriguez',
+              'Instagram: mariarodriguezatl'
+            ],
           ),
           LocalRepresentative(
             name: 'Andre Dickens',
             bioGuideId: 'cicero-mock-atlanta-mayor',
             party: 'Democratic',
-            level: 'CITY',
+            level: 'CITY', // Explicitly using CITY
             state: 'GA',
             district: 'Atlanta',
             office: 'Mayor',
@@ -777,37 +823,41 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
             name: 'Michael Johnson',
             bioGuideId: 'cicero-mock-chicago-council-7',
             party: 'Democratic',
-            level: 'CITY',
+            level: 'CITY', // Explicitly using CITY
             state: 'IL',
             district: 'Chicago City Council Ward 7',
             office: 'City Alderman',
             phone: '(312) 555-7890',
             email: 'michael.johnson@cityofchicago.org',
             website: 'https://www.chicago.gov/city/en/about/wards/7.html',
-            // Use a placeholder instead of a real URL to avoid 404 errors
             imageUrl: null,
-            socialMedia: ['Twitter: @michaeljohnson', 'Facebook: MikeJohnsonChicago'],
+            socialMedia: [
+              'Twitter: @michaeljohnson',
+              'Facebook: MikeJohnsonChicago'
+            ],
           ),
           LocalRepresentative(
             name: 'Sarah Williams',
             bioGuideId: 'cicero-mock-cook-commission-3',
             party: 'Democratic',
-            level: 'COUNTY',
+            level: 'COUNTY', // Explicitly using COUNTY
             state: 'IL',
             district: 'Cook County Commission District 3',
             office: 'County Commissioner',
             phone: '(312) 555-4321',
             email: 'sarah.williams@cookcountyil.gov',
             website: 'https://www.cookcountyil.gov/commissioners/district3',
-            // Use a placeholder instead of a real URL to avoid 404 errors
             imageUrl: null,
-            socialMedia: ['Twitter: @sarahwilliams', 'Instagram: sarahwilliamscook'],
+            socialMedia: [
+              'Twitter: @sarahwilliams',
+              'Instagram: sarahwilliamscook'
+            ],
           ),
           LocalRepresentative(
             name: 'Brandon Johnson',
             bioGuideId: 'cicero-mock-chicago-mayor',
             party: 'Democratic',
-            level: 'CITY',
+            level: 'CITY', // Explicitly using CITY
             state: 'IL',
             district: 'Chicago',
             office: 'Mayor',
@@ -815,132 +865,138 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
             email: 'mayor@cityofchicago.org',
             website: 'https://www.chicago.gov/city/en/depts/mayor.html',
             imageUrl: null,
-            socialMedia: ['Twitter: @chicagomayor', 'Facebook: ChicagoMayorsOffice'],
+            socialMedia: [
+              'Twitter: @chicagomayor',
+              'Facebook: ChicagoMayorsOffice'
+            ],
           ),
         ];
-      } else if (cityName == 'new york' || cityName.contains('new york')) {
+      } else if (cityName == 'salt lake city' ||
+          cityName.contains('salt lake')) {
         return [
           LocalRepresentative(
-            name: 'Eric Adams',
-            bioGuideId: 'cicero-mock-nyc-mayor',
+            name: 'Erin Mendenhall',
+            bioGuideId: 'cicero-mock-slc-mayor',
             party: 'Democratic',
             level: 'CITY',
-            state: 'NY',
-            district: 'New York City',
+            state: 'UT',
+            district: 'Salt Lake City',
             office: 'Mayor',
-            phone: '(212) 555-1000',
-            email: 'mayor@nyc.gov',
-            website: 'https://www1.nyc.gov/office-of-the-mayor/',
+            phone: '(801) 555-1000',
+            email: 'mayor@slcgov.com',
+            website: 'https://www.slc.gov/mayor/',
             imageUrl: null,
-            socialMedia: ['Twitter: @NYCMayor', 'Instagram: nycmayor'],
+            socialMedia: ['Twitter: @slcmayor'],
           ),
           LocalRepresentative(
-            name: 'John Davis',
-            bioGuideId: 'cicero-mock-nyc-council-5',
-            party: 'Democratic',
+            name: 'James Rogers',
+            bioGuideId: 'cicero-mock-slc-council-1',
+            party: 'Nonpartisan',
             level: 'CITY',
-            state: 'NY',
-            district: 'New York City Council District 5',
+            state: 'UT',
+            district: 'Salt Lake City Council District 1',
             office: 'City Council Member',
-            phone: '(212) 555-5555',
-            email: 'john.davis@council.nyc.gov',
-            website: 'https://council.nyc.gov/district-5/',
-            imageUrl: null,
-            socialMedia: ['Twitter: @johnNYC', 'Facebook: johnNYC'],
-          ),
-          LocalRepresentative(
-            name: 'Lisa Rodriguez',
-            bioGuideId: 'cicero-mock-nyc-council-8',
-            party: 'Democratic',
-            level: 'CITY',
-            state: 'NY',
-            district: 'New York City Council District 8',
-            office: 'City Council Member',
-            phone: '(212) 555-8888',
-            email: 'lisa.rodriguez@council.nyc.gov',
-            website: 'https://council.nyc.gov/district-8/',
-            imageUrl: null,
-            socialMedia: ['Twitter: @lisaNYC', 'Instagram: lisaNYC'],
-          ),
-        ];
-      } else {
-        // For any other city, generate some generic local representatives
-        final String stateName = _getStateNameForCity(cityName);
-        final String stateCode = _getStateCodeForCity(cityName);
-        
-        String cityProperName = city;
-        if (city.contains(',')) {
-          cityProperName = city.split(',')[0].trim();
-        }
-        
-        // Convert to title case for display
-        cityProperName = cityProperName.split(' ')
-          .map((word) => word.isNotEmpty 
-            ? word[0].toUpperCase() + word.substring(1).toLowerCase() 
-            : '')
-          .join(' ');
-          
-        return [
-          LocalRepresentative(
-            name: 'Mayor of $cityProperName',
-            bioGuideId: 'cicero-mock-${cityName.replaceAll(' ', '-')}-mayor',
-            party: 'Independent',
-            level: 'CITY',
-            state: stateCode,
-            district: '$cityProperName City',
-            office: 'Mayor',
-            phone: '(555) 555-1234',
-            email: 'mayor@${cityName.replaceAll(' ', '')}.gov',
-            website: 'https://www.${cityName.replaceAll(' ', '')}.gov',
+            phone: '(801) 555-1001',
+            email: 'council.district1@slcgov.com',
+            website: 'https://www.slc.gov/council/district1/',
             imageUrl: null,
             socialMedia: null,
           ),
           LocalRepresentative(
-            name: 'Council Member Smith',
-            bioGuideId: 'cicero-mock-${cityName.replaceAll(' ', '-')}-council-1',
+            name: 'Jenny Wilson',
+            bioGuideId: 'cicero-mock-slc-county-mayor',
             party: 'Democratic',
-            level: 'CITY',
-            state: stateCode,
-            district: '$cityProperName City Council District 1',
-            office: 'City Council Member',
-            phone: '(555) 555-2345',
-            email: 'council@${cityName.replaceAll(' ', '')}.gov',
-            website: 'https://www.${cityName.replaceAll(' ', '')}.gov/council',
-            imageUrl: null,
-            socialMedia: null,
-          ),
-          LocalRepresentative(
-            name: 'Commissioner Jones',
-            bioGuideId: 'cicero-mock-${cityName.replaceAll(' ', '-')}-commissioner',
-            party: 'Republican',
             level: 'COUNTY',
-            state: stateCode,
-            district: '$stateName County',
-            office: 'County Commissioner',
-            phone: '(555) 555-3456',
-            email: 'commissioner@county.gov',
-            website: 'https://www.county.gov',
+            state: 'UT',
+            district: 'Salt Lake County',
+            office: 'County Mayor',
+            phone: '(801) 555-2000',
+            email: 'mayor@slco.org',
+            website: 'https://slco.org/mayor/',
             imageUrl: null,
-            socialMedia: null,
+            socialMedia: ['Twitter: @SLCoMayor'],
           ),
         ];
       }
+
+      // For any other city, generate some generic local representatives
+      // Ensure levels are properly set to recognized values
+      final String stateName = _getStateNameForCity(cityName);
+      final String stateCode = _getStateCodeForCity(cityName);
+
+      String cityProperName = city;
+      if (city.contains(',')) {
+        cityProperName = city.split(',')[0].trim();
+      }
+
+      // Convert to title case for display
+      cityProperName = cityProperName
+          .split(' ')
+          .map((word) => word.isNotEmpty
+              ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+              : '')
+          .join(' ');
+
+      return [
+        LocalRepresentative(
+          name: 'Mayor of $cityProperName',
+          bioGuideId: 'cicero-mock-${cityName.replaceAll(' ', '-')}-mayor',
+          party: 'Independent',
+          level: 'CITY', // Explicitly using CITY
+          state: stateCode,
+          district: '$cityProperName City',
+          office: 'Mayor',
+          phone: '(555) 555-1234',
+          email: 'mayor@${cityName.replaceAll(' ', '')}.gov',
+          website: 'https://www.${cityName.replaceAll(' ', '')}.gov',
+          imageUrl: null,
+          socialMedia: null,
+        ),
+        LocalRepresentative(
+          name: 'Council Member Smith',
+          bioGuideId: 'cicero-mock-${cityName.replaceAll(' ', '-')}-council-1',
+          party: 'Democratic',
+          level: 'CITY', // Explicitly using CITY
+          state: stateCode,
+          district: '$cityProperName City Council District 1',
+          office: 'City Council Member',
+          phone: '(555) 555-2345',
+          email: 'council@${cityName.replaceAll(' ', '')}.gov',
+          website: 'https://www.${cityName.replaceAll(' ', '')}.gov/council',
+          imageUrl: null,
+          socialMedia: null,
+        ),
+        LocalRepresentative(
+          name: 'Commissioner Jones',
+          bioGuideId:
+              'cicero-mock-${cityName.replaceAll(' ', '-')}-commissioner',
+          party: 'Republican',
+          level: 'COUNTY', // Explicitly using COUNTY
+          state: stateCode,
+          district: '$stateName County',
+          office: 'County Commissioner',
+          phone: '(555) 555-3456',
+          email: 'commissioner@county.gov',
+          website: 'https://www.county.gov',
+          imageUrl: null,
+          socialMedia: null,
+        ),
+      ];
     }
-    
-    // Default mock data
+
+    // Default mock data with proper level values
     return [
       LocalRepresentative(
         name: 'Jane Smith',
         bioGuideId: 'cicero-mock-fulton-commission-1',
         party: 'Democratic',
-        level: 'COUNTY',
+        level: 'COUNTY', // Explicitly using COUNTY
         state: 'GA',
         district: 'Fulton County Commission District 1',
         office: 'County Commissioner',
         phone: '(404) 555-1234',
         email: 'jane.smith@fultoncountyga.gov',
         website: 'https://www.fultoncountyga.gov/commissioners/district1',
-        // Use a placeholder instead of a real URL to avoid 404 errors
         imageUrl: null,
         socialMedia: ['Twitter: @janesmith', 'Facebook: JaneSmithFulton'],
       ),
@@ -948,14 +1004,13 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
         name: 'John Doe',
         bioGuideId: 'cicero-mock-fulton-commission-2',
         party: 'Republican',
-        level: 'COUNTY',
+        level: 'COUNTY', // Explicitly using COUNTY
         state: 'GA',
         district: 'Fulton County Commission District 2',
         office: 'County Commissioner',
         phone: '(404) 555-5678',
         email: 'john.doe@fultoncountyga.gov',
         website: 'https://www.fultoncountyga.gov/commissioners/district2',
-        // Use a placeholder instead of a real URL to avoid 404 errors
         imageUrl: null,
         socialMedia: ['Twitter: @johndoe', 'Facebook: JohnDoeFulton'],
       ),
@@ -963,20 +1018,22 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
         name: 'Maria Rodriguez',
         bioGuideId: 'cicero-mock-atlanta-council-5',
         party: 'Democratic',
-        level: 'CITY',
+        level: 'CITY', // Explicitly using CITY
         state: 'GA',
         district: 'Atlanta City Council District 5',
         office: 'City Council Member',
         phone: '(404) 555-9012',
         email: 'maria.rodriguez@atlantaga.gov',
         website: 'https://www.atlantaga.gov/government/council/district-5',
-        // Use a placeholder instead of a real URL to avoid 404 errors
         imageUrl: null,
-        socialMedia: ['Twitter: @mariarodriguez', 'Instagram: mariarodriguezatl'],
+        socialMedia: [
+          'Twitter: @mariarodriguez',
+          'Instagram: mariarodriguezatl'
+        ],
       ),
     ];
   }
-  
+
   // Helper to get a state code for a city (simplified for mock data)
   String _getStateCodeForCity(String cityName) {
     // Check if city already has state code (e.g. "New York, NY")
@@ -990,7 +1047,7 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
         }
       }
     }
-    
+
     // This is a very simplified mapping for mock data purposes
     final Map<String, String> cityToState = {
       'new york': 'NY',
@@ -1039,18 +1096,18 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
       'washington': 'DC',
       'dc': 'DC',
     };
-    
+
     // Check for exact matches
     for (final entry in cityToState.entries) {
       if (cityName.contains(entry.key)) {
         return entry.value;
       }
     }
-    
+
     // Default to a generic state code
     return 'CA';
   }
-  
+
   // Helper to get a state name for a city (simplified for mock data)
   String _getStateNameForCity(String cityName) {
     // Map of state codes to names
@@ -1107,12 +1164,12 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
       'WY': 'Wyoming',
       'DC': 'District of Columbia'
     };
-    
+
     // Get state code, then convert to name
     final stateCode = _getStateCodeForCity(cityName);
     return stateCodeToName[stateCode] ?? 'California';
   }
-  
+
   // Helper method to guess the most likely state for a given city
   String? _guessStateForCity(String cityName) {
     // Map of well-known cities to their most common state
@@ -1164,7 +1221,7 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
       'bronx': 'NY',
       'staten island': 'NY',
     };
-    
+
     // Check for city in our map (case insensitive)
     final lowerCityName = cityName.toLowerCase();
     for (final entry in cityToState.entries) {
@@ -1172,7 +1229,7 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
         return entry.value;
       }
     }
-    
+
     // No match found
     return null;
   }

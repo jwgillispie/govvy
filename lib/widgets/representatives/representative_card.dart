@@ -1,4 +1,4 @@
-// lib/widgets/representatives/representative_card.dart - Update the build method
+// lib/widgets/representatives/representative_card.dart
 import 'package:flutter/material.dart';
 import 'package:govvy/models/representative_model.dart';
 
@@ -12,38 +12,26 @@ class RepresentativeCard extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
-  Widget _buildRepresentativeBadge(Representative representative) {
-    // Determine if this is a local representative by the chamber/bioGuideId
-    final bool isLocal = representative.bioGuideId.startsWith('cicero-') ||
-        ['COUNTY', 'CITY', 'PLACE', 'TOWNSHIP', 'BOROUGH', 'TOWN', 'VILLAGE']
-            .contains(representative.chamber.toUpperCase());
-
-    if (isLocal) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-        decoration: BoxDecoration(
-          color: Colors.teal.shade100,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          'LOCAL',
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-            color: Colors.teal.shade800,
-          ),
-        ),
-      );
+  // Improved method to determine if a representative is local
+  bool _isLocalRepresentative(Representative rep) {
+    // Check if the bioGuideId follows the pattern used for local reps
+    if (rep.bioGuideId.startsWith('cicero-')) {
+      return true;
     }
-
-    return const SizedBox.shrink(); // No badge for federal/state reps
+    
+    // Check if the chamber/level indicates a local position
+    if (['COUNTY', 'CITY', 'PLACE', 'TOWNSHIP', 'BOROUGH', 'TOWN', 'VILLAGE']
+        .contains(rep.chamber.toUpperCase())) {
+      return true;
+    }
+    
+    // Otherwise, it's not a local representative
+    return false;
   }
 
   Widget _buildLocalBadge(Representative representative) {
-    // Determine if this is a local representative by the bioGuideId
-    final bool isLocal = representative.bioGuideId.startsWith('cicero-');
-    
-    if (isLocal) {
+    // Only show the local badge if it's a local representative
+    if (_isLocalRepresentative(representative)) {
       return Container(
         margin: const EdgeInsets.only(left: 8),
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -223,18 +211,21 @@ class RepresentativeCard extends StatelessWidget {
   
   // Helper method to build a position text based on representative type
   String _buildPositionText(Representative representative) {
-    final bool isLocal = representative.bioGuideId.startsWith('cicero-');
+    // Determine if this is a local representative
+    final bool isLocal = _isLocalRepresentative(representative);
     
     if (isLocal) {
       // For local representatives, use chamber (CITY, COUNTY) and district
-      if (representative.chamber.toLowerCase() == 'city') {
+      final String level = representative.chamber.toUpperCase();
+      
+      if (level == 'CITY') {
         return 'City Official, ${representative.district ?? representative.state}';
-      } else if (representative.chamber.toLowerCase() == 'county') {
+      } else if (level == 'COUNTY') {
         return 'County Official, ${representative.district ?? representative.state}';
       } else {
         return '${representative.chamber} Official, ${representative.district ?? representative.state}';
       }
-    } else if (representative.chamber == 'Senate') {
+    } else if (representative.chamber.toLowerCase() == 'senate') {
       return 'U.S. Senator, ${representative.state}';
     } else {
       return 'U.S. Representative, ${representative.state}${representative.district != null ? '-${representative.district}' : ''}';

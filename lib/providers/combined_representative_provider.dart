@@ -26,12 +26,30 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   
   // Getters
   List<Representative> get federalRepresentatives => _federalRepresentatives;
-  List<LocalRepresentative> get localRepresentativesRaw => _localRepresentativesRaw;
-  List<Representative> get localRepresentatives => 
-      _localRepresentativesRaw.map((local) => local.toRepresentative()).toList();
   
-  List<Representative> get allRepresentatives => 
-      [..._federalRepresentatives, ...localRepresentatives];
+  List<LocalRepresentative> get localRepresentativesRaw => _localRepresentativesRaw;
+  
+  // Convert LocalRepresentative objects to Representative objects and ensure they're actually local
+  List<Representative> get localRepresentatives {
+    return _localRepresentativesRaw
+        .map((local) => local.toRepresentative())
+        .where((rep) => 
+          // Filter to ensure only truly local representatives are included
+          rep.bioGuideId.startsWith('cicero-') || 
+          ['COUNTY', 'CITY', 'PLACE', 'TOWNSHIP', 'BOROUGH', 'TOWN', 'VILLAGE']
+              .contains(rep.chamber.toUpperCase())
+        )
+        .toList();
+  }
+  
+  // Combine federal and local representatives
+  List<Representative> get allRepresentatives {
+    // Get only the local representatives using the filtered getter
+    final locals = localRepresentatives;
+    
+    // Combine with federal representatives
+    return [..._federalRepresentatives, ...locals];
+  }
   
   bool get isLoading => _isLoadingFederal || _isLoadingLocal;
   bool get isLoadingFederal => _isLoadingFederal;
