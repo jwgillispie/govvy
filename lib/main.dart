@@ -9,7 +9,6 @@ import 'package:govvy/screens/landing/landing_page.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:govvy/services/representative_service.dart';
-import 'package:govvy/providers/representative_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
@@ -33,6 +32,7 @@ Future<void> _loadEnvironmentVariables() async {
     // Verify required API keys
     final congressApiKey = dotenv.env['CONGRESS_API_KEY'];
     final googleMapsApiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
+    final ciceroApiKey = dotenv.env['CICERO_API_KEY'];
 
     // Log status of each key (securely)
     if (congressApiKey == null) {
@@ -51,6 +51,15 @@ Future<void> _loadEnvironmentVariables() async {
     } else {
       debugPrint(
           "GOOGLE_MAPS_API_KEY loaded successfully (${googleMapsApiKey.substring(0, min(3, googleMapsApiKey.length))}...)");
+    }
+    
+    if (ciceroApiKey == null) {
+      debugPrint("WARNING: CICERO_API_KEY not found in .env file");
+    } else if (ciceroApiKey.isEmpty) {
+      debugPrint("WARNING: CICERO_API_KEY is empty in .env file");
+    } else {
+      debugPrint(
+          "CICERO_API_KEY loaded successfully (${ciceroApiKey.substring(0, min(3, ciceroApiKey.length))}...)");
     }
 
     debugPrint(".env file loaded with ${dotenv.env.length} variables");
@@ -71,21 +80,16 @@ class RepresentativeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // Auth Service
         ChangeNotifierProvider(create: (_) => AuthService()),
+        
+        // Representative Services
         Provider(create: (_) => RepresentativeService()),
-        ChangeNotifierProxyProvider<RepresentativeService,
-            RepresentativeProvider>(
-          create: (context) =>
-              RepresentativeProvider(context.read<RepresentativeService>()),
-          update: (context, service, previous) =>
-              previous ?? RepresentativeProvider(service),
-        ),
-        ChangeNotifierProxyProvider<RepresentativeService,
-            CombinedRepresentativeProvider>(
-          create: (context) => CombinedRepresentativeProvider(
-              context.read<RepresentativeService>()),
-          update: (context, service, previous) =>
-              previous ?? CombinedRepresentativeProvider(service),
+        
+        // Combined Representative Provider
+        ChangeNotifierProxyProvider<RepresentativeService, CombinedRepresentativeProvider>(
+          create: (context) => CombinedRepresentativeProvider(context.read<RepresentativeService>()),
+          update: (context, service, previous) => previous ?? CombinedRepresentativeProvider(service),
         ),
       ],
       child: MaterialApp(

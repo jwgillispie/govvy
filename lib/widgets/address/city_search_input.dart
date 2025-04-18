@@ -113,51 +113,6 @@ class _CitySearchInputState extends State<CitySearchInput> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Info Card
-          Container(
-            padding: const EdgeInsets.all(16),
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.info_outline,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Local Government Search',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Enter a city name to find your local representatives, including city council members, mayors, county commissioners, and more.',
-                  style: TextStyle(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.8),
-                    fontSize: 14,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
           if (_errorMessage != null)
             Container(
               width: double.infinity,

@@ -5,7 +5,6 @@ import 'package:govvy/models/representative_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
 class RepresentativeService {
   final String _baseUrl = 'https://api.congress.gov/v3';
 
@@ -179,7 +178,7 @@ class RepresentativeService {
     }
   }
   
-  // Get representatives by state and district (if provided)
+  // Primary method: Get representatives by state and district (if provided)
   Future<List<Representative>> getRepresentativesByStateDistrict(String state, [String? district]) async {
     try {
       if (!hasCongressApiKey) {
@@ -187,6 +186,10 @@ class RepresentativeService {
           print('Congress API key not found. Using mock data.');
         }
         return _getMockRepresentatives(state, district);
+      }
+      
+      if (kDebugMode) {
+        print('Fetching representatives for state: $state, district: $district');
       }
       
       List<Representative> representatives = [];
@@ -210,7 +213,6 @@ class RepresentativeService {
       }
       
       if (kDebugMode) {
-        print('Fetching representatives from API for state: $state, district: $district');
         print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
       }
       
@@ -482,7 +484,7 @@ class RepresentativeService {
     );
   }
 
-  // Get representatives based on address
+  // Get representatives based on address (legacy method, kept for compatibility)
   Future<List<Representative>> getRepresentativesByAddress(String address) async {
     try {
       if (kDebugMode) {
@@ -891,6 +893,8 @@ class RepresentativeService {
 
   // Mock data methods for development when API keys are missing
   List<Representative> _getMockRepresentatives(String stateCode, [String? district]) {
+    final stateName = _getStateNameForCode(stateCode);
+    
     List<Representative> mockReps = [];
 
     // Add mock senators for the specified state
@@ -932,6 +936,35 @@ class RepresentativeService {
         office: '789 House Office Building',
         phone: '(202) 225-7777',
         website: 'https://www.house.gov/rep_johnson',
+        imageUrl:
+            'https://d2j6dbq0eux0bg.cloudfront.net/startersite/images/12759375/1585171739380.jpg',
+      ));
+    } else {
+      // If no specific district, add a couple of example House reps
+      mockReps.add(Representative(
+        name: 'Michael Williams',
+        bioGuideId: 'H000001',
+        party: 'R',
+        chamber: 'House',
+        state: stateCode,
+        district: '1',
+        office: '777 House Office Building',
+        phone: '(202) 225-8888',
+        website: 'https://www.house.gov/rep_williams',
+        imageUrl:
+            'https://d2j6dbq0eux0bg.cloudfront.net/startersite/images/12759375/1585171739380.jpg',
+      ));
+      
+      mockReps.add(Representative(
+        name: 'Sarah Miller',
+        bioGuideId: 'H000002',
+        party: 'D',
+        chamber: 'House',
+        state: stateCode,
+        district: '2',
+        office: '888 House Office Building',
+        phone: '(202) 225-9999',
+        website: 'https://www.house.gov/rep_miller',
         imageUrl:
             'https://d2j6dbq0eux0bg.cloudfront.net/startersite/images/12759375/1585171739380.jpg',
       ));
@@ -997,5 +1030,64 @@ class RepresentativeService {
       'sponsoredBills': mockSponsoredBills,
       'cosponsoredBills': mockCosponsoredBills,
     };
+  }
+  
+  // Helper method to get a state name from state code
+  String _getStateNameForCode(String stateCode) {
+    const Map<String, String> stateCodeMap = {
+      'AL': 'Alabama',
+      'AK': 'Alaska',
+      'AZ': 'Arizona',
+      'AR': 'Arkansas',
+      'CA': 'California',
+      'CO': 'Colorado',
+      'CT': 'Connecticut',
+      'DE': 'Delaware',
+      'FL': 'Florida',
+      'GA': 'Georgia',
+      'HI': 'Hawaii',
+      'ID': 'Idaho',
+      'IL': 'Illinois',
+      'IN': 'Indiana',
+      'IA': 'Iowa',
+      'KS': 'Kansas',
+      'KY': 'Kentucky',
+      'LA': 'Louisiana',
+      'ME': 'Maine',
+      'MD': 'Maryland',
+      'MA': 'Massachusetts',
+      'MI': 'Michigan',
+      'MN': 'Minnesota',
+      'MS': 'Mississippi',
+      'MO': 'Missouri',
+      'MT': 'Montana',
+      'NE': 'Nebraska',
+      'NV': 'Nevada',
+      'NH': 'New Hampshire',
+      'NJ': 'New Jersey',
+      'NM': 'New Mexico',
+      'NY': 'New York',
+      'NC': 'North Carolina',
+      'ND': 'North Dakota',
+      'OH': 'Ohio',
+      'OK': 'Oklahoma',
+      'OR': 'Oregon',
+      'PA': 'Pennsylvania',
+      'RI': 'Rhode Island',
+      'SC': 'South Carolina',
+      'SD': 'South Dakota',
+      'TN': 'Tennessee',
+      'TX': 'Texas',
+      'UT': 'Utah',
+      'VT': 'Vermont',
+      'VA': 'Virginia',
+      'WA': 'Washington',
+      'WV': 'West Virginia',
+      'WI': 'Wisconsin',
+      'WY': 'Wyoming',
+      'DC': 'District of Columbia'
+    };
+    
+    return stateCodeMap[stateCode.toUpperCase()] ?? stateCode;
   }
 }

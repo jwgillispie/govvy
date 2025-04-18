@@ -1,4 +1,4 @@
-// lib/providers/combined_representative_provider.dart - Add these methods
+// lib/providers/combined_representative_provider.dart
 import 'package:flutter/foundation.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/models/local_representative_model.dart';
@@ -19,6 +19,10 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   String? _errorMessageLocal;
   String? _lastSearchedAddress;
   String? _lastSearchedCity;
+  String? _lastSearchedState;
+  String? _lastSearchedDistrict;
+  RepresentativeDetails? _selectedRepresentative;
+  bool _isLoadingDetails = false;
   
   // Getters
   List<Representative> get federalRepresentatives => _federalRepresentatives;
@@ -39,10 +43,93 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   
   String? get lastSearchedAddress => _lastSearchedAddress;
   String? get lastSearchedCity => _lastSearchedCity;
+  String? get lastSearchedState => _lastSearchedState;
+  String? get lastSearchedDistrict => _lastSearchedDistrict;
+  
+  RepresentativeDetails? get selectedRepresentative => _selectedRepresentative;
+  bool get isLoadingDetails => _isLoadingDetails;
   
   CombinedRepresentativeProvider(this._federalService);
   
-  // New method: Fetch local representatives by city only
+  // New method: Fetch representatives by state (and optional district)
+  Future<void> fetchRepresentativesByState(String stateCode, [String? districtNumber]) async {
+    try {
+      _isLoadingFederal = true;
+      _errorMessageFederal = null;
+      _lastSearchedState = stateCode;
+      _lastSearchedDistrict = districtNumber;
+      notifyListeners();
+      
+      // Clear existing representatives
+      _federalRepresentatives = [];
+      // Also clear local representatives to avoid confusion
+      _localRepresentativesRaw = [];
+      
+      // Add a small delay to make loading state visible
+      await Future.delayed(const Duration(milliseconds: 300));
+      
+      // Fetch federal representatives from the service
+      _federalRepresentatives = await _federalService.getRepresentativesByStateDistrict(
+        stateCode, 
+        districtNumber
+      );
+      
+      if (_federalRepresentatives.isEmpty) {
+        _errorMessageFederal = 'No representatives found for ${stateCode}${districtNumber != null ? ' District $districtNumber' : ''}. Please check your selection.';
+      }
+      
+      _isLoadingFederal = false;
+      
+      // Also try to fetch local representatives for this state
+      if (districtNumber != null) {
+        // If district is specified, we might be able to get local reps
+        // using the state and district as an approximate location
+        fetchLocalRepresentativesByStateDistrict(stateCode, districtNumber);
+      }
+      
+      // Save to cache
+      _saveStateSearchToCache();
+      
+      notifyListeners();
+    } catch (e) {
+      _isLoadingFederal = false;
+      _errorMessageFederal = 'Error loading representatives: ${e.toString()}';
+      if (kDebugMode) {
+        print(_errorMessageFederal);
+      }
+      notifyListeners();
+    }
+  }
+  
+  // Helper method to fetch local representatives by state and district
+  Future<void> fetchLocalRepresentativesByStateDistrict(String stateCode, String districtNumber) async {
+    try {
+      _isLoadingLocal = true;
+      _errorMessageLocal = null;
+      notifyListeners();
+      
+      // Clear existing local representatives
+      _localRepresentativesRaw = [];
+      
+      // Construct a simple approximate location from state and district
+      // This is a basic approximation but better than nothing
+      String approximateLocation = "$stateCode Congressional District $districtNumber";
+      
+      _localRepresentativesRaw = await _localService.getLocalRepresentativesByAddress(approximateLocation);
+      
+      _isLoadingLocal = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoadingLocal = false;
+      // Don't show error message for this complementary search
+      if (kDebugMode) {
+        print('Error loading complementary local representatives: $e');
+      }
+      notifyListeners();
+    }
+  }
+  
+  // Fetch local representatives by city name
   Future<void> fetchLocalRepresentativesByCity(String city) async {
     try {
       _isLoadingLocal = true;
@@ -52,12 +139,18 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       
       // Clear existing local representatives
       _localRepresentativesRaw = [];
+      // Also clear federal representatives to avoid confusion
+      _federalRepresentatives = [];
       
       // Add a small delay to make loading state visible
       await Future.delayed(const Duration(milliseconds: 300));
       
-      // Fetch from CiceroService with the new city search method
+      // Fetch from CiceroService with the city search method
       _localRepresentativesRaw = await _localService.getLocalRepresentativesByCity(city);
+      
+      if (_localRepresentativesRaw.isEmpty) {
+        _errorMessageLocal = 'No local representatives found for $city. Please check the city name and try again.';
+      }
       
       _isLoadingLocal = false;
       
@@ -75,7 +168,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     }
   }
   
-  // Fetch both federal and local representatives
+  // Fetch both federal and local representatives (Legacy method kept for compatibility)
   Future<void> fetchAllRepresentativesByAddress(String address) async {
     _lastSearchedAddress = address;
     notifyListeners();
@@ -90,7 +183,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     _saveToCache();
   }
   
-  // Fetch only federal representatives
+  // Fetch only federal representatives by address
   Future<void> fetchFederalRepresentativesByAddress(String address) async {
     try {
       _isLoadingFederal = true;
@@ -105,6 +198,20 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       
       // Fetch from RepresentativeService
       _federalRepresentatives = await _federalService.getRepresentativesByAddress(address);
+      
+      if (_federalRepresentatives.isEmpty) {
+        _errorMessageFederal = 'No federal or state representatives found for this address. Please check the address and try again.';
+      }
+      
+      // Try to extract state from the results
+      if (_federalRepresentatives.isNotEmpty && _federalRepresentatives[0].state.isNotEmpty) {
+        _lastSearchedState = _federalRepresentatives[0].state;
+        
+        // Also try to extract district if available
+        if (_federalRepresentatives[0].district != null) {
+          _lastSearchedDistrict = _federalRepresentatives[0].district;
+        }
+      }
       
       _isLoadingFederal = false;
       notifyListeners();
@@ -134,6 +241,10 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       // Fetch from CiceroService
       _localRepresentativesRaw = await _localService.getLocalRepresentativesByAddress(address);
       
+      if (_localRepresentativesRaw.isEmpty) {
+        _errorMessageLocal = 'No local representatives found for this address. Try searching by city name instead.';
+      }
+      
       _isLoadingLocal = false;
       notifyListeners();
     } catch (e) {
@@ -146,7 +257,97 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     }
   }
   
-  // Cache results to reduce API calls
+  // Fetch representative details
+  Future<void> fetchRepresentativeDetails(String bioGuideId) async {
+    try {
+      _isLoadingDetails = true;
+      _errorMessageLocal = null;
+      _errorMessageFederal = null;
+      notifyListeners();
+      
+      // First check if it's a local representative
+      if (bioGuideId.startsWith('cicero-')) {
+        // Find the representative in our local list
+        final localRep = _localRepresentativesRaw.firstWhere(
+          (rep) => rep.bioGuideId == bioGuideId,
+          orElse: () => throw Exception('Local representative not found'),
+        );
+        
+        // Convert to RepresentativeDetails format
+        _selectedRepresentative = RepresentativeDetails(
+          bioGuideId: localRep.bioGuideId,
+          name: localRep.name,
+          party: localRep.party,
+          state: localRep.state,
+          district: localRep.district,
+          chamber: localRep.level,
+          office: localRep.office,
+          phone: localRep.phone,
+          website: localRep.website,
+          imageUrl: localRep.imageUrl,
+          // Local representatives typically don't have bills
+          sponsoredBills: [],
+          cosponsoredBills: [],
+        );
+      } else {
+        // It's a federal representative, use the federal service
+        final detailsResponse = await _federalService.getRepresentativeDetails(bioGuideId);
+        
+        _selectedRepresentative = RepresentativeDetails.fromMap(
+          details: detailsResponse['details'], 
+          sponsoredBills: detailsResponse['sponsoredBills'], 
+          cosponsoredBills: detailsResponse['cosponsoredBills']
+        );
+      }
+      
+      _isLoadingDetails = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoadingDetails = false;
+      _errorMessageFederal = 'Error loading representative details: ${e.toString()}';
+      if (kDebugMode) {
+        print(_errorMessageFederal);
+      }
+      notifyListeners();
+    }
+  }
+  
+  // Save state search results to cache
+  Future<void> _saveStateSearchToCache() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      
+      // Save state, district, and timestamp
+      if (_lastSearchedState != null) {
+        await prefs.setString('last_state', _lastSearchedState!);
+        await prefs.setInt('last_state_search_time', DateTime.now().millisecondsSinceEpoch);
+        
+        if (_lastSearchedDistrict != null) {
+          await prefs.setString('last_district', _lastSearchedDistrict!);
+        } else {
+          await prefs.remove('last_district');
+        }
+        
+        // Save federal representatives
+        if (_federalRepresentatives.isNotEmpty) {
+          final fedData = _federalRepresentatives.map((rep) => rep.toMap()).toList();
+          await prefs.setString('federal_reps_cache', json.encode(fedData));
+        }
+        
+        // Save local representatives
+        if (_localRepresentativesRaw.isNotEmpty) {
+          final localData = _localRepresentativesRaw.map((rep) => rep.toMap()).toList();
+          await prefs.setString('local_reps_cache', json.encode(localData));
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error saving state cache: $e');
+      }
+    }
+  }
+  
+  // Legacy method for address-based cache
   Future<void> _saveToCache() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -155,6 +356,15 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       if (_lastSearchedAddress != null) {
         await prefs.setString('last_address', _lastSearchedAddress!);
         await prefs.setInt('last_search_time', DateTime.now().millisecondsSinceEpoch);
+        
+        // Extract city from address to save as well
+        try {
+          final addressParts = _lastSearchedAddress!.split(',');
+          if (addressParts.length > 1) {
+            _lastSearchedCity = addressParts[1].trim();
+            await prefs.setString('last_city', _lastSearchedCity!);
+          }
+        } catch (_) {}
         
         // Save federal representatives
         if (_federalRepresentatives.isNotEmpty) {
@@ -175,7 +385,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     }
   }
   
-  // New method: Cache city search results
+  // Cache city search results
   Future<void> _saveLocalCityToCache() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -203,12 +413,41 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     try {
       final prefs = await SharedPreferences.getInstance();
       
-      // Check if we have cached data
-      final lastAddress = prefs.getString('last_address');
-      final lastSearchTime = prefs.getInt('last_search_time') ?? 0;
+      // First try to load state-based cache (newest approach)
+      final lastState = prefs.getString('last_state');
+      final lastStateSearchTime = prefs.getInt('last_state_search_time') ?? 0;
       final currentTime = DateTime.now().millisecondsSinceEpoch;
       
-      // Only use cache if it's less than 24 hours old
+      if (lastState != null && (currentTime - lastStateSearchTime) < 86400000) {
+        _lastSearchedState = lastState;
+        _lastSearchedDistrict = prefs.getString('last_district');
+        
+        // Load federal representatives
+        final fedCache = prefs.getString('federal_reps_cache');
+        if (fedCache != null) {
+          final fedData = json.decode(fedCache) as List<dynamic>;
+          _federalRepresentatives = fedData
+              .map((item) => Representative.fromMap('', Map<String, dynamic>.from(item)))
+              .toList();
+        }
+        
+        // Load local representatives
+        final localCache = prefs.getString('local_reps_cache');
+        if (localCache != null) {
+          final localData = json.decode(localCache) as List<dynamic>;
+          _localRepresentativesRaw = localData
+              .map((item) => LocalRepresentative.fromMap(Map<String, dynamic>.from(item)))
+              .toList();
+        }
+        
+        notifyListeners();
+        return true;
+      }
+      
+      // If no state cache, try address cache (legacy approach)
+      final lastAddress = prefs.getString('last_address');
+      final lastSearchTime = prefs.getInt('last_search_time') ?? 0;
+      
       if (lastAddress != null && (currentTime - lastSearchTime) < 86400000) {
         _lastSearchedAddress = lastAddress;
         
@@ -263,65 +502,10 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     }
   }
   
-  // New method: Load only city cache
-  Future<bool> loadCityCache() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      
-      // Check if we have cached city data
-      final lastCity = prefs.getString('last_city');
-      final lastCitySearchTime = prefs.getInt('last_city_search_time') ?? 0;
-      final currentTime = DateTime.now().millisecondsSinceEpoch;
-      
-      // Only use cache if it's less than 24 hours old
-      if (lastCity != null && (currentTime - lastCitySearchTime) < 86400000) {
-        _lastSearchedCity = lastCity;
-        
-        // Load local representatives from city search
-        final localCityCache = prefs.getString('local_city_reps_cache');
-        if (localCityCache != null) {
-          final localData = json.decode(localCityCache) as List<dynamic>;
-          _localRepresentativesRaw = localData
-              .map((item) => LocalRepresentative.fromMap(Map<String, dynamic>.from(item)))
-              .toList();
-          
-          notifyListeners();
-          return true;
-        }
-      }
-      
-      return false;
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error loading city cache: $e');
-      }
-      return false;
-    }
-  }
-  
-  // Get details for a specific representative
-  Future<Representative?> getRepresentativeDetails(String bioGuideId) async {
-    // First check if it's a federal rep
-    final fedRep = _federalRepresentatives.cast<Representative?>().firstWhere(
-      (rep) => rep?.bioGuideId == bioGuideId,
-      orElse: () => null,
-    );
-    
-    if (fedRep != null) {
-      return fedRep;
-    }
-    
-    // Then check if it's a local rep
-    final localRep = _localRepresentativesRaw.cast<LocalRepresentative?>().firstWhere(
-      (rep) => rep?.bioGuideId == bioGuideId,
-      orElse: () => null,
-    );
-    
-    if (localRep != null) {
-      return localRep.toRepresentative();
-    }
-    
-    return null;
+  // Clear selected representative
+  void clearSelectedRepresentative() {
+    _selectedRepresentative = null;
+    notifyListeners();
   }
   
   // Clear errors
@@ -339,6 +523,9 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     _errorMessageLocal = null;
     _lastSearchedAddress = null;
     _lastSearchedCity = null;
+    _lastSearchedState = null;
+    _lastSearchedDistrict = null;
+    _selectedRepresentative = null;
     notifyListeners();
   }
 }

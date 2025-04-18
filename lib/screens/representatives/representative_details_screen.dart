@@ -1,7 +1,7 @@
 // lib/screens/representatives/representative_details_screen.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:govvy/providers/representative_provider.dart';
+import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -38,7 +38,7 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
   }
   
   Future<void> _fetchRepresentativeDetails() async {
-    final provider = Provider.of<RepresentativeProvider>(context, listen: false);
+    final provider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
     await provider.fetchRepresentativeDetails(widget.bioGuideId);
   }
   
@@ -87,7 +87,7 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
   
   @override
   Widget build(BuildContext context) {
-    return Consumer<RepresentativeProvider>(
+    return Consumer<CombinedRepresentativeProvider>(
       builder: (context, provider, child) {
         final isLoading = provider.isLoadingDetails;
         final rep = provider.selectedRepresentative;
@@ -168,7 +168,7 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
         break;
       default:
         partyColor = '#777777';
-        partyName = rep.party;
+        partyName = rep.party.isEmpty ? 'Unknown' : rep.party;
     }
     
     return Container(

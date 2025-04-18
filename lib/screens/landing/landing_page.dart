@@ -513,7 +513,7 @@ class _LandingPageState extends State<LandingPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Who represents you locally? What do they actually do? Have you ever contacted them? How do learn about your government?',
+                  'Who represents you locally? What do they actually do? Have you ever contacted them? How do you learn about your government?',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontStyle: FontStyle.italic,

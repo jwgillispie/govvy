@@ -1,6 +1,5 @@
 // lib/screens/dashboards/dashboard_screen.dart
 import 'package:flutter/material.dart';
-import 'package:govvy/screens/representatives/find_local_representatives_screen.dart';
 import 'package:govvy/widgets/share/share_app_widget.dart.dart';
 import 'package:govvy/widgets/share/share_reminder_widget.dart';
 import 'package:provider/provider.dart';
@@ -125,71 +124,71 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 16),
 
               // Features grid
-          GridView.count(
-  crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
-  shrinkWrap: true,
-  physics: const NeverScrollableScrollPhysics(),
-  crossAxisSpacing: 16,
-  mainAxisSpacing: 16,
-  children: [
-    _buildFeatureCard(
-      context,
-      Icons.people_outline,
-      'Representatives',
-      'Find and learn about your elected officials',
-      () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const FindRepresentativesScreen(),
-          ),
-        );
-      },
-    ),
-    _buildFeatureCard(
-      context,
-      Icons.location_city_outlined,
-      'Local Representatives',
-      'Find officials in your city or town',
-      () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const FindLocalRepresentativesScreen(),
-          ),
-        );
-      },
-    ),
-    _buildFeatureCard(
-      context,
-      Icons.how_to_vote_outlined,
-      'Voting Records',
-      'Track how your representatives vote',
-      () {
-        // Navigate to voting records screen (to be implemented)
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Coming soon!'),
-          ),
-        );
-      },
-    ),
-    _buildFeatureCard(
-      context,
-      Icons.monetization_on_outlined,
-      'Campaign Finance',
-      'Follow the money in politics',
-      () {
-        // Navigate to campaign finance screen (to be implemented)
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Coming soon!'),
-          ),
-        );
-      },
-    ),
-  ],
-),
+              GridView.count(
+                crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+                children: [
+                  _buildFeatureCard(
+                    context,
+                    Icons.people_outline,
+                    'Representatives',
+                    'Find all your elected officials',
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const FindRepresentativesScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  _buildFeatureCard(
+                    context,
+                    Icons.how_to_vote_outlined,
+                    'Voting Records',
+                    'Track how your representatives vote',
+                    () {
+                      // Navigate to voting records screen (to be implemented)
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Coming soon!'),
+                        ),
+                      );
+                    },
+                  ),
+                  _buildFeatureCard(
+                    context,
+                    Icons.monetization_on_outlined,
+                    'Campaign Finance',
+                    'Follow the money in politics',
+                    () {
+                      // Navigate to campaign finance screen (to be implemented)
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Coming soon!'),
+                        ),
+                      );
+                    },
+                  ),
+                  _buildFeatureCard(
+                    context,
+                    Icons.notifications_outlined,
+                    'Notifications',
+                    'Stay informed about important votes',
+                    () {
+                      // Navigate to notifications screen (to be implemented)
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Coming soon!'),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
               const SizedBox(height: 32),
 
               // Share section

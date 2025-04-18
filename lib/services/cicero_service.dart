@@ -21,7 +21,24 @@ class CiceroService {
         print('WARNING: CICERO_API_KEY is empty in .env file');
       } else {
         // Only show first few chars for security
-        print('CICERO_API_KEY found: ${key.substring(0, 3)}...');
+        print('CICERO_API_KEY found: ${key.substring(0, min(3, key.length))}...');
+      }
+    }
+    
+    return key;
+  }
+  
+  String? get _googleApiKey {
+    final key = dotenv.env['GOOGLE_MAPS_API_KEY'];
+    
+    if (kDebugMode) {
+      if (key == null) {
+        print('WARNING: GOOGLE_MAPS_API_KEY not found in .env file');
+      } else if (key.isEmpty) {
+        print('WARNING: GOOGLE_MAPS_API_KEY is empty in .env file');
+      } else {
+        // Only show first few chars for security
+        print('GOOGLE_MAPS_API_KEY found: ${key.substring(0, min(3, key.length))}...');
       }
     }
     
@@ -37,7 +54,96 @@ class CiceroService {
     return hasKey;
   }
   
-  // Get local representatives by city name only
+  bool get hasGoogleApiKey {
+    final hasKey = _googleApiKey != null && _googleApiKey!.isNotEmpty;
+    if (kDebugMode && !hasKey) {
+      print('Using mock data because Google API key is not available');
+    }
+    return hasKey;
+  }
+  
+  // NEW: Function to geocode a city name to coordinates
+  Future<Map<String, double>?> geocodeCityToCoordinates(String city) async {
+    try {
+      if (!hasGoogleApiKey) {
+        if (kDebugMode) {
+          print('Google Maps API key not found. Using hardcoded coordinates for city.');
+        }
+        // Try using hardcoded coordinates first
+        final hardcodedCoordinates = _getHardcodedCoordinatesForCity(city);
+        if (hardcodedCoordinates != null) {
+          return hardcodedCoordinates;
+        }
+        return null;
+      }
+      
+      // First, check if the city has a state code (e.g., "Atlanta, GA")
+      String searchCity = city;
+      if (city.contains(',')) {
+        // Keep the format as is to ensure better geocoding results
+        searchCity = city;
+      } else {
+        // If no state is provided, try to guess based on city name
+        final stateCode = _guessStateForCity(city);
+        if (stateCode != null) {
+          searchCity = '$city, $stateCode, USA';
+        } else {
+          searchCity = '$city, USA';
+        }
+      }
+      
+      if (kDebugMode) {
+        print('Geocoding city: $searchCity');
+      }
+      
+      // Call Google's Geocoding API
+      final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
+          .replace(queryParameters: {
+            'address': searchCity,
+            'key': _googleApiKey!
+          });
+          
+      final response = await http.get(url);
+      
+      if (response.statusCode != 200) {
+        throw Exception('Geocoding API error: ${response.statusCode}');
+      }
+      
+      final data = jsonDecode(response.body);
+      
+      if (data['status'] != 'OK' || data['results'].isEmpty) {
+        throw Exception('Geocoding error: ${data['status']}');
+      }
+      
+      // Extract latitude and longitude
+      final location = data['results'][0]['geometry']['location'];
+      final lat = location['lat'] as double;
+      final lng = location['lng'] as double;
+      
+      if (kDebugMode) {
+        print('Successfully geocoded $searchCity to lat: $lat, lng: $lng');
+      }
+      
+      return {'lat': lat, 'lng': lng};
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error geocoding city: $e');
+      }
+      
+      // Fallback to hardcoded coordinates
+      final hardcodedCoordinates = _getHardcodedCoordinatesForCity(city);
+      if (hardcodedCoordinates != null) {
+        if (kDebugMode) {
+          print('Using hardcoded coordinates for $city: $hardcodedCoordinates');
+        }
+        return hardcodedCoordinates;
+      }
+      
+      return null;
+    }
+  }
+  
+  // Get local representatives by city name
   Future<List<LocalRepresentative>> getLocalRepresentativesByCity(String city) async {
     try {
       if (!hasApiKey) {
@@ -47,87 +153,39 @@ class CiceroService {
         return _getMockLocalRepresentatives(city: city);
       }
       
-      // Check if we have a state code in the city (e.g., "New York, NY")
-      String cityName = city;
-      String? stateCode;
-      
-      // Try to extract state code if provided in format "City, ST"
-      final cityStatePattern = RegExp(r'^(.*),\s*([A-Za-z]{2})');
-      final match = cityStatePattern.firstMatch(cityName);
-      if (match != null) {
-        cityName = match.group(1)!.trim();
-        stateCode = match.group(2)!.toUpperCase();
-        
-        if (kDebugMode) {
-          print('Extracted city: $cityName and state: $stateCode from input');
-        }
-      }
-      
-      // Try a known working approach - using search_loc with city and state
-      // If state is missing, we'll try to guess based on city name
-      final stateToTry = stateCode ?? _guessStateForCity(cityName);
-      
-      // Build a properly formatted search_loc string with city and state
-      final searchLocString = '$cityName, $stateToTry, USA';
-      
       if (kDebugMode) {
-        print('Trying search_loc approach with: $searchLocString');
+        print('Searching for local representatives in city: $city');
       }
       
-      final searchLocUrl = Uri.parse('$_baseUrl/official')
+      // UPDATED APPROACH: First geocode the city to get coordinates
+      final coordinates = await geocodeCityToCoordinates(city);
+      
+      if (coordinates == null) {
+        throw Exception('Could not geocode city: $city');
+      }
+      
+      // Use coordinates to search for representatives
+      final url = Uri.parse('$_baseUrl/official')
           .replace(queryParameters: {
-            'search_loc': searchLocString,
+            'lat': coordinates['lat'].toString(),
+            'lon': coordinates['lng'].toString(),
             'format': 'json',
             'key': _apiKey!,
             'max': '100',
           });
       
       if (kDebugMode) {
-        print('API URL: ${searchLocUrl.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+        print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
       }
       
-      try {
-        // Attempt to fetch using the search_loc approach
-        return await _fetchRepresentatives(searchLocUrl, cityName);
-      } catch (firstError) {
-        if (kDebugMode) {
-          print('search_loc approach failed: $firstError');
-          print('Trying with postal code fallback...');
-        }
-        
-        // If that failed, maybe try a postal code approach if we can map the city to a known postal code
-        final postalCode = _getCommonPostalCodeForCity(cityName, stateToTry);
-        
-        if (postalCode != null) {
-          final postalUrl = Uri.parse('$_baseUrl/official')
-              .replace(queryParameters: {
-                'search_postal': postalCode,
-                'search_country': 'US',
-                'format': 'json',
-                'key': _apiKey!,
-                'max': '100',
-              });
-          
-          if (kDebugMode) {
-            print('Trying postal code approach with: $postalCode');
-            print('API URL: ${postalUrl.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-          }
-          
-          try {
-            return await _fetchRepresentatives(postalUrl, cityName);
-          } catch (postalError) {
-            if (kDebugMode) {
-              print('Postal code approach failed: $postalError');
-            }
-            throw postalError;
-          }
-        } else {
-          if (kDebugMode) {
-            print('No postal code mapping available for $cityName');
-          }
-          throw firstError;
-        }
+      // Use the fetchRepresentatives method to handle the API call
+      final representatives = await _fetchRepresentatives(url, city);
+      
+      if (kDebugMode) {
+        print('Found ${representatives.length} representatives for $city');
       }
+      
+      return representatives;
     } catch (e) {
       if (kDebugMode) {
         print('All approaches failed for city $city: $e');
@@ -155,13 +213,38 @@ class CiceroService {
         return getLocalRepresentativesByCity(trimmedAddress);
       }
       
-      // Build URL with address search
+      // IMPROVED APPROACH: Try to geocode the address first
+      final coordinates = await geocodeAddressToCoordinates(address);
+      
+      if (coordinates != null) {
+        // Use coordinates to search for representatives
+        final url = Uri.parse('$_baseUrl/official')
+            .replace(queryParameters: {
+              'lat': coordinates['lat'].toString(),
+              'lon': coordinates['lng'].toString(),
+              'format': 'json',
+              'key': _apiKey!,
+              'max': '100',
+              // Add filters to only get local data if needed
+              'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
+            });
+        
+        if (kDebugMode) {
+          print('Using coordinates-based API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+        }
+        
+        return await _fetchRepresentatives(url, null);
+      }
+      
+      // Fallback to traditional search_loc approach
       final url = Uri.parse('$_baseUrl/official')
           .replace(queryParameters: {
             'search_loc': address,
             'key': _apiKey!,
+            'format': 'json',
+            'max': '100',
             // Add filters to only get local data
-            'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',  // Include all local district types
+            'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
           });
       
       if (kDebugMode) {
@@ -178,6 +261,55 @@ class CiceroService {
       return _getMockLocalRepresentatives();
     }
   }
+  
+  // NEW: Helper to geocode an address to coordinates
+  Future<Map<String, double>?> geocodeAddressToCoordinates(String address) async {
+    try {
+      if (!hasGoogleApiKey) {
+        return null;
+      }
+      
+      if (kDebugMode) {
+        print('Geocoding address: $address');
+      }
+      
+      // Call Google's Geocoding API
+      final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
+          .replace(queryParameters: {
+            'address': address,
+            'key': _googleApiKey!
+          });
+          
+      final response = await http.get(url);
+      
+      if (response.statusCode != 200) {
+        throw Exception('Geocoding API error: ${response.statusCode}');
+      }
+      
+      final data = jsonDecode(response.body);
+      
+      if (data['status'] != 'OK' || data['results'].isEmpty) {
+        throw Exception('Geocoding error: ${data['status']}');
+      }
+      
+      // Extract latitude and longitude
+      final location = data['results'][0]['geometry']['location'];
+      final lat = location['lat'] as double;
+      final lng = location['lng'] as double;
+      
+      if (kDebugMode) {
+        print('Successfully geocoded address to lat: $lat, lng: $lng');
+      }
+      
+      return {'lat': lat, 'lng': lng};
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error geocoding address: $e');
+      }
+      return null;
+    }
+  }
+  
   Future<List<LocalRepresentative>> _fetchRepresentatives(Uri url, String? cityFilter) async {
   try {
     final response = await http.get(url);
@@ -509,60 +641,76 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
   
   // Helper method with hardcoded coordinates for common US cities
   Map<String, double>? _getHardcodedCoordinatesForCity(String cityName) {
+    // Normalize input
+    final normalized = cityName.toLowerCase().trim();
+    
+    // Extract just the city if it has a state code (e.g. "Atlanta, GA" -> "atlanta")
+    String cityToLookup = normalized;
+    if (normalized.contains(',')) {
+      cityToLookup = normalized.split(',')[0].trim();
+    }
+    
     // Map of city names to their coordinates
     final Map<String, Map<String, double>> cityCoordinates = {
-      'new york': {'lat': 40.7128, 'lon': -74.0060},
-      'los angeles': {'lat': 34.0522, 'lon': -118.2437},
-      'chicago': {'lat': 41.8781, 'lon': -87.6298},
-      'houston': {'lat': 29.7604, 'lon': -95.3698},
-      'phoenix': {'lat': 33.4484, 'lon': -112.0740},
-      'philadelphia': {'lat': 39.9526, 'lon': -75.1652},
-      'san antonio': {'lat': 29.4241, 'lon': -98.4936},
-      'san diego': {'lat': 32.7157, 'lon': -117.1611},
-      'dallas': {'lat': 32.7767, 'lon': -96.7970},
-      'san jose': {'lat': 37.3382, 'lon': -121.8863},
-      'austin': {'lat': 30.2672, 'lon': -97.7431},
-      'jacksonville': {'lat': 30.3322, 'lon': -81.6557},
-      'san francisco': {'lat': 37.7749, 'lon': -122.4194},
-      'indianapolis': {'lat': 39.7684, 'lon': -86.1581},
-      'columbus': {'lat': 39.9612, 'lon': -82.9988},
-      'seattle': {'lat': 47.6062, 'lon': -122.3321},
-      'denver': {'lat': 39.7392, 'lon': -104.9903},
-      'washington': {'lat': 38.9072, 'lon': -77.0369},
-      'boston': {'lat': 42.3601, 'lon': -71.0589},
-      'atlanta': {'lat': 33.7490, 'lon': -84.3880},
-      'miami': {'lat': 25.7617, 'lon': -80.1918},
+      'new york': {'lat': 40.7128, 'lng': -74.0060},
+      'los angeles': {'lat': 34.0522, 'lng': -118.2437},
+      'chicago': {'lat': 41.8781, 'lng': -87.6298},
+      'houston': {'lat': 29.7604, 'lng': -95.3698},
+      'phoenix': {'lat': 33.4484, 'lng': -112.0740},
+      'philadelphia': {'lat': 39.9526, 'lng': -75.1652},
+      'san antonio': {'lat': 29.4241, 'lng': -98.4936},
+      'san diego': {'lat': 32.7157, 'lng': -117.1611},
+      'dallas': {'lat': 32.7767, 'lng': -96.7970},
+      'san jose': {'lat': 37.3382, 'lng': -121.8863},
+      'austin': {'lat': 30.2672, 'lng': -97.7431},
+      'jacksonville': {'lat': 30.3322, 'lng': -81.6557},
+      'san francisco': {'lat': 37.7749, 'lng': -122.4194},
+      'indianapolis': {'lat': 39.7684, 'lng': -86.1581},
+      'columbus': {'lat': 39.9612, 'lng': -82.9988},
+      'seattle': {'lat': 47.6062, 'lng': -122.3321},
+      'denver': {'lat': 39.7392, 'lng': -104.9903},
+      'washington': {'lat': 38.9072, 'lng': -77.0369},
+      'boston': {'lat': 42.3601, 'lng': -71.0589},
+      'atlanta': {'lat': 33.7490, 'lng': -84.3880},
+      'miami': {'lat': 25.7617, 'lng': -80.1918},
+      'brooklyn': {'lat': 40.6782, 'lng': -73.9442},
+      'queens': {'lat': 40.7282, 'lng': -73.7949},
+      'las vegas': {'lat': 36.1699, 'lng': -115.1398},
+      'nashville': {'lat': 36.1627, 'lng': -86.7816},
+      'detroit': {'lat': 42.3314, 'lng': -83.0458},
+      'portland': {'lat': 45.5051, 'lng': -122.6750},
+      'memphis': {'lat': 35.1495, 'lng': -90.0490},
+      'milwaukee': {'lat': 43.0389, 'lng': -87.9065},
+      'baltimore': {'lat': 39.2904, 'lng': -76.6122},
+      'albuquerque': {'lat': 35.0844, 'lng': -106.6504},
+      'tucson': {'lat': 32.2226, 'lng': -110.9747},
+      'fresno': {'lat': 36.7378, 'lng': -119.7871},
+      'sacramento': {'lat': 38.5816, 'lng': -121.4944},
+      'kansas city': {'lat': 39.0997, 'lng': -94.5786},
+      'charlotte': {'lat': 35.2271, 'lng': -80.8431},
+      'pittsburgh': {'lat': 40.4406, 'lng': -79.9959},
+      'st louis': {'lat': 38.6270, 'lng': -90.1994},
+      'cincinnati': {'lat': 39.1031, 'lng': -84.5120},
+      'minneapolis': {'lat': 44.9778, 'lng': -93.2650},
+      'tampa': {'lat': 27.9506, 'lng': -82.4572},
+      'orlando': {'lat': 28.5383, 'lng': -81.3792},
+      'cleveland': {'lat': 41.4993, 'lng': -81.6944},
+      'new orleans': {'lat': 29.9511, 'lng': -90.0715},
+      'st paul': {'lat': 44.9537, 'lng': -93.0900},
+      'honolulu': {'lat': 21.3069, 'lng': -157.8583},
+      'washington dc': {'lat': 38.9072, 'lng': -77.0369},
+      'dc': {'lat': 38.9072, 'lng': -77.0369},
     };
     
-    // Look for the city in our map (case insensitive)
-    final lowerCityName = cityName.toLowerCase();
-    
-    // Check for exact match
-    if (cityCoordinates.containsKey(lowerCityName)) {
-      return cityCoordinates[lowerCityName];
+    // Look for exact match
+    if (cityCoordinates.containsKey(cityToLookup)) {
+      return cityCoordinates[cityToLookup];
     }
     
-    // Check for partial match
+    // If no exact match, try to find partial matches
     for (final entry in cityCoordinates.entries) {
-      if (lowerCityName.contains(entry.key) || entry.key.contains(lowerCityName)) {
+      if (cityToLookup.contains(entry.key) || entry.key.contains(cityToLookup)) {
         return entry.value;
-      }
-    }
-    
-    // Check for city with state combo (e.g., "New York, NY")
-    final cityStatePattern = RegExp(r'^(.*),\s*([A-Za-z]{2})');
-    final match = cityStatePattern.firstMatch(cityName);
-    if (match != null) {
-      final city = match.group(1)!.trim().toLowerCase();
-      if (cityCoordinates.containsKey(city)) {
-        return cityCoordinates[city];
-      }
-      
-      // Check for partial match with just the city part
-      for (final entry in cityCoordinates.entries) {
-        if (city.contains(entry.key) || entry.key.contains(city)) {
-          return entry.value;
-        }
       }
     }
     
@@ -576,7 +724,7 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
     if (city != null) {
       final cityName = city.toLowerCase();
       
-      if (cityName == 'atlanta' || cityName == 'fulton') {
+      if (cityName == 'atlanta' || cityName.contains('atlanta')) {
         return [
           LocalRepresentative(
             name: 'Jane Smith',
@@ -608,8 +756,22 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
             imageUrl: null,
             socialMedia: ['Twitter: @mariarodriguez', 'Instagram: mariarodriguezatl'],
           ),
+          LocalRepresentative(
+            name: 'Andre Dickens',
+            bioGuideId: 'cicero-mock-atlanta-mayor',
+            party: 'Democratic',
+            level: 'CITY',
+            state: 'GA',
+            district: 'Atlanta',
+            office: 'Mayor',
+            phone: '(404) 555-1111',
+            email: 'mayor@atlantaga.gov',
+            website: 'https://www.atlantaga.gov/government/mayor-s-office',
+            imageUrl: null,
+            socialMedia: ['Twitter: @atlantamayor', 'Facebook: AtlantaMayor'],
+          ),
         ];
-      } else if (cityName == 'chicago' || cityName == 'cook') {
+      } else if (cityName == 'chicago' || cityName.contains('chicago')) {
         return [
           LocalRepresentative(
             name: 'Michael Johnson',
@@ -641,19 +803,91 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
             imageUrl: null,
             socialMedia: ['Twitter: @sarahwilliams', 'Instagram: sarahwilliamscook'],
           ),
+          LocalRepresentative(
+            name: 'Brandon Johnson',
+            bioGuideId: 'cicero-mock-chicago-mayor',
+            party: 'Democratic',
+            level: 'CITY',
+            state: 'IL',
+            district: 'Chicago',
+            office: 'Mayor',
+            phone: '(312) 555-0000',
+            email: 'mayor@cityofchicago.org',
+            website: 'https://www.chicago.gov/city/en/depts/mayor.html',
+            imageUrl: null,
+            socialMedia: ['Twitter: @chicagomayor', 'Facebook: ChicagoMayorsOffice'],
+          ),
+        ];
+      } else if (cityName == 'new york' || cityName.contains('new york')) {
+        return [
+          LocalRepresentative(
+            name: 'Eric Adams',
+            bioGuideId: 'cicero-mock-nyc-mayor',
+            party: 'Democratic',
+            level: 'CITY',
+            state: 'NY',
+            district: 'New York City',
+            office: 'Mayor',
+            phone: '(212) 555-1000',
+            email: 'mayor@nyc.gov',
+            website: 'https://www1.nyc.gov/office-of-the-mayor/',
+            imageUrl: null,
+            socialMedia: ['Twitter: @NYCMayor', 'Instagram: nycmayor'],
+          ),
+          LocalRepresentative(
+            name: 'John Davis',
+            bioGuideId: 'cicero-mock-nyc-council-5',
+            party: 'Democratic',
+            level: 'CITY',
+            state: 'NY',
+            district: 'New York City Council District 5',
+            office: 'City Council Member',
+            phone: '(212) 555-5555',
+            email: 'john.davis@council.nyc.gov',
+            website: 'https://council.nyc.gov/district-5/',
+            imageUrl: null,
+            socialMedia: ['Twitter: @johnNYC', 'Facebook: johnNYC'],
+          ),
+          LocalRepresentative(
+            name: 'Lisa Rodriguez',
+            bioGuideId: 'cicero-mock-nyc-council-8',
+            party: 'Democratic',
+            level: 'CITY',
+            state: 'NY',
+            district: 'New York City Council District 8',
+            office: 'City Council Member',
+            phone: '(212) 555-8888',
+            email: 'lisa.rodriguez@council.nyc.gov',
+            website: 'https://council.nyc.gov/district-8/',
+            imageUrl: null,
+            socialMedia: ['Twitter: @lisaNYC', 'Instagram: lisaNYC'],
+          ),
         ];
       } else {
         // For any other city, generate some generic local representatives
         final String stateName = _getStateNameForCity(cityName);
         final String stateCode = _getStateCodeForCity(cityName);
+        
+        String cityProperName = city;
+        if (city.contains(',')) {
+          cityProperName = city.split(',')[0].trim();
+        }
+        
+        // Convert to title case for display
+        cityProperName = cityProperName.split(' ')
+          .map((word) => word.isNotEmpty 
+            ? word[0].toUpperCase() + word.substring(1).toLowerCase() 
+            : '')
+          .join(' ');
+          
         return [
           LocalRepresentative(
-            name: 'Mayor ' + _capitalizeFirstLetter(cityName),
+            name: 'Mayor of $cityProperName',
             bioGuideId: 'cicero-mock-${cityName.replaceAll(' ', '-')}-mayor',
             party: 'Independent',
             level: 'CITY',
             state: stateCode,
-            district: '$cityName City',
+            district: '$cityProperName City',
             office: 'Mayor',
             phone: '(555) 555-1234',
             email: 'mayor@${cityName.replaceAll(' ', '')}.gov',
@@ -667,7 +901,7 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
             party: 'Democratic',
             level: 'CITY',
             state: stateCode,
-            district: '$cityName City Council District 1',
+            district: '$cityProperName City Council District 1',
             office: 'City Council Member',
             phone: '(555) 555-2345',
             email: 'council@${cityName.replaceAll(' ', '')}.gov',
@@ -743,18 +977,20 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
     ];
   }
   
-  // Helper to capitalize the first letter of each word
-  String _capitalizeFirstLetter(String text) {
-    if (text.isEmpty) return '';
-    return text.split(' ')
-      .map((word) => word.isNotEmpty 
-        ? word[0].toUpperCase() + word.substring(1).toLowerCase() 
-        : '')
-      .join(' ');
-  }
-  
   // Helper to get a state code for a city (simplified for mock data)
   String _getStateCodeForCity(String cityName) {
+    // Check if city already has state code (e.g. "New York, NY")
+    if (cityName.contains(',')) {
+      final parts = cityName.split(',');
+      if (parts.length > 1) {
+        final statePart = parts[1].trim().toUpperCase();
+        // If it looks like a state code (2 letters)
+        if (statePart.length == 2) {
+          return statePart;
+        }
+      }
+    }
+    
     // This is a very simplified mapping for mock data purposes
     final Map<String, String> cityToState = {
       'new york': 'NY',
@@ -775,6 +1011,33 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
       'boston': 'MA',
       'atlanta': 'GA',
       'miami': 'FL',
+      'brooklyn': 'NY',
+      'queens': 'NY',
+      'las vegas': 'NV',
+      'nashville': 'TN',
+      'detroit': 'MI',
+      'portland': 'OR',
+      'memphis': 'TN',
+      'milwaukee': 'WI',
+      'baltimore': 'MD',
+      'albuquerque': 'NM',
+      'tucson': 'AZ',
+      'fresno': 'CA',
+      'sacramento': 'CA',
+      'kansas city': 'MO',
+      'charlotte': 'NC',
+      'pittsburgh': 'PA',
+      'st louis': 'MO',
+      'cincinnati': 'OH',
+      'minneapolis': 'MN',
+      'tampa': 'FL',
+      'orlando': 'FL',
+      'cleveland': 'OH',
+      'new orleans': 'LA',
+      'st paul': 'MN',
+      'honolulu': 'HI',
+      'washington': 'DC',
+      'dc': 'DC',
     };
     
     // Check for exact matches
@@ -790,41 +1053,68 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
   
   // Helper to get a state name for a city (simplified for mock data)
   String _getStateNameForCity(String cityName) {
-    // This is a very simplified mapping for mock data purposes
-    final Map<String, String> cityToState = {
-      'new york': 'New York',
-      'los angeles': 'California',
-      'chicago': 'Illinois',
-      'houston': 'Texas',
-      'phoenix': 'Arizona',
-      'philadelphia': 'Pennsylvania',
-      'san antonio': 'Texas',
-      'san diego': 'California',
-      'dallas': 'Texas',
-      'san jose': 'California',
-      'austin': 'Texas',
-      'jacksonville': 'Florida',
-      'san francisco': 'California',
-      'seattle': 'Washington',
-      'denver': 'Colorado',
-      'boston': 'Massachusetts',
-      'atlanta': 'Georgia',
-      'miami': 'Florida',
+    // Map of state codes to names
+    const Map<String, String> stateCodeToName = {
+      'AL': 'Alabama',
+      'AK': 'Alaska',
+      'AZ': 'Arizona',
+      'AR': 'Arkansas',
+      'CA': 'California',
+      'CO': 'Colorado',
+      'CT': 'Connecticut',
+      'DE': 'Delaware',
+      'FL': 'Florida',
+      'GA': 'Georgia',
+      'HI': 'Hawaii',
+      'ID': 'Idaho',
+      'IL': 'Illinois',
+      'IN': 'Indiana',
+      'IA': 'Iowa',
+      'KS': 'Kansas',
+      'KY': 'Kentucky',
+      'LA': 'Louisiana',
+      'ME': 'Maine',
+      'MD': 'Maryland',
+      'MA': 'Massachusetts',
+      'MI': 'Michigan',
+      'MN': 'Minnesota',
+      'MS': 'Mississippi',
+      'MO': 'Missouri',
+      'MT': 'Montana',
+      'NE': 'Nebraska',
+      'NV': 'Nevada',
+      'NH': 'New Hampshire',
+      'NJ': 'New Jersey',
+      'NM': 'New Mexico',
+      'NY': 'New York',
+      'NC': 'North Carolina',
+      'ND': 'North Dakota',
+      'OH': 'Ohio',
+      'OK': 'Oklahoma',
+      'OR': 'Oregon',
+      'PA': 'Pennsylvania',
+      'RI': 'Rhode Island',
+      'SC': 'South Carolina',
+      'SD': 'South Dakota',
+      'TN': 'Tennessee',
+      'TX': 'Texas',
+      'UT': 'Utah',
+      'VT': 'Vermont',
+      'VA': 'Virginia',
+      'WA': 'Washington',
+      'WV': 'West Virginia',
+      'WI': 'Wisconsin',
+      'WY': 'Wyoming',
+      'DC': 'District of Columbia'
     };
     
-    // Check for exact matches
-    for (final entry in cityToState.entries) {
-      if (cityName.contains(entry.key)) {
-        return entry.value;
-      }
-    }
-    
-    // Default to a generic state name
-    return 'California';
+    // Get state code, then convert to name
+    final stateCode = _getStateCodeForCity(cityName);
+    return stateCodeToName[stateCode] ?? 'California';
   }
   
   // Helper method to guess the most likely state for a given city
-  String _guessStateForCity(String cityName) {
+  String? _guessStateForCity(String cityName) {
     // Map of well-known cities to their most common state
     final Map<String, String> cityToState = {
       'new york': 'NY',
@@ -880,80 +1170,6 @@ LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
     for (final entry in cityToState.entries) {
       if (lowerCityName == entry.key || lowerCityName.contains(entry.key)) {
         return entry.value;
-      }
-    }
-    
-    // Default to NY as a fallback
-    return 'NY';
-  }
-  
-  // Helper method to get a common postal code for a city
-  // This is a fallback for when geocoding fails
-  String? _getCommonPostalCodeForCity(String cityName, String stateCode) {
-    // Map cities to common/central postal codes
-    final Map<String, Map<String, String>> cityPostalCodes = {
-      'NY': {
-        'new york': '10001',    // Manhattan
-        'brooklyn': '11201',
-        'queens': '11101',
-        'bronx': '10451',
-        'staten island': '10301',
-        'buffalo': '14201',
-        'rochester': '14604',
-        'yonkers': '10701',
-        'syracuse': '13201',
-        'albany': '12201',
-      },
-      'CA': {
-        'los angeles': '90001',
-        'san francisco': '94102',
-        'san diego': '92101',
-        'san jose': '95101',
-        'oakland': '94601',
-        'sacramento': '95814',
-        'fresno': '93701',
-        'long beach': '90802',
-      },
-      'IL': {
-        'chicago': '60601',
-        'aurora': '60501',
-        'rockford': '61101',
-        'joliet': '60431',
-        'naperville': '60540',
-      },
-      'TX': {
-        'houston': '77001',
-        'dallas': '75201',
-        'san antonio': '78201',
-        'austin': '78701',
-        'fort worth': '76101',
-        'el paso': '79901',
-      },
-      'FL': {
-        'miami': '33101',
-        'orlando': '32801',
-        'tampa': '33601',
-        'jacksonville': '32201',
-      }
-    };
-    
-    // Look up the postal code for this city within the state
-    final lowerCityName = cityName.toLowerCase();
-    
-    // If we have postal codes for this state
-    if (cityPostalCodes.containsKey(stateCode)) {
-      final stateCodes = cityPostalCodes[stateCode]!;
-      
-      // Look for exact match
-      if (stateCodes.containsKey(lowerCityName)) {
-        return stateCodes[lowerCityName];
-      }
-      
-      // Or partial match
-      for (final entry in stateCodes.entries) {
-        if (lowerCityName.contains(entry.key) || entry.key.contains(lowerCityName)) {
-          return entry.value;
-        }
       }
     }
     
