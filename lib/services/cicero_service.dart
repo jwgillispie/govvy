@@ -496,8 +496,7 @@ class CiceroService {
     return false;
   }
 
-  // Convert Cicero official format to LocalRepresentative model
-// Updated _processCiceroOfficial method in lib/services/cicero_service.dart
+// Modify the CiceroService.processLocalOfficial function to better extract contact info
   LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
     // Extract basic information
     String firstName = official['first_name']?.toString() ?? '';
@@ -520,7 +519,7 @@ class CiceroService {
     String party = official['party']?.toString() ?? '';
 
     // Extract district info from office object
-    String level = 'LOCAL'; // Default to LOCAL as the base level
+    String level = 'Local';
     String district = '';
     String state = '';
     String officeName = '';
@@ -539,24 +538,7 @@ class CiceroService {
             Map<String, dynamic>.from(officeInfo['district'] as Map);
 
         if (districtInfo.containsKey('district_type')) {
-          // Convert district_type to proper level format (COUNTY, CITY, etc.)
-          String districtType =
-              districtInfo['district_type']?.toString() ?? 'LOCAL';
-          level = districtType.toUpperCase();
-
-          // Ensure it's one of our recognized local levels
-          if (![
-            'COUNTY',
-            'CITY',
-            'PLACE',
-            'TOWNSHIP',
-            'BOROUGH',
-            'TOWN',
-            'VILLAGE'
-          ].contains(level)) {
-            // If not one of our recognized local levels, set to a generic LOCAL
-            level = 'LOCAL';
-          }
+          level = districtInfo['district_type']?.toString() ?? 'Local';
         }
 
         if (districtInfo.containsKey('name')) {
@@ -574,13 +556,13 @@ class CiceroService {
       state = official['state']?.toString() ?? '';
     }
 
-    // Extract contact information
+    // Extract contact information more thoroughly
     String? phone;
     String? email;
     String? website;
     List<String>? socialMedia;
 
-    // Handle addresses array for contact info
+    // 1. Check addresses array for contact info
     if (official.containsKey('addresses') && official['addresses'] is List) {
       final addresses = official['addresses'] as List;
       for (var addressObj in addresses) {
@@ -596,18 +578,42 @@ class CiceroService {
           if (phone == null && address.containsKey('fax')) {
             phone = address['fax']?.toString();
           }
+
+          // Try to get an email if available
+          if (email == null && address.containsKey('email')) {
+            email = address['email']?.toString();
+          }
         }
       }
     }
 
-    // Handle email addresses array
+    // 2. Check all email addresses
     if (official.containsKey('email_addresses') &&
         official['email_addresses'] is List &&
         (official['email_addresses'] as List).isNotEmpty) {
       email = (official['email_addresses'] as List)[0]?.toString();
     }
 
-    // Handle URLs array
+    // 3. Check contact info
+    if (official.containsKey('contact_info') &&
+        official['contact_info'] is Map) {
+      final contactInfo =
+          Map<String, dynamic>.from(official['contact_info'] as Map);
+
+      if (email == null && contactInfo.containsKey('email')) {
+        email = contactInfo['email']?.toString();
+      }
+
+      if (phone == null && contactInfo.containsKey('phone')) {
+        phone = contactInfo['phone']?.toString();
+      }
+
+      if (website == null && contactInfo.containsKey('url')) {
+        website = contactInfo['url']?.toString();
+      }
+    }
+
+    // 4. Check URLs array
     if (official.containsKey('urls') &&
         official['urls'] is List &&
         (official['urls'] as List).isNotEmpty) {
@@ -649,6 +655,8 @@ class CiceroService {
     String? imageUrl;
     if (official.containsKey('photo_origin_url')) {
       imageUrl = official['photo_origin_url']?.toString();
+    } else if (official.containsKey('photo_url')) {
+      imageUrl = official['photo_url']?.toString();
     }
 
     // Create a unique ID using either id or sk field
