@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:govvy/firebase_options.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
+import 'package:govvy/screens/landing/landing_page.dart';
 import 'package:govvy/services/network_service.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ void main() async {
 
   // Initialize services with proper error handling
   await _initializeServices();
-  
+
   runApp(const RepresentativeApp());
 }
 
@@ -27,28 +28,28 @@ Future<void> _initializeServices() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    
+
     if (kDebugMode) {
       print('✅ Firebase initialized successfully');
     }
-    
+
     // Always attempt to load .env file for development (do this early)
     if (kDebugMode) {
       try {
         await dotenv.load(fileName: "assets/.env");
         print("✅ Loaded .env file with ${dotenv.env.length} variables");
-        
+
         // Log the API keys we found (masked for security)
         if (dotenv.env.containsKey('CONGRESS_API_KEY')) {
           final key = dotenv.env['CONGRESS_API_KEY']!;
           print("📋 CONGRESS_API_KEY: ${_maskApiKey(key)}");
         }
-        
+
         if (dotenv.env.containsKey('GOOGLE_MAPS_API_KEY')) {
           final key = dotenv.env['GOOGLE_MAPS_API_KEY']!;
           print("📋 GOOGLE_MAPS_API_KEY: ${_maskApiKey(key)}");
         }
-        
+
         if (dotenv.env.containsKey('CICERO_API_KEY')) {
           final key = dotenv.env['CICERO_API_KEY']!;
           print("📋 CICERO_API_KEY: ${_maskApiKey(key)}");
@@ -57,14 +58,14 @@ Future<void> _initializeServices() async {
         print("⚠️ Failed to load .env file: $e");
       }
     }
-    
+
     // Initialize Remote Config
     final remoteConfig = RemoteConfigService();
     await remoteConfig.initialize();
-    
+
     // Initialize NetworkService
     final networkService = NetworkService();
-    
+
     // Validate API keys and check connectivity in parallel
     await Future.wait([
       remoteConfig.validateApiKeys().then((keyStatus) {
@@ -72,16 +73,14 @@ Future<void> _initializeServices() async {
           print('🔑 API Keys: $keyStatus');
         }
       }),
-      
       networkService.checkConnectivity().then((hasConnectivity) {
         if (kDebugMode) {
-          print(hasConnectivity 
-              ? '🌐 Network connectivity: Connected' 
+          print(hasConnectivity
+              ? '🌐 Network connectivity: Connected'
               : '🌐 Network connectivity: Not connected');
         }
       }),
     ]);
-    
   } catch (e) {
     if (kDebugMode) {
       print('❌ Error initializing services: $e');
@@ -109,25 +108,29 @@ class RepresentativeApp extends StatelessWidget {
       providers: [
         // Network Service (add this)
         Provider(create: (_) => NetworkService()),
-        
+
         // Remote Config Service (add this)
         Provider(create: (_) => RemoteConfigService()),
-        
+
         // Auth Service
         ChangeNotifierProvider(create: (_) => AuthService()),
-        
+
         // Representative Services
         Provider(create: (_) => RepresentativeService()),
-        
+
         // Combined Representative Provider
-        ChangeNotifierProxyProvider<RepresentativeService, CombinedRepresentativeProvider>(
-          create: (context) => CombinedRepresentativeProvider(context.read<RepresentativeService>()),
-          update: (context, service, previous) => previous ?? CombinedRepresentativeProvider(service),
+        ChangeNotifierProxyProvider<RepresentativeService,
+            CombinedRepresentativeProvider>(
+          create: (context) => CombinedRepresentativeProvider(
+              context.read<RepresentativeService>()),
+          update: (context, service, previous) =>
+              previous ?? CombinedRepresentativeProvider(service),
         ),
       ],
       child: MaterialApp(
         title: 'govvy',
-        debugShowCheckedModeBanner: kDebugMode, // Only show debug banner in debug mode
+        debugShowCheckedModeBanner:
+            kDebugMode, // Only show debug banner in debug mode
         theme: ThemeData(
           primaryColor: const Color(0xFF5E35B1), // Deep Purple 600
           colorScheme: ColorScheme.fromSeed(
@@ -163,7 +166,10 @@ class RepresentativeApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const AuthWrapper(),
+        home: kIsWeb ? const LandingPage() : const AuthWrapper(),
+        routes: {
+          '/': (context) => kIsWeb ? const LandingPage() : const AuthWrapper(),
+        },
       ),
     );
   }
