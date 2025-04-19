@@ -17,14 +17,19 @@ class RemoteConfigService {
   static const String googleMapsApiKey = 'GOOGLE_MAPS_API_KEY';
   static const String ciceroApiKey = 'CICERO_API_KEY';
 
-  // Initialization status
+  // Initialization status and source tracking
   bool _initialized = false;
+  Map<String, String> _keySource = {};
 
-  // Initialize remote config
+  // Initialize remote config with improved error handling and logging
   Future<void> initialize() async {
     if (_initialized) return;
 
     try {
+      if (kDebugMode) {
+        print('🔑 Initializing RemoteConfigService...');
+      }
+
       // Set default values (these will be used until remote values are fetched)
       await _remoteConfig.setDefaults({
         congressApiKey: '',
@@ -41,24 +46,34 @@ class RemoteConfigService {
       // Fetch and activate values
       await _remoteConfig.fetchAndActivate();
 
+      // Track which values came from Firebase
+      if (_remoteConfig.getString(congressApiKey).isNotEmpty) {
+        _keySource[congressApiKey] = 'Firebase';
+      }
+      if (_remoteConfig.getString(googleMapsApiKey).isNotEmpty) {
+        _keySource[googleMapsApiKey] = 'Firebase';
+      }
+      if (_remoteConfig.getString(ciceroApiKey).isNotEmpty) {
+        _keySource[ciceroApiKey] = 'Firebase';
+      }
+
       _initialized = true;
 
-      if (kDebugMode) {
-        print('Remote Config initialized successfully');
-        print(
-            'CONGRESS_API_KEY: ${_remoteConfig.getString(congressApiKey).isEmpty ? "NOT SET" : "SET (hidden)"}');
-        print(
-            'GOOGLE_MAPS_API_KEY: ${_remoteConfig.getString(googleMapsApiKey).isEmpty ? "NOT SET" : "SET (hidden)"}');
-        print(
-            'CICERO_API_KEY: ${_remoteConfig.getString(ciceroApiKey).isEmpty ? "NOT SET" : "SET (hidden)"}');
+      // Always try to load local config as well (in development)
+      if (!kIsWeb) {
+        await _loadLocalConfig();
       }
+
+      // Log the available keys
+      _logKeyStatus();
     } catch (e) {
       if (kDebugMode) {
-        print('Error initializing Remote Config: $e');
+        print('❌ Error initializing Remote Config: $e');
       }
       // Fall back to .env file in development
       if (!kIsWeb) {
         await _loadLocalConfig();
+        _logKeyStatus();
       }
     }
   }
@@ -68,37 +83,124 @@ class RemoteConfigService {
     try {
       await dotenv.load(fileName: "assets/.env");
       if (kDebugMode) {
-        print(".env file loaded with ${dotenv.env.length} variables");
+        print("🔑 Loading .env file with ${dotenv.env.length} variables");
+      }
+
+      // Track which values came from .env
+      if (_keySource[congressApiKey] == null && dotenv.env[congressApiKey] != null) {
+        _keySource[congressApiKey] = '.env';
+      }
+      if (_keySource[googleMapsApiKey] == null && dotenv.env[googleMapsApiKey] != null) {
+        _keySource[googleMapsApiKey] = '.env';
+      }
+      if (_keySource[ciceroApiKey] == null && dotenv.env[ciceroApiKey] != null) {
+        _keySource[ciceroApiKey] = '.env';
       }
     } catch (e) {
       if (kDebugMode) {
-        print("WARNING: Error loading .env file: $e");
+        print("❌ Error loading .env file: $e");
       }
     }
   }
 
-  // Get API keys
-  String? get getCongressApiKey {
-    if (_initialized && _remoteConfig.getString(congressApiKey).isNotEmpty) {
-      return _remoteConfig.getString(congressApiKey);
+  // Log the status of all API keys
+  void _logKeyStatus() {
+    if (!kDebugMode) return;
+
+    print('🔑 API Key Status:');
+    
+    // Congress API Key
+    final congressKey = getCongressApiKey;
+    if (congressKey != null && congressKey.isNotEmpty) {
+      print('✅ CONGRESS_API_KEY: Valid (from ${_keySource[congressApiKey] ?? "unknown"}, ${_maskKey(congressKey)})');
+    } else {
+      print('❌ CONGRESS_API_KEY: Missing or empty');
     }
-    // Fall back to .env in development
-    return dotenv.env['CONGRESS_API_KEY'];
+    
+    // Google Maps API Key
+    final googleKey = getGoogleMapsApiKey;
+    if (googleKey != null && googleKey.isNotEmpty) {
+      print('✅ GOOGLE_MAPS_API_KEY: Valid (from ${_keySource[googleMapsApiKey] ?? "unknown"}, ${_maskKey(googleKey)})');
+    } else {
+      print('❌ GOOGLE_MAPS_API_KEY: Missing or empty');
+    }
+    
+    // Cicero API Key
+    final ciceroKey = getCiceroApiKey;
+    if (ciceroKey != null && ciceroKey.isNotEmpty) {
+      print('✅ CICERO_API_KEY: Valid (from ${_keySource[ciceroApiKey] ?? "unknown"}, ${_maskKey(ciceroKey)})');
+    } else {
+      print('❌ CICERO_API_KEY: Missing or empty');
+    }
+  }
+
+  // Mask API key for safe logging
+  String _maskKey(String key) {
+    if (key.length <= 8) {
+      return '****';
+    }
+    return '${key.substring(0, 4)}...${key.substring(key.length - 4)}';
+  }
+
+  // Public method to validate and report on API keys
+  Future<Map<String, bool>> validateApiKeys() async {
+    if (!_initialized) {
+      await initialize();
+    }
+
+    return {
+      'congress': getCongressApiKey?.isNotEmpty == true,
+      'googleMaps': getGoogleMapsApiKey?.isNotEmpty == true,
+      'cicero': getCiceroApiKey?.isNotEmpty == true,
+    };
+  }
+
+  // Get API keys - with improved null safety
+  String? get getCongressApiKey {
+    if (!_initialized) {
+      // Try to initialize if not done yet
+      initialize();
+    }
+
+    // First try Remote Config
+    final remoteKey = _remoteConfig.getString(congressApiKey);
+    if (remoteKey.isNotEmpty) {
+      return remoteKey;
+    }
+    
+    // Fall back to .env
+    return dotenv.env[congressApiKey];
   }
 
   String? get getGoogleMapsApiKey {
-    if (_initialized && _remoteConfig.getString(googleMapsApiKey).isNotEmpty) {
-      return _remoteConfig.getString(googleMapsApiKey);
+    if (!_initialized) {
+      // Try to initialize if not done yet
+      initialize();
     }
-    // Fall back to .env in development
-    return dotenv.env['GOOGLE_MAPS_API_KEY'];
+
+    // First try Remote Config
+    final remoteKey = _remoteConfig.getString(googleMapsApiKey);
+    if (remoteKey.isNotEmpty) {
+      return remoteKey;
+    }
+    
+    // Fall back to .env
+    return dotenv.env[googleMapsApiKey];
   }
 
   String? get getCiceroApiKey {
-    if (_initialized && _remoteConfig.getString(ciceroApiKey).isNotEmpty) {
-      return _remoteConfig.getString(ciceroApiKey);
+    if (!_initialized) {
+      // Try to initialize if not done yet
+      initialize();
     }
-    // Fall back to .env in development
-    return dotenv.env['CICERO_API_KEY'];
+
+    // First try Remote Config
+    final remoteKey = _remoteConfig.getString(ciceroApiKey);
+    if (remoteKey.isNotEmpty) {
+      return remoteKey;
+    }
+    
+    // Fall back to .env
+    return dotenv.env[ciceroApiKey];
   }
 }

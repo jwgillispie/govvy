@@ -4,12 +4,15 @@ import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/models/local_representative_model.dart';
 import 'package:govvy/services/representative_service.dart';
 import 'package:govvy/services/cicero_service.dart';
+import 'package:govvy/services/network_service.dart';
+import 'package:govvy/services/remote_service_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class CombinedRepresentativeProvider with ChangeNotifier {
   final RepresentativeService _federalService;
   final CiceroService _localService = CiceroService();
+  final NetworkService _networkService = NetworkService();
 
   List<Representative> _federalRepresentatives = [];
   List<LocalRepresentative> _localRepresentativesRaw = [];
@@ -76,10 +79,73 @@ class CombinedRepresentativeProvider with ChangeNotifier {
 
   CombinedRepresentativeProvider(this._federalService);
 
+  // Check network status before performing API calls
+  Future<bool> _checkNetworkBeforeRequest() async {
+    try {
+      final isConnected = await _networkService.checkConnectivity();
+      
+      if (!isConnected) {
+        _errorMessageFederal = 'Network connection unavailable. Please check your internet connection.';
+        notifyListeners();
+      }
+      
+      return isConnected;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error checking network: $e');
+      }
+      return true; // Assume connected if check fails
+    }
+  }
+  
+  // Add a method to check API key availability
+  Future<bool> _verifyApiKeys() async {
+    try {
+      final remoteConfig = RemoteConfigService();
+      final keyStatus = await remoteConfig.validateApiKeys();
+      
+      bool hasRequiredKeys = true;
+      
+      if (!keyStatus['googleMaps']!) {
+        _errorMessageFederal = 'Missing Google Maps API key. Some features may not work correctly.';
+        hasRequiredKeys = false;
+      }
+      
+      if (!keyStatus['congress']!) {
+        _errorMessageFederal = 'Missing Congress API key. Federal representative data will be limited.';
+        hasRequiredKeys = false;
+      }
+      
+      if (!keyStatus['cicero']!) {
+        _errorMessageLocal = 'Missing Cicero API key. Local representative data will be limited.';
+        hasRequiredKeys = false;
+      }
+      
+      if (!hasRequiredKeys) {
+        notifyListeners();
+      }
+      
+      return hasRequiredKeys;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error verifying API keys: $e');
+      }
+      return true; // Continue anyway
+    }
+  }
+
   // New method: Fetch representatives by state (and optional district)
   Future<void> fetchRepresentativesByState(String stateCode,
       [String? districtNumber]) async {
     try {
+      // Check network connectivity
+      if (!await _checkNetworkBeforeRequest()) {
+        return; // Don't proceed if no network
+      }
+      
+      // Verify API keys
+      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
+      
       _isLoadingFederal = true;
       _errorMessageFederal = null;
       _lastSearchedState = stateCode;
@@ -160,6 +226,14 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   // Fetch local representatives by city name
   Future<void> fetchLocalRepresentativesByCity(String city) async {
     try {
+      // Check network connectivity
+      if (!await _checkNetworkBeforeRequest()) {
+        return; // Don't proceed if no network
+      }
+      
+      // Verify API keys
+      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
+      
       _isLoadingLocal = true;
       _errorMessageLocal = null;
       _lastSearchedCity = city;
@@ -217,6 +291,14 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   // Fetch only federal representatives by address
   Future<void> fetchFederalRepresentativesByAddress(String address) async {
     try {
+      // Check network connectivity
+      if (!await _checkNetworkBeforeRequest()) {
+        return; // Don't proceed if no network
+      }
+      
+      // Verify API keys
+      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
+      
       _isLoadingFederal = true;
       _errorMessageFederal = null;
       notifyListeners();
@@ -263,6 +345,14 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   // Fetch only local representatives by address
   Future<void> fetchLocalRepresentativesByAddress(String address) async {
     try {
+      // Check network connectivity
+      if (!await _checkNetworkBeforeRequest()) {
+        return; // Don't proceed if no network
+      }
+      
+      // Verify API keys
+      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
+      
       _isLoadingLocal = true;
       _errorMessageLocal = null;
       notifyListeners();
@@ -298,6 +388,14 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   // Fetch representative details
   Future<void> fetchRepresentativeDetails(String bioGuideId) async {
     try {
+      // Check network connectivity
+      if (!await _checkNetworkBeforeRequest()) {
+        return; // Don't proceed if no network
+      }
+      
+      // Verify API keys
+      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
+      
       _isLoadingDetails = true;
       _errorMessageLocal = null;
       _errorMessageFederal = null;
@@ -321,8 +419,10 @@ class CombinedRepresentativeProvider with ChangeNotifier {
           chamber: localRep.level,
           office: localRep.office,
           phone: localRep.phone,
+          email: localRep.email,
           website: localRep.website,
           imageUrl: localRep.imageUrl,
+          socialMedia: localRep.socialMedia,
           // Local representatives typically don't have bills
           sponsoredBills: [],
           cosponsoredBills: [],
@@ -581,12 +681,19 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     _selectedRepresentative = null;
     notifyListeners();
   }
-// Add to lib/providers/combined_representative_provider.dart
 
-// Fetch representatives by name
+  // Fetch representatives by name
   Future<void> fetchRepresentativesByName(String lastName,
       {String? firstName}) async {
     try {
+      // Check network connectivity
+      if (!await _checkNetworkBeforeRequest()) {
+        return; // Don't proceed if no network
+      }
+      
+      // Verify API keys
+      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
+      
       _isLoadingLocal = true;
       _errorMessageLocal = null;
       notifyListeners();

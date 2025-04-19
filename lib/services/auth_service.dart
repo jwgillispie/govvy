@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:govvy/models/user_model.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 // Import these conditionally to fix platform compatibility
 import 'package:universal_html/html.dart' show window;
 
@@ -331,4 +332,16 @@ class AuthService with ChangeNotifier {
     if (currentUser == null) return null;
     return getUserData(currentUser!.uid);
   }
+  // Add this to both service classes
+Future<bool> checkNetworkConnectivity() async {
+  try {
+    final response = await http.get(Uri.parse('https://www.google.com'));
+    return response.statusCode == 200;
+  } catch (e) {
+    if (kDebugMode) {
+      print('Network connectivity check failed: $e');
+    }
+    return false;
+  }
+}
 }

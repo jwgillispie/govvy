@@ -1328,4 +1328,47 @@ class CiceroService {
       ),
     ];
   }
+  // Add this to both RepresentativeService and CiceroService
+Future<http.Response> _tracedHttpGet(Uri url, {String? apiKey}) async {
+  final redactedUrl = apiKey != null ? url.toString().replaceAll(apiKey, '[REDACTED]') : url.toString();
+  
+  if (kDebugMode) {
+    print('🌐 HTTP Request: GET $redactedUrl');
+  }
+  
+  final stopwatch = Stopwatch()..start();
+  try {
+    final response = await http.get(url);
+    stopwatch.stop();
+    
+    if (kDebugMode) {
+      print('🌐 HTTP Response: ${response.statusCode} (${stopwatch.elapsedMilliseconds}ms)');
+      print('🌐 Response Size: ${response.body.length} bytes');
+      if (response.statusCode != 200) {
+        print('🌐 Error Response: ${response.body.substring(0, min(500, response.body.length))}');
+      }
+    }
+    
+    return response;
+  } catch (e) {
+    stopwatch.stop();
+    if (kDebugMode) {
+      print('🌐 HTTP Error after ${stopwatch.elapsedMilliseconds}ms: $e');
+    }
+    rethrow;
+  }
+}
+
+// Add this to both service classes
+Future<bool> checkNetworkConnectivity() async {
+  try {
+    final response = await http.get(Uri.parse('https://www.google.com'));
+    return response.statusCode == 200;
+  } catch (e) {
+    if (kDebugMode) {
+      print('Network connectivity check failed: $e');
+    }
+    return false;
+  }
+}
 }

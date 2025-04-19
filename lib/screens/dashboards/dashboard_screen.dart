@@ -1,5 +1,7 @@
 // lib/screens/dashboards/dashboard_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:govvy/widgets/debug_access_button.dart';
 import 'package:govvy/widgets/share/share_app_widget.dart.dart';
 import 'package:govvy/widgets/share/share_reminder_widget.dart';
 import 'package:provider/provider.dart';
@@ -87,6 +89,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
         actions: [
+          // Add Debug Button here in debug mode
+          if (kDebugMode)
+            const DebugAccessButton(
+              useIconButton: true,
+              color: Colors.white,
+            ),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
@@ -122,6 +130,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
 
               const SizedBox(height: 16),
+
+              // Debug button (text variant) for better visibility in development
+              if (kDebugMode)
+                Center(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const DebugAccessButton(
+                      useIconButton: false,
+                      buttonText: 'Open API Debug Tools',
+                    ),
+                  ),
+                ),
 
               // Features grid
               GridView.count(

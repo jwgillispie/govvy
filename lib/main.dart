@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:govvy/firebase_options.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
-import 'package:govvy/screens/landing/landing_page.dart';
+import 'package:govvy/services/network_service.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
@@ -15,66 +15,86 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // Initialize services with proper error handling
+  await _initializeServices();
   
-  // Initialize Remote Config
-  await RemoteConfigService().initialize();
-
-  // Only load .env in development when not web
-  if (!kIsWeb) {
-    await _loadEnvironmentVariables();
-  }
-
   runApp(const RepresentativeApp());
 }
 
-Future<void> _loadEnvironmentVariables() async {
+Future<void> _initializeServices() async {
   try {
-    // Try to load .env file
-    await dotenv.load(fileName: "assets/.env");
-
-    // Verify required API keys
-    final congressApiKey = dotenv.env['CONGRESS_API_KEY'];
-    final googleMapsApiKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
-    final ciceroApiKey = dotenv.env['CICERO_API_KEY'];
-
-    // Log status of each key (securely)
-    if (congressApiKey == null) {
-      debugPrint("WARNING: CONGRESS_API_KEY not found in .env file");
-    } else if (congressApiKey.isEmpty) {
-      debugPrint("WARNING: CONGRESS_API_KEY is empty in .env file");
-    } else {
-      debugPrint(
-          "CONGRESS_API_KEY loaded successfully (${congressApiKey.substring(0, min(3, congressApiKey.length))}...)");
-    }
-
-    if (googleMapsApiKey == null) {
-      debugPrint("WARNING: GOOGLE_MAPS_API_KEY not found in .env file");
-    } else if (googleMapsApiKey.isEmpty) {
-      debugPrint("WARNING: GOOGLE_MAPS_API_KEY is empty in .env file");
-    } else {
-      debugPrint(
-          "GOOGLE_MAPS_API_KEY loaded successfully (${googleMapsApiKey.substring(0, min(3, googleMapsApiKey.length))}...)");
+    // Initialize Firebase first
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    
+    if (kDebugMode) {
+      print('✅ Firebase initialized successfully');
     }
     
-    if (ciceroApiKey == null) {
-      debugPrint("WARNING: CICERO_API_KEY not found in .env file");
-    } else if (ciceroApiKey.isEmpty) {
-      debugPrint("WARNING: CICERO_API_KEY is empty in .env file");
-    } else {
-      debugPrint(
-          "CICERO_API_KEY loaded successfully (${ciceroApiKey.substring(0, min(3, ciceroApiKey.length))}...)");
+    // Always attempt to load .env file for development (do this early)
+    if (kDebugMode) {
+      try {
+        await dotenv.load(fileName: "assets/.env");
+        print("✅ Loaded .env file with ${dotenv.env.length} variables");
+        
+        // Log the API keys we found (masked for security)
+        if (dotenv.env.containsKey('CONGRESS_API_KEY')) {
+          final key = dotenv.env['CONGRESS_API_KEY']!;
+          print("📋 CONGRESS_API_KEY: ${_maskApiKey(key)}");
+        }
+        
+        if (dotenv.env.containsKey('GOOGLE_MAPS_API_KEY')) {
+          final key = dotenv.env['GOOGLE_MAPS_API_KEY']!;
+          print("📋 GOOGLE_MAPS_API_KEY: ${_maskApiKey(key)}");
+        }
+        
+        if (dotenv.env.containsKey('CICERO_API_KEY')) {
+          final key = dotenv.env['CICERO_API_KEY']!;
+          print("📋 CICERO_API_KEY: ${_maskApiKey(key)}");
+        }
+      } catch (e) {
+        print("⚠️ Failed to load .env file: $e");
+      }
     }
-
-    debugPrint(".env file loaded with ${dotenv.env.length} variables");
+    
+    // Initialize Remote Config
+    final remoteConfig = RemoteConfigService();
+    await remoteConfig.initialize();
+    
+    // Initialize NetworkService
+    final networkService = NetworkService();
+    
+    // Validate API keys and check connectivity in parallel
+    await Future.wait([
+      remoteConfig.validateApiKeys().then((keyStatus) {
+        if (kDebugMode) {
+          print('🔑 API Keys: $keyStatus');
+        }
+      }),
+      
+      networkService.checkConnectivity().then((hasConnectivity) {
+        if (kDebugMode) {
+          print(hasConnectivity 
+              ? '🌐 Network connectivity: Connected' 
+              : '🌐 Network connectivity: Not connected');
+        }
+      }),
+    ]);
+    
   } catch (e) {
-    debugPrint("WARNING: Error loading .env file: $e");
-    debugPrint(
-        "WARNING: API features may not work correctly without environment variables.");
+    if (kDebugMode) {
+      print('❌ Error initializing services: $e');
+    }
   }
+}
+
+// Helper to mask API key for logging
+String _maskApiKey(String key) {
+  if (key.length <= 8) {
+    return '****';
+  }
+  return '${key.substring(0, 4)}...${key.substring(key.length - 4)}';
 }
 
 // Helper function to safely take a substring
@@ -87,6 +107,12 @@ class RepresentativeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // Network Service (add this)
+        Provider(create: (_) => NetworkService()),
+        
+        // Remote Config Service (add this)
+        Provider(create: (_) => RemoteConfigService()),
+        
         // Auth Service
         ChangeNotifierProvider(create: (_) => AuthService()),
         
@@ -101,7 +127,7 @@ class RepresentativeApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'govvy',
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: kDebugMode, // Only show debug banner in debug mode
         theme: ThemeData(
           primaryColor: const Color(0xFF5E35B1), // Deep Purple 600
           colorScheme: ColorScheme.fromSeed(
@@ -137,10 +163,7 @@ class RepresentativeApp extends StatelessWidget {
             ),
           ),
         ),
-        // For web, show only the landing page
-        // For mobile, show the full app with auth wrapper
-        // home: kIsWeb ? const LandingPage() : const AuthWrapper(),
-        home: AuthWrapper()
+        home: const AuthWrapper(),
       ),
     );
   }
