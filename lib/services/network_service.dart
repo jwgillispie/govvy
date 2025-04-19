@@ -28,14 +28,43 @@ class NetworkService {
     _loggingEnabled = enabled;
   }
   
-  // Check for network connectivity
+  // FIXED: Check for network connectivity - Use a CORS-friendly approach
   Future<bool> checkConnectivity() async {
     try {
-      final response = await http.get(
-        Uri.parse('https://www.google.com'),
-      ).timeout(_connectTimeout);
-      
-      return response.statusCode == 200;
+      if (kIsWeb) {
+        // For web platforms, use a more reliable approach that avoids CORS issues
+        // Option 1: Try to fetch your own backend API if available
+        try {
+          // First try - Use Firebase API as it's already CORS-enabled for your origin
+          final response = await http.get(
+            Uri.parse('https://firebase.googleapis.com/v1beta1/availableProjects'),
+            headers: {'Access-Control-Allow-Origin': '*'},
+          ).timeout(_connectTimeout);
+          
+          return response.statusCode < 500; // Any response (even 401) indicates network is up
+        } catch (e) {
+          // Fallback to a second try - Use a simple image from your own domain
+          try {
+            final response = await http.get(
+              Uri.parse('https://govvy--dev.web.app/favicon.ico'),
+            ).timeout(_connectTimeout);
+            
+            return response.statusCode == 200;
+          } catch (e) {
+            if (_loggingEnabled) {
+              print('🌐 Network connectivity check failed (second attempt): $e');
+            }
+            return false;
+          }
+        }
+      } else {
+        // For mobile platforms, the original approach works fine
+        final response = await http.get(
+          Uri.parse('https://www.google.com'),
+        ).timeout(_connectTimeout);
+        
+        return response.statusCode == 200;
+      }
     } catch (e) {
       if (_loggingEnabled) {
         print('🌐 Network connectivity check failed: $e');

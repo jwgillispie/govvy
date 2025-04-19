@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
+import 'package:govvy/services/network_service.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:govvy/models/representative_model.dart';
@@ -1328,7 +1329,6 @@ class CiceroService {
       ),
     ];
   }
-  // Add this to both RepresentativeService and CiceroService
 Future<http.Response> _tracedHttpGet(Uri url, {String? apiKey}) async {
   final redactedUrl = apiKey != null ? url.toString().replaceAll(apiKey, '[REDACTED]') : url.toString();
   
@@ -1359,16 +1359,10 @@ Future<http.Response> _tracedHttpGet(Uri url, {String? apiKey}) async {
   }
 }
 
-// Add this to both service classes
+// Replace the existing checkNetworkConnectivity method
 Future<bool> checkNetworkConnectivity() async {
-  try {
-    final response = await http.get(Uri.parse('https://www.google.com'));
-    return response.statusCode == 200;
-  } catch (e) {
-    if (kDebugMode) {
-      print('Network connectivity check failed: $e');
-    }
-    return false;
-  }
+  // Use the fixed implementation in NetworkService
+  final networkService = NetworkService();
+  return await networkService.checkConnectivity();
 }
 }
