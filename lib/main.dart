@@ -6,6 +6,7 @@ import 'package:govvy/firebase_options.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
 import 'package:govvy/screens/landing/landing_page.dart';
+import 'package:govvy/services/remote_service_config.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:govvy/services/representative_service.dart';
@@ -14,12 +15,18 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load .env file with improved error handling and verification
-  await _loadEnvironmentVariables();
-
+  // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
+  // Initialize Remote Config
+  await RemoteConfigService().initialize();
+
+  // Only load .env in development when not web
+  if (!kIsWeb) {
+    await _loadEnvironmentVariables();
+  }
 
   runApp(const RepresentativeApp());
 }
@@ -132,7 +139,8 @@ class RepresentativeApp extends StatelessWidget {
         ),
         // For web, show only the landing page
         // For mobile, show the full app with auth wrapper
-        home: kIsWeb ? const LandingPage() : const AuthWrapper(),
+        // home: kIsWeb ? const LandingPage() : const AuthWrapper(),
+        home: AuthWrapper()
       ),
     );
   }

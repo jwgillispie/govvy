@@ -2,50 +2,17 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
+import 'package:govvy/services/remote_service_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/models/local_representative_model.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CiceroService {
   final String _baseUrl = 'https://cicero.azavea.com/v3.1';
 
-  // Get API key from environment variables
-  String? get _apiKey {
-    final key = dotenv.env['CICERO_API_KEY'];
-
-    if (kDebugMode) {
-      if (key == null) {
-        print('WARNING: CICERO_API_KEY not found in .env file');
-      } else if (key.isEmpty) {
-        print('WARNING: CICERO_API_KEY is empty in .env file');
-      } else {
-        // Only show first few chars for security
-        print(
-            'CICERO_API_KEY found: ${key.substring(0, min(3, key.length))}...');
-      }
-    }
-
-    return key;
-  }
-
-  String? get _googleApiKey {
-    final key = dotenv.env['GOOGLE_MAPS_API_KEY'];
-
-    if (kDebugMode) {
-      if (key == null) {
-        print('WARNING: GOOGLE_MAPS_API_KEY not found in .env file');
-      } else if (key.isEmpty) {
-        print('WARNING: GOOGLE_MAPS_API_KEY is empty in .env file');
-      } else {
-        // Only show first few chars for security
-        print(
-            'GOOGLE_MAPS_API_KEY found: ${key.substring(0, min(3, key.length))}...');
-      }
-    }
-
-    return key;
-  }
+  // Get API keys from Remote Config
+  String? get _apiKey => RemoteConfigService().getCiceroApiKey;
+  String? get _googleApiKey => RemoteConfigService().getGoogleMapsApiKey;
 
   // Check if API key is available
   bool get hasApiKey {
@@ -63,6 +30,9 @@ class CiceroService {
     }
     return hasKey;
   }
+
+  // Helper function to safely take a substring
+  int min(int a, int b) => a < b ? a : b;
 
   // NEW: Function to geocode a city name to coordinates
   Future<Map<String, double>?> geocodeCityToCoordinates(String city) async {
@@ -496,7 +466,7 @@ class CiceroService {
     return false;
   }
 
-// Modify the CiceroService.processLocalOfficial function to better extract contact info
+// Process a Cicero official into a LocalRepresentative
   LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
     // Extract basic information
     String firstName = official['first_name']?.toString() ?? '';
@@ -659,7 +629,7 @@ class CiceroService {
       imageUrl = official['photo_url']?.toString();
     }
 
-    // Create a unique ID using either id or sk field
+// Create a unique ID using either id or sk field
     String bioGuideId = 'cicero-';
     if (official.containsKey('id')) {
       bioGuideId += official['id'].toString();
@@ -771,7 +741,6 @@ class CiceroService {
   }
 
   // Provide mock data for testing or when API is unavailable
-// Updated mock data generator in CiceroService
   List<LocalRepresentative> _getMockLocalRepresentatives({String? city}) {
     // Return city-specific mock data if a city is provided
     if (city != null) {
@@ -1241,125 +1210,122 @@ class CiceroService {
     // No match found
     return null;
   }
-  // Add to lib/services/cicero_service.dart
-
-// Get representatives by name
-Future<List<LocalRepresentative>> getRepresentativesByName(String lastName, {String? firstName}) async {
-  try {
-    if (!hasApiKey) {
-      if (kDebugMode) {
-        print('Cicero API key not found. Using mock data for development.');
+  // Get representatives by name
+  Future<List<LocalRepresentative>> getRepresentativesByName(String lastName, {String? firstName}) async {
+    try {
+      if (!hasApiKey) {
+        if (kDebugMode) {
+          print('Cicero API key not found. Using mock data for development.');
+        }
+        return _getMockLocalRepresentativesByName(lastName, firstName);
       }
-      return _getMockLocalRepresentativesByName(lastName, firstName);
-    }
-    
-    // Build query parameters
-    Map<String, String> queryParams = {
-      'last_name': lastName,
-      'valid_range': 'ALL',
-      'format': 'json',
-      'key': _apiKey!
-    };
-    
-    // Add first name if provided
-    if (firstName != null && firstName.isNotEmpty) {
-      queryParams['first_name'] = firstName;
-    }
-    
-    // Use the official endpoint
-    final url = Uri.parse('$_baseUrl/official').replace(queryParameters: queryParams);
-    
-    if (kDebugMode) {
-      print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-    }
-    
-    final response = await http.get(url);
-    
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      List<LocalRepresentative> representatives = [];
       
-      // Process officials
-      if (data.containsKey('response') && 
-          data['response'].containsKey('results') &&
-          data['response']['results'].containsKey('officials')) {
+      // Build query parameters
+      Map<String, String> queryParams = {
+        'last_name': lastName,
+        'valid_range': 'ALL',
+        'format': 'json',
+        'key': _apiKey!
+      };
+      
+      // Add first name if provided
+      if (firstName != null && firstName.isNotEmpty) {
+        queryParams['first_name'] = firstName;
+      }
+      
+      // Use the official endpoint
+      final url = Uri.parse('$_baseUrl/official').replace(queryParameters: queryParams);
+      
+      if (kDebugMode) {
+        print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+      }
+      
+      final response = await http.get(url);
+      
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        List<LocalRepresentative> representatives = [];
         
-        final officials = data['response']['results']['officials'];
-        
-        if (officials is List) {
-          for (var officialData in officials) {
-            if (officialData is Map) {
-              representatives.add(_processCiceroOfficial(
-                  Map<String, dynamic>.from(officialData)));
+        // Process officials
+        if (data.containsKey('response') && 
+            data['response'].containsKey('results') &&
+            data['response']['results'].containsKey('officials')) {
+          
+          final officials = data['response']['results']['officials'];
+          
+          if (officials is List) {
+            for (var officialData in officials) {
+              if (officialData is Map) {
+                representatives.add(_processCiceroOfficial(
+                    Map<String, dynamic>.from(officialData)));
+              }
             }
           }
         }
+        
+        return representatives;
+      } else {
+        if (kDebugMode) {
+          print('API error: ${response.statusCode} - ${response.body}');
+        }
+        throw Exception('Failed to fetch representatives by name: ${response.statusCode}');
       }
-      
-      return representatives;
-    } else {
+    } catch (e) {
       if (kDebugMode) {
-        print('API error: ${response.statusCode} - ${response.body}');
+        print('Error fetching representatives by name: $e');
       }
-      throw Exception('Failed to fetch representatives by name: ${response.statusCode}');
+      return _getMockLocalRepresentativesByName(lastName, firstName);
     }
-  } catch (e) {
-    if (kDebugMode) {
-      print('Error fetching representatives by name: $e');
-    }
-    return _getMockLocalRepresentativesByName(lastName, firstName);
   }
-}
 
-// Mock data for name search
-List<LocalRepresentative> _getMockLocalRepresentativesByName(String lastName, [String? firstName]) {
-  // Determine a more accurate name filter if firstName is provided
-  final nameFilter = firstName != null ? '$firstName $lastName' : lastName;
-  
-  return [
-    LocalRepresentative(
-      name: firstName != null ? '$firstName $lastName' : 'John $lastName',
-      bioGuideId: 'cicero-mock-state-senate-${lastName.toLowerCase()}',
-      party: 'Republican',
-      level: 'STATE_UPPER',
-      state: 'CA',
-      district: 'State Senate District 12',
-      office: 'State Senator',
-      phone: '(555) 123-4567',
-      email: '${lastName.toLowerCase()}@state.gov',
-      website: 'https://www.state.gov/senators/${lastName.toLowerCase()}',
-      imageUrl: null,
-      socialMedia: ['Twitter: @${lastName.toLowerCase()}', 'Facebook: ${lastName.toLowerCase()}ForSenate'],
-    ),
-    LocalRepresentative(
-      name: firstName != null ? 'Mayor $firstName $lastName' : 'Mayor Mary $lastName',
-      bioGuideId: 'cicero-mock-mayor-${lastName.toLowerCase()}',
-      party: 'Democratic',
-      level: 'LOCAL_EXEC',
-      state: 'NY',
-      district: 'New York City',
-      office: 'Mayor',
-      phone: '(555) 987-6543',
-      email: 'mayor${lastName.toLowerCase()}@city.gov',
-      website: 'https://www.city.gov/mayor',
-      imageUrl: null,
-      socialMedia: ['Twitter: @Mayor${lastName.toLowerCase()}', 'Instagram: Mayor${lastName.toLowerCase()}'],
-    ),
-    LocalRepresentative(
-      name: firstName != null ? 'Councilmember $firstName $lastName' : 'Councilmember Robert $lastName',
-      bioGuideId: 'cicero-mock-council-${lastName.toLowerCase()}',
-      party: 'Independent',
-      level: 'LOCAL',
-      state: 'FL',
-      district: 'Miami City Council District 3',
-      office: 'City Council Member',
-      phone: '(555) 555-5555',
-      email: 'council${lastName.toLowerCase()}@miami.gov',
-      website: 'https://www.miami.gov/council/district3',
-      imageUrl: null,
-      socialMedia: null,
-    ),
-  ];
-}
-  
+  // Mock data for name search
+  List<LocalRepresentative> _getMockLocalRepresentativesByName(String lastName, [String? firstName]) {
+    // Determine a more accurate name filter if firstName is provided
+    final nameFilter = firstName != null ? '$firstName $lastName' : lastName;
+    
+    return [
+      LocalRepresentative(
+        name: firstName != null ? '$firstName $lastName' : 'John $lastName',
+        bioGuideId: 'cicero-mock-state-senate-${lastName.toLowerCase()}',
+        party: 'Republican',
+        level: 'STATE_UPPER',
+        state: 'CA',
+        district: 'State Senate District 12',
+        office: 'State Senator',
+        phone: '(555) 123-4567',
+        email: '${lastName.toLowerCase()}@state.gov',
+        website: 'https://www.state.gov/senators/${lastName.toLowerCase()}',
+        imageUrl: null,
+        socialMedia: ['Twitter: @${lastName.toLowerCase()}', 'Facebook: ${lastName.toLowerCase()}ForSenate'],
+      ),
+      LocalRepresentative(
+        name: firstName != null ? 'Mayor $firstName $lastName' : 'Mayor Mary $lastName',
+        bioGuideId: 'cicero-mock-mayor-${lastName.toLowerCase()}',
+        party: 'Democratic',
+        level: 'LOCAL_EXEC',
+        state: 'NY',
+        district: 'New York City',
+        office: 'Mayor',
+        phone: '(555) 987-6543',
+        email: 'mayor${lastName.toLowerCase()}@city.gov',
+        website: 'https://www.city.gov/mayor',
+        imageUrl: null,
+        socialMedia: ['Twitter: @Mayor${lastName.toLowerCase()}', 'Instagram: Mayor${lastName.toLowerCase()}'],
+      ),
+      LocalRepresentative(
+        name: firstName != null ? 'Councilmember $firstName $lastName' : 'Councilmember Robert $lastName',
+        bioGuideId: 'cicero-mock-council-${lastName.toLowerCase()}',
+        party: 'Independent',
+        level: 'LOCAL',
+        state: 'FL',
+        district: 'Miami City Council District 3',
+        office: 'City Council Member',
+        phone: '(555) 555-5555',
+        email: 'council${lastName.toLowerCase()}@miami.gov',
+        website: 'https://www.miami.gov/council/district3',
+        imageUrl: null,
+        socialMedia: null,
+      ),
+    ];
+  }
 }
