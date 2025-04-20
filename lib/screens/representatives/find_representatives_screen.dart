@@ -27,7 +27,9 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
   bool _isSearching = false;
   int _searchTypeIndex = 0; // 0 = State, 1 = City, 2 = Name
   late TabController _tabController;
-
+  final ScrollController _scrollController = ScrollController();
+  bool _showSearchForm = true;
+  
   // US States mapping for dropdown
   final List<Map<String, String>> _usStates = [
     {"name": "Alabama", "code": "AL"},
@@ -91,15 +93,33 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     _fetchStateAndLoadCache();
+    
+    // Listen to tab changes to scroll to the top of the list
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        _scrollToTop();
+      }
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
-  // Fetch state from profile and try to load from cache
+  void _scrollToTop() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300), 
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  // Fetch state from profile and load from cache
   Future<void> _fetchStateAndLoadCache() async {
     try {
       setState(() {
@@ -205,6 +225,14 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
         setState(() {
           _validationError = provider.errorMessage;
         });
+      } else {
+        // Minimize the search form when results are available
+        setState(() {
+          _showSearchForm = false;
+        });
+        
+        // Scroll to the top of the results
+        _scrollToTop();
       }
 
       // Switch to the appropriate tab
@@ -254,6 +282,14 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
         setState(() {
           _validationError = provider.errorMessage;
         });
+      } else {
+        // Minimize the search form when results are available
+        setState(() {
+          _showSearchForm = false;
+        });
+        
+        // Scroll to the top of the results
+        _scrollToTop();
       }
     } catch (e) {
       if (mounted) {
@@ -268,52 +304,60 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
         });
       }
     }
-  }// Update in lib/screens/representatives/find_representatives_screen.dart
+  }
 
-// Add this method
-Future<void> _fetchRepresentativesByName(String lastName, String? firstName) async {
-  if (lastName.isEmpty) {
+  // Fetch representatives by name
+  Future<void> _fetchRepresentativesByName(String lastName, String? firstName) async {
+    if (lastName.isEmpty) {
+      setState(() {
+        _validationError = 'Please enter a last name';
+      });
+      return;
+    }
+
     setState(() {
-      _validationError = 'Please enter a last name';
+      _isSearching = true;
+      _validationError = null;
     });
-    return;
+
+    try {
+      // Get the provider and fetch reps by name
+      final provider =
+          Provider.of<CombinedRepresentativeProvider>(context, listen: false);
+      provider.clearErrors();
+
+      await provider.fetchRepresentativesByName(lastName, firstName: firstName);
+
+      // Navigate to the All tab after search completes
+      _tabController.animateTo(0); // Index 0 is the All tab
+
+      if (provider.errorMessage != null && mounted) {
+        setState(() {
+          _validationError = provider.errorMessage;
+        });
+      } else {
+        // Minimize the search form when results are available
+        setState(() {
+          _showSearchForm = false;
+        });
+        
+        // Scroll to the top of the results
+        _scrollToTop();
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _validationError = 'Error searching: ${e.toString()}';
+        });
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSearching = false;
+        });
+      }
+    }
   }
-
-  setState(() {
-    _isSearching = true;
-    _validationError = null;
-  });
-
-  try {
-    // Get the provider and fetch reps by name
-    final provider =
-        Provider.of<CombinedRepresentativeProvider>(context, listen: false);
-    provider.clearErrors();
-
-    await provider.fetchRepresentativesByName(lastName, firstName: firstName);
-
-    // Navigate to the All tab after search completes
-    _tabController.animateTo(0); // Index 0 is the All tab
-
-    if (provider.errorMessage != null && mounted) {
-      setState(() {
-        _validationError = provider.errorMessage;
-      });
-    }
-  } catch (e) {
-    if (mounted) {
-      setState(() {
-        _validationError = 'Error searching: ${e.toString()}';
-      });
-    }
-  } finally {
-    if (mounted) {
-      setState(() {
-        _isSearching = false;
-      });
-    }
-  }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -324,159 +368,206 @@ Future<void> _fetchRepresentativesByName(String lastName, String? firstName) asy
         title: const Text('Find Your Representatives'),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
+        actions: [
+          // Add a button to expand/collapse the search form
+          IconButton(
+            icon: Icon(_showSearchForm ? Icons.keyboard_arrow_up : Icons.search),
+            tooltip: _showSearchForm ? 'Hide search form' : 'Show search form',
+            onPressed: () {
+              setState(() {
+                _showSearchForm = !_showSearchForm;
+              });
+              
+              // If showing the search form, scroll to the top
+              if (_showSearchForm) {
+                _scrollToTop();
+              }
+            },
+          ),
+        ],
       ),
       body: !_initialLoadComplete
           ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                // Search inputs
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      // Search type toggle
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SegmentedButton<int>(
-                              segments: const [
-                                ButtonSegment<int>(
-                                  value: 0,
-                                  label: Text('By State'),
-                                  icon: Icon(Icons.public),
+          : SafeArea(
+              child: NestedScrollView(
+                controller: _scrollController,
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    // Search inputs
+                    SliverToBoxAdapter(
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        height: _showSearchForm ? null : 0,
+                        child: AnimatedOpacity(
+                          duration: const Duration(milliseconds: 200),
+                          opacity: _showSearchForm ? 1.0 : 0.0,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                // Search type toggle
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: SegmentedButton<int>(
+                                        segments: const [
+                                          ButtonSegment<int>(
+                                            value: 0,
+                                            label: Text('By State'),
+                                            icon: Icon(Icons.public),
+                                          ),
+                                          ButtonSegment<int>(
+                                            value: 1,
+                                            label: Text('By City'),
+                                            icon: Icon(Icons.location_city_outlined),
+                                          ),
+                                          ButtonSegment<int>(
+                                            value: 2,
+                                            label: Text('By Name'),
+                                            icon: Icon(Icons.person_search),
+                                          ),
+                                        ],
+                                        selected: {_searchTypeIndex},
+                                        onSelectionChanged: (Set<int> selection) {
+                                          setState(() {
+                                            _searchTypeIndex = selection.first;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                ButtonSegment<int>(
-                                  value: 1,
-                                  label: Text('By City'),
-                                  icon: Icon(Icons.location_city_outlined),
-                                ),
-                                ButtonSegment<int>(
-                                  value: 2,
-                                  label: Text('By Name'),
-                                  icon: Icon(Icons.person_search),
-                                ),
+                                const SizedBox(height: 16),
+
+                                // Show search form based on selected type
+                                if (_searchTypeIndex == 0)
+                                  _buildStateSearchForm()
+                                else if (_searchTypeIndex == 1)
+                                  CitySearchInput(
+                                    initialCity: _userCity,
+                                    isLoading: _isSearching,
+                                    onCitySubmitted: (cityName) {
+                                      _fetchLocalRepresentativesByCity(cityName);
+                                    },
+                                  )
+                                else
+                                  NameSearchInput(
+                                    isLoading: _isSearching,
+                                    onNameSubmitted: (lastName, firstName) {
+                                      _fetchRepresentativesByName(lastName, firstName);
+                                    },
+                                  ),
                               ],
-                              selected: {_searchTypeIndex},
-                              onSelectionChanged: (Set<int> selection) {
-                                setState(() {
-                                  _searchTypeIndex = selection.first;
-                                });
-                              },
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-
-                      // Show search form based on selected type
-                      if (_searchTypeIndex == 0)
-                        _buildStateSearchForm()
-                      else if (_searchTypeIndex == 1)
-                        CitySearchInput(
-                          initialCity: _userCity,
-                          isLoading: _isSearching,
-                          onCitySubmitted: (cityName) {
-                            _fetchLocalRepresentativesByCity(cityName);
-                          },
-                        )
-                      else
-                        NameSearchInput(
-                          isLoading: _isSearching,
-                          onNameSubmitted: (lastName, firstName) {
-                            _fetchRepresentativesByName(lastName, firstName);
-                          },
                         ),
-                    ],
-                  ),
-                ),
-
-                // Tab bar
-                TabBar(
-                  controller: _tabController,
-                  isScrollable: true, // Make tabs scrollable to fit all
-                  tabs: const [
-                    Tab(text: 'All'),
-                    Tab(text: 'Federal/State'),
-                    Tab(text: 'Local'),
-                    Tab(text: 'Name Results'),
-                  ],
-                  labelColor: Theme.of(context).colorScheme.primary,
-                  unselectedLabelColor: Colors.grey,
-                  indicatorColor: Theme.of(context).colorScheme.primary,
-                ),
-
-                // Error message if any
-                if (_validationError != null || provider.errorMessage != null)
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        color: Colors.red.shade50,
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: Colors.red.shade200),
-                      ),
-                      child: Text(
-                        _validationError ?? provider.errorMessage ?? '',
-                        style: TextStyle(color: Colors.red.shade700),
                       ),
                     ),
-                  ),
 
-                // Loading indicators
-                if (provider.isLoading)
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (provider.isLoadingFederal)
-                          const Padding(
-                            padding: EdgeInsets.only(right: 8.0),
-                            child: Text('Loading federal...'),
+                    // Tab bar
+                    SliverToBoxAdapter(
+                      child: TabBar(
+                        controller: _tabController,
+                        isScrollable: true, // Make tabs scrollable to fit all
+                        tabs: const [
+                          Tab(text: 'All'),
+                          Tab(text: 'Federal/State'),
+                          Tab(text: 'Local'),
+                          Tab(text: 'Name Results'),
+                        ],
+                        labelColor: Theme.of(context).colorScheme.primary,
+                        unselectedLabelColor: Colors.grey,
+                        indicatorColor: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+
+                    // Error message if any
+                    if (_validationError != null || provider.errorMessage != null)
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade50,
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(color: Colors.red.shade200),
+                            ),
+                            child: Text(
+                              _validationError ?? provider.errorMessage ?? '',
+                              style: TextStyle(color: Colors.red.shade700),
+                            ),
                           ),
-                        if (provider.isLoadingLocal)
-                          const Text('Loading local...'),
-                        const SizedBox(width: 8),
-                        const CircularProgressIndicator(),
-                      ],
-                    ),
-                  ),
+                        ),
+                      ),
 
-                // Tab content
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      // All representatives tab
-                      _buildRepresentativesList(
-                          provider.allRepresentatives,
-                          _searchTypeIndex == 0
-                              ? 'Select a state to find your representatives'
-                              : _searchTypeIndex == 1
-                                  ? 'Enter a city to find your representatives'
-                                  : 'Search by name to find representatives'),
+                    // Loading indicators
+                    if (provider.isLoading)
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (provider.isLoadingFederal)
+                                const Padding(
+                                  padding: EdgeInsets.only(right: 8.0),
+                                  child: Text('Loading federal...'),
+                                ),
+                              if (provider.isLoadingLocal)
+                                const Text('Loading local...'),
+                              const SizedBox(width: 8),
+                              const CircularProgressIndicator(),
+                            ],
+                          ),
+                        ),
+                      ),
+                  ];
+                },
+                // Tab content in the body
+                body: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    // All representatives tab
+                    _buildRepresentativesList(
+                        provider.allRepresentatives,
+                        _searchTypeIndex == 0
+                            ? 'Select a state to find your representatives'
+                            : _searchTypeIndex == 1
+                                ? 'Enter a city to find your representatives'
+                                : 'Search by name to find representatives'),
 
-                      // Federal/State representatives tab
-                      _buildRepresentativesList(provider.federalRepresentatives,
-                          'Select a state to find your federal and state representatives'),
+                    // Federal/State representatives tab
+                    _buildRepresentativesList(provider.federalRepresentatives,
+                        'Select a state to find your federal and state representatives'),
 
-                      // Local representatives tab
-                      _buildRepresentativesList(
-                          provider.localRepresentatives,
-                          _searchTypeIndex == 1
-                              ? 'Enter a city to find your local representatives'
-                              : 'Select a state and enter district for your local representatives'),
-                              
-                      // Name search results tab
-                      _buildRepresentativesList(
-                          provider.allRepresentatives,
-                          'Search for representatives by name to see results here'),
-                    ],
-                  ),
+                    // Local representatives tab
+                    _buildRepresentativesList(
+                        provider.localRepresentatives,
+                        _searchTypeIndex == 1
+                            ? 'Enter a city to find your local representatives'
+                            : 'Select a state and enter district for your local representatives'),
+                            
+                    // Name search results tab
+                    _buildRepresentativesList(
+                        provider.allRepresentatives,
+                        'Search for representatives by name to see results here'),
+                  ],
                 ),
-              ],
+              ),
             ),
+      // Add a floating action button to show/hide search form
+      floatingActionButton: !_showSearchForm && provider.allRepresentatives.isNotEmpty ? 
+        FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              _showSearchForm = true;
+            });
+            _scrollToTop();
+          },
+          child: const Icon(Icons.search),
+          tooltip: 'New search',
+        ) : null,
     );
   }
 

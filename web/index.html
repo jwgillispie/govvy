@@ -1,51 +1,105 @@
-// web/index.html
 <!DOCTYPE html>
 <html>
 <head>
- <base href="$FLUTTER_BASE_HREF">
- <meta charset="UTF-8">
- <meta content="IE=Edge" http-equiv="X-UA-Compatible">
- <meta name="description" content="A local government transparency app connecting citizens with their representatives.">
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A local government transparency app connecting citizens with their representatives.">
 
- <!-- iOS meta tags & icons -->
- <meta name="apple-mobile-web-app-capable" content="yes">
- <meta name="apple-mobile-web-app-status-bar-style" content="black">
- <meta name="apple-mobile-web-app-title" content="govvy">
- <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="govvy">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
- <!-- Favicon -->
- <link rel="icon" type="image/png" href="favicon.png"/>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
 
- <title>govvy</title>
- <link rel="manifest" href="manifest.json">
+  <title>govvy</title>
+  <link rel="manifest" href="manifest.json">
 
- <script>
-   // The value below is injected by flutter build, do not touch.
-   var serviceWorkerVersion = null;
- </script>
- <!-- This script adds the flutter initialization JS code -->
- <script src="flutter.js" defer></script>
+  <!-- Added custom loading screen styles -->
+  <style>
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #5E35B1;
+      z-index: 9999;
+    }
+    
+    .logo {
+      font-size: 42px;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 20px;
+      font-family: Arial, sans-serif;
+    }
+    
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      animation: spin 1s infinite linear;
+      margin-bottom: 24px;
+    }
+    
+    .loading-text {
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "1844241248";
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
 </head>
 <body>
- <div id="recaptcha-container"></div>
+  <!-- Custom loading screen -->
+  <div id="loading-screen" class="loading-container">
+    <div class="logo">govvy</div>
+    <div class="spinner"></div>
+    <div class="loading-text">Connecting you with your government...</div>
+  </div>
 
- <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
- <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth-compat.js"></script>
+  <div id="recaptcha-container"></div>
 
- <script>
-   window.addEventListener('load', function(ev) {
-     // Download main.dart.js
-     _flutter.loader.loadEntrypoint({
-       serviceWorker: {
-         serviceWorkerVersion: serviceWorkerVersion,
-       },
-       onEntrypointLoaded: function(engineInitializer) {
-         engineInitializer.initializeEngine().then(function(appRunner) {
-           appRunner.runApp();
-         });
-       }
-     });
-   });
- </script>
+  <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.19.1/firebase-auth-compat.js"></script>
+
+  <script>
+    window.addEventListener('load', function(ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp().then(function() {
+              // Remove the loading screen when app is ready
+              document.getElementById('loading-screen').style.display = 'none';
+            });
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>

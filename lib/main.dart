@@ -156,10 +156,8 @@ class RepresentativeApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const AuthWrapper(),
-        routes: {
-          '/': (context) => kIsWeb ? const LandingPage() : const AuthWrapper(),
-        },
+        home:  const AuthWrapper(),
+
       ),
     );
   }

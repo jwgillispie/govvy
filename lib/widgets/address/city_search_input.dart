@@ -260,21 +260,7 @@ class _CitySearchInputState extends State<CitySearchInput> {
 
           const SizedBox(height: 16),
 
-          // Popular cities chips
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              const Text(
-                'Popular: ',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              ..._buildPopularCityChips(),
-            ],
-          ),
+          // Note: Popular cities section removed temporarily
 
           const SizedBox(height: 20),
 
@@ -313,7 +299,8 @@ class _CitySearchInputState extends State<CitySearchInput> {
     );
   }
 
-  // Helper to build popular city chips
+  // Helper method for building popular city chips (commented out for now)
+  /*
   List<Widget> _buildPopularCityChips() {
     final List<String> popularCities = [
       'New York',
@@ -342,4 +329,5 @@ class _CitySearchInputState extends State<CitySearchInput> {
             ))
         .toList();
   }
+  */
 }
