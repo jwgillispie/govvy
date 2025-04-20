@@ -62,6 +62,10 @@ Future<void> _initializeServices() async {
     // Initialize Remote Config
     final remoteConfig = RemoteConfigService();
     await remoteConfig.initialize();
+    // Add this after initializing Remote Config
+    final remoteKey = remoteConfig.getCongressApiKey;
+      print(
+          "Remote Config Congress API Key: ${remoteKey != null ? 'Found' : 'Not found'}");
 
     // Initialize NetworkService
     final networkService = NetworkService();
@@ -166,7 +170,7 @@ class RepresentativeApp extends StatelessWidget {
             ),
           ),
         ),
-        home: kIsWeb ? const LandingPage() : const AuthWrapper(),
+        home: const AuthWrapper(),
         routes: {
           '/': (context) => kIsWeb ? const LandingPage() : const AuthWrapper(),
         },
