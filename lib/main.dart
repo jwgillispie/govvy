@@ -21,7 +21,7 @@ void main() async {
 
   runApp(const RepresentativeApp());
 }
-
+// In main.dart
 Future<void> _initializeServices() async {
   try {
     // Initialize Firebase first
@@ -29,31 +29,11 @@ Future<void> _initializeServices() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    if (kDebugMode) {
-      print('✅ Firebase initialized successfully');
-    }
-
-    // Always attempt to load .env file for development (do this early)
+    // Load .env file before RemoteConfig
     if (kDebugMode) {
       try {
         await dotenv.load(fileName: "assets/.env");
         print("✅ Loaded .env file with ${dotenv.env.length} variables");
-
-        // Log the API keys we found (masked for security)
-        if (dotenv.env.containsKey('CONGRESS_API_KEY')) {
-          final key = dotenv.env['CONGRESS_API_KEY']!;
-          print("📋 CONGRESS_API_KEY: ${_maskApiKey(key)}");
-        }
-
-        if (dotenv.env.containsKey('GOOGLE_MAPS_API_KEY')) {
-          final key = dotenv.env['GOOGLE_MAPS_API_KEY']!;
-          print("📋 GOOGLE_MAPS_API_KEY: ${_maskApiKey(key)}");
-        }
-
-        if (dotenv.env.containsKey('CICERO_API_KEY')) {
-          final key = dotenv.env['CICERO_API_KEY']!;
-          print("📋 CICERO_API_KEY: ${_maskApiKey(key)}");
-        }
       } catch (e) {
         print("⚠️ Failed to load .env file: $e");
       }
@@ -62,35 +42,23 @@ Future<void> _initializeServices() async {
     // Initialize Remote Config
     final remoteConfig = RemoteConfigService();
     await remoteConfig.initialize();
-    // Add this after initializing Remote Config
+
+    // Validate API keys
+    final keyStatus = await remoteConfig.validateApiKeys();
+    if (kDebugMode) {
+      print('🔑 API Keys: $keyStatus');
+    }
+    
+    // Add this to debug the issue
     final remoteKey = remoteConfig.getCongressApiKey;
-      print(
-          "Remote Config Congress API Key: ${remoteKey != null ? 'Found' : 'Not found'}");
-
-    // Initialize NetworkService
-    final networkService = NetworkService();
-
-    // Validate API keys and check connectivity in parallel
-    await Future.wait([
-      remoteConfig.validateApiKeys().then((keyStatus) {
-        if (kDebugMode) {
-          print('🔑 API Keys: $keyStatus');
-        }
-      }),
-      networkService.checkConnectivity().then((hasConnectivity) {
-        if (kDebugMode) {
-          print(hasConnectivity
-              ? '🌐 Network connectivity: Connected'
-              : '🌐 Network connectivity: Not connected');
-        }
-      }),
-    ]);
+    print("Remote Config Congress API Key: ${remoteKey != null ? 'Found' : 'Not found'}");
   } catch (e) {
     if (kDebugMode) {
       print('❌ Error initializing services: $e');
     }
   }
 }
+
 
 // Helper to mask API key for logging
 String _maskApiKey(String key) {
@@ -154,6 +122,7 @@ class RepresentativeApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Color(0xFF5E35B1), // Deep Purple 600
             ),
+            
             bodyLarge: TextStyle(
               fontSize: 16.0,
               color: Color(0xFF424242), // Grey 800

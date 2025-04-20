@@ -28,41 +28,30 @@ class NetworkService {
     _loggingEnabled = enabled;
   }
 
-  // FIXED: Check for network connectivity - Use a CORS-friendly approach
-// Modified checkConnectivity method for NetworkService
+// In your NetworkService class
   Future<bool> checkConnectivity() async {
     try {
       if (kIsWeb) {
-        // For web platforms, use a more reliable approach that avoids CORS issues
+        // For web platforms, use your own app domain to avoid CORS issues
         try {
-          // Use your own domain for connectivity check - like a favicon
           final response = await http
-              .get(
-                Uri.parse('https://govvy--dev.web.app/favicon.ico'),
-              )
-              .timeout(_connectTimeout);
-
+              .get(Uri.parse('https://govvy--dev.web.app/favicon.ico'))
+              .timeout(const Duration(seconds: 5));
           return response.statusCode == 200;
         } catch (e) {
-          if (_loggingEnabled) {
-            print('🌐 Network connectivity check failed: $e');
+          if (kDebugMode) {
+            print('Network connectivity check failed: $e');
           }
           return false;
         }
       } else {
-        // For mobile platforms, the original approach works fine
+        // For mobile platforms
         final response = await http
-            .get(
-              Uri.parse('https://www.google.com'),
-            )
-            .timeout(_connectTimeout);
-
+            .get(Uri.parse('https://www.google.com'))
+            .timeout(const Duration(seconds: 5));
         return response.statusCode == 200;
       }
     } catch (e) {
-      if (_loggingEnabled) {
-        print('🌐 Network connectivity check failed: $e');
-      }
       return false;
     }
   }
@@ -264,6 +253,25 @@ class NetworkService {
       }
       return null;
     }
+  }
+  // lib/services/network_service.dart
+
+// Add this method to your NetworkService class
+  Future<String> getProxiedImageUrl(String originalUrl) async {
+    if (!kIsWeb) {
+      // For mobile, just return the original URL
+      return originalUrl;
+    }
+
+    // For web, check if the URL needs proxying
+    if (originalUrl.contains('congress.gov') ||
+        originalUrl.contains('cicero.azavea.com')) {
+      // Use a CORS proxy for image URLs
+      return 'https://corsproxy.io/?${Uri.encodeComponent(originalUrl)}';
+    }
+
+    // If it's not a problematic URL, return as is
+    return originalUrl;
   }
 
   // Helper function to safely take a substring

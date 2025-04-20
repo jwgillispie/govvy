@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/utils/district_type_formatter.dart';
+import 'package:govvy/services/network_service.dart';
+import 'package:flutter/foundation.dart';
 
 class RepresentativeCard extends StatelessWidget {
   final Representative representative;
@@ -54,6 +56,24 @@ class RepresentativeCard extends StatelessWidget {
     return const SizedBox.shrink(); // No badge for federal/state reps
   }
 
+  // Get a proxied image URL for web to avoid CORS issues
+  Future<String> _getProxiedImageUrl(String originalUrl) async {
+    if (!kIsWeb) {
+      // For mobile, just return the original URL
+      return originalUrl;
+    }
+    
+    // For web, check if the URL needs proxying
+    if (originalUrl.contains('congress.gov') || 
+        originalUrl.contains('cicero.azavea.com')) {
+      // Use a CORS proxy for image URLs
+      return 'https://corsproxy.io/?${Uri.encodeComponent(originalUrl)}';
+    }
+    
+    // If it's not a problematic URL, return as is
+    return originalUrl;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Determine party colors
@@ -96,37 +116,50 @@ class RepresentativeCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Representative image - handle image loading safely
+              // Representative image - handle image loading with CORS proxy for web
               CircleAvatar(
                 radius: 32,
                 backgroundColor: Colors.grey.shade200,
-                // Only try to load the image if we have a valid URL
-                // Also, handle image loading errors gracefully
                 child: (representative.imageUrl != null && representative.imageUrl!.isNotEmpty) 
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(32),
-                        child: Image.network(
-                          representative.imageUrl!,
-                          width: 64,
-                          height: 64,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            // If the image fails to load, show a fallback icon
-                            return Icon(Icons.person, size: 32, color: Colors.grey.shade400);
-                          },
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded / 
-                                      loadingProgress.expectedTotalBytes!
-                                    : null,
-                                strokeWidth: 2,
-                              ),
+                    ? FutureBuilder<String>(
+                        future: _getProxiedImageUrl(representative.imageUrl!),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2),
                             );
-                          },
-                        ),
+                          }
+                          
+                          final imageUrl = snapshot.data ?? representative.imageUrl!;
+                          
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(32),
+                            child: Image.network(
+                              imageUrl,
+                              width: 64,
+                              height: 64,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                // Fallback icon if image fails to load
+                                return Icon(Icons.person, size: 32, color: Colors.grey.shade400);
+                              },
+                              loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes != null
+                                        ? loadingProgress.cumulativeBytesLoaded / 
+                                        loadingProgress.expectedTotalBytes!
+                                        : null,
+                                    strokeWidth: 2,
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
                       )
                     : Icon(Icons.person, size: 32, color: Colors.grey.shade400),
               ),
@@ -220,50 +253,49 @@ class RepresentativeCard extends StatelessWidget {
     );
   }
   
-// Helper method to build a position text based on representative type
-// Helper method to build a position text based on representative type
-String _buildPositionText(Representative representative) {
-  // Determine if this is a local representative
-  final bool isLocal = _isLocalRepresentative(representative);
-  
-  // Get the user-friendly role description
-  final String formattedLevel = DistrictTypeFormatter.formatDistrictType(representative.chamber);
-  
-  // Handle federal representatives
-  if (representative.chamber.toLowerCase() == 'senate' || 
-      representative.chamber.toUpperCase() == 'NATIONAL_UPPER') {
-    return 'U.S. Senator, ${representative.state}';
-  } 
-  else if (representative.chamber.toLowerCase() == 'house' || 
-           representative.chamber.toUpperCase() == 'NATIONAL_LOWER') {
-    return 'U.S. Representative, ${representative.state}${representative.district != null ? '-${representative.district}' : ''}';
-  }
-  // Handle state representatives 
-  else if (representative.chamber.toUpperCase().startsWith('STATE_')) {
-    // For state representatives, show State role, State name, and district if available
-    if (representative.office != null && representative.office!.isNotEmpty) {
-      // If we have an office title, use it
-      return '${representative.office}, ${representative.state}${representative.district != null ? ' District ${representative.district}' : ''}';
-    } else {
-      // Otherwise use the formatted level
+  // Helper method to build a position text based on representative type
+  String _buildPositionText(Representative representative) {
+    // Determine if this is a local representative
+    final bool isLocal = _isLocalRepresentative(representative);
+    
+    // Get the user-friendly role description
+    final String formattedLevel = DistrictTypeFormatter.formatDistrictType(representative.chamber);
+    
+    // Handle federal representatives
+    if (representative.chamber.toLowerCase() == 'senate' || 
+        representative.chamber.toUpperCase() == 'NATIONAL_UPPER') {
+      return 'U.S. Senator, ${representative.state}';
+    } 
+    else if (representative.chamber.toLowerCase() == 'house' || 
+             representative.chamber.toUpperCase() == 'NATIONAL_LOWER') {
+      return 'U.S. Representative, ${representative.state}${representative.district != null ? '-${representative.district}' : ''}';
+    }
+    // Handle state representatives 
+    else if (representative.chamber.toUpperCase().startsWith('STATE_')) {
+      // For state representatives, show State role, State name, and district if available
+      if (representative.office != null && representative.office!.isNotEmpty) {
+        // If we have an office title, use it
+        return '${representative.office}, ${representative.state}${representative.district != null ? ' District ${representative.district}' : ''}';
+      } else {
+        // Otherwise use the formatted level
+        return '$formattedLevel, ${representative.state}${representative.district != null ? ' District ${representative.district}' : ''}';
+      }
+    }
+    // Handle local representatives
+    else if (isLocal) {
+      // For local representatives, create a more descriptive position text
+      if (representative.office != null && representative.office!.isNotEmpty) {
+        // If we have an office title, use it
+        return '${representative.office}, ${representative.district ?? representative.state}';
+      } else {
+        // Otherwise use the formatted level
+        return '$formattedLevel, ${representative.district ?? representative.state}';
+      }
+    } 
+    // Handle any other case
+    else {
+      // For other roles, use the formatted level
       return '$formattedLevel, ${representative.state}${representative.district != null ? ' District ${representative.district}' : ''}';
     }
   }
-  // Handle local representatives
-  else if (isLocal) {
-    // For local representatives, create a more descriptive position text
-    if (representative.office != null && representative.office!.isNotEmpty) {
-      // If we have an office title, use it
-      return '${representative.office}, ${representative.district ?? representative.state}';
-    } else {
-      // Otherwise use the formatted level
-      return '$formattedLevel, ${representative.district ?? representative.state}';
-    }
-  } 
-  // Handle any other case
-  else {
-    // For other roles, use the formatted level
-    return '$formattedLevel, ${representative.state}${representative.district != null ? ' District ${representative.district}' : ''}';
-  }
-}
 }

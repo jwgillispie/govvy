@@ -10,6 +10,11 @@ import 'package:govvy/models/local_representative_model.dart';
 
 class CiceroService {
   final String _baseUrl = 'https://cicero.azavea.com/v3.1';
+  
+  // Replace these with your actual Firebase Function URLs after deployment
+  final String _proxyBaseUrl = 'https://us-central1-govvy--dev.cloudfunctions.net';
+  final String _ciceroProxyUrl = '/ciceroProxy';
+  final String _geocodeProxyUrl = '/geocodeProxy';
 
   // Get API keys from Remote Config
   String? get _apiKey => RemoteConfigService().getCiceroApiKey;
@@ -35,68 +40,101 @@ class CiceroService {
   // Helper function to safely take a substring
   int min(int a, int b) => a < b ? a : b;
 
-  // NEW: Function to geocode a city name to coordinates
+  // Function to geocode a city name to coordinates - updated for proxy
   Future<Map<String, double>?> geocodeCityToCoordinates(String city) async {
     try {
-      if (!hasGoogleApiKey) {
+      if (kIsWeb) {
+        // Use geocoding proxy for web
+        final url = Uri.parse('$_proxyBaseUrl$_geocodeProxyUrl')
+            .replace(queryParameters: {'address': city});
+            
         if (kDebugMode) {
-          print(
-              'Google Maps API key not found. Using hardcoded coordinates for city.');
+          print('Using proxy to geocode city: $city');
+          print('Proxy URL: $url');
         }
-        // Try using hardcoded coordinates first
-        final hardcodedCoordinates = _getHardcodedCoordinatesForCity(city);
-        if (hardcodedCoordinates != null) {
-          return hardcodedCoordinates;
+        
+        final response = await http.get(url);
+        
+        if (response.statusCode != 200) {
+          throw Exception('Geocoding API error: ${response.statusCode} - ${response.body}');
         }
-        return null;
-      }
-
-      // First, check if the city has a state code (e.g., "Atlanta, GA")
-      String searchCity = city;
-      if (city.contains(',')) {
-        // Keep the format as is to ensure better geocoding results
-        searchCity = city;
+        
+        final data = jsonDecode(response.body);
+        
+        if (data['status'] != 'OK' || data['results'].isEmpty) {
+          throw Exception('Geocoding error: ${data['status']}');
+        }
+        
+        // Extract coordinates
+        final location = data['results'][0]['geometry']['location'];
+        final lat = location['lat'] as double;
+        final lng = location['lng'] as double;
+        
+        if (kDebugMode) {
+          print('Successfully geocoded $city to lat: $lat, lng: $lng (via proxy)');
+        }
+        
+        return {'lat': lat, 'lng': lng};
       } else {
-        // If no state is provided, try to guess based on city name
-        final stateCode = _guessStateForCity(city);
-        if (stateCode != null) {
-          searchCity = '$city, $stateCode, USA';
-        } else {
-          searchCity = '$city, USA';
+        // Original code for mobile
+        if (!hasGoogleApiKey) {
+          if (kDebugMode) {
+            print('Google Maps API key not found. Using hardcoded coordinates for city.');
+          }
+          // Try using hardcoded coordinates first
+          final hardcodedCoordinates = _getHardcodedCoordinatesForCity(city);
+          if (hardcodedCoordinates != null) {
+            return hardcodedCoordinates;
+          }
+          return null;
         }
+
+        // First, check if the city has a state code (e.g., "Atlanta, GA")
+        String searchCity = city;
+        if (city.contains(',')) {
+          // Keep the format as is to ensure better geocoding results
+          searchCity = city;
+        } else {
+          // If no state is provided, try to guess based on city name
+          final stateCode = _guessStateForCity(city);
+          if (stateCode != null) {
+            searchCity = '$city, $stateCode, USA';
+          } else {
+            searchCity = '$city, USA';
+          }
+        }
+
+        if (kDebugMode) {
+          print('Geocoding city: $searchCity');
+        }
+
+        // Call Google's Geocoding API
+        final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
+            .replace(queryParameters: {'address': searchCity, 'key': _googleApiKey!});
+
+        final response = await http.get(url);
+
+        if (response.statusCode != 200) {
+          throw Exception('Geocoding API error: ${response.statusCode}');
+        }
+
+        final data = jsonDecode(response.body);
+
+        if (data['status'] != 'OK' || data['results'].isEmpty) {
+          throw Exception('Geocoding error: ${data['status']}');
+        }
+
+        // Extract latitude and longitude
+        final location = data['results'][0]['geometry']['location'];
+        final lat = location['lat'] as double;
+        final lng = location['lng'] as double;
+
+        if (kDebugMode) {
+          print('Successfully geocoded $searchCity to lat: $lat, lng: $lng');
+        }
+
+        return {'lat': lat, 'lng': lng};
       }
-
-      if (kDebugMode) {
-        print('Geocoding city: $searchCity');
-      }
-
-      // Call Google's Geocoding API
-      final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
-          .replace(
-              queryParameters: {'address': searchCity, 'key': _googleApiKey!});
-
-      final response = await http.get(url);
-
-      if (response.statusCode != 200) {
-        throw Exception('Geocoding API error: ${response.statusCode}');
-      }
-
-      final data = jsonDecode(response.body);
-
-      if (data['status'] != 'OK' || data['results'].isEmpty) {
-        throw Exception('Geocoding error: ${data['status']}');
-      }
-
-      // Extract latitude and longitude
-      final location = data['results'][0]['geometry']['location'];
-      final lat = location['lat'] as double;
-      final lng = location['lng'] as double;
-
-      if (kDebugMode) {
-        print('Successfully geocoded $searchCity to lat: $lat, lng: $lng');
-      }
-
-      return {'lat': lat, 'lng': lng};
     } catch (e) {
       if (kDebugMode) {
         print('Error geocoding city: $e');
@@ -115,49 +153,110 @@ class CiceroService {
     }
   }
 
-  // Get local representatives by city name
-  Future<List<LocalRepresentative>> getLocalRepresentativesByCity(
-      String city) async {
+  // Get local representatives by city name - updated for proxy
+  Future<List<LocalRepresentative>> getLocalRepresentativesByCity(String city) async {
     try {
-      if (!hasApiKey) {
+      if (kIsWeb) {
         if (kDebugMode) {
-          print('Cicero API key not found. Using mock data for development.');
+          print('Searching for local representatives in city (via proxy): $city');
         }
-        return _getMockLocalRepresentatives(city: city);
+        
+        // First approach: Try geocoding and then passing coordinates to proxy
+        try {
+          // Get coordinates from geocoding
+          final coordinates = await geocodeCityToCoordinates(city);
+          
+          if (coordinates == null) {
+            throw Exception('Could not geocode city: $city');
+          }
+          
+          // Use proxy with coordinates
+          final url = Uri.parse('$_proxyBaseUrl$_ciceroProxyUrl')
+              .replace(queryParameters: {
+            'lat': coordinates['lat'].toString(),
+            'lon': coordinates['lng'].toString(),
+          });
+              
+          if (kDebugMode) {
+            print('Proxy URL (coordinates): $url');
+          }
+          
+          final response = await http.get(url);
+          
+          if (response.statusCode != 200) {
+            throw Exception('Proxy API error: ${response.statusCode} - ${response.body}');
+          }
+          
+          final data = json.decode(response.body);
+          
+          // Process the data
+          return _processResponseData(data, city);
+        } catch (geoError) {
+          if (kDebugMode) {
+            print('Geocode approach failed: $geoError, trying direct city search');
+          }
+          
+          // Second approach: Use city name directly with proxy
+          final url = Uri.parse('$_proxyBaseUrl$_ciceroProxyUrl')
+              .replace(queryParameters: {'city': city});
+              
+          if (kDebugMode) {
+            print('Proxy URL (city): $url');
+          }
+          
+          final response = await http.get(url);
+          
+          if (response.statusCode != 200) {
+            throw Exception('Proxy API error: ${response.statusCode} - ${response.body}');
+          }
+          
+          final data = json.decode(response.body);
+          
+          // Process the data
+          return _processResponseData(data, city);
+        }
+      } else {
+        // Original code for mobile
+        if (!hasApiKey) {
+          if (kDebugMode) {
+            print('Cicero API key not found. Using mock data for development.');
+          }
+          return _getMockLocalRepresentatives(city: city);
+        }
+
+        if (kDebugMode) {
+          print('Searching for local representatives in city: $city');
+        }
+
+        // UPDATED APPROACH: First geocode the city to get coordinates
+        final coordinates = await geocodeCityToCoordinates(city);
+
+        if (coordinates == null) {
+          throw Exception('Could not geocode city: $city');
+        }
+
+        // Use coordinates to search for representatives
+        final url = Uri.parse('$_baseUrl/official').replace(queryParameters: {
+          'lat': coordinates['lat'].toString(),
+          'lon': coordinates['lng'].toString(),
+          'format': 'json',
+          'key': _apiKey!,
+          'max': '100',
+        });
+
+        if (kDebugMode) {
+          print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+        }
+
+        // Use the fetchRepresentatives method to handle the API call
+        final representatives = await _fetchRepresentatives(url, city);
+
+        if (kDebugMode) {
+          print('Found ${representatives.length} representatives for $city');
+        }
+
+        return representatives;
       }
-
-      if (kDebugMode) {
-        print('Searching for local representatives in city: $city');
-      }
-
-      // UPDATED APPROACH: First geocode the city to get coordinates
-      final coordinates = await geocodeCityToCoordinates(city);
-
-      if (coordinates == null) {
-        throw Exception('Could not geocode city: $city');
-      }
-
-      // Use coordinates to search for representatives
-      final url = Uri.parse('$_baseUrl/official').replace(queryParameters: {
-        'lat': coordinates['lat'].toString(),
-        'lon': coordinates['lng'].toString(),
-        'format': 'json',
-        'key': _apiKey!,
-        'max': '100',
-      });
-
-      if (kDebugMode) {
-        print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-      }
-
-      // Use the fetchRepresentatives method to handle the API call
-      final representatives = await _fetchRepresentatives(url, city);
-
-      if (kDebugMode) {
-        print('Found ${representatives.length} representatives for $city');
-      }
-
-      return representatives;
     } catch (e) {
       if (kDebugMode) {
         print('All approaches failed for city $city: $e');
@@ -168,63 +267,189 @@ class CiceroService {
     }
   }
 
-  // Original method, kept for backward compatibility
-  Future<List<LocalRepresentative>> getLocalRepresentativesByAddress(
-      String address) async {
-    try {
-      if (!hasApiKey) {
-        if (kDebugMode) {
-          print('Cicero API key not found. Using mock data for development.');
+  // Process API response data
+  List<LocalRepresentative> _processResponseData(Map<String, dynamic> data, String? cityFilter) {
+    List<LocalRepresentative> representatives = [];
+    
+    // Check for errors in response
+    if (data.containsKey('response') &&
+        data['response'].containsKey('errors') &&
+        data['response']['errors'] is List &&
+        (data['response']['errors'] as List).isNotEmpty) {
+      throw Exception('Cicero API error: ${data['response']['errors']}');
+    }
+
+    // Direct officials array in response
+    if (data.containsKey('response') &&
+        data['response'].containsKey('officials') &&
+        data['response']['officials'] is List) {
+      final officials = data['response']['officials'] as List;
+      for (var officialData in officials) {
+        if (officialData is Map) {
+          representatives.add(_processCiceroOfficial(
+              Map<String, dynamic>.from(officialData)));
         }
-        return _getMockLocalRepresentatives();
       }
+    }
+    // Officials in results
+    else if (data.containsKey('response') &&
+        data['response'].containsKey('results') &&
+        data['response']['results'] is Map) {
+      final results =
+          Map<String, dynamic>.from(data['response']['results'] as Map);
 
-      // Check if this looks like just a city
-      final trimmedAddress = address.trim();
-      if (!trimmedAddress.contains(',') && !trimmedAddress.contains(' ')) {
-        // This might be just a city name
-        return getLocalRepresentativesByCity(trimmedAddress);
+      // Check for officials directly in results
+      if (results.containsKey('officials') &&
+          results['officials'] is List) {
+        final officials = results['officials'] as List;
+        for (var officialData in officials) {
+          if (officialData is Map) {
+            representatives.add(_processCiceroOfficial(
+                Map<String, dynamic>.from(officialData)));
+          }
+        }
       }
+      // Check for candidates with officials
+      else if (results.containsKey('candidates') &&
+          results['candidates'] is List) {
+        final candidates = results['candidates'] as List;
 
-      // IMPROVED APPROACH: Try to geocode the address first
-      final coordinates = await geocodeAddressToCoordinates(address);
+        for (var candidateData in candidates) {
+          if (candidateData is Map) {
+            final candidate = Map<String, dynamic>.from(candidateData);
 
-      if (coordinates != null) {
-        // Use coordinates to search for representatives
+            // Check for districts with officials
+            if (candidate.containsKey('districts') &&
+                candidate['districts'] is List) {
+              final districts = candidate['districts'] as List;
+
+              for (var districtData in districts) {
+                if (districtData is Map) {
+                  final district = Map<String, dynamic>.from(districtData);
+
+                  // Process officials in this district
+                  if (district.containsKey('officials') &&
+                      district['officials'] is List) {
+                    final officials = district['officials'] as List;
+
+                    for (var officialData in officials) {
+                      if (officialData is Map) {
+                        representatives.add(_processCiceroOfficial(
+                            Map<String, dynamic>.from(officialData)));
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            // Also check if the candidate itself has officials
+            if (candidate.containsKey('officials') &&
+                candidate['officials'] is List) {
+              final officials = candidate['officials'] as List;
+
+              for (var officialData in officials) {
+                if (officialData is Map) {
+                  representatives.add(_processCiceroOfficial(
+                      Map<String, dynamic>.from(officialData)));
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Filter out duplicates (sometimes the API returns the same official multiple times)
+    Map<String, LocalRepresentative> uniqueReps = {};
+    for (var rep in representatives) {
+      uniqueReps[rep.bioGuideId] = rep;
+    }
+    
+    return uniqueReps.values.toList();
+  }
+
+  // Get local representatives by address - updated for proxy
+  Future<List<LocalRepresentative>> getLocalRepresentativesByAddress(String address) async {
+    try {
+      if (kIsWeb) {
+        if (kDebugMode) {
+          print('Searching for local representatives at address (via proxy): $address');
+        }
+        
+        // Use proxy with address parameter
+        final url = Uri.parse('$_proxyBaseUrl$_ciceroProxyUrl')
+            .replace(queryParameters: {'address': address});
+            
+        if (kDebugMode) {
+          print('Proxy URL: $url');
+        }
+        
+        final response = await http.get(url);
+        
+        if (response.statusCode != 200) {
+          throw Exception('Proxy API error: ${response.statusCode} - ${response.body}');
+        }
+        
+        final data = json.decode(response.body);
+        
+        // Process the data
+        return _processResponseData(data, null);
+      } else {
+        // Original code for mobile
+        if (!hasApiKey) {
+          if (kDebugMode) {
+            print('Cicero API key not found. Using mock data for development.');
+          }
+          return _getMockLocalRepresentatives();
+        }
+
+        // Check if this looks like just a city
+        final trimmedAddress = address.trim();
+        if (!trimmedAddress.contains(',') && !trimmedAddress.contains(' ')) {
+          // This might be just a city name
+          return getLocalRepresentativesByCity(trimmedAddress);
+        }
+
+        // IMPROVED APPROACH: Try to geocode the address first
+        final coordinates = await geocodeAddressToCoordinates(address);
+
+        if (coordinates != null) {
+          // Use coordinates to search for representatives
+          final url = Uri.parse('$_baseUrl/official').replace(queryParameters: {
+            'lat': coordinates['lat'].toString(),
+            'lon': coordinates['lng'].toString(),
+            'format': 'json',
+            'key': _apiKey!,
+            'max': '100',
+            // Add filters to only get local data if needed
+            'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
+          });
+
+          if (kDebugMode) {
+            print('Using coordinates-based API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+          }
+
+          return await _fetchRepresentatives(url, null);
+        }
+
+        // Fallback to traditional search_loc approach
         final url = Uri.parse('$_baseUrl/official').replace(queryParameters: {
-          'lat': coordinates['lat'].toString(),
-          'lon': coordinates['lng'].toString(),
-          'format': 'json',
+          'search_loc': address,
           'key': _apiKey!,
+          'format': 'json',
           'max': '100',
-          // Add filters to only get local data if needed
+          // Add filters to only get local data
           'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
         });
 
         if (kDebugMode) {
-          print(
-              'Using coordinates-based API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+          print('Calling Cicero API with address: $address');
+          print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
         }
 
         return await _fetchRepresentatives(url, null);
       }
-
-      // Fallback to traditional search_loc approach
-      final url = Uri.parse('$_baseUrl/official').replace(queryParameters: {
-        'search_loc': address,
-        'key': _apiKey!,
-        'format': 'json',
-        'max': '100',
-        // Add filters to only get local data
-        'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
-      });
-
-      if (kDebugMode) {
-        print('Calling Cicero API with address: $address');
-        print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-      }
-
-      return await _fetchRepresentatives(url, null);
     } catch (e) {
       if (kDebugMode) {
         print('Error getting local representatives by address: $e');
@@ -234,45 +459,72 @@ class CiceroService {
     }
   }
 
-  // NEW: Helper to geocode an address to coordinates
-  Future<Map<String, double>?> geocodeAddressToCoordinates(
-      String address) async {
+  // Helper to geocode an address to coordinates
+  Future<Map<String, double>?> geocodeAddressToCoordinates(String address) async {
     try {
-      if (!hasGoogleApiKey) {
-        return null;
+      if (kIsWeb) {
+        // Use geocoding proxy for web
+        final url = Uri.parse('$_proxyBaseUrl$_geocodeProxyUrl')
+            .replace(queryParameters: {'address': address});
+            
+        if (kDebugMode) {
+          print('Using proxy to geocode address: $address');
+        }
+        
+        final response = await http.get(url);
+        
+        if (response.statusCode != 200) {
+          throw Exception('Geocoding API error: ${response.statusCode}');
+        }
+        
+        final data = jsonDecode(response.body);
+        
+        if (data['status'] != 'OK' || data['results'].isEmpty) {
+          throw Exception('Geocoding error: ${data['status']}');
+        }
+        
+        // Extract coordinates
+        final location = data['results'][0]['geometry']['location'];
+        final lat = location['lat'] as double;
+        final lng = location['lng'] as double;
+        
+        return {'lat': lat, 'lng': lng};
+      } else {
+        if (!hasGoogleApiKey) {
+          return null;
+        }
+
+        if (kDebugMode) {
+          print('Geocoding address: $address');
+        }
+
+        // Call Google's Geocoding API
+        final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
+            .replace(queryParameters: {'address': address, 'key': _googleApiKey!});
+
+        final response = await http.get(url);
+
+        if (response.statusCode != 200) {
+          throw Exception('Geocoding API error: ${response.statusCode}');
+        }
+
+        final data = jsonDecode(response.body);
+
+        if (data['status'] != 'OK' || data['results'].isEmpty) {
+          throw Exception('Geocoding error: ${data['status']}');
+        }
+
+        // Extract latitude and longitude
+        final location = data['results'][0]['geometry']['location'];
+        final lat = location['lat'] as double;
+        final lng = location['lng'] as double;
+
+        if (kDebugMode) {
+          print('Successfully geocoded address to lat: $lat, lng: $lng');
+        }
+
+        return {'lat': lat, 'lng': lng};
       }
-
-      if (kDebugMode) {
-        print('Geocoding address: $address');
-      }
-
-      // Call Google's Geocoding API
-      final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
-          .replace(
-              queryParameters: {'address': address, 'key': _googleApiKey!});
-
-      final response = await http.get(url);
-
-      if (response.statusCode != 200) {
-        throw Exception('Geocoding API error: ${response.statusCode}');
-      }
-
-      final data = jsonDecode(response.body);
-
-      if (data['status'] != 'OK' || data['results'].isEmpty) {
-        throw Exception('Geocoding error: ${data['status']}');
-      }
-
-      // Extract latitude and longitude
-      final location = data['results'][0]['geometry']['location'];
-      final lat = location['lat'] as double;
-      final lng = location['lng'] as double;
-
-      if (kDebugMode) {
-        print('Successfully geocoded address to lat: $lat, lng: $lng');
-      }
-
-      return {'lat': lat, 'lng': lng};
     } catch (e) {
       if (kDebugMode) {
         print('Error geocoding address: $e');
@@ -281,155 +533,133 @@ class CiceroService {
     }
   }
 
-  Future<List<LocalRepresentative>> _fetchRepresentatives(
-      Uri url, String? cityFilter) async {
+  // Fetch representatives from API - Updated for web vs. mobile
+  Future<List<LocalRepresentative>> _fetchRepresentatives(Uri url, String? cityFilter) async {
     try {
       final response = await http.get(url);
 
       if (kDebugMode) {
         print('Cicero API response received. Status: ${response.statusCode}');
-        print(
-            'Response body preview: ${response.body.substring(0, min(200, response.body.length))}...');
+        print('Response body preview: ${response.body.substring(0, min(200, response.body.length))}...');
       }
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        List<LocalRepresentative> representatives = [];
-
-        // Check for errors in response
-        if (data.containsKey('response') &&
-            data['response'].containsKey('errors') &&
-            data['response']['errors'] is List &&
-            (data['response']['errors'] as List).isNotEmpty) {
-          throw Exception('Cicero API error: ${data['response']['errors']}');
-        }
-
-        // Direct officials array in response
-        if (data.containsKey('response') &&
-            data['response'].containsKey('officials') &&
-            data['response']['officials'] is List) {
-          final officials = data['response']['officials'] as List;
-          for (var officialData in officials) {
-            if (officialData is Map) {
-              representatives.add(_processCiceroOfficial(
-                  Map<String, dynamic>.from(officialData)));
-            }
-          }
-        }
-        // Officials in results
-        else if (data.containsKey('response') &&
-            data['response'].containsKey('results') &&
-            data['response']['results'] is Map) {
-          final results =
-              Map<String, dynamic>.from(data['response']['results'] as Map);
-
-          // Check for officials directly in results
-          if (results.containsKey('officials') &&
-              results['officials'] is List) {
-            final officials = results['officials'] as List;
-            for (var officialData in officials) {
-              if (officialData is Map) {
-                representatives.add(_processCiceroOfficial(
-                    Map<String, dynamic>.from(officialData)));
-              }
-            }
-          }
-          // Check for candidates with officials
-          else if (results.containsKey('candidates') &&
-              results['candidates'] is List) {
-            final candidates = results['candidates'] as List;
-
-            for (var candidateData in candidates) {
-              if (candidateData is Map) {
-                final candidate = Map<String, dynamic>.from(candidateData);
-
-                // Check for districts with officials
-                if (candidate.containsKey('districts') &&
-                    candidate['districts'] is List) {
-                  final districts = candidate['districts'] as List;
-
-                  for (var districtData in districts) {
-                    if (districtData is Map) {
-                      final district = Map<String, dynamic>.from(districtData);
-
-                      // Process officials in this district
-                      if (district.containsKey('officials') &&
-                          district['officials'] is List) {
-                        final officials = district['officials'] as List;
-
-                        for (var officialData in officials) {
-                          if (officialData is Map) {
-                            representatives.add(_processCiceroOfficial(
-                                Map<String, dynamic>.from(officialData)));
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-
-                // Also check if the candidate itself has officials
-                if (candidate.containsKey('officials') &&
-                    candidate['officials'] is List) {
-                  final officials = candidate['officials'] as List;
-
-                  for (var officialData in officials) {
-                    if (officialData is Map) {
-                      representatives.add(_processCiceroOfficial(
-                          Map<String, dynamic>.from(officialData)));
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        // Filter out duplicates (sometimes the API returns the same official multiple times)
-        Map<String, LocalRepresentative> uniqueReps = {};
-        for (var rep in representatives) {
-          uniqueReps[rep.bioGuideId] = rep;
-        }
-
-        // If we found representatives, return them
-        if (uniqueReps.isNotEmpty) {
-          return uniqueReps.values.toList();
-        }
-
-        // No officials found - check if it's a geocoding error
-        if (data.containsKey('response') &&
-            data['response'].containsKey('results') &&
-            data['response']['results'] is Map) {
-          final results =
-              Map<String, dynamic>.from(data['response']['results'] as Map);
-
-          // Check if candidates array is empty (no geocoding results)
-          if (results.containsKey('candidates') &&
-              results['candidates'] is List &&
-              (results['candidates'] as List).isEmpty) {
-            throw Exception('No geocoding results found for this location');
-          }
-        }
-
-        // If we get here, we found no representatives in a seemingly valid response
-        if (kDebugMode) {
-          print('No representatives found in API response structure.');
-        }
-
-        // Return empty list - caller will handle fallback
-        return [];
+        return _processResponseData(data, cityFilter);
       } else {
         if (kDebugMode) {
           print('Cicero API error: ${response.statusCode} - ${response.body}');
         }
-        throw Exception(
-            'Failed to fetch representatives: ${response.statusCode}');
+        throw Exception('Failed to fetch representatives: ${response.statusCode}');
       }
     } catch (e) {
       if (kDebugMode) {
         print('Error fetching representatives: $e');
       }
       throw e;
+    }
+  }
+
+  // Get representatives by name - updated for proxy
+  Future<List<LocalRepresentative>> getRepresentativesByName(String lastName, {String? firstName}) async {
+    try {
+      if (kIsWeb) {
+        if (kDebugMode) {
+          print('Searching for representatives by name (via proxy): $lastName, $firstName');
+        }
+        
+        // Build query parameters
+        final Map<String, String> queryParams = {
+          'lastName': lastName,
+        };
+        
+        if (firstName != null && firstName.isNotEmpty) {
+          queryParams['firstName'] = firstName;
+        }
+        
+        // Use proxy
+        final url = Uri.parse('$_proxyBaseUrl$_ciceroProxyUrl')
+            .replace(queryParameters: queryParams);
+            
+        if (kDebugMode) {
+          print('Proxy URL: $url');
+        }
+        
+        final response = await http.get(url);
+        
+        if (response.statusCode != 200) {
+          throw Exception('Proxy API error: ${response.statusCode} - ${response.body}');
+        }
+        
+        final data = json.decode(response.body);
+        
+        // Process the data
+        return _processResponseData(data, null);
+      } else {
+        // Original implementation for mobile
+        if (!hasApiKey) {
+          if (kDebugMode) {
+            print('Cicero API key not found. Using mock data for development.');
+          }
+          return _getMockLocalRepresentativesByName(lastName, firstName);
+        }
+        
+        // Build query parameters
+        Map<String, String> queryParams = {
+          'last_name': lastName,
+          'valid_range': 'ALL',
+          'format': 'json',
+          'key': _apiKey!
+        };
+        
+        // Add first name if provided
+        if (firstName != null && firstName.isNotEmpty) {
+          queryParams['first_name'] = firstName;
+        }
+        
+        // Use the official endpoint
+        final url = Uri.parse('$_baseUrl/official').replace(queryParameters: queryParams);
+        
+        if (kDebugMode) {
+          print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+        }
+        
+        final response = await http.get(url);
+        
+        if (response.statusCode == 200) {
+          final Map<String, dynamic> data = json.decode(response.body);
+          List<LocalRepresentative> representatives = [];
+          
+          // Process officials
+          if (data.containsKey('response') && 
+              data['response'].containsKey('results') &&
+              data['response']['results'].containsKey('officials')) {
+            
+            final officials = data['response']['results']['officials'];
+            
+            if (officials is List) {
+              for (var officialData in officials) {
+                if (officialData is Map) {
+                  representatives.add(_processCiceroOfficial(
+                      Map<String, dynamic>.from(officialData)));
+                }
+              }
+            }
+          }
+          
+          return representatives;
+        } else {
+          if (kDebugMode) {
+            print('API error: ${response.statusCode} - ${response.body}');
+          }
+          throw Exception('Failed to fetch representatives by name: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching representatives by name: $e');
+      }
+      return _getMockLocalRepresentativesByName(lastName, firstName);
     }
   }
 
@@ -467,7 +697,7 @@ class CiceroService {
     return false;
   }
 
-// Process a Cicero official into a LocalRepresentative
+  // Process a Cicero official into a LocalRepresentative
   LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
     // Extract basic information
     String firstName = official['first_name']?.toString() ?? '';
@@ -630,7 +860,7 @@ class CiceroService {
       imageUrl = official['photo_url']?.toString();
     }
 
-// Create a unique ID using either id or sk field
+    // Create a unique ID using either id or sk field
     String bioGuideId = 'cicero-';
     if (official.containsKey('id')) {
       bioGuideId += official['id'].toString();
@@ -722,6 +952,7 @@ class CiceroService {
       'honolulu': {'lat': 21.3069, 'lng': -157.8583},
       'washington dc': {'lat': 38.9072, 'lng': -77.0369},
       'dc': {'lat': 38.9072, 'lng': -77.0369},
+      'gainesville': {'lat': 29.6516, 'lng': -82.3248},
     };
 
     // Look for exact match
@@ -847,6 +1078,51 @@ class CiceroService {
               'Twitter: @chicagomayor',
               'Facebook: ChicagoMayorsOffice'
             ],
+          ),
+        ];
+      } else if (cityName == 'gainesville' || cityName.contains('gainesville')) {
+        return [
+          LocalRepresentative(
+            name: 'Harvey Ward',
+            bioGuideId: 'cicero-mock-gainesville-mayor',
+            party: 'Democratic',
+            level: 'CITY',
+            state: 'FL',
+            district: 'Gainesville',
+            office: 'Mayor',
+            phone: '(352) 555-1234',
+            email: 'mayor@cityofgainesville.org',
+            website: 'https://www.cityofgainesville.org',
+            imageUrl: null,
+            socialMedia: ['Twitter: @GvilleMayor'],
+          ),
+          LocalRepresentative(
+            name: 'Casey Willits',
+            bioGuideId: 'cicero-mock-gainesville-commission-4',
+            party: 'Democratic',
+            level: 'CITY',
+            state: 'FL',
+            district: 'Gainesville City Commission District 3',
+            office: 'City Commissioner',
+            phone: '(352) 555-5678',
+            email: 'willitsc@cityofgainesville.org',
+            website: 'https://www.cityofgainesville.org/CityCommission',
+            imageUrl: null,
+            socialMedia: null,
+          ),
+          LocalRepresentative(
+            name: 'Ken Cornell',
+            bioGuideId: 'cicero-mock-alachua-commission-4',
+            party: 'Democratic',
+            level: 'COUNTY',
+            state: 'FL',
+            district: 'Alachua County Commission District 4',
+            office: 'County Commissioner',
+            phone: '(352) 555-9012',
+            email: 'kcornell@alachuacounty.us',
+            website: 'https://alachuacounty.us/govt/bocc',
+            imageUrl: null,
+            socialMedia: ['Facebook: KenCornellAlachua'],
           ),
         ];
       } else if (cityName == 'salt lake city' ||
@@ -1073,6 +1349,7 @@ class CiceroService {
       'honolulu': 'HI',
       'washington': 'DC',
       'dc': 'DC',
+      'gainesville': 'FL',
     };
 
     // Check for exact matches
@@ -1198,6 +1475,7 @@ class CiceroService {
       'manhattan': 'NY',
       'bronx': 'NY',
       'staten island': 'NY',
+      'gainesville': 'FL',
     };
 
     // Check for city in our map (case insensitive)
@@ -1211,74 +1489,7 @@ class CiceroService {
     // No match found
     return null;
   }
-  // Get representatives by name
-  Future<List<LocalRepresentative>> getRepresentativesByName(String lastName, {String? firstName}) async {
-    try {
-      if (!hasApiKey) {
-        if (kDebugMode) {
-          print('Cicero API key not found. Using mock data for development.');
-        }
-        return _getMockLocalRepresentativesByName(lastName, firstName);
-      }
-      
-      // Build query parameters
-      Map<String, String> queryParams = {
-        'last_name': lastName,
-        'valid_range': 'ALL',
-        'format': 'json',
-        'key': _apiKey!
-      };
-      
-      // Add first name if provided
-      if (firstName != null && firstName.isNotEmpty) {
-        queryParams['first_name'] = firstName;
-      }
-      
-      // Use the official endpoint
-      final url = Uri.parse('$_baseUrl/official').replace(queryParameters: queryParams);
-      
-      if (kDebugMode) {
-        print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-      }
-      
-      final response = await http.get(url);
-      
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        List<LocalRepresentative> representatives = [];
-        
-        // Process officials
-        if (data.containsKey('response') && 
-            data['response'].containsKey('results') &&
-            data['response']['results'].containsKey('officials')) {
-          
-          final officials = data['response']['results']['officials'];
-          
-          if (officials is List) {
-            for (var officialData in officials) {
-              if (officialData is Map) {
-                representatives.add(_processCiceroOfficial(
-                    Map<String, dynamic>.from(officialData)));
-              }
-            }
-          }
-        }
-        
-        return representatives;
-      } else {
-        if (kDebugMode) {
-          print('API error: ${response.statusCode} - ${response.body}');
-        }
-        throw Exception('Failed to fetch representatives by name: ${response.statusCode}');
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error fetching representatives by name: $e');
-      }
-      return _getMockLocalRepresentativesByName(lastName, firstName);
-    }
-  }
-
+  
   // Mock data for name search
   List<LocalRepresentative> _getMockLocalRepresentativesByName(String lastName, [String? firstName]) {
     // Determine a more accurate name filter if firstName is provided
@@ -1329,40 +1540,41 @@ class CiceroService {
       ),
     ];
   }
-Future<http.Response> _tracedHttpGet(Uri url, {String? apiKey}) async {
-  final redactedUrl = apiKey != null ? url.toString().replaceAll(apiKey, '[REDACTED]') : url.toString();
   
-  if (kDebugMode) {
-    print('🌐 HTTP Request: GET $redactedUrl');
-  }
-  
-  final stopwatch = Stopwatch()..start();
-  try {
-    final response = await http.get(url);
-    stopwatch.stop();
+  Future<http.Response> _tracedHttpGet(Uri url, {String? apiKey}) async {
+    final redactedUrl = apiKey != null ? url.toString().replaceAll(apiKey, '[REDACTED]') : url.toString();
     
     if (kDebugMode) {
-      print('🌐 HTTP Response: ${response.statusCode} (${stopwatch.elapsedMilliseconds}ms)');
-      print('🌐 Response Size: ${response.body.length} bytes');
-      if (response.statusCode != 200) {
-        print('🌐 Error Response: ${response.body.substring(0, min(500, response.body.length))}');
+      print('🌐 HTTP Request: GET $redactedUrl');
+    }
+    
+    final stopwatch = Stopwatch()..start();
+    try {
+      final response = await http.get(url);
+      stopwatch.stop();
+      
+      if (kDebugMode) {
+        print('🌐 HTTP Response: ${response.statusCode} (${stopwatch.elapsedMilliseconds}ms)');
+        print('🌐 Response Size: ${response.body.length} bytes');
+        if (response.statusCode != 200) {
+          print('🌐 Error Response: ${response.body.substring(0, min(500, response.body.length))}');
+        }
       }
+      
+      return response;
+    } catch (e) {
+      stopwatch.stop();
+      if (kDebugMode) {
+        print('🌐 HTTP Error after ${stopwatch.elapsedMilliseconds}ms: $e');
+      }
+      rethrow;
     }
-    
-    return response;
-  } catch (e) {
-    stopwatch.stop();
-    if (kDebugMode) {
-      print('🌐 HTTP Error after ${stopwatch.elapsedMilliseconds}ms: $e');
-    }
-    rethrow;
   }
-}
 
-// Replace the existing checkNetworkConnectivity method
-Future<bool> checkNetworkConnectivity() async {
-  // Use the fixed implementation in NetworkService
-  final networkService = NetworkService();
-  return await networkService.checkConnectivity();
-}
+  // Replace the existing checkNetworkConnectivity method
+  Future<bool> checkNetworkConnectivity() async {
+    // Use the fixed implementation in NetworkService
+    final networkService = NetworkService();
+    return await networkService.checkConnectivity();
+  }
 }
