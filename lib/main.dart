@@ -21,6 +21,7 @@ void main() async {
 
   runApp(const RepresentativeApp());
 }
+
 // In main.dart
 Future<void> _initializeServices() async {
   try {
@@ -48,17 +49,34 @@ Future<void> _initializeServices() async {
     if (kDebugMode) {
       print('🔑 API Keys: $keyStatus');
     }
-    
-    // Add this to debug the issue
-    final remoteKey = remoteConfig.getCongressApiKey;
-    print("Remote Config Congress API Key: ${remoteKey != null ? 'Found' : 'Not found'}");
+
+    // Debug all API keys
+    final congressKey = remoteConfig.getCongressApiKey;
+    final googleMapsKey = remoteConfig.getGoogleMapsApiKey;
+    final ciceroKey = remoteConfig.getCiceroApiKey;
+
+    print(
+        "Remote Config Congress API Key: ${congressKey != null ? 'Found' : 'Not found'}");
+    print(
+        "Remote Config Google Maps API Key: ${googleMapsKey != null ? 'Found' : 'Not found'}");
+    print(
+        "Remote Config Cicero API Key: ${ciceroKey != null ? 'Found' : 'Not found'}");
+
+    if (kDebugMode && congressKey != null) {
+      print("Congress API Key (masked): ${_maskApiKey(congressKey)}");
+    }
+    if (kDebugMode && googleMapsKey != null) {
+      print("Google Maps API Key (masked): ${_maskApiKey(googleMapsKey)}");
+    }
+    if (kDebugMode && ciceroKey != null) {
+      print("Cicero API Key (masked): ${_maskApiKey(ciceroKey)}");
+    }
   } catch (e) {
     if (kDebugMode) {
       print('❌ Error initializing services: $e');
     }
   }
 }
-
 
 // Helper to mask API key for logging
 String _maskApiKey(String key) {
@@ -122,7 +140,6 @@ class RepresentativeApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Color(0xFF5E35B1), // Deep Purple 600
             ),
-            
             bodyLarge: TextStyle(
               fontSize: 16.0,
               color: Color(0xFF424242), // Grey 800

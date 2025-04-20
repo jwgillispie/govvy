@@ -14,9 +14,13 @@ exports.ciceroProxy = functions.https.onRequest((request, response) => {
       const lastName = request.query.lastName;
       const firstName = request.query.firstName;
 
-      // API key stored in Firebase environment
-      const CICERO_API_KEY = process.env.CICERO_API_KEY ||
-      functions.config().cicero.key;
+      // Debug logging to see what's available
+      console.log("Environment variables:", process.env);
+
+      // API key stored in environment variables directly for v2 functions
+      const CICERO_API_KEY = process.env.CICERO_API_KEY;
+
+      console.log("Cicero API Key available:", !!CICERO_API_KEY);
 
       if (!CICERO_API_KEY) {
         throw new Error("Cicero API key not configured");
@@ -48,9 +52,10 @@ exports.ciceroProxy = functions.https.onRequest((request, response) => {
       }
 
       // Make the request to Cicero API
-      const ciceroResponse = await axios.get("https://cicero.azavea.com/v3.1/official", {
-        params: params,
-      });
+      const ciceroResponse = await axios.get(
+          "https://cicero.azavea.com/v3.1/official",
+          {params},
+      );
 
       // Return the data
       response.json(ciceroResponse.data);
@@ -74,18 +79,27 @@ exports.geocodeProxy = functions.https.onRequest((request, response) => {
         throw new Error("Address parameter is required");
       }
 
-      const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY ||
-      functions.config().google.maps_key;
+      // Debug logging
+      console.log("Environment variables:", process.env);
+
+      // Access API key directly from environment variables
+      const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+
+      console.log("Google Maps API Key available:", !!GOOGLE_MAPS_API_KEY);
+
       if (!GOOGLE_MAPS_API_KEY) {
         throw new Error("Google Maps API key not configured");
       }
 
-      const geocodeResponse = await axios.get("https://maps.googleapis.com/maps/api/geocode/json", {
-        params: {
-          address: address,
-          key: GOOGLE_MAPS_API_KEY,
-        },
-      });
+      const geocodeResponse = await axios.get(
+          "https://maps.googleapis.com/maps/api/geocode/json",
+          {
+            params: {
+              address: address,
+              key: GOOGLE_MAPS_API_KEY,
+            },
+          },
+      );
 
       response.json(geocodeResponse.data);
     } catch (error) {
