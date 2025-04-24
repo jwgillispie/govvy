@@ -72,28 +72,6 @@ class RoleInfoWidget extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Chip(
-                      label: Text(
-                        roleInfo.levelString,
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                      backgroundColor: _getLevelColor(roleInfo.levelString),
-                      visualDensity: VisualDensity.compact,
-                    ),
-                    const SizedBox(width: 8),
-                    Chip(
-                      label: Text(
-                        roleInfo.branchString,
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                      backgroundColor: _getBranchColor(roleInfo.branchString),
-                      visualDensity: VisualDensity.compact,
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
@@ -181,57 +159,6 @@ class RoleInfoWidget extends StatelessWidget {
             'Qualifications:', 
             roleInfo.qualifications,
             Icons.school
-          ),
-          
-          const SizedBox(height: 20),
-          const Divider(),
-          const SizedBox(height: 16),
-          
-          // Fun facts section
-          Text(
-            'Did You Know?',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-          const SizedBox(height: 12),
-          
-          // Fun facts
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.purple.shade50,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.purple.shade100),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: roleInfo.funFacts.map((fact) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(Icons.lightbulb_outline, 
-                        size: 18, 
-                        color: Colors.purple.shade700,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          fact,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.purple.shade900,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
           ),
         ],
       ),
@@ -329,33 +256,5 @@ class RoleInfoWidget extends StatelessWidget {
     return 'default';
   }
   
-  // Helper to get color for level chip
-  Color _getLevelColor(String level) {
-    switch (level) {
-      case 'Federal':
-        return Colors.blue.shade50;
-      case 'State':
-        return Colors.green.shade50;
-      case 'Local':
-        return Colors.orange.shade50;
-      default:
-        return Colors.grey.shade50;
-    }
-  }
-  
-  // Helper to get color for branch chip
-  Color _getBranchColor(String branch) {
-    switch (branch) {
-      case 'Executive':
-        return Colors.red.shade50;
-      case 'Legislative':
-        return Colors.indigo.shade50;
-      case 'Judicial':
-        return Colors.brown.shade50;
-      case 'Executive & Legislative':
-        return Colors.purple.shade50;
-      default:
-        return Colors.grey.shade50;
-    }
-  }
+  // These helper methods have been removed since we no longer display level and branch chips
 }
