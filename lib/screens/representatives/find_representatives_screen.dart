@@ -20,6 +20,120 @@ class FindRepresentativesScreen extends StatefulWidget {
 
 class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     with SingleTickerProviderStateMixin {
+    
+  // Helper method to determine if a representative is truly local
+  bool _isLocalRepresentative(Representative rep) {
+    // First, check explicit federal roles that should always be excluded
+    final String chamberUpper = rep.chamber.toUpperCase();
+    final String officeUpper = rep.office?.toUpperCase() ?? '';
+    final String nameUpper = rep.name.toUpperCase();
+    
+    // These are clearly federal positions
+    final List<String> federalChambers = [
+      'NATIONAL_UPPER', 'NATIONAL_LOWER', 'NATIONAL_EXEC',
+      'SENATE', 'HOUSE', 'PRESIDENT', 'CONGRESS', 'U.S. SENATE',
+      'U.S. HOUSE', 'UNITED STATES SENATE', 'UNITED STATES HOUSE',
+      'REPRESENTATIVE'
+    ];
+    
+    if (federalChambers.any((chamber) => chamberUpper.contains(chamber))) {
+      return false;
+    }
+    
+    // Explicitly check for federal titles in office
+    final List<String> federalTitles = [
+      'U.S. SENATOR', 'UNITED STATES SENATOR', 
+      'U.S. REPRESENTATIVE', 'UNITED STATES REPRESENTATIVE',
+      'CONGRESSMAN', 'CONGRESSWOMAN', 'SENATOR',
+      'U.S. CONGRESS', 'PRESIDENT', 'VICE PRESIDENT'
+    ];
+    
+    if (federalTitles.any((title) => officeUpper.contains(title))) {
+      return false;
+    }
+    
+    // Check for specific federal officials by name
+    final List<String> federalOfficialNames = [
+      'BIDEN', 'TRUMP', 'HARRIS', 'VANCE', 'RUBIO', 'MCCONNELL', 
+      'SCHUMER', 'PELOSI', 'JEFFRIES', 'JOHNSON'
+    ];
+    
+    if (federalOfficialNames.any((name) => nameUpper.contains(name))) {
+      // Check that this is actually the federal official, not someone with the same name
+      if (federalTitles.any((title) => officeUpper.contains(title)) || 
+          federalChambers.any((chamber) => chamberUpper.contains(chamber))) {
+        return false;
+      }
+    }
+    
+    // Now let's check for local indicators
+    
+    // Check if this is a cicero-sourced local rep (strongest indicator)
+    if (rep.bioGuideId.startsWith('cicero-')) {
+      // Double-check it's not a federal official from cicero
+      for (final title in federalTitles) {
+        if (officeUpper.contains(title)) {
+          return false;
+        }
+      }
+      return true;
+    }
+    
+    // Check for local keywords in chamber/level
+    final localLevels = [
+      'COUNTY', 'CITY', 'PLACE', 'TOWNSHIP', 'BOROUGH', 
+      'TOWN', 'VILLAGE', 'LOCAL', 'LOCAL_EXEC', 'SCHOOL', 
+      'MAYOR', 'COUNCIL', 'MUNICIPAL', 'COMMISSIONER'
+    ];
+    
+    for (final level in localLevels) {
+      if (chamberUpper.contains(level)) {
+        return true;
+      }
+    }
+    
+    // Check for local keywords in the district
+    if (rep.district != null) {
+      final String district = rep.district!.toUpperCase();
+      final localDistrictKeywords = [
+        'COUNTY', 'CITY', 'TOWN', 'VILLAGE', 'BOROUGH', 
+        'SCHOOL', 'MUNICIPAL', 'WARD', 'PRECINCT'
+      ];
+      
+      for (final keyword in localDistrictKeywords) {
+        if (district.contains(keyword)) {
+          return true;
+        }
+      }
+    }
+    
+    // Check for local keywords in the office title
+    if (rep.office != null) {
+      final localOfficeKeywords = [
+        'MAYOR', 'CITY COUNCIL', 'COUNTY COMMISSION', 'ALDERMAN', 
+        'SHERIFF', 'CLERK', 'TREASURER', 'ASSESSOR', 'AUDITOR', 
+        'RECORDER', 'SCHOOL BOARD'
+      ];
+      
+      for (final keyword in localOfficeKeywords) {
+        if (officeUpper.contains(keyword)) {
+          return true;
+        }
+      }
+    }
+    
+    // Still exclude clear state-level roles
+    if (chamberUpper.startsWith('STATE_') ||
+        chamberUpper == 'GOVERNOR' ||
+        chamberUpper == 'STATE SENATE' ||
+        chamberUpper == 'STATE HOUSE' ||
+        chamberUpper == 'STATE ASSEMBLY') {
+      return false;
+    }
+    
+    // For everything else, we should default to false
+    return false;
+  }
   String? _userState;
   String? _userCity;
   bool _initialLoadComplete = false;
@@ -85,7 +199,6 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
   ];
 
   String? _selectedState;
-  String? _districtNumber;
 
   @override
   void initState() {
@@ -192,7 +305,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     }
   }
 
-  // Fetch representatives based on state and optional district
+  // Fetch representatives based on state
   Future<void> _fetchRepresentativesByState() async {
     if (_selectedState == null || _selectedState!.isEmpty) {
       setState(() {
@@ -216,9 +329,8 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
           Provider.of<CombinedRepresentativeProvider>(context, listen: false);
       provider.clearErrors();
 
-      // Fetch representatives by state and optional district
-      await provider.fetchRepresentativesByState(
-          _selectedState!, _districtNumber);
+      // Fetch representatives by state
+      await provider.fetchRepresentativesByState(_selectedState!);
 
       if (provider.errorMessage != null && mounted) {
         setState(() {
@@ -282,8 +394,8 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
 
       await provider.fetchLocalRepresentativesByCity(city);
 
-      // Navigate to the All tab after search completes
-      _tabController.animateTo(0); // All tab
+      // Navigate directly to the Local tab after search completes
+      _tabController.animateTo(2); // Local tab
 
       if (provider.errorMessage != null && mounted) {
         setState(() {
@@ -361,6 +473,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     final provider = Provider.of<CombinedRepresentativeProvider>(context);
 
     return Scaffold(
+      restorationId: 'find_representatives_screen',
       appBar: AppBar(
         title: const Text('Find Your Representatives'),
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -404,6 +517,9 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                                 onSelectionChanged: (Set<int> selection) {
                                   setState(() {
                                     _searchTypeIndex = selection.first;
+                                    // Clear errors when changing search type
+                                    _validationError = null;
+                                    provider.clearErrors();
                                   });
                                 },
                               ),
@@ -511,7 +627,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                             provider.localRepresentatives,
                             _searchTypeIndex == 1
                                 ? 'Enter a city to find your local representatives'
-                                : 'Select a state and enter district for your local representatives'),
+                                : 'Select a state to find your local representatives'),
                                 
                         // Name search results tab
                         _buildRepresentativesList(
@@ -532,7 +648,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     );
   }
 
-  // Build state and district search form
+  // Build state search form
   Widget _buildStateSearchForm() {
     return Form(
       child: Column(
@@ -566,32 +682,35 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
             },
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),  // Increased spacing to compensate for the removed field
 
-          // District number input (optional)
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'District Number (Optional)',
-              hintText: 'e.g. 5',
-              filled: true,
-              fillColor: Colors.grey.shade100,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-              prefixIcon: const Icon(Icons.grid_3x3),
+          // Informational text
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.blue.shade50,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.blue.shade100),
             ),
-            keyboardType: TextInputType.number,
-            onChanged: (String value) {
-              setState(() {
-                _districtNumber = value.isEmpty ? null : value;
-              });
-            },
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.info_outline, color: Colors.blue.shade700, size: 16),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'This will show all representatives for your state, including federal Senators and House members, plus state-level representatives.',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.blue.shade800,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),  // Increased spacing
 
           // Search button
           SizedBox(
@@ -624,6 +743,15 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
 
           // Popular states chips
           const SizedBox(height: 16),
+          Text(
+            'Popular States:',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: 8),
           Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -689,8 +817,41 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
       );
     }
 
+    // Filter representatives if needed based on the current tab
+    List<Representative> filteredReps = representatives;
+    
+    // If we're on the "Local" tab (index 2), apply additional filtering
+    if (_tabController.index == 2) {
+      filteredReps = representatives.where((rep) => _isLocalRepresentative(rep)).toList();
+      
+      // Show empty state if we filtered out all representatives
+      if (filteredReps.isEmpty) {
+        return Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.location_city,
+                  size: 64,
+                  color: Colors.grey.shade400,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'No local representatives found.\nTry searching by city name instead.',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    }
+
     // Sort representatives by name for consistency
-    final sortedReps = List<Representative>.from(representatives)
+    final sortedReps = List<Representative>.from(filteredReps)
       ..sort((a, b) => a.name.compareTo(b.name));
 
     return ListView.builder(
