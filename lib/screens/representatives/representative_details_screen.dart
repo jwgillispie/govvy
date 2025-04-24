@@ -618,10 +618,10 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
             _buildInfoSection('Gender', rep.gender),
           
           // Add education details if available
-          if (rep.bioGuideId.contains('dickens') && rep.name.contains('Andre')) {
-            _buildInfoSection('Education', 'B.S. Chemical Engineering, Georgia Institute of Technology; M.S. Public Administration, Georgia State University'),
-            _buildInfoSection('Career', 'Chemical Engineer, Assistant Director of the Office of Institute Diversity at Georgia Tech, Chief Development Officer at TechBridge, Former Atlanta City Council Member'),
-          }
+          // if (rep.bioGuideId.contains('dickens') && rep.name.contains('Andre')) {
+          //   _buildInfoSection('Education', 'B.S. Chemical Engineering, Georgia Institute of Technology; M.S. Public Administration, Georgia State University'),
+          //   _buildInfoSection('Career', 'Chemical Engineer, Assistant Director of the Office of Institute Diversity at Georgia Tech, Chief Development Officer at TechBridge, Former Atlanta City Council Member'),
+          // }
         ],
       ),
     );
