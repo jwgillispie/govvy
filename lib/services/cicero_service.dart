@@ -729,24 +729,29 @@ class CiceroService {
     return false;
   }
 
-  // Process a Cicero official into a LocalRepresentative
+  // Update the _processCiceroOfficial method in lib/services/cicero_service.dart
+
   LocalRepresentative _processCiceroOfficial(Map<String, dynamic> official) {
     // Extract basic information
     String firstName = official['first_name']?.toString() ?? '';
     String lastName = official['last_name']?.toString() ?? '';
     String middleInitial = official['middle_initial']?.toString() ?? '';
     String preferredName = official['preferred_name']?.toString() ?? '';
+    String nameSuffix = official['name_suffix']?.toString() ?? '';
 
     // Use preferred name if available, otherwise use first name
     String displayFirstName =
         preferredName.isNotEmpty ? preferredName : firstName;
 
-    // Build full name with middle initial if available
+    // Build full name with middle initial and suffix if available
     String fullName = displayFirstName;
     if (middleInitial.isNotEmpty) {
       fullName += ' $middleInitial';
     }
     fullName += ' $lastName';
+    if (nameSuffix.isNotEmpty) {
+      fullName += ', $nameSuffix';
+    }
 
     // Extract party
     String party = official['party']?.toString() ?? '';
@@ -760,9 +765,12 @@ class CiceroService {
     if (official.containsKey('office') && official['office'] is Map) {
       final officeInfo = Map<String, dynamic>.from(official['office'] as Map);
 
-      // Extract role/position
+      // Extract role/position/title
       if (officeInfo.containsKey('role')) {
         officeName = officeInfo['role']?.toString() ?? '';
+      } else if (officeInfo.containsKey('title')) {
+        // According to API docs, a primary title may be in 'title' field
+        officeName = officeInfo['title']?.toString() ?? '';
       }
 
       // Extract district information
@@ -770,17 +778,32 @@ class CiceroService {
         final districtInfo =
             Map<String, dynamic>.from(officeInfo['district'] as Map);
 
+        // Get district type - this is the chamber/level like COUNTY, CITY, etc.
         if (districtInfo.containsKey('district_type')) {
           level = districtInfo['district_type']?.toString() ?? 'Local';
+        } else if (districtInfo.containsKey('district_type__name_short')) {
+          // Alternative field that might be present
+          level =
+              districtInfo['district_type__name_short']?.toString() ?? 'Local';
         }
 
+        // Get district name - this is the specific district like "Alachua County", "Gainesville", etc.
         if (districtInfo.containsKey('name')) {
           district = districtInfo['name']?.toString() ?? '';
+        } else if (districtInfo.containsKey('label')) {
+          // Alternative field that might be present
+          district = districtInfo['label']?.toString() ?? '';
         }
 
+        // Get state
         if (districtInfo.containsKey('state')) {
           state = districtInfo['state']?.toString() ?? '';
         }
+      }
+
+      // Check for formal chamber name as alternative to district type
+      if (level == 'Local' && officeInfo.containsKey('chamber__name_formal')) {
+        level = officeInfo['chamber__name_formal']?.toString() ?? level;
       }
     }
 
@@ -795,7 +818,7 @@ class CiceroService {
     String? website;
     List<String>? socialMedia;
 
-    // 1. Check addresses array for contact info
+    // 1. Process addresses array
     if (official.containsKey('addresses') && official['addresses'] is List) {
       final addresses = official['addresses'] as List;
       for (var addressObj in addresses) {
@@ -807,11 +830,6 @@ class CiceroService {
             phone = address['phone']?.toString();
           }
 
-          // Get the first fax number as fallback if no phone
-          if (phone == null && address.containsKey('fax')) {
-            phone = address['fax']?.toString();
-          }
-
           // Try to get an email if available
           if (email == null && address.containsKey('email')) {
             email = address['email']?.toString();
@@ -820,39 +838,33 @@ class CiceroService {
       }
     }
 
-    // 2. Check all email addresses
+    // 2. Check direct phone fields
+    if (phone == null) {
+      if (official.containsKey('phone_1')) {
+        phone = official['phone_1']?.toString();
+      } else if (official.containsKey('phone_2')) {
+        phone = official['phone_2']?.toString();
+      }
+    }
+
+    // 3. Check all email addresses
     if (official.containsKey('email_addresses') &&
         official['email_addresses'] is List &&
         (official['email_addresses'] as List).isNotEmpty) {
       email = (official['email_addresses'] as List)[0]?.toString();
     }
 
-    // 3. Check contact info
-    if (official.containsKey('contact_info') &&
-        official['contact_info'] is Map) {
-      final contactInfo =
-          Map<String, dynamic>.from(official['contact_info'] as Map);
-
-      if (email == null && contactInfo.containsKey('email')) {
-        email = contactInfo['email']?.toString();
-      }
-
-      if (phone == null && contactInfo.containsKey('phone')) {
-        phone = contactInfo['phone']?.toString();
-      }
-
-      if (website == null && contactInfo.containsKey('url')) {
-        website = contactInfo['url']?.toString();
-      }
+    // 4. Check web form URL
+    if (website == null && official.containsKey('web_form_url')) {
+      website = official['web_form_url']?.toString();
     }
 
-    // 4. Check URLs array
-    if (official.containsKey('urls') &&
+    // 5. Check URLs array
+    if (website == null &&
+        official.containsKey('urls') &&
         official['urls'] is List &&
         (official['urls'] as List).isNotEmpty) {
       website = (official['urls'] as List)[0]?.toString();
-    } else if (official.containsKey('web_form_url')) {
-      website = official['web_form_url']?.toString();
     }
 
     // Extract social media from identifiers
@@ -864,16 +876,27 @@ class CiceroService {
       for (var idObj in identifiers) {
         if (idObj is Map) {
           final identifier = Map<String, dynamic>.from(idObj);
+          String type = '';
+          String value = '';
+
+          // Handle different identifier field naming
           if (identifier.containsKey('identifier_type') &&
               identifier.containsKey('identifier')) {
-            final type = identifier['identifier_type']?.toString() ?? '';
-            final id = identifier['identifier']?.toString() ?? '';
+            type = identifier['identifier_type']?.toString() ?? '';
+            value = identifier['identifier']?.toString() ?? '';
+          } else if (identifier.containsKey('identifier_value')) {
+            // Alternative format
+            type = identifier.containsKey('identifier_type')
+                ? identifier['identifier_type']?.toString() ?? ''
+                : '';
+            value = identifier['identifier_value']?.toString() ?? '';
+          }
 
-            // Only add social media identifiers
-            if (['twitter', 'facebook', 'instagram', 'youtube', 'linkedin']
-                .contains(type.toLowerCase())) {
-              socialMedia.add('$type: $id');
-            }
+          // Only add social media identifiers
+          if (['twitter', 'facebook', 'instagram', 'youtube', 'linkedin']
+                  .contains(type.toLowerCase()) &&
+              value.isNotEmpty) {
+            socialMedia.add('$type: $value');
           }
         }
       }

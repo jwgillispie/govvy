@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:govvy/widgets/representatives/role_info_widget.dart';
+import 'package:govvy/data/government_roles.dart';
 
 class RepresentativeDetailsScreen extends StatefulWidget {
   final String bioGuideId;
@@ -189,7 +191,11 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
                             controller: _tabController,
                             children: [
                               _buildProfileTab(rep),
-                              _buildRoleInfoTab(rep),
+                              RoleInfoWidget(
+                                role: rep.chamber,
+                                officeName: rep.office ?? '',
+                                district: rep.district,
+                              ),
                               _buildBillsTab(rep.sponsoredBills, 'No sponsored bills found'),
                               _buildBillsTab(rep.cosponsoredBills, 'No co-sponsored bills found'),
                             ],
@@ -279,7 +285,7 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${rep.chamber}, ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}',
+                  _getFormattedRoleTitle(rep),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
@@ -287,6 +293,21 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
           ),
         ],
       ),
+    );
+  }
+
+  String _getFormattedRoleTitle(RepresentativeDetails rep) {
+    // Check if this is a specific role like Manny Diaz
+    if (rep.chamber.toUpperCase() == 'STATE_EXEC' && rep.office != null && rep.office!.isNotEmpty) {
+      return '${rep.office}, ${rep.state}';
+    }
+    
+    // For other cases, use the formatter
+    return DistrictTypeFormatter.formatRoleWithLocation(
+      rep.chamber, 
+      rep.office, 
+      rep.state, 
+      rep.district
     );
   }
 
@@ -617,515 +638,56 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
           if (rep.gender != null)
             _buildInfoSection('Gender', rep.gender),
           
-          // Add education details if available
-          // if (rep.bioGuideId.contains('dickens') && rep.name.contains('Andre')) {
-          //   _buildInfoSection('Education', 'B.S. Chemical Engineering, Georgia Institute of Technology; M.S. Public Administration, Georgia State University'),
-          //   _buildInfoSection('Career', 'Chemical Engineer, Assistant Director of the Office of Institute Diversity at Georgia Tech, Chief Development Officer at TechBridge, Former Atlanta City Council Member'),
-          // }
+          // Add position information
+          _buildInfoSection('Position', _getPositionTitle(rep)),
+          
+          // Add jurisdiction information
+          _buildInfoSection('Jurisdiction', _getJurisdiction(rep)),
         ],
       ),
     );
-  }
-
-  // New tab for role information
-  Widget _buildRoleInfoTab(RepresentativeDetails rep) {
-    // Determine the role type to show the appropriate information
-    final String chamberUpper = rep.chamber.toUpperCase();
-    String roleType = '';
-    
-    if (chamberUpper.contains('MAYOR') || chamberUpper.contains('LOCAL_EXEC')) {
-      roleType = 'mayor';
-    } else if (chamberUpper.contains('CITY') || chamberUpper.contains('LOCAL')) {
-      roleType = 'cityCouncil';
-    } else if (chamberUpper.contains('COUNTY')) {
-      roleType = 'countyCommission';
-    } else if (chamberUpper.contains('SENATE') || chamberUpper == 'NATIONAL_UPPER') {
-      roleType = 'senator';
-    } else if (chamberUpper.contains('HOUSE') || chamberUpper == 'NATIONAL_LOWER') {
-      roleType = 'representative';
-    } else if (chamberUpper.contains('STATE')) {
-      roleType = 'stateOfficial';
-    } else {
-      roleType = 'other';
-    }
-    
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Role & Responsibilities',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 12),
-          
-          // Role description
-          _buildRoleDescription(roleType, rep),
-          
-          const SizedBox(height: 20),
-          const Divider(),
-          const SizedBox(height: 16),
-          
-          // Key responsibilities section
-          Text(
-            'Key Responsibilities',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-          const SizedBox(height: 12),
-          
-          _buildResponsibilitiesList(roleType),
-          
-          const SizedBox(height: 20),
-          const Divider(),
-          const SizedBox(height: 16),
-          
-          // Authority & Limitations section
-          Text(
-            'Authority & Limitations',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-          const SizedBox(height: 12),
-          
-          _buildAuthorityLimitations(roleType),
-        ],
-      ),
-    );
-  }
-  
-  // Helper to build role description
-  Widget _buildRoleDescription(String roleType, RepresentativeDetails rep) {
-    String description = '';
-    
-    switch (roleType) {
-      case 'mayor':
-        if (rep.name.contains('Dickens') && rep.state == 'GA') {
-          description = 'As the Mayor of Atlanta, Andre Dickens serves as the Chief Executive Officer of the city. He is responsible for the general management of Atlanta, enforcing all laws and ordinances, and serving as the official representative of the city. Mayor Dickens oversees the city\'s budget and thousands of employees across numerous departments.';
-        } else {
-          description = 'Mayors are the chief executive officers of cities, responsible for the general management of city operations, enforcing laws and ordinances, and serving as the official representative of the city. They typically oversee city departments, propose budgets, and implement policies set by the city council.';
-        }
-        break;
-        
-      case 'cityCouncil':
-        description = 'City Council members serve as the legislative body for the city. They create laws through ordinances and resolutions, approve budgets, establish tax rates, set utility fees, and develop policy. Council members represent specific districts or the city at large, advocating for constituents\' needs and interests.';
-        break;
-        
-      case 'countyCommission':
-        description = 'County Commissioners form the legislative and often executive body of county government. They manage county property and funds, establish budgets, set tax rates, oversee public works, and implement policies for unincorporated areas. Commissioners typically represent specific districts within the county.';
-        break;
-        
-      case 'senator':
-        description = 'U.S. Senators serve six-year terms in the upper chamber of Congress, with two senators representing each state regardless of population. Senators write and vote on federal legislation, confirm presidential nominations for federal positions, ratify treaties, and conduct oversight of federal agencies.';
-        break;
-        
-      case 'representative':
-        description = 'U.S. Representatives serve two-year terms in the House of Representatives, the lower chamber of Congress. Each representative serves a specific district, with the number of representatives per state based on population. They draft and vote on federal legislation, have exclusive power to initiate revenue bills, and conduct oversight of federal agencies.';
-        break;
-        
-      case 'stateOfficial':
-        description = 'State officials work at the state government level, creating and implementing policies that affect citizens within their state. Depending on their specific role, they may draft state legislation, oversee state agencies, manage state budgets, or implement state programs and services.';
-        break;
-        
-      default:
-        description = 'This official serves in a government capacity, representing constituents and working within their jurisdiction\'s governmental structure to implement policies, provide services, and address community needs.';
-    }
-    
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.blue.shade50,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blue.shade100),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            roleType == 'mayor' && rep.name.contains('Dickens') ? 'Mayor of Atlanta' : 
-            _getRoleTitle(roleType),
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            description,
-            style: const TextStyle(
-              fontSize: 14,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  
-  // Helper to build responsibilities list
-  Widget _buildResponsibilitiesList(String roleType) {
-    List<String> responsibilities = [];
-    
-    switch (roleType) {
-      case 'mayor':
-        responsibilities = [
-          'Oversee city operations and administration',
-          'Propose annual budgets',
-          'Appoint department heads and staff',
-          'Implement city council policies',
-          'Represent the city to other governments and the public',
-          'Oversee public safety departments',
-          'Lead emergency response efforts',
-          'Veto or approve legislation (in some cities)',
-          'Develop strategic initiatives and economic development plans'
-        ];
-        break;
-        
-      case 'cityCouncil':
-        responsibilities = [
-          'Draft and pass local ordinances and resolutions',
-          'Approve the city budget',
-          'Set tax rates and service fees',
-          'Review and approve contracts',
-          'Establish zoning regulations',
-          'Confirm mayoral appointments (in some cities)',
-          'Provide oversight of city departments',
-          'Address constituent concerns',
-          'Serve on committees and boards'
-        ];
-        break;
-        
-      case 'countyCommission':
-        responsibilities = [
-          'Manage county property and funds',
-          'Set county budgets and tax rates',
-          'Oversee county roads and infrastructure',
-          'Establish policies for unincorporated areas',
-          'Coordinate with other local governments',
-          'Authorize contracts and payments',
-          'Manage county facilities',
-          'Appoint county officials (in some counties)',
-          'Oversee public health and safety services'
-        ];
-        break;
-        
-      case 'senator':
-      case 'representative':
-        responsibilities = [
-          'Draft and vote on federal legislation',
-          'Serve on congressional committees',
-          'Oversee federal agencies and programs',
-          'Approve federal budgets',
-          'Address constituent concerns and provide services',
-          'Conduct investigations and hearings',
-          'Represent district/state interests at the federal level',
-          'Authorize federal spending',
-          roleType == 'senator' ? 'Confirm presidential appointments' : 'Initiate revenue bills'
-        ];
-        break;
-        
-      case 'stateOfficial':
-        responsibilities = [
-          'Draft and vote on state legislation (for legislators)',
-          'Implement state policies and programs',
-          'Oversee state departments and agencies',
-          'Manage state resources and budgets',
-          'Address state-level issues and constituent concerns',
-          'Coordinate with local and federal governments',
-          'Develop state regulations and standards',
-          'Represent state interests in various forums',
-          'Serve on state boards and commissions'
-        ];
-        break;
-        
-      default:
-        responsibilities = [
-          'Represent constituents in official capacity',
-          'Participate in policy development and implementation',
-          'Address community needs and concerns',
-          'Collaborate with other government officials',
-          'Oversee programs and services within jurisdiction',
-          'Manage resources and budgets',
-          'Ensure compliance with relevant laws and regulations',
-          'Communicate with the public and stakeholders',
-          'Participate in official meetings and proceedings'
-        ];
-    }
-    
-    return Column(
-      children: responsibilities.map((responsibility) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(Icons.check_circle, 
-                size: 18, 
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  responsibility,
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ),
-            ],
-          ),
-        );
-      }).toList(),
-    );
-  }
-  
-  // Helper to build authority and limitations section
-  Widget _buildAuthorityLimitations(String roleType) {
-    Map<String, List<String>> authLimits = {};
-    
-    switch (roleType) {
-      case 'mayor':
-        authLimits = {
-          'Authority': [
-            'Appoint and remove department heads',
-            'Propose and administer city budget',
-            'Execute contracts (within limits)',
-            'Declare local emergencies',
-            'Represent the city officially'
-          ],
-          'Limitations': [
-            'Cannot create laws independently',
-            'Budget approval required from city council',
-            'Authority limited to city boundaries',
-            'Subject to checks from council',
-            'Term limits (in many cities)'
-          ]
-        };
-        break;
-        
-      case 'cityCouncil':
-        authLimits = {
-          'Authority': [
-            'Legislative power to create local laws',
-            'Budget approval authority',
-            'Set tax rates and fees',
-            'Confirm/reject appointments',
-            'Establish city policies'
-          ],
-          'Limitations': [
-            'Cannot directly manage city staff',
-            'Individual members have no executive power',
-            'Subject to mayoral veto (in some cities)',
-            'Limited to city boundaries',
-            'Subject to state and federal laws'
-          ]
-        };
-        break;
-        
-      case 'countyCommission':
-        authLimits = {
-          'Authority': [
-            'Manage county property and funds',
-            'Establish county policies',
-            'Set county tax rates',
-            'Approve county contracts',
-            'Manage unincorporated areas'
-          ],
-          'Limitations': [
-            'Limited authority in incorporated cities',
-            'Must coordinate with other elected officials',
-            'Subject to state mandates',
-            'Cannot override municipal decisions',
-            'Budget constraints'
-          ]
-        };
-        break;
-        
-      case 'senator':
-      case 'representative':
-        authLimits = {
-          'Authority': [
-            'Draft and vote on federal legislation',
-            'Approve federal budgets',
-            'Conduct investigations',
-            'Override presidential vetoes (with supermajority)',
-            roleType == 'senator' ? 'Confirm federal appointments' : 'Initiate revenue bills'
-          ],
-          'Limitations': [
-            'Cannot act individually',
-            'Subject to checks and balances',
-            'Limited by Constitution and courts',
-            'Cannot direct federal agencies',
-            'Term limits (for some positions)'
-          ]
-        };
-        break;
-        
-      case 'stateOfficial':
-        authLimits = {
-          'Authority': [
-            'Create and enforce state laws',
-            'Manage state resources',
-            'Establish state policies',
-            'Oversee state departments',
-            'Regulate within state boundaries'
-          ],
-          'Limitations': [
-            'Limited by federal laws',
-            'Subject to state constitution',
-            'Budget constraints',
-            'Cannot override local control (in some areas)',
-            'Term limits (in many states)'
-          ]
-        };
-        break;
-        
-      default:
-        authLimits = {
-          'Authority': [
-            'Act within official capacity',
-            'Implement relevant policies',
-            'Manage allocated resources',
-            'Represent constituents',
-            'Participate in official proceedings'
-          ],
-          'Limitations': [
-            'Limited to specific jurisdiction',
-            'Subject to governing laws',
-            'Budget constraints',
-            'Must work within governmental system',
-            'Term limits or appointment periods'
-          ]
-        };
-    }
-    
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Authority section
-        Text(
-          'Authority',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
-        ),
-        const SizedBox(height: 8),
-        ...authLimits['Authority']!.map((item) => 
-          Padding(
-            padding: const EdgeInsets.only(bottom: 6, left: 8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(Icons.arrow_right, 
-                  size: 16, 
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    item,
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ).toList(),
-        
-        const SizedBox(height: 16),
-        
-        // Limitations section
-        Text(
-          'Limitations',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-            color: Colors.red.shade700,
-          ),
-        ),
-        const SizedBox(height: 8),
-        ...authLimits['Limitations']!.map((item) => 
-          Padding(
-            padding: const EdgeInsets.only(bottom: 6, left: 8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(Icons.arrow_right, 
-                  size: 16, 
-                  color: Colors.red.shade700,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    item,
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ).toList(),
-      ],
-    );
-  }
-  
-  // Helper to get role title
-  String _getRoleTitle(String roleType) {
-    switch (roleType) {
-      case 'mayor':
-        return 'Mayor';
-      case 'cityCouncil':
-        return 'City Council Member';
-      case 'countyCommission':
-        return 'County Commissioner';
-      case 'senator':
-        return 'U.S. Senator';
-      case 'representative':
-        return 'U.S. Representative';
-      case 'stateOfficial':
-        return 'State Government Official';
-      default:
-        return 'Government Official';
-    }
   }
 
   // Helper to build a more descriptive About text
   Widget _buildAboutText(RepresentativeDetails rep) {
-    // Special case for Andre Dickens
-    if (rep.name.contains('Andre Dickens') && rep.state == 'GA') {
+    // For state executive officials like Manny Diaz
+    if (rep.chamber.toUpperCase() == 'STATE_EXEC' && rep.state == 'FL') {
+      // Specific content for Manny Diaz
+      if (rep.name.contains('Diaz')) {
+        return Text(
+          'Manny Diaz serves as the Commissioner of Education in Florida\'s executive branch. In this role, he oversees the state\'s public education system, including policies related to K-12 schools, vocational training, and higher education institutions across Florida.',
+          style: Theme.of(context).textTheme.bodyLarge,
+        );
+      }
+      
+      // Generic state executive
       return Text(
-        'Andre Dickens is the 61st Mayor of Atlanta, serving since January 2022. A native Atlantan and product of Atlanta Public Schools, Mayor Dickens earned his Chemical Engineering degree from Georgia Tech and a Master\'s in Public Administration from Georgia State University. Before becoming Mayor, he served as an Atlanta City Council member at-large for eight years. As Mayor, he\'s focused on public safety, affordable housing, infrastructure improvements, and economic development in Atlanta. He also serves as Chair of the Atlanta Regional Commission Board.',
+        '${rep.name} serves in the executive branch of ${rep.state} state government as ${rep.office ?? "a state official"}. Executive branch officials are responsible for implementing and enforcing state laws and overseeing state agencies and departments.',
         style: Theme.of(context).textTheme.bodyLarge,
       );
     }
     
-    // For other officials, generate a descriptive bio
+    // Generate appropriate description based on the role
     String formattedLevel = DistrictTypeFormatter.formatDistrictType(rep.chamber);
     String aboutText;
     
     // Federal representatives
     if (rep.chamber.toUpperCase() == 'NATIONAL_UPPER' || rep.chamber.toLowerCase() == 'senate') {
-      aboutText = '${rep.name} is a United States Senator representing ${rep.state}.';
+      aboutText = '${rep.name} is a United States Senator representing ${rep.state}. Senators serve 6-year terms and represent the entire state in the upper chamber of Congress.';
     } 
     else if (rep.chamber.toUpperCase() == 'NATIONAL_LOWER' || rep.chamber.toLowerCase() == 'house') {
-      aboutText = '${rep.name} is a member of the U.S. House of Representatives representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
+      aboutText = '${rep.name} is a member of the U.S. House of Representatives representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}. Representatives serve 2-year terms and represent specific geographic districts within their state.';
     }
     // State representatives
     else if (rep.chamber.toUpperCase().startsWith('STATE_')) {
       if (rep.chamber.toUpperCase() == 'STATE_UPPER') {
-        aboutText = '${rep.name} is a State Senator representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
+        aboutText = '${rep.name} is a State Senator representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}. State Senators create laws and policies at the state level and typically serve 4-year terms.';
       } 
       else if (rep.chamber.toUpperCase() == 'STATE_LOWER') {
-        aboutText = '${rep.name} is a State Representative serving in the ${rep.state} House of Representatives${rep.district != null ? ' for District ${rep.district}' : ''}.';
+        aboutText = '${rep.name} is a State Representative serving in the ${rep.state} House of Representatives${rep.district != null ? ' for District ${rep.district}' : ''}. State Representatives draft and vote on state legislation and typically serve 2-year terms.';
       }
       else if (rep.chamber.toUpperCase() == 'STATE_EXEC') {
-        aboutText = '${rep.name} serves in the executive branch of ${rep.state} state government.';
+        aboutText = '${rep.name} serves in the executive branch of ${rep.state} state government${rep.office != null ? ' as ${rep.office}' : ''}. State executive officials implement state laws and oversee various state departments and programs.';
       }
       else {
         aboutText = '${rep.name} is a member of the ${formattedLevel} representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
@@ -1133,25 +695,25 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
     }
     // Local representatives
     else if (rep.chamber.toUpperCase() == 'LOCAL_EXEC' || rep.chamber.toUpperCase() == 'MAYOR') {
-      aboutText = '${rep.name} is the Mayor of ${rep.district ?? rep.state}.';
+      aboutText = '${rep.name} is the Mayor of ${rep.district ?? rep.state}. As Mayor, ${rep.name.split(' ')[0]} oversees city operations, proposes budgets, and represents the city in official capacities.';
     }
     else if (rep.chamber.toUpperCase() == 'LOCAL' || rep.chamber.toUpperCase() == 'CITY') {
-      aboutText = '${rep.name} is a member of the City Council for ${rep.district ?? rep.state}.';
+      aboutText = '${rep.name} is a member of the City Council for ${rep.district ?? rep.state}. City Council members create local ordinances, approve city budgets, and address constituent needs at the local level.';
     }
     else if (rep.chamber.toUpperCase() == 'COUNTY') {
-      aboutText = '${rep.name} is a County Commissioner for ${rep.district ?? rep.state}.';
+      aboutText = '${rep.name} is a County Commissioner for ${rep.district ?? rep.state}. County Commissioners manage county resources, oversee county departments, and establish policies for unincorporated areas.';
     }
     else if (rep.chamber.toUpperCase() == 'SCHOOL') {
-      aboutText = '${rep.name} is a member of the School Board for ${rep.district ?? rep.state}.';
+      aboutText = '${rep.name} is a member of the School Board for ${rep.district ?? rep.state}. School Board members set educational policies, approve school district budgets, and oversee district operations.';
     }
     // Fallback for other types
     else {
       aboutText = '${rep.name} is a member of the ${formattedLevel} representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
     }
     
-    // Add office title if available
-    if (rep.office != null && rep.office!.isNotEmpty) {
-      aboutText += ' ${rep.name} serves as ${rep.office}.';
+    // Add office title if available and not already included
+    if (rep.office != null && rep.office!.isNotEmpty && !aboutText.contains(rep.office!)) {
+      aboutText += ' ${rep.name.split(' ')[0]} serves as ${rep.office}.';
     }
     
     return Text(
@@ -1186,6 +748,75 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
         ],
       ),
     );
+  }
+  
+  // Helper to get a standardized position title
+  String _getPositionTitle(RepresentativeDetails rep) {
+    if (rep.office != null && rep.office!.isNotEmpty) {
+      return rep.office!;
+    }
+    
+    final String chamberUpper = rep.chamber.toUpperCase();
+    
+    if (chamberUpper == 'NATIONAL_UPPER' || chamberUpper == 'SENATE') {
+      return 'U.S. Senator';
+    } 
+    else if (chamberUpper == 'NATIONAL_LOWER' || chamberUpper == 'HOUSE') {
+      return 'U.S. Representative';
+    }
+    else if (chamberUpper == 'STATE_UPPER') {
+      return 'State Senator';
+    }
+    else if (chamberUpper == 'STATE_LOWER') {
+      return 'State Representative';
+    }
+    else if (chamberUpper == 'STATE_EXEC') {
+      return 'State Executive Official';
+    }
+    else if (chamberUpper == 'LOCAL_EXEC' || chamberUpper.contains('MAYOR')) {
+      return 'Mayor';
+    }
+    else if (chamberUpper == 'LOCAL' || chamberUpper.contains('CITY')) {
+      return 'City Council Member';
+    }
+    else if (chamberUpper.contains('COUNTY')) {
+      return 'County Commissioner';
+    }
+    else if (chamberUpper.contains('SCHOOL')) {
+      return 'School Board Member';
+    }
+    
+    // Default to formatted district type
+    return DistrictTypeFormatter.formatDistrictType(rep.chamber);
+  }
+  
+  // Helper to get jurisdiction information
+  String _getJurisdiction(RepresentativeDetails rep) {
+    final String chamberUpper = rep.chamber.toUpperCase();
+    
+    if (chamberUpper.startsWith('NATIONAL_')) {
+      return rep.state;
+    }
+    else if (chamberUpper.startsWith('STATE_')) {
+      if (rep.district != null) {
+        return '${rep.state} District ${rep.district}';
+      } else {
+        return rep.state;
+      }
+    }
+    else if (chamberUpper == 'LOCAL_EXEC' || chamberUpper == 'LOCAL' || 
+             chamberUpper.contains('CITY') || chamberUpper.contains('MAYOR')) {
+      return rep.district ?? rep.state;
+    }
+    else if (chamberUpper.contains('COUNTY')) {
+      return rep.district ?? '${rep.state} County';
+    }
+    else if (chamberUpper.contains('SCHOOL')) {
+      return rep.district ?? '${rep.state} School District';
+    }
+    
+    // Default
+    return rep.district ?? rep.state;
   }
   
   Widget _buildBillsTab(List<RepresentativeBill> bills, String emptyMessage) {
@@ -1262,6 +893,6 @@ class _RepresentativeDetailsScreenState extends State<RepresentativeDetailsScree
 // Helper extension to capitalize strings
 extension StringExtension on String {
   String capitalize() {
-    return "${this[0].toUpperCase()}${substring(1)}";
+    return isEmpty ? this : "${this[0].toUpperCase()}${substring(1)}";
   }
 }

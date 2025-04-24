@@ -78,4 +78,75 @@ class DistrictTypeFormatter {
         return userFriendlyTerm;
     }
   }
+  
+  // Format role with location for user-friendly display
+  static String formatRoleWithLocation(String? districtType, String? officeName, String state, String? district) {
+    if (districtType == null || districtType.isEmpty) {
+      return 'Unknown';
+    }
+
+    final String formattedRole = formatDistrictType(districtType);
+    String location = '';
+
+    // Determine the appropriate location format based on the role and available information
+    if (district != null && district.isNotEmpty) {
+      if (districtType.toUpperCase() == 'LOCAL_EXEC' || 
+          districtType.toUpperCase() == 'MAYOR' || 
+          formattedRole.contains('Mayor')) {
+        location = 'of $district';
+      } else {
+        location = district;
+      }
+    } else {
+      location = state;
+    }
+
+    // Format specific roles with office name
+    if (officeName != null && officeName.isNotEmpty) {
+      return '$officeName, $location';
+    }
+
+    // Format based on role type
+    switch (districtType.toUpperCase()) {
+      case 'NATIONAL_UPPER':
+      case 'SENATE':
+        return 'U.S. Senator, $state';
+      
+      case 'NATIONAL_LOWER': 
+      case 'HOUSE':
+        return district != null 
+            ? 'U.S. Representative, $state-$district' 
+            : 'U.S. Representative, $state';
+      
+      case 'STATE_EXEC':
+        return 'State Executive, $state';
+      
+      case 'STATE_UPPER':
+        return district != null 
+            ? 'State Senator, $state District $district' 
+            : 'State Senator, $state';
+      
+      case 'STATE_LOWER':
+        return district != null 
+            ? 'State Representative, $state District $district' 
+            : 'State Representative, $state';
+      
+      case 'LOCAL_EXEC':
+      case 'MAYOR':
+        return 'Mayor of $location';
+      
+      case 'LOCAL':
+      case 'CITY':
+        return 'City Council Member, $location';
+      
+      case 'COUNTY':
+        return 'County Commissioner, $location';
+      
+      case 'SCHOOL':
+        return 'School Board Member, $location';
+        
+      default:
+        return '$formattedRole, $location';
+    }
+  }
 }

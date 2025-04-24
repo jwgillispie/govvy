@@ -281,14 +281,31 @@ class RepresentativeCard extends StatelessWidget {
         return '$formattedLevel, ${representative.state}${representative.district != null ? ' District ${representative.district}' : ''}';
       }
     }
-    // Handle local representatives
+    // Handle local representatives with clear, user-friendly information
     else if (isLocal) {
-      // For local representatives, create a more descriptive position text
+      // For local representatives, show what type of local official they are and where they serve
       if (representative.office != null && representative.office!.isNotEmpty) {
-        // If we have an office title, use it
-        return '${representative.office}, ${representative.district ?? representative.state}';
+        if (representative.district != null && representative.district!.isNotEmpty) {
+          // If we have both office title and a district
+          return '${representative.office}, ${representative.district}';
+        } else {
+          // If we have office title but no specific district
+          return '${representative.office}, ${representative.state}';
+        }
+      } else if (formattedLevel.contains('Council')) {
+        // City Council Member
+        return 'City Council Member, ${representative.district ?? representative.state}';
+      } else if (formattedLevel.contains('Mayor')) {
+        // Mayor
+        return 'Mayor of ${representative.district ?? representative.state}';
+      } else if (formattedLevel.contains('County')) {
+        // County Commissioner
+        return 'County Commissioner, ${representative.district ?? representative.state}';
+      } else if (formattedLevel.contains('School')) {
+        // School Board Member
+        return 'School Board Member, ${representative.district ?? representative.state}';
       } else {
-        // Otherwise use the formatted level
+        // Generic local official with better formatting
         return '$formattedLevel, ${representative.district ?? representative.state}';
       }
     } 

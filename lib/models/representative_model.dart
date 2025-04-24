@@ -1,6 +1,7 @@
-// lib/models/representative_model.dart - Enhanced Representative model
+// lib/models/representative_model.dart
 
 import 'package:govvy/models/local_representative_model.dart';
+import 'package:govvy/utils/district_type_formatter.dart';
 
 class Representative {
   final String name;
@@ -12,9 +13,10 @@ class Representative {
   final String? imageUrl;
   final String? office;
   final String? phone;
-  final String? email;       // Added email field
+  final String? email;
   final String? website;
-  final List<String>? socialMedia; // Added social media field
+  final List<String>? socialMedia;
+  final String? displayTitle;
 
   Representative({
     required this.name,
@@ -26,9 +28,10 @@ class Representative {
     this.imageUrl,
     this.office,
     this.phone,
-    this.email,          // Added to constructor
+    this.email,
     this.website,
-    this.socialMedia,    // Added to constructor
+    this.socialMedia,
+    this.displayTitle,
   });
 
   // Convert to map for storage
@@ -42,10 +45,11 @@ class Representative {
       'district': district,
       'office': office,
       'phone': phone,
-      'email': email,             // Added to map
+      'email': email,
       'website': website,
       'imageUrl': imageUrl,
-      'socialMedia': socialMedia, // Added to map
+      'socialMedia': socialMedia,
+      'displayTitle': displayTitle,
     };
   }
 
@@ -60,12 +64,13 @@ class Representative {
       district: map['district'],
       office: map['office'],
       phone: map['phone'],
-      email: map['email'],                     // Extract from map
+      email: map['email'],
       website: map['website'],
       imageUrl: map['imageUrl'],
-      socialMedia: map['socialMedia'] != null 
-          ? List<String>.from(map['socialMedia']) 
-          : null,                             // Extract from map
+      socialMedia: map['socialMedia'] != null
+          ? List<String>.from(map['socialMedia'])
+          : null,
+      displayTitle: map['displayTitle'],
     );
   }
 
@@ -80,16 +85,25 @@ class Representative {
       imageUrl: json['imageUrl']?.toString(),
       office: json['office']?.toString(),
       phone: json['phone']?.toString(),
-      email: json['email']?.toString(),        // Added to fromJson
+      email: json['email']?.toString(),
       website: json['website']?.toString(),
-      socialMedia: json['socialMedia'] is List 
-          ? List<String>.from(json['socialMedia']) 
-          : null,                              // Added to fromJson
+      socialMedia: json['socialMedia'] is List
+          ? List<String>.from(json['socialMedia'])
+          : null,
+      displayTitle: json['displayTitle']?.toString(),
     );
+  }
+
+  // Get formatted display title
+  String getDisplayTitle() {
+    if (displayTitle != null && displayTitle!.isNotEmpty) {
+      return displayTitle!;
+    }
+    return DistrictTypeFormatter.formatRoleWithLocation(
+        chamber, office, state, district);
   }
 }
 
-// Similarly update the RepresentativeDetails class to include email and social media
 class RepresentativeDetails {
   final String bioGuideId;
   final String name;
@@ -101,12 +115,13 @@ class RepresentativeDetails {
   final String? gender;
   final String? office;
   final String? phone;
-  final String? email;              // Added email field
+  final String? email;
   final String? website;
   final String? imageUrl;
-  final List<String>? socialMedia;  // Added social media field
+  final List<String>? socialMedia;
   final List<RepresentativeBill> sponsoredBills;
   final List<RepresentativeBill> cosponsoredBills;
+  final String? displayTitle;
 
   RepresentativeDetails({
     required this.bioGuideId,
@@ -119,12 +134,13 @@ class RepresentativeDetails {
     this.gender,
     this.office,
     this.phone,
-    this.email,               // Added to constructor
+    this.email,
     this.website,
     this.imageUrl,
-    this.socialMedia,         // Added to constructor
+    this.socialMedia,
     required this.sponsoredBills,
     required this.cosponsoredBills,
+    this.displayTitle,
   });
 
   factory RepresentativeDetails.fromMap({
@@ -134,10 +150,10 @@ class RepresentativeDetails {
   }) {
     // Extract current term information from terms list or map
     Map<String, dynamic> termMap = {};
-    
+
     if (details.containsKey('terms')) {
       final terms = details['terms'];
-      
+
       if (terms is List && terms.isNotEmpty) {
         // Get the most recent term (usually first in the list)
         termMap = Map<String, dynamic>.from(terms[0] as Map);
@@ -150,114 +166,144 @@ class RepresentativeDetails {
         }
       }
     }
-    
+
     // Extract address information if available
     String? office;
     String? phone;
-    String? email;      // Added email variable
-    List<String> socialMediaLinks = [];  // Added for social media
-    
-    if (details.containsKey('addressInformation') && details['addressInformation'] is Map) {
-      final addressInfo = Map<String, dynamic>.from(details['addressInformation'] as Map);
+    String? email;
+    List<String> socialMediaLinks = [];
+
+    if (details.containsKey('addressInformation') &&
+        details['addressInformation'] is Map) {
+      final addressInfo =
+          Map<String, dynamic>.from(details['addressInformation'] as Map);
       office = addressInfo['officeAddress']?.toString();
       phone = addressInfo['phoneNumber']?.toString();
-      
+
       // Extract email if available
       if (addressInfo.containsKey('email')) {
         email = addressInfo['email']?.toString();
       }
     }
-    
+
     // Try to extract email from other sources
     if (email == null && details.containsKey('email')) {
       email = details['email']?.toString();
     }
-    
+
     if (email == null && details.containsKey('contactForm')) {
       email = details['contactForm']?.toString();
     }
-    
+
     // Look for emails in "contactInformation" if available
-    if (email == null && details.containsKey('contactInformation') && details['contactInformation'] is Map) {
-      final contactInfo = Map<String, dynamic>.from(details['contactInformation'] as Map);
+    if (email == null &&
+        details.containsKey('contactInformation') &&
+        details['contactInformation'] is Map) {
+      final contactInfo =
+          Map<String, dynamic>.from(details['contactInformation'] as Map);
       if (contactInfo.containsKey('email')) {
         email = contactInfo['email']?.toString();
       }
     }
-    
+
     // Extract social media info if available
     if (details.containsKey('socialMedia') && details['socialMedia'] is List) {
       final socialMediaList = details['socialMedia'] as List;
       for (var media in socialMediaList) {
         if (media is Map) {
           final mediaInfo = Map<String, dynamic>.from(media);
-          if (mediaInfo.containsKey('type') && mediaInfo.containsKey('account')) {
-            socialMediaLinks.add('${mediaInfo['type']}: ${mediaInfo['account']}');
+          if (mediaInfo.containsKey('type') &&
+              mediaInfo.containsKey('account')) {
+            socialMediaLinks
+                .add('${mediaInfo['type']}: ${mediaInfo['account']}');
           }
         }
       }
     }
-    
+
     // Use term data for contact info if not found in address info
     if (office == null && termMap.containsKey('office')) {
       office = termMap['office']?.toString();
     }
-    
+
     if (phone == null && termMap.containsKey('phone')) {
       phone = termMap['phone']?.toString();
     }
-    
+
     if (email == null && termMap.containsKey('email')) {
       email = termMap['email']?.toString();
     }
-    
+
     if (email == null && termMap.containsKey('contact_form')) {
       email = termMap['contact_form']?.toString();
     }
-    
+
     // Get website either from term or from official website URL
     String? website = termMap['website']?.toString();
     if (website == null && details.containsKey('officialWebsiteUrl')) {
       website = details['officialWebsiteUrl']?.toString();
     }
-    
+
     // Handle image URL
     String? imageUrl;
     if (details.containsKey('depiction') && details['depiction'] is Map) {
       final depiction = Map<String, dynamic>.from(details['depiction'] as Map);
       imageUrl = depiction['imageUrl']?.toString();
     }
-    
+
     // If no image URL but we have bioGuideId, construct a standard one
     if (imageUrl == null && details.containsKey('bioGuideId')) {
       final bioId = details['bioGuideId']?.toString();
       if (bioId != null && bioId.isNotEmpty) {
-        imageUrl = 'https://bioguide.congress.gov/bioguide/photo/${bioId[0]}/$bioId.jpg';
+        imageUrl =
+            'https://bioguide.congress.gov/bioguide/photo/${bioId[0]}/$bioId.jpg';
       }
+    }
+
+    // Get chamber info
+    String chamber = termMap['chamber']?.toString() ?? '';
+
+    // Get state and district info
+    String state = termMap['state']?.toString() ??
+        termMap['stateCode']?.toString() ??
+        details['state']?.toString() ??
+        '';
+    String? district = termMap['district']?.toString();
+
+    // Create display title
+    String? displayTitle;
+    if (office != null && office.isNotEmpty) {
+      displayTitle =
+          '$office, $state${district != null ? ' District $district' : ''}';
+    } else {
+      displayTitle = DistrictTypeFormatter.formatRoleWithLocation(
+          chamber, office, state, district);
     }
 
     // Convert all values to strings to handle both int and string types from API
     return RepresentativeDetails(
       bioGuideId: details['bioGuideId']?.toString() ?? '',
-      name: details['name']?.toString() ?? 
-            details['invertedOrderName']?.toString() ?? 
-            details['directOrderName']?.toString() ?? '',
-      party: termMap['party']?.toString() ?? 
-             termMap['partyName']?.toString() ?? 
-             details['partyName']?.toString() ?? '',
-      state: termMap['state']?.toString() ?? 
-             termMap['stateCode']?.toString() ?? 
-             details['state']?.toString() ?? '',
-      district: termMap['district']?.toString(), // Convert int to string
-      chamber: termMap['chamber']?.toString() ?? '',
-      dateOfBirth: details['birthYear']?.toString() ?? details['birthDate']?.toString(),
+      name: details['name']?.toString() ??
+          details['invertedOrderName']?.toString() ??
+          details['directOrderName']?.toString() ??
+          '',
+      party: termMap['party']?.toString() ??
+          termMap['partyName']?.toString() ??
+          details['partyName']?.toString() ??
+          '',
+      state: state,
+      district: district,
+      chamber: chamber,
+      dateOfBirth:
+          details['birthYear']?.toString() ?? details['birthDate']?.toString(),
       gender: details['gender']?.toString(),
       office: office,
       phone: phone,
-      email: email,                                // Added email field
+      email: email,
       website: website,
       imageUrl: imageUrl,
-      socialMedia: socialMediaLinks.isEmpty ? null : socialMediaLinks, // Added social media
+      socialMedia: socialMediaLinks.isEmpty ? null : socialMediaLinks,
+      displayTitle: displayTitle,
       sponsoredBills: sponsoredBills
           .map((bill) => RepresentativeBill.fromMap(
               bill is Map ? Map<String, dynamic>.from(bill) : {}))
@@ -268,9 +314,18 @@ class RepresentativeDetails {
           .toList(),
     );
   }
+
+  // Get formatted display title
+  String getDisplayTitle() {
+    if (displayTitle != null && displayTitle!.isNotEmpty) {
+      return displayTitle!;
+    }
+    return DistrictTypeFormatter.formatRoleWithLocation(
+        chamber, office, state, district);
+  }
 }
 
-// Make sure LocalRepresentative.toRepresentative() method properly handles the new fields
+// Extension for LocalRepresentative to convert to Representative
 extension LocalRepToRepresentative on LocalRepresentative {
   Representative toRepresentative() {
     return Representative(
@@ -282,13 +337,15 @@ extension LocalRepToRepresentative on LocalRepresentative {
       district: district,
       office: office,
       phone: phone,
-      email: email,  // Pass email to Representative
+      email: email,
       website: website,
       imageUrl: imageUrl,
-      socialMedia: socialMedia, // Pass social media data
+      socialMedia: socialMedia,
+      displayTitle: DistrictTypeFormatter.formatRoleWithLocation(
+          level, office, state, district),
     );
   }
-}// Add this class definition to lib/models/representative_model.dart
+}
 
 /// Represents a bill sponsored or co-sponsored by a representative
 class RepresentativeBill {
@@ -314,7 +371,8 @@ class RepresentativeBill {
     if (map.containsKey('latestAction') && map['latestAction'] is Map) {
       final actionMap = Map<String, dynamic>.from(map['latestAction'] as Map);
       latestActionText = actionMap['text']?.toString();
-    } else if (map.containsKey('latestAction') && map['latestAction'] is String) {
+    } else if (map.containsKey('latestAction') &&
+        map['latestAction'] is String) {
       latestActionText = map['latestAction'] as String;
     }
 
