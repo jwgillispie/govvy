@@ -28,33 +28,39 @@ class NetworkService {
     _loggingEnabled = enabled;
   }
 
-// In your NetworkService class
-  Future<bool> checkConnectivity() async {
-    try {
-      if (kIsWeb) {
-        // For web platforms, use your own app domain to avoid CORS issues
-        try {
-          final response = await http
-              .get(Uri.parse('https://govvy--dev.web.app/favicon.ico'))
-              .timeout(const Duration(seconds: 5));
-          return response.statusCode == 200;
-        } catch (e) {
-          if (kDebugMode) {
-            print('Network connectivity check failed: $e');
-          }
-          return false;
-        }
-      } else {
-        // For mobile platforms
+Future<bool> checkConnectivity() async {
+  try {
+    if (kIsWeb) {
+      // Check if we're in local development
+      final currentUrl = Uri.base.toString();
+      final isLocalDevelopment = currentUrl.contains('localhost') || 
+                                currentUrl.contains('127.0.0.1');
+      
+      if (isLocalDevelopment) {
+        // For local development, just assume we're connected
+        // or use a public domain that doesn't have CORS restrictions
         final response = await http
-            .get(Uri.parse('https://www.google.com'))
+            .get(Uri.parse('https://www.google.com/favicon.ico'))
+            .timeout(const Duration(seconds: 5));
+        return response.statusCode == 200;
+      } else {
+        // For production, use your app domain
+        final response = await http
+            .get(Uri.parse('https://govvy--dev.web.app/favicon.ico'))
             .timeout(const Duration(seconds: 5));
         return response.statusCode == 200;
       }
-    } catch (e) {
-      return false;
+    } else {
+      // For mobile platforms
+      final response = await http
+          .get(Uri.parse('https://www.google.com'))
+          .timeout(const Duration(seconds: 5));
+      return response.statusCode == 200;
     }
+  } catch (e) {
+    return false;
   }
+}
 
   // Generic GET request with tracing
   Future<http.Response> get(
