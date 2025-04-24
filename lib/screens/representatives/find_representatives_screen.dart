@@ -639,12 +639,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                 ],
               ),
             ),
-      // Floating action button to scroll back to top
-      floatingActionButton: FloatingActionButton(
-        onPressed: _scrollToTop,
-        child: const Icon(Icons.arrow_upward),
-        tooltip: 'Back to top',
-      ),
+      // Floating action button removed as per request
     );
   }
 

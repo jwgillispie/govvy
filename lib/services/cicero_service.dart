@@ -738,17 +738,32 @@ class CiceroService {
     String middleInitial = official['middle_initial']?.toString() ?? '';
     String preferredName = official['preferred_name']?.toString() ?? '';
     String nameSuffix = official['name_suffix']?.toString() ?? '';
+    String salutation = official['salutation']?.toString() ?? '';
 
     // Use preferred name if available, otherwise use first name
     String displayFirstName =
         preferredName.isNotEmpty ? preferredName : firstName;
 
-    // Build full name with middle initial and suffix if available
-    String fullName = displayFirstName;
+    // Build full name with salutation, middle initial and suffix if available
+    String fullName = '';
+
+    // Add salutation if it exists
+    if (salutation.isNotEmpty) {
+      fullName += '$salutation ';
+    }
+
+    // Add first/preferred name
+    fullName += displayFirstName;
+
+    // Add middle initial if available
     if (middleInitial.isNotEmpty) {
       fullName += ' $middleInitial';
     }
+
+    // Add last name
     fullName += ' $lastName';
+
+    // Add suffix if available
     if (nameSuffix.isNotEmpty) {
       fullName += ', $nameSuffix';
     }
@@ -766,10 +781,7 @@ class CiceroService {
       final officeInfo = Map<String, dynamic>.from(official['office'] as Map);
 
       // Extract role/position/title
-      if (officeInfo.containsKey('role')) {
-        officeName = officeInfo['role']?.toString() ?? '';
-      } else if (officeInfo.containsKey('title')) {
-        // According to API docs, a primary title may be in 'title' field
+      if (officeInfo.containsKey('title')) {
         officeName = officeInfo['title']?.toString() ?? '';
       }
 
@@ -781,18 +793,13 @@ class CiceroService {
         // Get district type - this is the chamber/level like COUNTY, CITY, etc.
         if (districtInfo.containsKey('district_type')) {
           level = districtInfo['district_type']?.toString() ?? 'Local';
-        } else if (districtInfo.containsKey('district_type__name_short')) {
-          // Alternative field that might be present
-          level =
-              districtInfo['district_type__name_short']?.toString() ?? 'Local';
         }
 
         // Get district name - this is the specific district like "Alachua County", "Gainesville", etc.
-        if (districtInfo.containsKey('name')) {
-          district = districtInfo['name']?.toString() ?? '';
-        } else if (districtInfo.containsKey('label')) {
-          // Alternative field that might be present
+        if (districtInfo.containsKey('label')) {
           district = districtInfo['label']?.toString() ?? '';
+        } else if (districtInfo.containsKey('name')) {
+          district = districtInfo['name']?.toString() ?? '';
         }
 
         // Get state
@@ -801,9 +808,17 @@ class CiceroService {
         }
       }
 
-      // Check for formal chamber name as alternative to district type
-      if (level == 'Local' && officeInfo.containsKey('chamber__name_formal')) {
-        level = officeInfo['chamber__name_formal']?.toString() ?? level;
+      // Check for chamber name if level not set
+      if (level == 'Local' &&
+          officeInfo.containsKey('chamber') &&
+          officeInfo['chamber'] is Map) {
+        final chamberInfo =
+            Map<String, dynamic>.from(officeInfo['chamber'] as Map);
+        if (chamberInfo.containsKey('name_formal')) {
+          level = chamberInfo['name_formal']?.toString() ?? level;
+        } else if (chamberInfo.containsKey('name')) {
+          level = chamberInfo['name']?.toString() ?? level;
+        }
       }
     }
 
@@ -816,62 +831,66 @@ class CiceroService {
     String? phone;
     String? email;
     String? website;
-    List<String>? socialMedia;
+    List<String> socialMedia = [];
 
-    // 1. Process addresses array
+    // 1. Process addresses array for physical address and phone
     if (official.containsKey('addresses') && official['addresses'] is List) {
       final addresses = official['addresses'] as List;
-      for (var addressObj in addresses) {
-        if (addressObj is Map) {
-          final address = Map<String, dynamic>.from(addressObj);
 
-          // Get the first phone number we find
-          if (phone == null && address.containsKey('phone')) {
-            phone = address['phone']?.toString();
-          }
+      if (addresses.isNotEmpty) {
+        // Use the first address - this is typically the main office
+        final address = Map<String, dynamic>.from(addresses[0]);
 
-          // Try to get an email if available
-          if (email == null && address.containsKey('email')) {
-            email = address['email']?.toString();
-          }
+        // Get phone number (primary or secondary)
+        if (address.containsKey('phone_1') &&
+            address['phone_1'] != null &&
+            address['phone_1'].toString().isNotEmpty) {
+          phone = address['phone_1']?.toString();
+        } else if (address.containsKey('phone_2') &&
+            address['phone_2'] != null &&
+            address['phone_2'].toString().isNotEmpty) {
+          phone = address['phone_2']?.toString();
         }
       }
     }
 
-    // 2. Check direct phone fields
-    if (phone == null) {
-      if (official.containsKey('phone_1')) {
+    // 2. Check direct phone fields if still not found
+    if (phone == null || phone.isEmpty) {
+      if (official.containsKey('phone_1') && official['phone_1'] != null) {
         phone = official['phone_1']?.toString();
-      } else if (official.containsKey('phone_2')) {
+      } else if (official.containsKey('phone_2') &&
+          official['phone_2'] != null) {
         phone = official['phone_2']?.toString();
       }
     }
 
-    // 3. Check all email addresses
+    // 3. Check email addresses array
     if (official.containsKey('email_addresses') &&
         official['email_addresses'] is List &&
         (official['email_addresses'] as List).isNotEmpty) {
+      // Use first email address
       email = (official['email_addresses'] as List)[0]?.toString();
     }
 
-    // 4. Check web form URL
-    if (website == null && official.containsKey('web_form_url')) {
-      website = official['web_form_url']?.toString();
+    // 4. Check web form URL if email is not available
+    if ((email == null || email.isEmpty) &&
+        official.containsKey('web_form_url') &&
+        official['web_form_url'].toString().isNotEmpty) {
+      // Store contact form as email - it will be handled differently in the UI
+      email = official['web_form_url']?.toString();
     }
 
-    // 5. Check URLs array
-    if (website == null &&
-        official.containsKey('urls') &&
+    // 5. Check website URLs array
+    if (official.containsKey('urls') &&
         official['urls'] is List &&
         (official['urls'] as List).isNotEmpty) {
       website = (official['urls'] as List)[0]?.toString();
     }
 
-    // Extract social media from identifiers
+    // 6. Process social media from identifiers
     if (official.containsKey('identifiers') &&
         official['identifiers'] is List) {
       final identifiers = official['identifiers'] as List;
-      socialMedia = [];
 
       for (var idObj in identifiers) {
         if (idObj is Map) {
@@ -880,39 +899,50 @@ class CiceroService {
           String value = '';
 
           // Handle different identifier field naming
-          if (identifier.containsKey('identifier_type') &&
-              identifier.containsKey('identifier')) {
+          if (identifier.containsKey('identifier_type')) {
             type = identifier['identifier_type']?.toString() ?? '';
-            value = identifier['identifier']?.toString() ?? '';
-          } else if (identifier.containsKey('identifier_value')) {
-            // Alternative format
-            type = identifier.containsKey('identifier_type')
-                ? identifier['identifier_type']?.toString() ?? ''
-                : '';
-            value = identifier['identifier_value']?.toString() ?? '';
-          }
 
-          // Only add social media identifiers
-          if (['twitter', 'facebook', 'instagram', 'youtube', 'linkedin']
-                  .contains(type.toLowerCase()) &&
-              value.isNotEmpty) {
-            socialMedia.add('$type: $value');
+            // Extract the value - could be in different fields
+            if (identifier.containsKey('identifier_value')) {
+              value = identifier['identifier_value']?.toString() ?? '';
+            } else if (identifier.containsKey('identifier')) {
+              value = identifier['identifier']?.toString() ?? '';
+            }
+
+            // Convert type to lowercase for consistency
+            type = type.toLowerCase();
+
+            // Only add social media or public identifiers
+            if (([
+                  'facebook',
+                  'facebook-official',
+                  'facebook-campaign',
+                  'twitter',
+                  'instagram',
+                  'linkedin',
+                  'youtube',
+                  'flickr'
+                ].contains(type)) &&
+                value.isNotEmpty) {
+              // If the value is a URL and not just a username, keep the full URL
+              if (value.startsWith('http')) {
+                socialMedia.add('$type: $value');
+              } else {
+                // For usernames, add the platform name
+                socialMedia.add('$type: $value');
+              }
+            }
           }
         }
-      }
-
-      // If no social media was found, set to null
-      if (socialMedia.isEmpty) {
-        socialMedia = null;
       }
     }
 
     // Extract image URL
     String? imageUrl;
-    if (official.containsKey('photo_origin_url')) {
+    if (official.containsKey('photo_origin_url') &&
+        official['photo_origin_url'] != null &&
+        official['photo_origin_url'].toString().isNotEmpty) {
       imageUrl = official['photo_origin_url']?.toString();
-    } else if (official.containsKey('photo_url')) {
-      imageUrl = official['photo_url']?.toString();
     }
 
     // Create a unique ID using either id or sk field
@@ -942,7 +972,7 @@ class CiceroService {
       email: email,
       website: website,
       imageUrl: imageUrl,
-      socialMedia: socialMedia,
+      socialMedia: socialMedia.isEmpty ? null : socialMedia,
     );
   }
 

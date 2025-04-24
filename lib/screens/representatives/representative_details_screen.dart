@@ -167,47 +167,51 @@ class _RepresentativeDetailsScreenState
                         textAlign: TextAlign.center,
                       ),
                     )
-                  : Column(
-                      children: [
-                        // Representative header section
-                        _buildRepresentativeHeader(rep),
+                  : SingleChildScrollView(  // Make entire page scrollable
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Representative header section
+                          _buildRepresentativeHeader(rep),
 
-                        // Contact information section
-                        _buildContactInfoSection(rep),
+                          // Contact information section
+                          _buildContactInfoSection(rep),
 
-                        // Tab bar
-                        TabBar(
-                          controller: _tabController,
-                          tabs: const [
-                            Tab(text: 'Profile'),
-                            Tab(text: 'Role Info'),
-                            Tab(text: 'Sponsored'),
-                            Tab(text: 'Co-Sponsored'),
-                          ],
-                          labelColor: Theme.of(context).colorScheme.primary,
-                          unselectedLabelColor: Colors.grey,
-                          indicatorColor: Theme.of(context).colorScheme.primary,
-                        ),
-
-                        // Tab content
-                        Expanded(
-                          child: TabBarView(
+                          // Tab bar
+                          TabBar(
                             controller: _tabController,
-                            children: [
-                              _buildProfileTab(rep),
-                              RoleInfoWidget(
-                                role: rep.chamber,
-                                officeName: rep.office ?? '',
-                                district: rep.district,
-                              ),
-                              _buildBillsTab(rep.sponsoredBills,
-                                  'No sponsored bills found'),
-                              _buildBillsTab(rep.cosponsoredBills,
-                                  'No co-sponsored bills found'),
+                            tabs: const [
+                              Tab(text: 'Profile'),
+                              Tab(text: 'Role Info'),
+                              Tab(text: 'Sponsored'),
+                              Tab(text: 'Co-Sponsored'),
                             ],
+                            labelColor: Theme.of(context).colorScheme.primary,
+                            unselectedLabelColor: Colors.grey,
+                            indicatorColor: Theme.of(context).colorScheme.primary,
                           ),
-                        ),
-                      ],
+
+                          // Tab content with fixed height to ensure it's visible
+                          SizedBox(
+                            height: 600, // Fixed height for the tab content
+                            child: TabBarView(
+                              controller: _tabController,
+                              children: [
+                                _buildProfileTab(rep),
+                                RoleInfoWidget(
+                                  role: rep.chamber,
+                                  officeName: rep.office ?? '',
+                                  district: rep.district,
+                                ),
+                                _buildBillsTab(rep.sponsoredBills,
+                                    'No sponsored bills found'),
+                                _buildBillsTab(rep.cosponsoredBills,
+                                    'No co-sponsored bills found'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
         );
       },
@@ -330,231 +334,387 @@ class _RepresentativeDetailsScreenState
         rep.chamber, null, rep.state, rep.district);
   }
 
-  // Widget for contact information with improved layout
   Widget _buildContactInfoSection(RepresentativeDetails rep) {
     // Check if we have direct contact info
-    final bool hasDirectContact = rep.phone != null || rep.email != null;
+    final bool hasDirectContact = rep.phone != null || rep.email != null || rep.website != null;
+    final bool hasSocialMedia = rep.socialMedia != null && rep.socialMedia!.isNotEmpty;
+    
+    // State variables for the expansion panels
+    final ValueNotifier<bool> contactExpanded = ValueNotifier<bool>(true);
+    final ValueNotifier<bool> socialExpanded = ValueNotifier<bool>(true);
 
     return Container(
       padding: const EdgeInsets.all(16),
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,  // Use min to prevent expansion
         children: [
-          Text(
-            'Contact Information',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          const SizedBox(height: 12),
-
-          // If we have direct contact info, show it
-          if (hasDirectContact)
-            Column(
-              children: [
-                if (rep.phone != null)
-                  _buildContactItem(
-                    icon: Icons.phone,
-                    title: 'Phone',
-                    value: rep.phone!,
-                    onTap: () => _makePhoneCall(rep.phone),
-                    onLongPress: () =>
-                        _copyToClipboard(rep.phone!, 'Phone number'),
-                  ),
-                if (rep.email != null)
-                  _buildContactItem(
-                    icon: Icons.email,
-                    title: 'Email',
-                    value: rep.email!,
-                    onTap: () => _sendEmail(rep.email),
-                    onLongPress: () =>
-                        _copyToClipboard(rep.email!, 'Email address'),
-                  ),
-                if (rep.office != null)
-                  _buildContactItem(
-                    icon: Icons.location_on,
-                    title: 'Office',
-                    value: rep.office!,
-                    onTap: null,
-                    onLongPress: () =>
-                        _copyToClipboard(rep.office!, 'Office address'),
-                  ),
-                if (rep.website != null)
-                  _buildContactItem(
-                    icon: Icons.language,
-                    title: 'Website',
-                    value: rep.website!,
-                    onTap: () => _launchUrl(rep.website),
-                    onLongPress: () =>
-                        _copyToClipboard(rep.website!, 'Website URL'),
-                  ),
-              ],
-            )
-          else if (rep.website != null)
-            // If we only have website, show a message and website button
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.amber.shade50,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.amber.shade200),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(Icons.info_outline,
-                          color: Colors.amber.shade800, size: 20),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: Text(
-                          'Direct contact information not available. Please visit the representative\'s website for contact details.',
-                          style: TextStyle(color: Colors.amber.shade900),
+          // Direct contact information section
+          Card(
+            margin: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: ValueListenableBuilder<bool>(
+              valueListenable: contactExpanded,
+              builder: (context, isExpanded, child) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,  // Use min to prevent expansion
+                  children: [
+                    // Header with expansion toggle
+                    InkWell(
+                      onTap: () {
+                        contactExpanded.value = !isExpanded;
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.contact_phone,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Contact Information',
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                            const Spacer(),
+                            Icon(
+                              isExpanded ? Icons.expand_less : Icons.expand_more,
+                              color: Colors.grey,
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 12),
-                _buildContactItem(
-                  icon: Icons.language,
-                  title: 'Website',
-                  value: rep.website!,
-                  onTap: () => _launchUrl(rep.website),
-                  onLongPress: () =>
-                      _copyToClipboard(rep.website!, 'Website URL'),
-                ),
-              ],
-            )
-          else
-            // No contact info available
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.red.shade50,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.red.shade200),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.error_outline,
-                      color: Colors.red.shade800, size: 20),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'No contact information available for this representative.',
-                      style: TextStyle(color: Colors.red.shade900),
                     ),
-                  ),
-                ],
-              ),
-            ),
-
-          // If there's social media, show it
-          if (rep.socialMedia != null && rep.socialMedia!.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            Text(
-              'Social Media',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: rep.socialMedia!.map((socialAccount) {
-                IconData icon;
-                Color color;
-
-                // Parse platform from social media string
-                final parts = socialAccount.split(':');
-                if (parts.length < 2) return const SizedBox.shrink();
-
-                final platform = parts[0].trim().toLowerCase();
-
-                // Determine icon and color based on platform
-                switch (platform) {
-                  case 'twitter':
-                    icon = Icons.flutter_dash; // Use as Twitter icon
-                    color = Colors.blue;
-                    break;
-                  case 'facebook':
-                    icon = Icons.facebook;
-                    color = Colors.indigo;
-                    break;
-                  case 'instagram':
-                    icon = Icons.camera_alt;
-                    color = Colors.pink;
-                    break;
-                  case 'youtube':
-                    icon = Icons.play_circle_fill;
-                    color = Colors.red;
-                    break;
-                  case 'linkedin':
-                    icon = Icons.work;
-                    color = Colors.blue.shade800;
-                    break;
-                  default:
-                    icon = Icons.link;
-                    color = Colors.grey;
-                }
-
-                return InkWell(
-                  onTap: () {
-                    // Try to build a social media URL (simplified)
-                    String url = '';
-                    final username = parts.sublist(1).join(':').trim();
-
-                    switch (platform) {
-                      case 'twitter':
-                        url = 'https://twitter.com/$username';
-                        break;
-                      case 'facebook':
-                        url = 'https://facebook.com/$username';
-                        break;
-                      case 'instagram':
-                        url = 'https://instagram.com/$username';
-                        break;
-                      case 'youtube':
-                        if (username.startsWith('@')) {
-                          url = 'https://youtube.com/${username.substring(1)}';
-                        } else {
-                          url = 'https://youtube.com/$username';
-                        }
-                        break;
-                      case 'linkedin':
-                        url = 'https://linkedin.com/in/$username';
-                        break;
-                      default:
-                        url = '';
-                    }
-
-                    if (url.isNotEmpty) {
-                      _launchUrl(url);
-                    }
-                  },
-                  child: Chip(
-                    avatar: Icon(icon, color: color, size: 16),
-                    label: Text(
-                      platform.capitalize(),
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                    backgroundColor: Colors.grey.shade100,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-                    visualDensity: VisualDensity.compact,
-                  ),
+                    
+                    // Expandable content
+                    if (isExpanded)  // Use conditional rendering instead of AnimatedCrossFade
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 16.0, right: 16.0, bottom: 16.0,
+                        ),
+                        child: _buildContactContent(rep, hasDirectContact),
+                      ),
+                  ],
                 );
-              }).toList(),
+              },
+            ),
+          ),
+          
+          // Only show social media section if there's social media
+          if (hasSocialMedia) ...[
+            const SizedBox(height: 16),
+            Card(
+              margin: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: ValueListenableBuilder<bool>(
+                valueListenable: socialExpanded,
+                builder: (context, isExpanded, child) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,  // Use min to prevent expansion
+                    children: [
+                      // Social media header with expansion toggle
+                      InkWell(
+                        onTap: () {
+                          socialExpanded.value = !isExpanded;
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.share,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Social Media',
+                                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              const Spacer(),
+                              Text(
+                                '${rep.socialMedia?.length ?? 0} accounts',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Icon(
+                                isExpanded ? Icons.expand_less : Icons.expand_more,
+                                color: Colors.grey,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      
+                      // Expandable social media content
+                      if (isExpanded)  // Use conditional rendering instead of AnimatedCrossFade
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 16.0, right: 16.0, bottom: 16.0,
+                          ),
+                          child: _buildSocialMediaContent(rep),
+                        ),
+                    ],
+                  );
+                },
+              ),
             ),
           ],
         ],
       ),
+    );
+  }
+
+  // Helper method to build the contact information content
+  Widget _buildContactContent(RepresentativeDetails rep, bool hasDirectContact) {
+    if (!hasDirectContact) {
+      // No contact info available
+      return Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.red.shade50,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.red.shade200),
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.error_outline, color: Colors.red.shade800, size: 20),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                'No direct contact information available for this representative.',
+                style: TextStyle(color: Colors.red.shade900),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (rep.phone != null)
+          _buildContactItem(
+            icon: Icons.phone,
+            title: 'Phone',
+            value: rep.phone!,
+            onTap: () => _makePhoneCall(rep.phone),
+            onLongPress: () => _copyToClipboard(rep.phone!, 'Phone number'),
+          ),
+          
+        if (rep.email != null) 
+          _buildContactItem(
+            // If the email is actually a web form, use a different icon
+            icon: rep.email!.startsWith('http') ? Icons.web : Icons.email,
+            title: rep.email!.startsWith('http') ? 'Contact Form' : 'Email',
+            value: rep.email!,
+            onTap: () => _sendEmail(rep.email),
+            onLongPress: () => _copyToClipboard(rep.email!, 
+              rep.email!.startsWith('http') ? 'Contact form URL' : 'Email address'),
+          ),
+          
+        if (rep.office != null)
+          _buildContactItem(
+            icon: Icons.location_on,
+            title: 'Office',
+            value: rep.office!,
+            onTap: null,
+            onLongPress: () => _copyToClipboard(rep.office!, 'Office address'),
+          ),
+          
+        if (rep.website != null)
+          _buildContactItem(
+            icon: Icons.language,
+            title: 'Website',
+            value: rep.website!,
+            onTap: () => _launchUrl(rep.website),
+            onLongPress: () => _copyToClipboard(rep.website!, 'Website URL'),
+          ),
+      ],
+    );
+  }
+
+  // Helper method to build the social media content
+  Widget _buildSocialMediaContent(RepresentativeDetails rep) {
+    if (rep.socialMedia == null || rep.socialMedia!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    
+    // Group social media by platform
+    final Map<String, List<String>> groupedSocial = {};
+    
+    for (var account in rep.socialMedia!) {
+      final parts = account.split(':');
+      if (parts.length < 2) continue;
+      
+      String platform = parts[0].trim().toLowerCase();
+      String accountInfo = parts.sublist(1).join(':').trim();
+      
+      // Normalize platform names
+      if (platform.startsWith('facebook')) {
+        platform = 'facebook';
+      }
+      
+      // Add to appropriate group
+      if (!groupedSocial.containsKey(platform)) {
+        groupedSocial[platform] = [];
+      }
+      groupedSocial[platform]!.add(accountInfo);
+    }
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,  // Use min to prevent expansion
+      children: groupedSocial.entries.map((entry) {
+        final platform = entry.key;
+        final accounts = entry.value;
+        
+        IconData icon;
+        Color color;
+        
+        // Determine icon and color based on platform
+        switch (platform) {
+          case 'twitter':
+            icon = Icons.flutter_dash; // Use as Twitter icon
+            color = Colors.blue;
+            break;
+          case 'facebook':
+            icon = Icons.facebook;
+            color = Colors.indigo;
+            break;
+          case 'instagram':
+            icon = Icons.camera_alt;
+            color = Colors.pink;
+            break;
+          case 'youtube':
+            icon = Icons.play_circle_fill;
+            color = Colors.red;
+            break;
+          case 'linkedin':
+            icon = Icons.work;
+            color = Colors.blue.shade800;
+            break;
+          case 'flickr':
+            icon = Icons.photo_camera;
+            color = Colors.purple;
+            break;
+          default:
+            icon = Icons.link;
+            color = Colors.grey;
+        }
+        
+        // Format platform name for display
+        String displayPlatform = platform.split('-')[0];
+        displayPlatform = displayPlatform.capitalize();
+        
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,  // Use min to prevent expansion
+            children: [
+              Row(
+                children: [
+                  Icon(icon, size: 18, color: color),
+                  const SizedBox(width: 8),
+                  Text(
+                    displayPlatform,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: color,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              ...accounts.map((account) {
+                // Build URL based on platform and account
+                String? url;
+                
+                if (account.startsWith('http')) {
+                  // Already a URL
+                  url = account;
+                } else {
+                  // Try to build URL
+                  switch (platform) {
+                    case 'twitter':
+                      url = 'https://twitter.com/$account';
+                      break;
+                    case 'facebook':
+                      url = 'https://facebook.com/$account';
+                      break;
+                    case 'instagram':
+                      url = 'https://instagram.com/$account';
+                      break;
+                    case 'youtube':
+                      if (account.startsWith('@')) {
+                        url = 'https://youtube.com/${account.substring(1)}';
+                      } else {
+                        url = 'https://youtube.com/$account';
+                      }
+                      break;
+                    case 'linkedin':
+                      if (account.contains('linkedin.com')) {
+                        url = account;
+                      } else {
+                        url = 'https://linkedin.com/in/$account';
+                      }
+                      break;
+                    case 'flickr':
+                      url = 'https://flickr.com/photos/$account';
+                      break;
+                  }
+                }
+                
+                // Create tappable list item for each account
+                return InkWell(
+                  onTap: url != null ? () => _launchUrl(url!) : null,
+                  borderRadius: BorderRadius.circular(4),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 26), // Indent for alignment
+                        Expanded(
+                          child: Text(
+                            account,
+                            style: TextStyle(
+                              color: url != null ? Theme.of(context).colorScheme.primary : Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        if (url != null)
+                          Icon(
+                            Icons.open_in_new,
+                            size: 16,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -781,7 +941,6 @@ class _RepresentativeDetailsScreenState
     );
   }
 
-// In representative_details_screen.dart
   String _getPositionTitle(RepresentativeDetails rep) {
     // Don't use office field as it contains the physical address
     // Instead, determine position from chamber information
