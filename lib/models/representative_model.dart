@@ -113,7 +113,7 @@ class RepresentativeDetails {
   final String chamber;
   final String? dateOfBirth;
   final String? gender;
-  final String? office;
+  final String? office; // Physical office address
   final String? phone;
   final String? email;
   final String? website;
@@ -122,6 +122,7 @@ class RepresentativeDetails {
   final List<RepresentativeBill> sponsoredBills;
   final List<RepresentativeBill> cosponsoredBills;
   final String? displayTitle;
+  final String? role; // Actual role/position title
 
   RepresentativeDetails({
     required this.bioGuideId,
@@ -141,9 +142,8 @@ class RepresentativeDetails {
     required this.sponsoredBills,
     required this.cosponsoredBills,
     this.displayTitle,
+    this.role,
   });
-
-// lib/models/representative_model.dart - RepresentativeDetails.fromMap method
 
   factory RepresentativeDetails.fromMap({
     required Map<String, dynamic> details,
@@ -170,16 +170,17 @@ class RepresentativeDetails {
     }
 
     // Extract address information if available
-    String? office;
+    String? officeAddress;
     String? phone;
     String? email;
+    String? role; // Added separate field for actual role/position
     List<String> socialMediaLinks = [];
 
     if (details.containsKey('addressInformation') &&
         details['addressInformation'] is Map) {
       final addressInfo =
           Map<String, dynamic>.from(details['addressInformation'] as Map);
-      office = addressInfo['officeAddress']?.toString();
+      officeAddress = addressInfo['officeAddress']?.toString();
       phone = addressInfo['phoneNumber']?.toString();
 
       // Extract email if available
@@ -208,6 +209,13 @@ class RepresentativeDetails {
       }
     }
 
+    // Extract role information if available
+    if (termMap.containsKey('memberType')) {
+      role = termMap['memberType']?.toString();
+    } else if (details.containsKey('memberType')) {
+      role = details['memberType']?.toString();
+    }
+
     // Extract social media info if available
     if (details.containsKey('socialMedia') && details['socialMedia'] is List) {
       final socialMediaList = details['socialMedia'] as List;
@@ -223,11 +231,7 @@ class RepresentativeDetails {
       }
     }
 
-    // Use term data for contact info if not found in address info
-    if (office == null && termMap.containsKey('office')) {
-      office = termMap['office']?.toString();
-    }
-
+    // Phone and email (not address)
     if (phone == null && termMap.containsKey('phone')) {
       phone = termMap['phone']?.toString();
     }
@@ -275,13 +279,11 @@ class RepresentativeDetails {
       district = details['district']?.toString();
     }
 
-    // Extract party information - IMPROVED PARTY HANDLING
+    // Extract party information
     String party = '';
-
+    
     // First check partyHistory if available (most reliable source from Congress.gov API)
-    if (details.containsKey('partyHistory') &&
-        details['partyHistory'] is List &&
-        (details['partyHistory'] as List).isNotEmpty) {
+    if (details.containsKey('partyHistory') && details['partyHistory'] is List && (details['partyHistory'] as List).isNotEmpty) {
       final partyHistoryList = details['partyHistory'] as List;
       // Use the most recent party affiliation
       if (partyHistoryList.isNotEmpty) {
@@ -310,19 +312,19 @@ class RepresentativeDetails {
         }
       }
     }
-
+    
     // If still empty, try other potential sources
     if (party.isEmpty) {
       // Check term data
       if (termMap.containsKey('party')) {
         party = termMap['party']?.toString() ?? '';
       }
-
+      
       // Check direct fields
       if (party.isEmpty && details.containsKey('party')) {
         party = details['party']?.toString() ?? '';
       }
-
+      
       if (party.isEmpty && details.containsKey('partyName')) {
         party = details['partyName']?.toString() ?? '';
       }
@@ -335,14 +337,13 @@ class RepresentativeDetails {
       party = 'Democratic';
     }
 
-    // Create display title
+    // Don't use office in display title since it contains address
     String? displayTitle;
-    if (office != null && office.isNotEmpty) {
-      displayTitle =
-          '$office, $state${district != null ? ' District $district' : ''}';
+    if (role != null && role.isNotEmpty) {
+      displayTitle = '$role, $state${district != null ? ' District $district' : ''}';
     } else {
       displayTitle = DistrictTypeFormatter.formatRoleWithLocation(
-          chamber, office, state, district);
+          chamber, null, state, district);
     }
 
     // Convert all values to strings to handle both int and string types from API
@@ -359,13 +360,14 @@ class RepresentativeDetails {
       dateOfBirth:
           details['birthYear']?.toString() ?? details['birthDate']?.toString(),
       gender: details['gender']?.toString(),
-      office: office,
+      office: officeAddress, // Use office only for the physical address now
       phone: phone,
       email: email,
       website: website,
       imageUrl: imageUrl,
       socialMedia: socialMediaLinks.isEmpty ? null : socialMediaLinks,
       displayTitle: displayTitle,
+      role: role, // Add separate role field
       sponsoredBills: sponsoredBills
           .map((bill) => RepresentativeBill.fromMap(
               bill is Map ? Map<String, dynamic>.from(bill) : {}))
@@ -383,7 +385,7 @@ class RepresentativeDetails {
       return displayTitle!;
     }
     return DistrictTypeFormatter.formatRoleWithLocation(
-        chamber, office, state, district);
+        chamber, null, state, district);
   }
 }
 

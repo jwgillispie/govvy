@@ -302,16 +302,32 @@ class _RepresentativeDetailsScreenState
   }
 
   String _getFormattedRoleTitle(RepresentativeDetails rep) {
-    // Check if this is a specific role like Manny Diaz
-    if (rep.chamber.toUpperCase() == 'STATE_EXEC' &&
-        rep.office != null &&
-        rep.office!.isNotEmpty) {
-      return '${rep.office}, ${rep.state}';
+    // Use the role field if available
+    if (rep.role != null && rep.role!.isNotEmpty) {
+      return '${rep.role}, ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}';
     }
 
-    // For other cases, use the formatter
+    // Otherwise, determine position from chamber
+    final String chamberUpper = rep.chamber.toUpperCase();
+
+    if (chamberUpper == 'NATIONAL_UPPER' || chamberUpper == 'SENATE') {
+      return 'U.S. Senator, ${rep.state}';
+    } else if (chamberUpper == 'NATIONAL_LOWER' ||
+        chamberUpper == 'HOUSE' ||
+        chamberUpper == 'HOUSE OF REPRESENTATIVES') {
+      return 'U.S. Representative, ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}';
+    } else if (chamberUpper == 'STATE_UPPER') {
+      return 'State Senator, ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}';
+    } else if (chamberUpper == 'STATE_LOWER') {
+      return 'State Representative, ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}';
+    } else if (chamberUpper == 'STATE_EXEC') {
+      return 'State Executive Official, ${rep.state}';
+    }
+
+    // Don't use displayTitle or office at all - these may contain the address
+    // Instead, use the district type formatter but pass null for the office parameter
     return DistrictTypeFormatter.formatRoleWithLocation(
-        rep.chamber, rep.office, rep.state, rep.district);
+        rep.chamber, null, rep.state, rep.district);
   }
 
   // Widget for contact information with improved layout
@@ -661,7 +677,14 @@ class _RepresentativeDetailsScreenState
   Widget _buildAboutText(RepresentativeDetails rep) {
     // For state executive officials like Manny Diaz
     if (rep.chamber.toUpperCase() == 'STATE_EXEC' && rep.state == 'FL') {
-      // Specific content for Manny
+      // Specific content for Manny Diaz
+      if (rep.name.contains('Diaz')) {
+        return Text(
+          'Manny Diaz serves as the Commissioner of Education in Florida\'s executive branch. In this role, he oversees the state\'s public education system, including policies related to K-12 schools, vocational training, and higher education institutions across Florida.',
+          style: Theme.of(context).textTheme.bodyLarge,
+        );
+      }
+
       // Generic state executive
       return Text(
         '${rep.name} serves in the executive branch of ${rep.state} state government as ${rep.office ?? "a state official"}. Executive branch officials are responsible for implementing and enforcing state laws and overseeing state agencies and departments.',
@@ -722,12 +745,7 @@ class _RepresentativeDetailsScreenState
           '${rep.name} is a member of the ${formattedLevel} representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
     }
 
-    // Add office title if available and not already included
-    if (rep.office != null &&
-        rep.office!.isNotEmpty &&
-        !aboutText.contains(rep.office!)) {
-      aboutText += ' ${rep.name.split(' ')[0]} serves as ${rep.office}.';
-    }
+    // Don't add office information anymore - it's causing confusion with the address
 
     return Text(
       aboutText,
@@ -763,102 +781,33 @@ class _RepresentativeDetailsScreenState
     );
   }
 
+// In representative_details_screen.dart
   String _getPositionTitle(RepresentativeDetails rep) {
+    // Don't use office field as it contains the physical address
+    // Instead, determine position from chamber information
+
     final String chamberUpper = rep.chamber.toUpperCase();
 
-    // Based on chamber type, determine the position title
-    // House/Representatives
-    if (chamberUpper == 'NATIONAL_LOWER' || chamberUpper == 'HOUSE') {
-      return 'U.S. Representative';
-    }
-    // Senate
-    else if (chamberUpper == 'NATIONAL_UPPER' || chamberUpper == 'SENATE') {
+    if (chamberUpper == 'NATIONAL_UPPER' || chamberUpper == 'SENATE') {
       return 'U.S. Senator';
-    }
-    // State Legislature - Upper Chamber
-    else if (chamberUpper == 'STATE_UPPER') {
+    } else if (chamberUpper == 'NATIONAL_LOWER' ||
+        chamberUpper == 'HOUSE' ||
+        chamberUpper == 'HOUSE OF REPRESENTATIVES') {
+      return 'U.S. Representative';
+    } else if (chamberUpper == 'STATE_UPPER') {
       return 'State Senator';
-    }
-    // State Legislature - Lower Chamber
-    else if (chamberUpper == 'STATE_LOWER') {
+    } else if (chamberUpper == 'STATE_LOWER') {
       return 'State Representative';
-    }
-    // State Executive Officials
-    else if (chamberUpper == 'STATE_EXEC') {
-      // Only use office for state executives if it's clearly a title (e.g., "Commissioner of Education")
-      if (rep.office != null && rep.office!.isNotEmpty) {
-        final lowercaseOffice = rep.office!.toLowerCase();
-        if (lowercaseOffice.contains('secretary') ||
-            lowercaseOffice.contains('commissioner') ||
-            lowercaseOffice.contains('governor') ||
-            lowercaseOffice.contains('attorney general') ||
-            lowercaseOffice.contains('treasurer') ||
-            lowercaseOffice.contains('controller')) {
-          return rep.office!;
-        }
-      }
+    } else if (chamberUpper == 'STATE_EXEC') {
       return 'State Executive Official';
-    }
-    // Mayors
-    else if (chamberUpper == 'LOCAL_EXEC' || chamberUpper.contains('MAYOR')) {
+    } else if (chamberUpper == 'LOCAL_EXEC' || chamberUpper.contains('MAYOR')) {
       return 'Mayor';
-    }
-    // City Council
-    else if (chamberUpper == 'LOCAL' || chamberUpper.contains('CITY')) {
+    } else if (chamberUpper == 'LOCAL' || chamberUpper.contains('CITY')) {
       return 'City Council Member';
-    }
-    // County Officials
-    else if (chamberUpper.contains('COUNTY')) {
+    } else if (chamberUpper.contains('COUNTY')) {
       return 'County Commissioner';
-    }
-    // School Board
-    else if (chamberUpper.contains('SCHOOL')) {
+    } else if (chamberUpper.contains('SCHOOL')) {
       return 'School Board Member';
-    }
-
-    // Only use office field if it's likely a role title and not an address/building
-    if (rep.office != null && rep.office!.isNotEmpty) {
-      final lowercaseOffice = rep.office!.toLowerCase();
-
-      // Skip if it contains address-related keywords
-      final addressKeywords = [
-        'building',
-        'suite',
-        'room',
-        'rayburn',
-        'longworth',
-        'cannon',
-        'dirksen',
-        'hart',
-        'russell',
-        'street',
-        'avenue',
-        'boulevard',
-        'road',
-        'drive',
-        'lane',
-        'way',
-        '1st',
-        '2nd',
-        '3rd',
-        '#',
-        'ste',
-        'st',
-        'ave',
-        'blvd',
-        'rd',
-        'dr'
-      ];
-
-      bool isLikelyAddress =
-          addressKeywords.any((keyword) => lowercaseOffice.contains(keyword));
-
-      // Skip if it contains digits (likely an address)
-      bool containsDigits = RegExp(r'\d').hasMatch(lowercaseOffice);
-
-      if (!isLikelyAddress && !containsDigits) {
-        return rep.office!;
-      }
     }
 
     // Default to formatted district type
