@@ -473,6 +473,79 @@ class RepresentativeService {
     );
   }
 
+  Map<String, dynamic> processCongressGovMemberResponse(
+      Map<String, dynamic> response) {
+    Map<String, dynamic> memberDetails = {};
+
+    if (response.containsKey('member')) {
+      memberDetails = Map<String, dynamic>.from(response['member'] as Map);
+
+      // Add sponsored and cosponsored bills placeholders
+      // These would need to be fetched in separate API calls using the URLs in the response
+      List<Map<String, dynamic>> emptyBills = [];
+
+      // Prepare return data in the format expected by RepresentativeDetails.fromMap
+      return {
+        'details': memberDetails,
+        'sponsoredBills': emptyBills,
+        'cosponsoredBills': emptyBills,
+      };
+    }
+
+    return {
+      'details': memberDetails,
+      'sponsoredBills': [],
+      'cosponsoredBills': [],
+    };
+  }
+
+
+
+// Add this method to fetch representative details from Congress.gov
+  Future<Map<String, dynamic>> getRepresentativeDetailsFromCongressGov(
+      String bioGuideId) async {
+    if (!hasCongressApiKey) {
+      if (kDebugMode) {
+        print(
+            'Congress API key not found. Using mock data for representative details.');
+      }
+      return _getMockRepresentativeDetails(bioGuideId);
+    }
+
+    if (kDebugMode) {
+      print(
+          'Fetching representative details from Congress.gov for bioGuideId: $bioGuideId');
+    }
+
+    // Build URL for member details
+    final url = Uri.parse('$_baseUrl/member/$bioGuideId')
+        .replace(queryParameters: {'format': 'json', 'api_key': _apiKey!});
+
+    if (kDebugMode) {
+      print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+    }
+
+    final response = await _tracedHttpGet(url);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+
+      if (kDebugMode) {
+        print('Successfully received representative details from Congress.gov');
+      }
+
+      // Process the response to match our expected format
+      return processCongressGovMemberResponse(data);
+    } else {
+      if (kDebugMode) {
+        print(
+            'Congress.gov API error: ${response.statusCode} - ${response.body}');
+      }
+      throw Exception(
+          'Failed to fetch representative details from Congress.gov');
+    }
+  }
+
   // Get representatives based on address (legacy method, kept for compatibility)
   Future<List<Representative>> getRepresentativesByAddress(
       String address) async {

@@ -143,6 +143,8 @@ class RepresentativeDetails {
     this.displayTitle,
   });
 
+// lib/models/representative_model.dart - RepresentativeDetails.fromMap method
+
   factory RepresentativeDetails.fromMap({
     required Map<String, dynamic> details,
     required List<dynamic> sponsoredBills,
@@ -269,6 +271,69 @@ class RepresentativeDetails {
         details['state']?.toString() ??
         '';
     String? district = termMap['district']?.toString();
+    if (district == null && details.containsKey('district')) {
+      district = details['district']?.toString();
+    }
+
+    // Extract party information - IMPROVED PARTY HANDLING
+    String party = '';
+
+    // First check partyHistory if available (most reliable source from Congress.gov API)
+    if (details.containsKey('partyHistory') &&
+        details['partyHistory'] is List &&
+        (details['partyHistory'] as List).isNotEmpty) {
+      final partyHistoryList = details['partyHistory'] as List;
+      // Use the most recent party affiliation
+      if (partyHistoryList.isNotEmpty) {
+        final mostRecentParty = partyHistoryList[0];
+        if (mostRecentParty is Map) {
+          final partyMap = Map<String, dynamic>.from(mostRecentParty);
+          if (partyMap.containsKey('partyName')) {
+            party = partyMap['partyName']?.toString() ?? '';
+          } else if (partyMap.containsKey('partyAbbreviation')) {
+            // Convert abbreviation to full name
+            final abbr = partyMap['partyAbbreviation']?.toString() ?? '';
+            switch (abbr) {
+              case 'R':
+                party = 'Republican';
+                break;
+              case 'D':
+                party = 'Democratic';
+                break;
+              case 'I':
+                party = 'Independent';
+                break;
+              default:
+                party = abbr;
+            }
+          }
+        }
+      }
+    }
+
+    // If still empty, try other potential sources
+    if (party.isEmpty) {
+      // Check term data
+      if (termMap.containsKey('party')) {
+        party = termMap['party']?.toString() ?? '';
+      }
+
+      // Check direct fields
+      if (party.isEmpty && details.containsKey('party')) {
+        party = details['party']?.toString() ?? '';
+      }
+
+      if (party.isEmpty && details.containsKey('partyName')) {
+        party = details['partyName']?.toString() ?? '';
+      }
+    }
+
+    // Convert 'R' or 'D' abbreviations to full names if needed
+    if (party == 'R') {
+      party = 'Republican';
+    } else if (party == 'D') {
+      party = 'Democratic';
+    }
 
     // Create display title
     String? displayTitle;
@@ -284,13 +349,10 @@ class RepresentativeDetails {
     return RepresentativeDetails(
       bioGuideId: details['bioGuideId']?.toString() ?? '',
       name: details['name']?.toString() ??
-          details['invertedOrderName']?.toString() ??
           details['directOrderName']?.toString() ??
+          details['invertedOrderName']?.toString() ??
           '',
-      party: termMap['party']?.toString() ??
-          termMap['partyName']?.toString() ??
-          details['partyName']?.toString() ??
-          '',
+      party: party,
       state: state,
       district: district,
       chamber: chamber,
