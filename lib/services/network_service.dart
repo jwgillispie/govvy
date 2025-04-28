@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:govvy/services/remote_service_config.dart';
@@ -28,39 +29,39 @@ class NetworkService {
     _loggingEnabled = enabled;
   }
 
-Future<bool> checkConnectivity() async {
-  try {
-    if (kIsWeb) {
-      // Check if we're in local development
-      final currentUrl = Uri.base.toString();
-      final isLocalDevelopment = currentUrl.contains('localhost') || 
-                                currentUrl.contains('127.0.0.1');
-      
-      if (isLocalDevelopment) {
-        // For local development, just assume we're connected
-        // or use a public domain that doesn't have CORS restrictions
-        final response = await http
-            .get(Uri.parse('https://www.google.com/favicon.ico'))
-            .timeout(const Duration(seconds: 5));
-        return response.statusCode == 200;
+  Future<bool> checkConnectivity() async {
+    try {
+      if (kIsWeb) {
+        // Check if we're in local development
+        final currentUrl = Uri.base.toString();
+        final isLocalDevelopment = currentUrl.contains('localhost') ||
+            currentUrl.contains('127.0.0.1');
+
+        if (isLocalDevelopment) {
+          // For local development, just assume we're connected
+          // or use a public domain that doesn't have CORS restrictions
+          final response = await http
+              .get(Uri.parse('https://www.google.com/favicon.ico'))
+              .timeout(const Duration(seconds: 5));
+          return response.statusCode == 200;
+        } else {
+          // For production, use your app domain
+          final response = await http
+              .get(Uri.parse('https://govvy--dev.web.app/favicon.ico'))
+              .timeout(const Duration(seconds: 5));
+          return response.statusCode == 200;
+        }
       } else {
-        // For production, use your app domain
+        // For mobile platforms
         final response = await http
-            .get(Uri.parse('https://govvy--dev.web.app/favicon.ico'))
+            .get(Uri.parse('https://www.google.com'))
             .timeout(const Duration(seconds: 5));
         return response.statusCode == 200;
       }
-    } else {
-      // For mobile platforms
-      final response = await http
-          .get(Uri.parse('https://www.google.com'))
-          .timeout(const Duration(seconds: 5));
-      return response.statusCode == 200;
+    } catch (e) {
+      return false;
     }
-  } catch (e) {
-    return false;
   }
-}
 
   // Generic GET request with tracing
   Future<http.Response> get(
@@ -260,26 +261,60 @@ Future<bool> checkConnectivity() async {
       return null;
     }
   }
-  // lib/services/network_service.dart
 
-// Add this method to your NetworkService class
   Future<String> getProxiedImageUrl(String originalUrl) async {
+    if (originalUrl.isEmpty) {
+      return ''; // Return empty string for empty URLs
+    }
+
+    // For mobile platforms, just return the original URL
     if (!kIsWeb) {
-      // For mobile, just return the original URL
       return originalUrl;
     }
 
-    // For web, check if the URL needs proxying
-    if (originalUrl.contains('congress.gov') ||
-        originalUrl.contains('cicero.azavea.com')) {
-      // Use a CORS proxy for image URLs
-      return 'https://corsproxy.io/?${Uri.encodeComponent(originalUrl)}';
+    // For web platform, apply proxying to problematic domains
+    try {
+      // Always use a proxy for these domains which commonly have CORS issues
+      final List<String> corsRestrictedDomains = [
+        'congress.gov',
+        'cicero.azavea.com',
+        'bioguide.congress.gov',
+        'www.govtrack.us',
+        'www.senate.gov',
+        'www.house.gov',
+        'azavea.com',
+        's3.amazonaws.com/cicero-media-files',
+        'cicero-media-files.s3.amazonaws.com'
+      ];
+
+      // Check if URL contains any of the restricted domains
+      bool needsProxy = corsRestrictedDomains.any(
+          (domain) => originalUrl.toLowerCase().contains(domain.toLowerCase()));
+
+      if (needsProxy) {
+        if (_loggingEnabled) {
+          print('Proxying image URL: $originalUrl');
+        }
+
+        // Try multiple proxy services in case one doesn't work
+        // Option 1: corsproxy.io (main)
+        String proxiedUrl =
+            'https://corsproxy.io/?${Uri.encodeComponent(originalUrl)}';
+
+        // Option 2: If you need alternative proxies, uncomment these
+        // String proxiedUrl = 'https://cors-anywhere.herokuapp.com/$originalUrl';
+        // String proxiedUrl = 'https://api.allorigins.win/raw?url=${Uri.encodeComponent(originalUrl)}';
+
+        return proxiedUrl;
+      }
+
+      // For non-restricted domains, return original URL
+      return originalUrl;
+    } catch (e) {
+      if (_loggingEnabled) {
+        print('Error proxying URL: $e, returning original URL');
+      }
+      return originalUrl;
     }
-
-    // If it's not a problematic URL, return as is
-    return originalUrl;
   }
-
-  // Helper function to safely take a substring
-  int min(int a, int b) => a < b ? a : b;
 }

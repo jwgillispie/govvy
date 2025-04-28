@@ -9,6 +9,7 @@ import 'package:govvy/models/representative_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:govvy/widgets/representatives/role_info_widget.dart';
 import 'package:govvy/data/government_roles.dart';
+import 'package:govvy/widgets/representatives/email_template_dialog.dart';
 
 class RepresentativeDetailsScreen extends StatefulWidget {
   final String bioGuideId;
@@ -142,6 +143,16 @@ class _RepresentativeDetailsScreenState
         ),
       );
     }
+  }
+  
+  // Method to show email template dialog
+  void _showEmailTemplate(RepresentativeDetails rep) {
+    showDialog(
+      context: context,
+      builder: (context) => EmailTemplateDialog(
+        representative: rep,
+      ),
+    );
   }
 
   @override
@@ -505,47 +516,82 @@ class _RepresentativeDetailsScreenState
       );
     }
     
+    // Build a list of contact items
+    List<Widget> contactItems = [];
+    
+    if (rep.phone != null) {
+      contactItems.add(
+        _buildContactItem(
+          icon: Icons.phone,
+          title: 'Phone',
+          value: rep.phone!,
+          onTap: () => _makePhoneCall(rep.phone),
+          onLongPress: () => _copyToClipboard(rep.phone!, 'Phone number'),
+        ),
+      );
+    }
+    
+    if (rep.email != null) {
+      contactItems.add(
+        _buildContactItem(
+          // If the email is actually a web form, use a different icon
+          icon: rep.email!.startsWith('http') ? Icons.web : Icons.email,
+          title: rep.email!.startsWith('http') ? 'Contact Form' : 'Email',
+          value: rep.email!,
+          onTap: () => _sendEmail(rep.email),
+          onLongPress: () => _copyToClipboard(rep.email!, 
+            rep.email!.startsWith('http') ? 'Contact form URL' : 'Email address'),
+        ),
+      );
+    }
+    
+    if (rep.office != null) {
+      contactItems.add(
+        _buildContactItem(
+          icon: Icons.location_on,
+          title: 'Office',
+          value: rep.office!,
+          onTap: null,
+          onLongPress: () => _copyToClipboard(rep.office!, 'Office address'),
+        ),
+      );
+    }
+    
+    if (rep.website != null) {
+      contactItems.add(
+        _buildContactItem(
+          icon: Icons.language,
+          title: 'Website',
+          value: rep.website!,
+          onTap: () => _launchUrl(rep.website),
+          onLongPress: () => _copyToClipboard(rep.website!, 'Website URL'),
+        ),
+      );
+    }
+    
+    // Add Email Template button if there's an email
+    if (rep.email != null) {
+      contactItems.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: ElevatedButton.icon(
+            icon: const Icon(Icons.email_outlined),
+            label: const Text('Compose Email'),
+            onPressed: () => _showEmailTemplate(rep),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (rep.phone != null)
-          _buildContactItem(
-            icon: Icons.phone,
-            title: 'Phone',
-            value: rep.phone!,
-            onTap: () => _makePhoneCall(rep.phone),
-            onLongPress: () => _copyToClipboard(rep.phone!, 'Phone number'),
-          ),
-          
-        if (rep.email != null) 
-          _buildContactItem(
-            // If the email is actually a web form, use a different icon
-            icon: rep.email!.startsWith('http') ? Icons.web : Icons.email,
-            title: rep.email!.startsWith('http') ? 'Contact Form' : 'Email',
-            value: rep.email!,
-            onTap: () => _sendEmail(rep.email),
-            onLongPress: () => _copyToClipboard(rep.email!, 
-              rep.email!.startsWith('http') ? 'Contact form URL' : 'Email address'),
-          ),
-          
-        if (rep.office != null)
-          _buildContactItem(
-            icon: Icons.location_on,
-            title: 'Office',
-            value: rep.office!,
-            onTap: null,
-            onLongPress: () => _copyToClipboard(rep.office!, 'Office address'),
-          ),
-          
-        if (rep.website != null)
-          _buildContactItem(
-            icon: Icons.language,
-            title: 'Website',
-            value: rep.website!,
-            onTap: () => _launchUrl(rep.website),
-            onLongPress: () => _copyToClipboard(rep.website!, 'Website URL'),
-          ),
-      ],
+      children: contactItems,
     );
   }
 

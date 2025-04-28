@@ -4,6 +4,7 @@ import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/utils/district_type_formatter.dart';
 import 'package:govvy/services/network_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 
 class RepresentativeCard extends StatelessWidget {
   final Representative representative;
@@ -56,24 +57,6 @@ class RepresentativeCard extends StatelessWidget {
     return const SizedBox.shrink(); // No badge for federal/state reps
   }
 
-  // Get a proxied image URL for web to avoid CORS issues
-  Future<String> _getProxiedImageUrl(String originalUrl) async {
-    if (!kIsWeb) {
-      // For mobile, just return the original URL
-      return originalUrl;
-    }
-    
-    // For web, check if the URL needs proxying
-    if (originalUrl.contains('congress.gov') || 
-        originalUrl.contains('cicero.azavea.com')) {
-      // Use a CORS proxy for image URLs
-      return 'https://corsproxy.io/?${Uri.encodeComponent(originalUrl)}';
-    }
-    
-    // If it's not a problematic URL, return as is
-    return originalUrl;
-  }
-
   @override
   Widget build(BuildContext context) {
     // Determine party colors
@@ -117,52 +100,59 @@ class RepresentativeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Representative image - handle image loading with CORS proxy for web
-              CircleAvatar(
-                radius: 32,
-                backgroundColor: Colors.grey.shade200,
-                child: (representative.imageUrl != null && representative.imageUrl!.isNotEmpty) 
-                    ? FutureBuilder<String>(
-                        future: _getProxiedImageUrl(representative.imageUrl!),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            );
-                          }
-                          
-                          final imageUrl = snapshot.data ?? representative.imageUrl!;
-                          
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(32),
-                            child: Image.network(
-                              imageUrl,
-                              width: 64,
-                              height: 64,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                // Fallback icon if image fails to load
-                                return Icon(Icons.person, size: 32, color: Colors.grey.shade400);
-                              },
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes != null
-                                        ? loadingProgress.cumulativeBytesLoaded / 
-                                        loadingProgress.expectedTotalBytes!
-                                        : null,
-                                    strokeWidth: 2,
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        },
-                      )
-                    : Icon(Icons.person, size: 32, color: Colors.grey.shade400),
+CircleAvatar(
+  radius: 32,
+  backgroundColor: Colors.grey.shade200,
+  child: (representative.imageUrl != null && representative.imageUrl!.isNotEmpty) 
+      ? FutureBuilder<String>(
+          // Use the NetworkService for proxying
+          future: Provider.of<NetworkService>(context, listen: false)
+              .getProxiedImageUrl(representative.imageUrl!),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              );
+            }
+            
+            final imageUrl = snapshot.data ?? representative.imageUrl!;
+            
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(32),
+              child: Image.network(
+                imageUrl,
+                width: 64,
+                height: 64,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  // Log the error for debugging
+                  if (kDebugMode) {
+                    print('Error loading image: $error');
+                    print('URL: $imageUrl');
+                  }
+                  // Return a fallback icon
+                  return Icon(Icons.person, size: 32, color: Colors.grey.shade400);
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded / 
+                          loadingProgress.expectedTotalBytes!
+                          : null,
+                      strokeWidth: 2,
+                    ),
+                  );
+                },
               ),
+            );
+          },
+        )
+      : Icon(Icons.person, size: 32, color: Colors.grey.shade400),
+),
               const SizedBox(width: 12),
 
               // Representative info

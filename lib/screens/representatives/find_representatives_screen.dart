@@ -20,54 +20,75 @@ class FindRepresentativesScreen extends StatefulWidget {
 
 class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     with SingleTickerProviderStateMixin {
-    
   // Helper method to determine if a representative is truly local
   bool _isLocalRepresentative(Representative rep) {
     // First, check explicit federal roles that should always be excluded
     final String chamberUpper = rep.chamber.toUpperCase();
     final String officeUpper = rep.office?.toUpperCase() ?? '';
     final String nameUpper = rep.name.toUpperCase();
-    
+
     // These are clearly federal positions
     final List<String> federalChambers = [
-      'NATIONAL_UPPER', 'NATIONAL_LOWER', 'NATIONAL_EXEC',
-      'SENATE', 'HOUSE', 'PRESIDENT', 'CONGRESS', 'U.S. SENATE',
-      'U.S. HOUSE', 'UNITED STATES SENATE', 'UNITED STATES HOUSE',
+      'NATIONAL_UPPER',
+      'NATIONAL_LOWER',
+      'NATIONAL_EXEC',
+      'SENATE',
+      'HOUSE',
+      'PRESIDENT',
+      'CONGRESS',
+      'U.S. SENATE',
+      'U.S. HOUSE',
+      'UNITED STATES SENATE',
+      'UNITED STATES HOUSE',
       'REPRESENTATIVE'
     ];
-    
+
     if (federalChambers.any((chamber) => chamberUpper.contains(chamber))) {
       return false;
     }
-    
+
     // Explicitly check for federal titles in office
     final List<String> federalTitles = [
-      'U.S. SENATOR', 'UNITED STATES SENATOR', 
-      'U.S. REPRESENTATIVE', 'UNITED STATES REPRESENTATIVE',
-      'CONGRESSMAN', 'CONGRESSWOMAN', 'SENATOR',
-      'U.S. CONGRESS', 'PRESIDENT', 'VICE PRESIDENT'
+      'U.S. SENATOR',
+      'UNITED STATES SENATOR',
+      'U.S. REPRESENTATIVE',
+      'UNITED STATES REPRESENTATIVE',
+      'CONGRESSMAN',
+      'CONGRESSWOMAN',
+      'SENATOR',
+      'U.S. CONGRESS',
+      'PRESIDENT',
+      'VICE PRESIDENT'
     ];
-    
+
     if (federalTitles.any((title) => officeUpper.contains(title))) {
       return false;
     }
-    
+
     // Check for specific federal officials by name
     final List<String> federalOfficialNames = [
-      'BIDEN', 'TRUMP', 'HARRIS', 'VANCE', 'RUBIO', 'MCCONNELL', 
-      'SCHUMER', 'PELOSI', 'JEFFRIES', 'JOHNSON'
+      'BIDEN',
+      'TRUMP',
+      'HARRIS',
+      'VANCE',
+      'RUBIO',
+      'MCCONNELL',
+      'SCHUMER',
+      'PELOSI',
+      'JEFFRIES',
+      'JOHNSON'
     ];
-    
+
     if (federalOfficialNames.any((name) => nameUpper.contains(name))) {
       // Check that this is actually the federal official, not someone with the same name
-      if (federalTitles.any((title) => officeUpper.contains(title)) || 
+      if (federalTitles.any((title) => officeUpper.contains(title)) ||
           federalChambers.any((chamber) => chamberUpper.contains(chamber))) {
         return false;
       }
     }
-    
+
     // Now let's check for local indicators
-    
+
     // Check if this is a cicero-sourced local rep (strongest indicator)
     if (rep.bioGuideId.startsWith('cicero-')) {
       // Double-check it's not a federal official from cicero
@@ -78,50 +99,76 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
       }
       return true;
     }
-    
+
     // Check for local keywords in chamber/level
     final localLevels = [
-      'COUNTY', 'CITY', 'PLACE', 'TOWNSHIP', 'BOROUGH', 
-      'TOWN', 'VILLAGE', 'LOCAL', 'LOCAL_EXEC', 'SCHOOL', 
-      'MAYOR', 'COUNCIL', 'MUNICIPAL', 'COMMISSIONER'
+      'COUNTY',
+      'CITY',
+      'PLACE',
+      'TOWNSHIP',
+      'BOROUGH',
+      'TOWN',
+      'VILLAGE',
+      'LOCAL',
+      'LOCAL_EXEC',
+      'SCHOOL',
+      'MAYOR',
+      'COUNCIL',
+      'MUNICIPAL',
+      'COMMISSIONER'
     ];
-    
+
     for (final level in localLevels) {
       if (chamberUpper.contains(level)) {
         return true;
       }
     }
-    
+
     // Check for local keywords in the district
     if (rep.district != null) {
       final String district = rep.district!.toUpperCase();
       final localDistrictKeywords = [
-        'COUNTY', 'CITY', 'TOWN', 'VILLAGE', 'BOROUGH', 
-        'SCHOOL', 'MUNICIPAL', 'WARD', 'PRECINCT'
+        'COUNTY',
+        'CITY',
+        'TOWN',
+        'VILLAGE',
+        'BOROUGH',
+        'SCHOOL',
+        'MUNICIPAL',
+        'WARD',
+        'PRECINCT'
       ];
-      
+
       for (final keyword in localDistrictKeywords) {
         if (district.contains(keyword)) {
           return true;
         }
       }
     }
-    
+
     // Check for local keywords in the office title
     if (rep.office != null) {
       final localOfficeKeywords = [
-        'MAYOR', 'CITY COUNCIL', 'COUNTY COMMISSION', 'ALDERMAN', 
-        'SHERIFF', 'CLERK', 'TREASURER', 'ASSESSOR', 'AUDITOR', 
-        'RECORDER', 'SCHOOL BOARD'
+        'MAYOR',
+        'CITY COUNCIL',
+        'COUNTY COMMISSION',
+        'ALDERMAN',
+        'SHERIFF',
+        'CLERK',
+        'TREASURER',
+        'ASSESSOR',
+        'AUDITOR',
+        'RECORDER',
+        'SCHOOL BOARD'
       ];
-      
+
       for (final keyword in localOfficeKeywords) {
         if (officeUpper.contains(keyword)) {
           return true;
         }
       }
     }
-    
+
     // Still exclude clear state-level roles
     if (chamberUpper.startsWith('STATE_') ||
         chamberUpper == 'GOVERNOR' ||
@@ -130,10 +177,11 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
         chamberUpper == 'STATE ASSEMBLY') {
       return false;
     }
-    
+
     // For everything else, we should default to false
     return false;
   }
+
   String? _userState;
   String? _userCity;
   bool _initialLoadComplete = false;
@@ -142,7 +190,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
   int _searchTypeIndex = 0; // 0 = State, 1 = City, 2 = Name
   late TabController _tabController;
   final ScrollController _scrollController = ScrollController();
-  
+
   // US States mapping for dropdown
   final List<Map<String, String>> _usStates = [
     {"name": "Alabama", "code": "AL"},
@@ -205,7 +253,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     _fetchStateAndLoadCache();
-    
+
     // Listen to tab changes to scroll to the top of the list
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
@@ -225,7 +273,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
         0,
-        duration: const Duration(milliseconds: 300), 
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
     }
@@ -340,7 +388,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
 
       // Switch to the appropriate tab
       _tabController.animateTo(0); // All tab
-      
+
       // Scroll to the tab bar to show results
       _scrollToTabBar();
     } catch (e) {
@@ -371,7 +419,6 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     }
   }
 
-  // Fetch local representatives by city name
   Future<void> _fetchLocalRepresentativesByCity(String city) async {
     if (city.isEmpty) {
       setState(() {
@@ -392,17 +439,28 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
           Provider.of<CombinedRepresentativeProvider>(context, listen: false);
       provider.clearErrors();
 
+      // City may contain state information (e.g., "Gainesville, FL")
+      // The enhanced provider method will handle parsing this
       await provider.fetchLocalRepresentativesByCity(city);
 
-      // Navigate directly to the Local tab after search completes
-      _tabController.animateTo(2); // Local tab
-
-      if (provider.errorMessage != null && mounted) {
+      // After search completes, check if we have results
+      if (provider.localRepresentatives.isEmpty &&
+          provider.federalRepresentatives.isEmpty) {
         setState(() {
-          _validationError = provider.errorMessage;
+          // City might be ambiguous - suggest using state in search
+          if (_mightBeAmbiguousCity(city)) {
+            _validationError =
+                'Multiple cities with this name exist. Try adding a state code (e.g., "$city, FL")';
+          } else {
+            _validationError = provider.errorMessage ??
+                'No representatives found for this city';
+          }
         });
+      } else {
+        // Navigate directly to the Local tab after search completes
+        _tabController.animateTo(2); // Local tab
       }
-      
+
       // Scroll to the tab bar to show results
       _scrollToTabBar();
     } catch (e) {
@@ -420,8 +478,127 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     }
   }
 
+// Helper to check if a city name might be ambiguous (exists in multiple states)
+  bool _mightBeAmbiguousCity(String cityName) {
+    // Extract just the city name if it includes a state code
+    String city = cityName;
+    if (cityName.contains(',')) {
+      city = cityName.split(',')[0].trim();
+    }
+    city = city.toLowerCase();
+
+    // List of known ambiguous city names
+    final ambiguousCities = [
+      'portland',
+      'springfield',
+      'franklin',
+      'washington',
+      'madison',
+      'georgetown',
+      'salem',
+      'oxford',
+      'lebanon',
+      'bristol',
+      'newton',
+      'gainesville',
+      'greenville',
+      'columbus',
+      'charleston',
+      'fairfield',
+      'richmond',
+      'riverside',
+      'kingston',
+      'dover',
+      'burlington',
+      'lancaster',
+      'oakland',
+      'manchester',
+      'arlington',
+      'bloomfield',
+      'jackson',
+      'columbia',
+      'auburn',
+      'dayton',
+      'lexington',
+      'florence',
+      'orange',
+      'glendale',
+      'bristol'
+    ];
+
+    return ambiguousCities.contains(city);
+  }
+
+// Show disambiguation dialog when multiple cities with the same name exist
+  void _showCityDisambiguationDialog(String cityName) {
+    // Extract just the city name without state
+    String city = cityName;
+    if (cityName.contains(',')) {
+      city = cityName.split(',')[0].trim();
+    }
+
+    // List of common states where this city exists
+    List<String> possibleStates = [];
+
+    // Check for known cities with duplicates
+    switch (city.toLowerCase()) {
+      case 'portland':
+        possibleStates = ['OR', 'ME', 'TX', 'IN', 'MI'];
+        break;
+      case 'springfield':
+        possibleStates = ['IL', 'MA', 'MO', 'OH', 'OR'];
+        break;
+      case 'gainesville':
+        possibleStates = ['FL', 'GA', 'TX', 'VA'];
+        break;
+      case 'charleston':
+        possibleStates = ['SC', 'WV', 'IL', 'MO'];
+        break;
+      case 'columbus':
+        possibleStates = ['OH', 'GA', 'IN', 'MS', 'NE'];
+        break;
+      default:
+        // For cities we don't have specific data for, show a general message
+        setState(() {
+          _validationError =
+              'Try adding a state code (e.g., "$city, NY") to refine your search';
+        });
+        return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Multiple cities named "$city"'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Which $city did you mean?'),
+            const SizedBox(height: 16),
+            ...possibleStates.map((state) => ListTile(
+                  title: Text('$city, $state'),
+                  leading: const Icon(Icons.location_city),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    _fetchLocalRepresentativesByCity('$city, $state');
+                  },
+                )),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
+    );
+  }
+
   // Fetch representatives by name
-  Future<void> _fetchRepresentativesByName(String lastName, String? firstName) async {
+  Future<void> _fetchRepresentativesByName(
+      String lastName, String? firstName) async {
     if (lastName.isEmpty) {
       setState(() {
         _validationError = 'Please enter a last name';
@@ -450,7 +627,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
           _validationError = provider.errorMessage;
         });
       }
-      
+
       // Scroll to the tab bar to show results
       _scrollToTabBar();
     } catch (e) {
@@ -602,7 +779,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                         ],
                       ),
                     ),
-                    
+
                   // Tab content
                   SizedBox(
                     height: 600, // Fixed height for the tab content
@@ -619,7 +796,8 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                                     : 'Search by name to find representatives'),
 
                         // Federal/State representatives tab
-                        _buildRepresentativesList(provider.federalRepresentatives,
+                        _buildRepresentativesList(
+                            provider.federalRepresentatives,
                             'Select a state to find your federal and state representatives'),
 
                         // Local representatives tab
@@ -628,10 +806,9 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                             _searchTypeIndex == 1
                                 ? 'Enter a city to find your local representatives'
                                 : 'Select a state to find your local representatives'),
-                                
+
                         // Name search results tab
-                        _buildRepresentativesList(
-                            provider.allRepresentatives,
+                        _buildRepresentativesList(provider.allRepresentatives,
                             'Search for representatives by name to see results here'),
                       ],
                     ),
@@ -677,7 +854,9 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
             },
           ),
 
-          const SizedBox(height: 24),  // Increased spacing to compensate for the removed field
+          const SizedBox(
+              height:
+                  24), // Increased spacing to compensate for the removed field
 
           // Informational text
           Container(
@@ -705,7 +884,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
             ),
           ),
 
-          const SizedBox(height: 24),  // Increased spacing
+          const SizedBox(height: 24), // Increased spacing
 
           // Search button
           SizedBox(
@@ -794,9 +973,11 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                _searchTypeIndex == 0 ? Icons.public : 
-                _searchTypeIndex == 1 ? Icons.location_city : 
-                Icons.person_search,
+                _searchTypeIndex == 0
+                    ? Icons.public
+                    : _searchTypeIndex == 1
+                        ? Icons.location_city
+                        : Icons.person_search,
                 size: 64,
                 color: Colors.grey.shade400,
               ),
@@ -814,11 +995,12 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
 
     // Filter representatives if needed based on the current tab
     List<Representative> filteredReps = representatives;
-    
+
     // If we're on the "Local" tab (index 2), apply additional filtering
     if (_tabController.index == 2) {
-      filteredReps = representatives.where((rep) => _isLocalRepresentative(rep)).toList();
-      
+      filteredReps =
+          representatives.where((rep) => _isLocalRepresentative(rep)).toList();
+
       // Show empty state if we filtered out all representatives
       if (filteredReps.isEmpty) {
         return Center(

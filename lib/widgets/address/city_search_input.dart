@@ -22,53 +22,53 @@ class _CitySearchInputState extends State<CitySearchInput> {
   final _cityController = TextEditingController();
   String? _errorMessage;
 
-  // List of common US cities for autocomplete
-  final List<String> _commonCities = [
-    'New York',
-    'Los Angeles',
-    'Chicago',
-    'Houston',
-    'Phoenix',
-    'Philadelphia',
-    'San Antonio',
-    'San Diego',
-    'Dallas',
-    'San Jose',
-    'Austin',
-    'Jacksonville',
-    'Fort Worth',
-    'Columbus',
-    'Charlotte',
-    'Indianapolis',
-    'San Francisco',
-    'Seattle',
-    'Denver',
-    'Washington DC',
-    'Boston',
-    'El Paso',
-    'Nashville',
-    'Detroit',
-    'Oklahoma City',
-    'Portland',
-    'Las Vegas',
-    'Memphis',
-    'Louisville',
-    'Baltimore',
-    'Milwaukee',
-    'Albuquerque',
-    'Tucson',
-    'Fresno',
-    'Sacramento',
-    'Kansas City',
-    'Long Beach',
-    'Mesa',
-    'Atlanta',
-    'Colorado Springs',
-    'Raleigh',
-    'Omaha',
-    'Miami',
-    'Oakland',
-    'Minneapolis'
+  // Enhanced common US cities with state information for disambiguation
+  final List<Map<String, String>> _citiesWithStates = [
+    {"city": "New York", "state": "NY", "display": "New York, NY"},
+    {"city": "Los Angeles", "state": "CA", "display": "Los Angeles, CA"},
+    {"city": "Chicago", "state": "IL", "display": "Chicago, IL"},
+    {"city": "Houston", "state": "TX", "display": "Houston, TX"},
+    {"city": "Phoenix", "state": "AZ", "display": "Phoenix, AZ"},
+    {"city": "Philadelphia", "state": "PA", "display": "Philadelphia, PA"},
+    {"city": "San Antonio", "state": "TX", "display": "San Antonio, TX"},
+    {"city": "San Diego", "state": "CA", "display": "San Diego, CA"},
+    {"city": "Dallas", "state": "TX", "display": "Dallas, TX"},
+    {"city": "San Jose", "state": "CA", "display": "San Jose, CA"},
+    {"city": "Austin", "state": "TX", "display": "Austin, TX"},
+    {"city": "Jacksonville", "state": "FL", "display": "Jacksonville, FL"},
+    {"city": "Fort Worth", "state": "TX", "display": "Fort Worth, TX"},
+    {"city": "Columbus", "state": "OH", "display": "Columbus, OH"},
+    {"city": "Charlotte", "state": "NC", "display": "Charlotte, NC"},
+    {"city": "Indianapolis", "state": "IN", "display": "Indianapolis, IN"},
+    {"city": "San Francisco", "state": "CA", "display": "San Francisco, CA"},
+    {"city": "Seattle", "state": "WA", "display": "Seattle, WA"},
+    {"city": "Denver", "state": "CO", "display": "Denver, CO"},
+    {"city": "Boston", "state": "MA", "display": "Boston, MA"},
+    {"city": "Portland", "state": "OR", "display": "Portland, OR"},
+    {"city": "Portland", "state": "ME", "display": "Portland, ME"}, // Duplicate city name example
+    {"city": "Las Vegas", "state": "NV", "display": "Las Vegas, NV"},
+    {"city": "Miami", "state": "FL", "display": "Miami, FL"},
+    {"city": "Atlanta", "state": "GA", "display": "Atlanta, GA"},
+    {"city": "Minneapolis", "state": "MN", "display": "Minneapolis, MN"},
+    {"city": "Tampa", "state": "FL", "display": "Tampa, FL"},
+    {"city": "Orlando", "state": "FL", "display": "Orlando, FL"},
+    {"city": "Cleveland", "state": "OH", "display": "Cleveland, OH"},
+    {"city": "New Orleans", "state": "LA", "display": "New Orleans, LA"},
+    {"city": "Kansas City", "state": "MO", "display": "Kansas City, MO"},
+    {"city": "Kansas City", "state": "KS", "display": "Kansas City, KS"}, // Duplicate city name example
+    {"city": "St. Louis", "state": "MO", "display": "St. Louis, MO"},
+    {"city": "Cincinnati", "state": "OH", "display": "Cincinnati, OH"},
+    {"city": "Nashville", "state": "TN", "display": "Nashville, TN"},
+    {"city": "Washington", "state": "DC", "display": "Washington, DC"},
+    {"city": "Gainesville", "state": "FL", "display": "Gainesville, FL"},
+    {"city": "Gainesville", "state": "GA", "display": "Gainesville, GA"}, // Duplicate city name example
+    {"city": "Gainesville", "state": "TX", "display": "Gainesville, TX"}, // Duplicate city name example
+    {"city": "Charlottesville", "state": "VA", "display": "Charlottesville, VA"},
+    {"city": "Charleston", "state": "SC", "display": "Charleston, SC"},
+    {"city": "Charleston", "state": "WV", "display": "Charleston, WV"}, // Duplicate city name example
+    {"city": "Springfield", "state": "IL", "display": "Springfield, IL"},
+    {"city": "Springfield", "state": "MO", "display": "Springfield, MO"}, // Duplicate city name example
+    {"city": "Springfield", "state": "MA", "display": "Springfield, MA"}, // Duplicate city name example
   ];
 
   @override
@@ -95,13 +95,18 @@ class _CitySearchInputState extends State<CitySearchInput> {
     super.dispose();
   }
 
-  void _submitCity() {
+  void _submitCity(String cityValue) {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _errorMessage = null;
       });
 
-      final cityName = _cityController.text.trim();
+      // Extract city name from the selection (remove state if present)
+      String cityName = cityValue;
+      if (cityValue.contains(",")) {
+        cityName = cityValue.split(",")[0].trim();
+      }
+
       widget.onCitySubmitted(cityName);
     }
   }
@@ -146,15 +151,27 @@ class _CitySearchInputState extends State<CitySearchInput> {
                 return const Iterable<String>.empty();
               }
 
-              return _commonCities.where((city) => city
-                  .toLowerCase()
-                  .contains(textEditingValue.text.toLowerCase()));
+              // Filter cities based on input text
+              final List<String> filteredOptions = _citiesWithStates
+                  .where((city) {
+                    // Match by city name or city+state (case-insensitive)
+                    final input = textEditingValue.text.toLowerCase();
+                    return city["display"]!.toLowerCase().contains(input) ||
+                        city["city"]!.toLowerCase().contains(input);
+                  })
+                  .map((city) => city["display"]!)
+                  .toList();
+
+              // Limit to 10 suggestions max
+              return filteredOptions.length > 10
+                  ? filteredOptions.sublist(0, 10)
+                  : filteredOptions;
             },
             onSelected: (String selection) {
               _cityController.text = selection;
               // Auto-submit when a city is selected from the dropdown
               Future.delayed(const Duration(milliseconds: 100), () {
-                _submitCity();
+                _submitCity(selection);
               });
             },
             fieldViewBuilder: (
@@ -177,8 +194,13 @@ class _CitySearchInputState extends State<CitySearchInput> {
                 controller: controller,
                 focusNode: focusNode,
                 decoration: InputDecoration(
-                  labelText: 'City Name',
-                  hintText: 'e.g. Chicago, Atlanta, Houston',
+                  labelText: 'City',
+                  hintText: 'e.g. Chicago, Miami, Portland',
+                  helperText: 'Enter city name',
+                  helperStyle: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade600,
+                  ),
                   filled: true,
                   fillColor: Colors.grey.shade100,
                   border: OutlineInputBorder(
@@ -218,7 +240,7 @@ class _CitySearchInputState extends State<CitySearchInput> {
                 enabled: !widget.isLoading,
                 onFieldSubmitted: (_) {
                   onFieldSubmitted();
-                  _submitCity();
+                  _submitCity(controller.text);
                 },
                 textCapitalization: TextCapitalization.words,
                 textInputAction: TextInputAction.search,
@@ -230,12 +252,11 @@ class _CitySearchInputState extends State<CitySearchInput> {
                 child: Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(12),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    constraints: const BoxConstraints(maxHeight: 200),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.white,
+                  color: Colors.white,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: 250,
+                      maxWidth: MediaQuery.of(context).size.width * 0.9,
                     ),
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
@@ -243,9 +264,42 @@ class _CitySearchInputState extends State<CitySearchInput> {
                       itemCount: options.length,
                       itemBuilder: (context, index) {
                         final option = options.elementAt(index);
+                        // Check if it's a city-state pair
+                        bool hasDuplicate = _hasDuplicateCityName(option.split(',')[0].trim());
+                        
                         return ListTile(
-                          title: Text(option),
-                          leading: const Icon(Icons.location_city_outlined),
+                          title: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: option.split(',')[0].trim(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: option.contains(',') ? ', ${option.split(',')[1].trim()}' : '',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Show warning icon for duplicate city names
+                          leading: Icon(
+                            hasDuplicate
+                                ? Icons.info_outline
+                                : Icons.location_city_outlined,
+                            color: hasDuplicate
+                                ? Colors.orange
+                                : Theme.of(context).colorScheme.primary,
+                            size: 20,
+                          ),
+                          dense: true,
                           onTap: () {
                             onSelected(option);
                           },
@@ -258,17 +312,13 @@ class _CitySearchInputState extends State<CitySearchInput> {
             },
           ),
 
-          const SizedBox(height: 16),
-
-          // Note: Popular cities section removed temporarily
-
           const SizedBox(height: 20),
 
           // Submit button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
-              onPressed: widget.isLoading ? null : _submitCity,
+              onPressed: widget.isLoading ? null : () => _submitCity(_cityController.text),
               icon: widget.isLoading
                   ? Container(
                       width: 20,
@@ -294,40 +344,24 @@ class _CitySearchInputState extends State<CitySearchInput> {
               ),
             ),
           ),
+          
+          // No popular cities section as requested
         ],
       ),
     );
   }
 
-  // Helper method for building popular city chips (commented out for now)
-  /*
-  List<Widget> _buildPopularCityChips() {
-    final List<String> popularCities = [
-      'New York',
-      'Chicago',
-      'Los Angeles',
-      'Seattle',
-      'Atlanta'
-    ];
-
-    return popularCities
-        .map((city) => ActionChip(
-              label: Text(city),
-              onPressed: widget.isLoading
-                  ? null
-                  : () {
-                      setState(() {
-                        _cityController.text = city;
-                      });
-                      // Ensure we call submitCity with a slight delay to allow state to update
-                      Future.microtask(() => _submitCity());
-                    },
-              backgroundColor: Colors.grey.shade100,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-            ))
-        .toList();
+  // Helper method to check if a city name appears in multiple states
+  bool _hasDuplicateCityName(String cityName) {
+    int count = 0;
+    for (var city in _citiesWithStates) {
+      if (city["city"]!.trim().toLowerCase() == cityName.toLowerCase()) {
+        count++;
+        if (count > 1) return true;
+      }
+    }
+    return false;
   }
-  */
+
+  // Popular city chips method removed
 }

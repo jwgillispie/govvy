@@ -975,6 +975,370 @@ class CiceroService {
       socialMedia: socialMedia.isEmpty ? null : socialMedia,
     );
   }
+  // Add this new method to lib/services/cicero_service.dart
+
+// Get local representatives by state code and city name
+Future<List<LocalRepresentative>> getLocalRepresentativesByStateCity(String stateCode, String cityName) async {
+  try {
+    if (kIsWeb) {
+      if (kDebugMode) {
+        print('Searching for local representatives in $cityName, $stateCode (via proxy)');
+      }
+
+      // Use proxy with state and city parameters
+      final url = Uri.parse('$_proxyBaseUrl$_ciceroProxyUrl').replace(
+        queryParameters: {
+          'city': cityName,
+          'state': stateCode,
+        },
+      );
+
+      if (kDebugMode) {
+        print('Proxy URL (state+city): $url');
+      }
+
+      final response = await http.get(url);
+
+      if (response.statusCode != 200) {
+        throw Exception('Proxy API error: ${response.statusCode} - ${response.body}');
+      }
+
+      final data = json.decode(response.body);
+
+      // Process the data
+      return _processResponseData(data, '$cityName, $stateCode');
+    } else {
+      // Original code for mobile
+      if (!hasApiKey) {
+        if (kDebugMode) {
+          print('Cicero API key not found. Using mock data for development.');
+        }
+        return _getMockLocalRepresentatives(city: '$cityName, $stateCode');
+      }
+
+      // For mobile implementation - we have two approaches:
+      
+      // Approach 1: Use state component restriction if available
+      final queryParams = {
+        'format': 'json',
+        'key': _apiKey!,
+        'max': '100',
+      };
+      
+      // Add search location as city, state
+      queryParams['search_loc'] = '$cityName, $stateCode';
+      
+      // Try to use components parameter to restrict results to the state
+      queryParams['components'] = 'country:us|administrative_area:$stateCode';
+      
+      // URL for the Cicero API with the state and city
+      final url = Uri.parse('$_baseUrl/official').replace(queryParameters: queryParams);
+
+      if (kDebugMode) {
+        print('Calling Cicero API with state and city: $stateCode, $cityName');
+        print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+      }
+
+      try {
+        // Try the direct API call first
+        List<LocalRepresentative> representatives = await _fetchRepresentatives(url, '$cityName, $stateCode');
+
+        if (representatives.isNotEmpty) {
+          return representatives;
+        }
+        
+        // If no results, fall back to geocoding approach
+        if (kDebugMode) {
+          print('No results from direct search, trying geocoding approach for $cityName, $stateCode');
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error with direct search, trying geocoding approach: $e');
+        }
+      }
+
+      // Approach 2: Geocode the city+state to coordinates
+      final geocodeQuery = '$cityName, $stateCode, USA';
+      final coordinates = await geocodeCityToCoordinates(geocodeQuery);
+
+      if (coordinates == null) {
+        throw Exception('Could not geocode $cityName, $stateCode');
+      }
+
+      // Use coordinates to search for representatives
+      final coordUrl = Uri.parse('$_baseUrl/official').replace(queryParameters: {
+        'lat': coordinates['lat'].toString(),
+        'lon': coordinates['lng'].toString(),
+        'format': 'json',
+        'key': _apiKey!,
+        'max': '100',
+      });
+
+      if (kDebugMode) {
+        print('Using coordinates-based API URL for $cityName, $stateCode: ${coordUrl.toString().replaceAll(_apiKey!, '[REDACTED]')}');
+      }
+
+      return await _fetchRepresentatives(coordUrl, '$cityName, $stateCode');
+    }
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error getting representatives by state and city: $e');
+    }
+    // Fallback to mock data on error
+    return _getMockLocalRepresentativesByStateCity(stateCode, cityName);
+  }
+}
+
+// Helper method to generate mock data for state + city search
+List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCode, String cityName) {
+  // Create specific mock data for common city+state combinations
+  final String cityStatePair = '$cityName, $stateCode'.toLowerCase();
+  
+  if (cityStatePair == 'gainesville, fl') {
+    return [
+      LocalRepresentative(
+        name: 'Harvey Ward',
+        bioGuideId: 'cicero-mock-gainesville-fl-mayor',
+        party: 'Democratic',
+        level: 'CITY',
+        state: 'FL',
+        district: 'Gainesville',
+        office: 'Mayor',
+        phone: '(352) 555-1234',
+        email: 'mayor@cityofgainesville.org',
+        website: 'https://www.cityofgainesville.org',
+        imageUrl: null,
+        socialMedia: ['Twitter: @GvilleMayor'],
+      ),
+      LocalRepresentative(
+        name: 'Casey Willits',
+        bioGuideId: 'cicero-mock-gainesville-fl-commission-3',
+        party: 'Democratic',
+        level: 'CITY',
+        state: 'FL',
+        district: 'Gainesville City Commission District 3',
+        office: 'City Commissioner',
+        phone: '(352) 555-5678',
+        email: 'willitsc@cityofgainesville.org',
+        website: 'https://www.cityofgainesville.org/CityCommission',
+        imageUrl: null,
+        socialMedia: null,
+      ),
+      LocalRepresentative(
+        name: 'Ken Cornell',
+        bioGuideId: 'cicero-mock-alachua-fl-commission-4',
+        party: 'Democratic',
+        level: 'COUNTY',
+        state: 'FL',
+        district: 'Alachua County Commission District 4',
+        office: 'County Commissioner',
+        phone: '(352) 555-9012',
+        email: 'kcornell@alachuacounty.us',
+        website: 'https://alachuacounty.us/govt/bocc',
+        imageUrl: null,
+        socialMedia: ['Facebook: KenCornellAlachua'],
+      ),
+    ];
+  } else if (cityStatePair == 'gainesville, ga') {
+    return [
+      LocalRepresentative(
+        name: 'John Smith',
+        bioGuideId: 'cicero-mock-gainesville-ga-mayor',
+        party: 'Republican',
+        level: 'CITY',
+        state: 'GA',
+        district: 'Gainesville',
+        office: 'Mayor',
+        phone: '(770) 555-1234',
+        email: 'mayor@gainesville.org',
+        website: 'https://www.gainesville.org',
+        imageUrl: null,
+        socialMedia: ['Twitter: @GainesvilleGAMayor'],
+      ),
+      LocalRepresentative(
+        name: 'Barbara Miller',
+        bioGuideId: 'cicero-mock-gainesville-ga-council-2',
+        party: 'Republican',
+        level: 'CITY',
+        state: 'GA',
+        district: 'Gainesville City Council Ward 2',
+        office: 'City Council Member',
+        phone: '(770) 555-5678',
+        email: 'bmiller@gainesville.org',
+        website: 'https://www.gainesville.org/city-council',
+        imageUrl: null,
+        socialMedia: null,
+      ),
+      LocalRepresentative(
+        name: 'Richard Johnson',
+        bioGuideId: 'cicero-mock-hall-ga-commission-3',
+        party: 'Republican',
+        level: 'COUNTY',
+        state: 'GA',
+        district: 'Hall County Commission District 3',
+        office: 'County Commissioner',
+        phone: '(770) 555-9012',
+        email: 'rjohnson@hallcounty.org',
+        website: 'https://www.hallcounty.org/commission',
+        imageUrl: null,
+        socialMedia: ['Facebook: RichardJohnsonHall'],
+      ),
+    ];
+  } else if (cityStatePair == 'gainesville, tx') {
+    return [
+      LocalRepresentative(
+        name: 'Tommy Moore',
+        bioGuideId: 'cicero-mock-gainesville-tx-mayor',
+        party: 'Republican',
+        level: 'CITY',
+        state: 'TX',
+        district: 'Gainesville',
+        office: 'Mayor',
+        phone: '(940) 555-1234',
+        email: 'mayor@gainesville.tx.gov',
+        website: 'https://www.gainesville.tx.us',
+        imageUrl: null,
+        socialMedia: ['Twitter: @GainesvilleTXMayor'],
+      ),
+      LocalRepresentative(
+        name: 'Mary Williamson',
+        bioGuideId: 'cicero-mock-gainesville-tx-council-1',
+        party: 'Republican',
+        level: 'CITY',
+        state: 'TX',
+        district: 'Gainesville City Council Ward 1',
+        office: 'City Council Member',
+        phone: '(940) 555-5678',
+        email: 'mwilliamson@gainesville.tx.gov',
+        website: 'https://www.gainesville.tx.us/city-council',
+        imageUrl: null,
+        socialMedia: null,
+      ),
+      LocalRepresentative(
+        name: 'Robert Davis',
+        bioGuideId: 'cicero-mock-cooke-tx-commission-2',
+        party: 'Republican',
+        level: 'COUNTY',
+        state: 'TX',
+        district: 'Cooke County Commission Precinct 2',
+        office: 'County Commissioner',
+        phone: '(940) 555-9012',
+        email: 'rdavis@cookecounty.tx.gov',
+        website: 'https://www.co.cooke.tx.us',
+        imageUrl: null,
+        socialMedia: ['Facebook: RobertDavisCooke'],
+      ),
+    ];
+  } else if (cityStatePair == 'portland, or') {
+    return [
+      LocalRepresentative(
+        name: 'Ted Wheeler',
+        bioGuideId: 'cicero-mock-portland-or-mayor',
+        party: 'Democratic',
+        level: 'CITY',
+        state: 'OR',
+        district: 'Portland',
+        office: 'Mayor',
+        phone: '(503) 555-1234',
+        email: 'mayor@portland.gov',
+        website: 'https://www.portland.gov/wheeler',
+        imageUrl: null,
+        socialMedia: ['Twitter: @tedwheeler'],
+      ),
+      LocalRepresentative(
+        name: 'Jo Ann Hardesty',
+        bioGuideId: 'cicero-mock-portland-or-council-1',
+        party: 'Democratic',
+        level: 'CITY',
+        state: 'OR',
+        district: 'Portland City Council Position 3',
+        office: 'City Commissioner',
+        phone: '(503) 555-5678',
+        email: 'joann@portland.gov',
+        website: 'https://www.portland.gov/hardesty',
+        imageUrl: null,
+        socialMedia: ['Twitter: @JoAnnPDX'],
+      ),
+    ];
+  } else if (cityStatePair == 'portland, me') {
+    return [
+      LocalRepresentative(
+        name: 'Kate Snyder',
+        bioGuideId: 'cicero-mock-portland-me-mayor',
+        party: 'Democratic',
+        level: 'CITY',
+        state: 'ME',
+        district: 'Portland',
+        office: 'Mayor',
+        phone: '(207) 555-1234',
+        email: 'mayor@portlandmaine.gov',
+        website: 'https://www.portlandmaine.gov/mayor',
+        imageUrl: null,
+        socialMedia: null,
+      ),
+      LocalRepresentative(
+        name: 'Spencer Thibodeau',
+        bioGuideId: 'cicero-mock-portland-me-council-2',
+        party: 'Democratic',
+        level: 'CITY',
+        state: 'ME',
+        district: 'Portland City Council District 2',
+        office: 'City Councilor',
+        phone: '(207) 555-5678',
+        email: 'sthibodeau@portlandmaine.gov',
+        website: 'https://www.portlandmaine.gov/council',
+        imageUrl: null,
+        socialMedia: null,
+      ),
+    ];
+  }
+  
+  // Default mock data with state-specific variations
+  return [
+    LocalRepresentative(
+      name: 'Mayor of $cityName',
+      bioGuideId: 'cicero-mock-${cityName.toLowerCase().replaceAll(' ', '-')}-$stateCode-mayor',
+      party: stateCode == 'CA' || stateCode == 'NY' || stateCode == 'IL' ? 'Democratic' : 'Republican',
+      level: 'CITY',
+      state: stateCode,
+      district: cityName,
+      office: 'Mayor',
+      phone: '(555) 555-1234',
+      email: 'mayor@${cityName.toLowerCase().replaceAll(' ', '')}.gov',
+      website: 'https://www.${cityName.toLowerCase().replaceAll(' ', '')}.gov',
+      imageUrl: null,
+      socialMedia: null,
+    ),
+    LocalRepresentative(
+      name: 'Council Member Smith',
+      bioGuideId: 'cicero-mock-${cityName.toLowerCase().replaceAll(' ', '-')}-$stateCode-council-1',
+      party: stateCode == 'CA' || stateCode == 'NY' || stateCode == 'IL' ? 'Democratic' : 'Republican',
+      level: 'CITY',
+      state: stateCode,
+      district: '$cityName City Council District 1',
+      office: 'City Council Member',
+      phone: '(555) 555-2345',
+      email: 'council@${cityName.toLowerCase().replaceAll(' ', '')}.gov',
+      website: 'https://www.${cityName.toLowerCase().replaceAll(' ', '')}.gov/council',
+      imageUrl: null,
+      socialMedia: null,
+    ),
+    LocalRepresentative(
+      name: 'Commissioner Jones',
+      bioGuideId: 'cicero-mock-${cityName.toLowerCase().replaceAll(' ', '-')}-$stateCode-commissioner',
+      party: stateCode == 'CA' || stateCode == 'NY' || stateCode == 'IL' ? 'Democratic' : 'Republican',
+      level: 'COUNTY',
+      state: stateCode,
+      district: stateCode == 'FL' ? 'Dade County' : (stateCode == 'GA' ? 'Fulton County' : 'County'),
+      office: 'County Commissioner',
+      phone: '(555) 555-3456',
+      email: 'commissioner@county.gov',
+      website: 'https://www.county.gov',
+      imageUrl: null,
+      socialMedia: null,
+    ),
+  ];
+}
 
   // Helper method with hardcoded coordinates for common US cities
   Map<String, double>? _getHardcodedCoordinatesForCity(String cityName) {

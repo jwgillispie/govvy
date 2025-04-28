@@ -223,56 +223,88 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     }
   }
 
-  // Fetch local representatives by city name
-  Future<void> fetchLocalRepresentativesByCity(String city) async {
-    try {
-      // Check network connectivity
-      if (!await _checkNetworkBeforeRequest()) {
-        return; // Don't proceed if no network
-      }
-      
-      // Verify API keys
-      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
-      
-      _isLoadingLocal = true;
-      _errorMessageLocal = null;
-      _lastSearchedCity = city;
-      notifyListeners();
+ // Add this enhanced method to your lib/providers/combined_representative_provider.dart file
 
-      // Clear existing local representatives
-      _localRepresentativesRaw = [];
-      // Also clear federal representatives to avoid confusion
-      _federalRepresentatives = [];
-
-      // Add a small delay to make loading state visible
-      await Future.delayed(const Duration(milliseconds: 300));
-
-      // Fetch from CiceroService with the city search method
-      _localRepresentativesRaw =
-          await _localService.getLocalRepresentativesByCity(city);
-
-      if (_localRepresentativesRaw.isEmpty) {
-        _errorMessageLocal =
-            'No local representatives found for $city. Please check the city name and try again.';
-      }
-
-      _isLoadingLocal = false;
-
-      // Save to cache
-      _saveLocalCityToCache();
-
-      notifyListeners();
-    } catch (e) {
-      _isLoadingLocal = false;
-      _errorMessageLocal =
-          'Error loading local representatives: ${e.toString()}';
-      if (kDebugMode) {
-        print(_errorMessageLocal);
-      }
-      notifyListeners();
+// Enhanced method to fetch local representatives by city with state support
+Future<void> fetchLocalRepresentativesByCity(String city) async {
+  try {
+    // Check network connectivity
+    if (!await _checkNetworkBeforeRequest()) {
+      return; // Don't proceed if no network
     }
-  }
+    
+    // Verify API keys
+    await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
+    
+    _isLoadingLocal = true;
+    _errorMessageLocal = null;
+    
+    // Parse city and state if provided (e.g., "Gainesville, FL")
+    String searchCity = city;
+    String? stateCode;
+    
+    if (city.contains(',')) {
+      final parts = city.split(',');
+      if (parts.length >= 2) {
+        searchCity = parts[0].trim();
+        // Extract state code - normalize to uppercase and remove spaces
+        stateCode = parts[1].trim().toUpperCase().replaceAll(' ', '');
+      }
+    }
+    
+    // Store the search parameters for caching and display
+    _lastSearchedCity = searchCity;
+    if (stateCode != null) {
+      _lastSearchedState = stateCode;
+    }
+    
+    notifyListeners();
 
+    // Clear existing local representatives
+    _localRepresentativesRaw = [];
+    // Also clear federal representatives to avoid confusion
+    _federalRepresentatives = [];
+
+    // Add a small delay to make loading state visible
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    // Using refined search with state code if available
+    if (stateCode != null) {
+      if (kDebugMode) {
+        print('Searching for representatives in $searchCity, $stateCode');
+      }
+      
+      // If state code is available, use a more specific search
+      // First try with specific state filter
+      _localRepresentativesRaw = await _localService.getLocalRepresentativesByStateCity(stateCode, searchCity);
+    } else {
+      // Regular city search without state specification
+      if (kDebugMode) {
+        print('Searching for representatives in $searchCity (no state specified)');
+      }
+      
+      _localRepresentativesRaw = await _localService.getLocalRepresentativesByCity(searchCity);
+    }
+
+    if (_localRepresentativesRaw.isEmpty) {
+      _errorMessageLocal = 'No local representatives found for $city. Please check the city name and try again.';
+    }
+
+    _isLoadingLocal = false;
+
+    // Save to cache
+    _saveLocalCityToCache();
+
+    notifyListeners();
+  } catch (e) {
+    _isLoadingLocal = false;
+    _errorMessageLocal = 'Error loading local representatives: ${e.toString()}';
+    if (kDebugMode) {
+      print(_errorMessageLocal);
+    }
+    notifyListeners();
+  }
+}
   // Fetch both federal and local representatives (Legacy method kept for compatibility)
   Future<void> fetchAllRepresentativesByAddress(String address) async {
     _lastSearchedAddress = address;
