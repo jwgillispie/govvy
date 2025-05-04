@@ -1,0 +1,19 @@
+Sample Pull API Calls (Note document blobs and datasets are Base64 encoded for JSON transport):
+
+getDatasetList	https://api.legiscan.com/?key=&op=getDatasetList&state=GA
+getDataset	https://api.legiscan.com/?key=&op=getDataset&access_key=268o6T9OIxH5EGJCHXgJfQ&id=2167
+getDatasetRaw	https://api.legiscan.com/?key=&op=getDatasetRaw&access_key=268o6T9OIxH5EGJCHXgJfQ&id=2167&format=csv
+getSessionList	https://api.legiscan.com/?key=&op=getSessionList&state=GA
+getSessionPeople	https://api.legiscan.com/?key=&op=getSessionPeople&id=2167
+getMonitorListRaw	https://api.legiscan.com/?key=&op=getMonitorListRaw&record=current
+getMonitorList	https://api.legiscan.com/?key=&op=getMonitorList&record=all
+getMasterListRaw	https://api.legiscan.com/?key=&op=getMasterListRaw&id=2167
+getMasterList	https://api.legiscan.com/?key=&op=getMasterList&id=2167
+getBill	https://api.legiscan.com/?key=&op=getBill&id=2021328
+getBillText	https://api.legiscan.com/?key=&op=getBillText&id=3208663
+getAmendment	https://api.legiscan.com/?key=&op=getAmendment&id=246722
+getSupplement	https://api.legiscan.com/?key=&op=getSupplement&id=569645
+getRollCall	https://api.legiscan.com/?key=&op=getRollCall&id=1539183
+getPerson	https://api.legiscan.com/?key=&op=getPerson&id=26243
+getSearch	https://api.legiscan.com/?key=&op=getSearch&state=GA&query=tax
+getSearchRaw	https://api.legiscan.com/?key=&op=getSearchRaw&state=GA&query=tax
