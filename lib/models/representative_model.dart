@@ -119,10 +119,13 @@ class RepresentativeDetails {
   final String? website;
   final String? imageUrl;
   final List<String>? socialMedia;
-  final List<RepresentativeBill> sponsoredBills;
-  final List<RepresentativeBill> cosponsoredBills;
+  // Changed from final to allow adding bills after instantiation
+  List<RepresentativeBill> sponsoredBills;
+  List<RepresentativeBill> cosponsoredBills;
   final String? displayTitle;
   final String? role; // Actual role/position title
+  // New field to track if LegiScan bills were attempted to be loaded
+  bool legiscanBillsLoaded = false;
 
   RepresentativeDetails({
     required this.bioGuideId,
@@ -143,6 +146,7 @@ class RepresentativeDetails {
     required this.cosponsoredBills,
     this.displayTitle,
     this.role,
+    this.legiscanBillsLoaded = false,
   });
 
   factory RepresentativeDetails.fromMap({
@@ -346,6 +350,17 @@ class RepresentativeDetails {
           chamber, null, state, district);
     }
 
+    // Process sponsored and cosponsored bills
+    List<RepresentativeBill> processedSponsoredBills = sponsoredBills
+        .map((bill) => RepresentativeBill.fromMap(
+            bill is Map ? Map<String, dynamic>.from(bill) : {}))
+        .toList();
+    
+    List<RepresentativeBill> processedCosponsoredBills = cosponsoredBills
+        .map((bill) => RepresentativeBill.fromMap(
+            bill is Map ? Map<String, dynamic>.from(bill) : {}))
+        .toList();
+
     // Convert all values to strings to handle both int and string types from API
     return RepresentativeDetails(
       bioGuideId: details['bioGuideId']?.toString() ?? '',
@@ -368,14 +383,9 @@ class RepresentativeDetails {
       socialMedia: socialMediaLinks.isEmpty ? null : socialMediaLinks,
       displayTitle: displayTitle,
       role: role, // Add separate role field
-      sponsoredBills: sponsoredBills
-          .map((bill) => RepresentativeBill.fromMap(
-              bill is Map ? Map<String, dynamic>.from(bill) : {}))
-          .toList(),
-      cosponsoredBills: cosponsoredBills
-          .map((bill) => RepresentativeBill.fromMap(
-              bill is Map ? Map<String, dynamic>.from(bill) : {}))
-          .toList(),
+      sponsoredBills: processedSponsoredBills,
+      cosponsoredBills: processedCosponsoredBills,
+      legiscanBillsLoaded: false, // Initialize as not loaded
     );
   }
 
@@ -386,6 +396,24 @@ class RepresentativeDetails {
     }
     return DistrictTypeFormatter.formatRoleWithLocation(
         chamber, null, state, district);
+  }
+  
+  // Add LegiScan bills to sponsored bills list
+  void addLegiscanBills(List<RepresentativeBill> legiscanBills) {
+    if (legiscanBills.isNotEmpty) {
+      // Mark each bill as coming from LegiScan
+      for (var bill in legiscanBills) {
+        bill.source = 'LegiScan';
+      }
+      sponsoredBills.addAll(legiscanBills);
+      // Sort bills by introduced date (most recent first)
+      sponsoredBills.sort((a, b) {
+        if (a.introducedDate == null) return 1;
+        if (b.introducedDate == null) return -1;
+        return b.introducedDate!.compareTo(a.introducedDate!);
+      });
+    }
+    legiscanBillsLoaded = true;
   }
 }
 
@@ -419,6 +447,8 @@ class RepresentativeBill {
   final String title;
   final String? introducedDate;
   final String? latestAction;
+  // Added source to track where the bill came from
+  String source = 'Congress';
 
   RepresentativeBill({
     required this.congress,
@@ -427,6 +457,7 @@ class RepresentativeBill {
     required this.title,
     this.introducedDate,
     this.latestAction,
+    this.source = 'Congress',
   });
 
   factory RepresentativeBill.fromMap(Map<String, dynamic> map) {
@@ -448,6 +479,7 @@ class RepresentativeBill {
       title: map['title']?.toString() ?? '',
       introducedDate: map['introducedDate']?.toString(),
       latestAction: latestActionText,
+      source: map['source']?.toString() ?? 'Congress',
     );
   }
 
@@ -459,6 +491,7 @@ class RepresentativeBill {
       'title': title,
       'introducedDate': introducedDate,
       'latestAction': latestAction,
+      'source': source,
     };
   }
 }

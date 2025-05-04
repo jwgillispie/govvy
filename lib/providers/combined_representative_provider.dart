@@ -4,6 +4,7 @@ import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/models/local_representative_model.dart';
 import 'package:govvy/services/representative_service.dart';
 import 'package:govvy/services/cicero_service.dart';
+import 'package:govvy/services/legiscan_service.dart'; // Add import for LegiScan service
 import 'package:govvy/services/network_service.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,19 +14,25 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   final RepresentativeService _federalService;
   final CiceroService _localService = CiceroService();
   final NetworkService _networkService = NetworkService();
+  final LegiscanService _legiscanService = LegiscanService(); // Add LegiScan service
 
   List<Representative> _federalRepresentatives = [];
   List<LocalRepresentative> _localRepresentativesRaw = [];
   bool _isLoadingFederal = false;
   bool _isLoadingLocal = false;
+  bool _isLoadingLegiscan = false; // Add loading state for LegiScan
   String? _errorMessageFederal;
   String? _errorMessageLocal;
+  String? _errorMessageLegiscan; // Add error message for LegiScan
   String? _lastSearchedAddress;
   String? _lastSearchedCity;
   String? _lastSearchedState;
   String? _lastSearchedDistrict;
   RepresentativeDetails? _selectedRepresentative;
   bool _isLoadingDetails = false;
+
+  // Map to store LegiScan person IDs for representatives
+  final Map<String, int> _repToLegiscanIdMap = {};
 
   // Getters
   List<Representative> get federalRepresentatives => _federalRepresentatives;
@@ -61,13 +68,15 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     return [..._federalRepresentatives, ...locals];
   }
 
-  bool get isLoading => _isLoadingFederal || _isLoadingLocal;
+  bool get isLoading => _isLoadingFederal || _isLoadingLocal || _isLoadingLegiscan;
   bool get isLoadingFederal => _isLoadingFederal;
   bool get isLoadingLocal => _isLoadingLocal;
+  bool get isLoadingLegiscan => _isLoadingLegiscan; // Add getter for LegiScan loading state
 
-  String? get errorMessage => _errorMessageFederal ?? _errorMessageLocal;
+  String? get errorMessage => _errorMessageFederal ?? _errorMessageLocal ?? _errorMessageLegiscan;
   String? get errorMessageFederal => _errorMessageFederal;
   String? get errorMessageLocal => _errorMessageLocal;
+  String? get errorMessageLegiscan => _errorMessageLegiscan;
 
   String? get lastSearchedAddress => _lastSearchedAddress;
   String? get lastSearchedCity => _lastSearchedCity;
@@ -121,6 +130,11 @@ class CombinedRepresentativeProvider with ChangeNotifier {
         hasRequiredKeys = false;
       }
       
+      if (!keyStatus['legiscan']!) {
+        _errorMessageLegiscan = 'Missing LegiScan API key. State/local bill data will be limited.';
+        hasRequiredKeys = false;
+      }
+      
       if (!hasRequiredKeys) {
         notifyListeners();
       }
@@ -131,6 +145,75 @@ class CombinedRepresentativeProvider with ChangeNotifier {
         print('Error verifying API keys: $e');
       }
       return true; // Continue anyway
+    }
+  }
+
+  // Method to find and fetch LegiScan bills for a representative
+  Future<List<RepresentativeBill>> fetchLegiscanBills(Representative rep) async {
+    try {
+      _isLoadingLegiscan = true;
+      _errorMessageLegiscan = null;
+      notifyListeners();
+      
+      // Skip if LegiScan API key is not available
+      if (!_legiscanService.hasApiKey) {
+        if (kDebugMode) {
+          print('LegiScan API key not available. Using mock data.');
+        }
+        _isLoadingLegiscan = false;
+        notifyListeners();
+        return await _legiscanService.getMockSponsoredBills();
+      }
+      
+      // Check if we already have a LegiScan ID for this representative
+      if (_repToLegiscanIdMap.containsKey(rep.bioGuideId)) {
+        final legiscanId = _repToLegiscanIdMap[rep.bioGuideId]!;
+        if (kDebugMode) {
+          print('Using cached LegiScan ID: $legiscanId for ${rep.name}');
+        }
+        
+        final bills = await _legiscanService.getSponsoredBills(legiscanId);
+        _isLoadingLegiscan = false;
+        notifyListeners();
+        return bills;
+      }
+      
+      // Try to find the representative in LegiScan by name and state
+      final person = await _legiscanService.findPersonByName(rep.name, rep.state);
+      
+      if (person != null && person.containsKey('people_id')) {
+        final legiscanId = int.parse(person['people_id'].toString());
+        
+        // Cache the ID for future use
+        _repToLegiscanIdMap[rep.bioGuideId] = legiscanId;
+        
+        if (kDebugMode) {
+          print('Found LegiScan ID: $legiscanId for ${rep.name}');
+        }
+        
+        // Get the bills sponsored by this person
+        final bills = await _legiscanService.getSponsoredBills(legiscanId);
+        _isLoadingLegiscan = false;
+        notifyListeners();
+        return bills;
+      }
+      
+      // If we couldn't find the person in LegiScan
+      if (kDebugMode) {
+        print('Could not find ${rep.name} (${rep.state}) in LegiScan');
+      }
+      
+      _isLoadingLegiscan = false;
+      notifyListeners();
+      return [];
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching LegiScan bills: $e');
+      }
+      _errorMessageLegiscan = 'Error fetching bills from LegiScan: ${e.toString()}';
+      _isLoadingLegiscan = false;
+      notifyListeners();
+      return [];
     }
   }
 
@@ -417,7 +500,7 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
     }
   }
 
-  // Fetch representative details
+  // Updated method to fetch representative details with LegiScan integration
   Future<void> fetchRepresentativeDetails(String bioGuideId) async {
     try {
       // Check network connectivity
@@ -431,6 +514,7 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
       _isLoadingDetails = true;
       _errorMessageLocal = null;
       _errorMessageFederal = null;
+      _errorMessageLegiscan = null;
       notifyListeners();
 
       // First check if it's a local representative
@@ -459,8 +543,50 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
           sponsoredBills: [],
           cosponsoredBills: [],
         );
+        
+        // Now try to find bills in LegiScan for this local representative
+        final localRepAsGeneric = localRep.toRepresentative();
+        
+        // Only proceed if this is a state or local-level representative
+        final chamber = localRep.level.toUpperCase();
+        if (!chamber.contains('NATIONAL') && 
+            chamber != 'SENATE' && 
+            chamber != 'HOUSE' &&
+            chamber != 'CONGRESS') {
+          
+          if (kDebugMode) {
+            print('Searching for bills in LegiScan for local rep: ${localRep.name}');
+          }
+          
+          try {
+            // Fetch but don't wait for completion
+            _isLoadingLegiscan = true;
+            notifyListeners();
+            
+            fetchLegiscanBills(localRepAsGeneric).then((legiscanBills) {
+              if (_selectedRepresentative != null && 
+                  _selectedRepresentative!.bioGuideId == bioGuideId) {
+                
+                _selectedRepresentative!.addLegiscanBills(legiscanBills);
+                _isLoadingLegiscan = false;
+                notifyListeners();
+              }
+            }).catchError((e) {
+              if (kDebugMode) {
+                print('Error fetching LegiScan bills for local rep: $e');
+              }
+              _isLoadingLegiscan = false;
+              notifyListeners();
+            });
+          } catch (e) {
+            if (kDebugMode) {
+              print('Error initiating LegiScan search: $e');
+            }
+            _isLoadingLegiscan = false;
+          }
+        }
       } else {
-        // It's a federal representative, use the federal service
+        // It's a federal or state representative, use the federal service
         final detailsResponse =
             await _federalService.getRepresentativeDetails(bioGuideId);
 
@@ -468,6 +594,59 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
             details: detailsResponse['details'],
             sponsoredBills: detailsResponse['sponsoredBills'],
             cosponsoredBills: detailsResponse['cosponsoredBills']);
+            
+        // For state-level representatives, try to get bills from LegiScan
+        if (_selectedRepresentative != null) {
+          final chamber = _selectedRepresentative!.chamber.toUpperCase();
+          
+          // Only get LegiScan bills for state legislators, not federal ones
+          if (chamber.startsWith('STATE_') || 
+              chamber == 'STATE SENATE' || 
+              chamber == 'STATE HOUSE' || 
+              chamber == 'STATE ASSEMBLY') {
+            
+            if (kDebugMode) {
+              print('Searching for bills in LegiScan for state rep: ${_selectedRepresentative!.name}');
+            }
+            
+            try {
+              // Create a Representative object from the details
+              final stateRep = Representative(
+                name: _selectedRepresentative!.name,
+                bioGuideId: bioGuideId,
+                party: _selectedRepresentative!.party,
+                chamber: _selectedRepresentative!.chamber,
+                state: _selectedRepresentative!.state,
+                district: _selectedRepresentative!.district,
+              );
+              
+              // Fetch but don't wait for completion
+              _isLoadingLegiscan = true;
+              notifyListeners();
+              
+              fetchLegiscanBills(stateRep).then((legiscanBills) {
+                if (_selectedRepresentative != null && 
+                    _selectedRepresentative!.bioGuideId == bioGuideId) {
+                  
+                  _selectedRepresentative!.addLegiscanBills(legiscanBills);
+                  _isLoadingLegiscan = false;
+                  notifyListeners();
+                }
+              }).catchError((e) {
+                if (kDebugMode) {
+                  print('Error fetching LegiScan bills for state rep: $e');
+                }
+                _isLoadingLegiscan = false;
+                notifyListeners();
+              });
+            } catch (e) {
+              if (kDebugMode) {
+                print('Error initiating LegiScan search: $e');
+              }
+              _isLoadingLegiscan = false;
+            }
+          }
+        }
       }
 
       _isLoadingDetails = false;
@@ -483,6 +662,56 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
     }
   }
 
+  // Fetch representatives by name
+  Future<void> fetchRepresentativesByName(String lastName,
+      {String? firstName}) async {
+    try {
+      // Check network connectivity
+      if (!await _checkNetworkBeforeRequest()) {
+        return; // Don't proceed if no network
+      }
+      
+      // Verify API keys
+      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
+      
+      _isLoadingLocal = true;
+      _errorMessageLocal = null;
+      notifyListeners();
+
+      // Clear existing representatives
+      _federalRepresentatives = [];
+      _localRepresentativesRaw = [];
+
+      // Add a small delay to make loading state visible
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      if (kDebugMode) {
+        print(
+            'Searching for representatives with last name: $lastName, first name: $firstName');
+      }
+
+      // Use the CiceroService to search by name
+      _localRepresentativesRaw = await _localService
+          .getRepresentativesByName(lastName, firstName: firstName);
+
+      if (_localRepresentativesRaw.isEmpty) {
+        _errorMessageLocal =
+            'No representatives found with the name "$lastName${firstName != null ? ', $firstName' : ''}". Please try a different name.';
+      }
+
+      _isLoadingLocal = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoadingLocal = false;
+      _errorMessageLocal =
+          'Error searching for representatives: ${e.toString()}';
+      if (kDebugMode) {
+        print(_errorMessageLocal);
+      }
+      notifyListeners();
+    }
+  }
+  
   // Save state search results to cache
   Future<void> _saveStateSearchToCache() async {
     try {
@@ -697,6 +926,7 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
   void clearErrors() {
     _errorMessageFederal = null;
     _errorMessageLocal = null;
+    _errorMessageLegiscan = null;
     notifyListeners();
   }
 
@@ -706,61 +936,12 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
     _localRepresentativesRaw = [];
     _errorMessageFederal = null;
     _errorMessageLocal = null;
+    _errorMessageLegiscan = null;
     _lastSearchedAddress = null;
     _lastSearchedCity = null;
     _lastSearchedState = null;
     _lastSearchedDistrict = null;
     _selectedRepresentative = null;
     notifyListeners();
-  }
-
-  // Fetch representatives by name
-  Future<void> fetchRepresentativesByName(String lastName,
-      {String? firstName}) async {
-    try {
-      // Check network connectivity
-      if (!await _checkNetworkBeforeRequest()) {
-        return; // Don't proceed if no network
-      }
-      
-      // Verify API keys
-      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
-      
-      _isLoadingLocal = true;
-      _errorMessageLocal = null;
-      notifyListeners();
-
-      // Clear existing representatives
-      _federalRepresentatives = [];
-      _localRepresentativesRaw = [];
-
-      // Add a small delay to make loading state visible
-      await Future.delayed(const Duration(milliseconds: 300));
-
-      if (kDebugMode) {
-        print(
-            'Searching for representatives with last name: $lastName, first name: $firstName');
-      }
-
-      // Use the CiceroService to search by name
-      _localRepresentativesRaw = await _localService
-          .getRepresentativesByName(lastName, firstName: firstName);
-
-      if (_localRepresentativesRaw.isEmpty) {
-        _errorMessageLocal =
-            'No representatives found with the name "$lastName${firstName != null ? ', $firstName' : ''}". Please try a different name.';
-      }
-
-      _isLoadingLocal = false;
-      notifyListeners();
-    } catch (e) {
-      _isLoadingLocal = false;
-      _errorMessageLocal =
-          'Error searching for representatives: ${e.toString()}';
-      if (kDebugMode) {
-        print(_errorMessageLocal);
-      }
-      notifyListeners();
-    }
   }
 }

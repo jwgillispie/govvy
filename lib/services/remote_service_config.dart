@@ -1,4 +1,4 @@
-// lib/services/remote_config_service.dart
+// lib/services/remote_service_config.dart
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -16,6 +16,7 @@ class RemoteConfigService {
   static const String congressApiKey = 'CONGRESS_API_KEY';
   static const String googleMapsApiKey = 'GOOGLE_MAPS_API_KEY';
   static const String ciceroApiKey = 'CICERO_API_KEY';
+  static const String legiscanApiKey = 'LEGISCAN_API_KEY'; // Added LegiScan API key
 
   // Initialization status and source tracking
   bool _initialized = false;
@@ -35,6 +36,7 @@ class RemoteConfigService {
         congressApiKey: '',
         googleMapsApiKey: '',
         ciceroApiKey: '',
+        legiscanApiKey: '', // Added default for LegiScan API key
       });
 
       // Set minimum fetch interval
@@ -55,6 +57,9 @@ class RemoteConfigService {
       }
       if (_remoteConfig.getString(ciceroApiKey).isNotEmpty) {
         _keySource[ciceroApiKey] = 'Firebase';
+      }
+      if (_remoteConfig.getString(legiscanApiKey).isNotEmpty) {
+        _keySource[legiscanApiKey] = 'Firebase';
       }
 
       _initialized = true;
@@ -96,6 +101,9 @@ class RemoteConfigService {
       if (_keySource[ciceroApiKey] == null && dotenv.env[ciceroApiKey] != null) {
         _keySource[ciceroApiKey] = '.env';
       }
+      if (_keySource[legiscanApiKey] == null && dotenv.env[legiscanApiKey] != null) {
+        _keySource[legiscanApiKey] = '.env';
+      }
     } catch (e) {
       if (kDebugMode) {
         print("❌ Error loading .env file: $e");
@@ -132,6 +140,14 @@ class RemoteConfigService {
     } else {
       print('❌ CICERO_API_KEY: Missing or empty');
     }
+    
+    // LegiScan API Key
+    final legiscanKey = getLegiscanApiKey;
+    if (legiscanKey != null && legiscanKey.isNotEmpty) {
+      print('✅ LEGISCAN_API_KEY: Valid (from ${_keySource[legiscanApiKey] ?? "unknown"}, ${_maskKey(legiscanKey)})');
+    } else {
+      print('❌ LEGISCAN_API_KEY: Missing or empty');
+    }
   }
 
   // Mask API key for safe logging
@@ -152,6 +168,7 @@ class RemoteConfigService {
       'congress': getCongressApiKey?.isNotEmpty == true,
       'googleMaps': getGoogleMapsApiKey?.isNotEmpty == true,
       'cicero': getCiceroApiKey?.isNotEmpty == true,
+      'legiscan': getLegiscanApiKey?.isNotEmpty == true, // Added LegiScan validation
     };
   }
 
@@ -202,5 +219,22 @@ class RemoteConfigService {
     
     // Fall back to .env
     return dotenv.env[ciceroApiKey];
+  }
+  
+  // Added getter for LegiScan API key
+  String? get getLegiscanApiKey {
+    if (!_initialized) {
+      // Try to initialize if not done yet
+      initialize();
+    }
+
+    // First try Remote Config
+    final remoteKey = _remoteConfig.getString(legiscanApiKey);
+    if (remoteKey.isNotEmpty) {
+      return remoteKey;
+    }
+    
+    // Fall back to .env
+    return dotenv.env[legiscanApiKey];
   }
 }

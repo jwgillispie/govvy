@@ -32,7 +32,7 @@ class _RepresentativeDetailsScreenState
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this); // Updated to 4 tabs
+    _tabController = TabController(length: 4, vsync: this); // 4 tabs
 
     // Fix: Use addPostFrameCallback to defer API call until after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -161,6 +161,7 @@ class _RepresentativeDetailsScreenState
       builder: (context, provider, child) {
         final isLoading = provider.isLoadingDetails;
         final rep = provider.selectedRepresentative;
+        final isLoadingLegiscan = provider.isLoadingLegiscan;
 
         return Scaffold(
           appBar: AppBar(
@@ -214,10 +215,16 @@ class _RepresentativeDetailsScreenState
                                   officeName: rep.office ?? '',
                                   district: rep.district,
                                 ),
-                                _buildBillsTab(rep.sponsoredBills,
-                                    'No sponsored bills found'),
-                                _buildBillsTab(rep.cosponsoredBills,
-                                    'No co-sponsored bills found'),
+                                _buildBillsTab(
+                                  rep.sponsoredBills, 
+                                  'No sponsored bills found',
+                                  isLoadingLegiscan,
+                                ),
+                                _buildBillsTab(
+                                  rep.cosponsoredBills,
+                                  'No co-sponsored bills found',
+                                  false, // We don't load LegiScan bills for cosponsored tab
+                                ),
                               ],
                             ),
                           ),
@@ -1046,7 +1053,30 @@ class _RepresentativeDetailsScreenState
     return rep.district ?? rep.state;
   }
 
-  Widget _buildBillsTab(List<RepresentativeBill> bills, String emptyMessage) {
+  // Updated to show LegiScan loading state
+  Widget _buildBillsTab(
+    List<RepresentativeBill> bills, 
+    String emptyMessage,
+    bool isLoadingLegiscan,
+  ) {
+    // Show loading indicator if LegiScan bills are being loaded
+    if (isLoadingLegiscan) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(height: 16),
+            Text(
+              'Loading additional bills from LegiScan...',
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
+    }
+    
     if (bills.isEmpty) {
       return Center(
         child: Text(
@@ -1072,7 +1102,9 @@ class _RepresentativeDetailsScreenState
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: bill.source == 'LegiScan'
+                        ? Colors.green
+                        : Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
@@ -1085,12 +1117,33 @@ class _RepresentativeDetailsScreenState
                   ),
                 ),
                 const SizedBox(width: 8),
+                if (bill.source == 'LegiScan')
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade100,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: Colors.green.shade300),
+                    ),
+                    child: Text(
+                      'State',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green.shade800,
+                      ),
+                    ),
+                  ),
+                const SizedBox(width: 8),
                 if (bill.introducedDate != null)
-                  Text(
-                    'Introduced: ${bill.introducedDate}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey.shade700,
+                  Expanded(
+                    child: Text(
+                      'Introduced: ${bill.introducedDate}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade700,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
               ],
@@ -1111,6 +1164,14 @@ class _RepresentativeDetailsScreenState
                 ),
               ),
             ],
+            const SizedBox(height: 4),
+            Text(
+              'Session: ${bill.congress}',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey.shade600,
+              ),
+            ),
           ],
         );
       },
