@@ -14,7 +14,8 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   final RepresentativeService _federalService;
   final CiceroService _localService = CiceroService();
   final NetworkService _networkService = NetworkService();
-  final LegiscanService _legiscanService = LegiscanService(); // Add LegiScan service
+  final LegiscanService _legiscanService =
+      LegiscanService(); // Add LegiScan service
 
   List<Representative> _federalRepresentatives = [];
   List<LocalRepresentative> _localRepresentativesRaw = [];
@@ -68,12 +69,15 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     return [..._federalRepresentatives, ...locals];
   }
 
-  bool get isLoading => _isLoadingFederal || _isLoadingLocal || _isLoadingLegiscan;
+  bool get isLoading =>
+      _isLoadingFederal || _isLoadingLocal || _isLoadingLegiscan;
   bool get isLoadingFederal => _isLoadingFederal;
   bool get isLoadingLocal => _isLoadingLocal;
-  bool get isLoadingLegiscan => _isLoadingLegiscan; // Add getter for LegiScan loading state
+  bool get isLoadingLegiscan =>
+      _isLoadingLegiscan; // Add getter for LegiScan loading state
 
-  String? get errorMessage => _errorMessageFederal ?? _errorMessageLocal ?? _errorMessageLegiscan;
+  String? get errorMessage =>
+      _errorMessageFederal ?? _errorMessageLocal ?? _errorMessageLegiscan;
   String? get errorMessageFederal => _errorMessageFederal;
   String? get errorMessageLocal => _errorMessageLocal;
   String? get errorMessageLegiscan => _errorMessageLegiscan;
@@ -92,12 +96,13 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   Future<bool> _checkNetworkBeforeRequest() async {
     try {
       final isConnected = await _networkService.checkConnectivity();
-      
+
       if (!isConnected) {
-        _errorMessageFederal = 'Network connection unavailable. Please check your internet connection.';
+        _errorMessageFederal =
+            'Network connection unavailable. Please check your internet connection.';
         notifyListeners();
       }
-      
+
       return isConnected;
     } catch (e) {
       if (kDebugMode) {
@@ -106,39 +111,43 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       return true; // Assume connected if check fails
     }
   }
-  
+
   // Add a method to check API key availability
   Future<bool> _verifyApiKeys() async {
     try {
       final remoteConfig = RemoteConfigService();
       final keyStatus = await remoteConfig.validateApiKeys();
-      
+
       bool hasRequiredKeys = true;
-      
+
       if (!keyStatus['googleMaps']!) {
-        _errorMessageFederal = 'Missing Google Maps API key. Some features may not work correctly.';
+        _errorMessageFederal =
+            'Missing Google Maps API key. Some features may not work correctly.';
         hasRequiredKeys = false;
       }
-      
+
       if (!keyStatus['congress']!) {
-        _errorMessageFederal = 'Missing Congress API key. Federal representative data will be limited.';
+        _errorMessageFederal =
+            'Missing Congress API key. Federal representative data will be limited.';
         hasRequiredKeys = false;
       }
-      
+
       if (!keyStatus['cicero']!) {
-        _errorMessageLocal = 'Missing Cicero API key. Local representative data will be limited.';
+        _errorMessageLocal =
+            'Missing Cicero API key. Local representative data will be limited.';
         hasRequiredKeys = false;
       }
-      
+
       if (!keyStatus['legiscan']!) {
-        _errorMessageLegiscan = 'Missing LegiScan API key. State/local bill data will be limited.';
+        _errorMessageLegiscan =
+            'Missing LegiScan API key. State/local bill data will be limited.';
         hasRequiredKeys = false;
       }
-      
+
       if (!hasRequiredKeys) {
         notifyListeners();
       }
-      
+
       return hasRequiredKeys;
     } catch (e) {
       if (kDebugMode) {
@@ -149,12 +158,13 @@ class CombinedRepresentativeProvider with ChangeNotifier {
   }
 
   // Method to find and fetch LegiScan bills for a representative
-  Future<List<RepresentativeBill>> fetchLegiscanBills(Representative rep) async {
+  Future<List<RepresentativeBill>> fetchLegiscanBills(
+      Representative rep) async {
     try {
       _isLoadingLegiscan = true;
       _errorMessageLegiscan = null;
       notifyListeners();
-      
+
       // Skip if LegiScan API key is not available
       if (!_legiscanService.hasApiKey) {
         if (kDebugMode) {
@@ -164,45 +174,50 @@ class CombinedRepresentativeProvider with ChangeNotifier {
         notifyListeners();
         return await _legiscanService.getMockSponsoredBills();
       }
-      
+
       // Check if we already have a LegiScan ID for this representative
       if (_repToLegiscanIdMap.containsKey(rep.bioGuideId)) {
         final legiscanId = _repToLegiscanIdMap[rep.bioGuideId]!;
         if (kDebugMode) {
           print('Using cached LegiScan ID: $legiscanId for ${rep.name}');
         }
-        
+
         final bills = await _legiscanService.getSponsoredBills(legiscanId);
         _isLoadingLegiscan = false;
         notifyListeners();
         return bills;
       }
-      
+
       // Try to find the representative in LegiScan by name and state
-      final person = await _legiscanService.findPersonByName(rep.name, rep.state);
-      
-      if (person != null && person.containsKey('people_id')) {
-        final legiscanId = int.parse(person['people_id'].toString());
-        
-        // Cache the ID for future use
-        _repToLegiscanIdMap[rep.bioGuideId] = legiscanId;
-        
+      final person =
+          await _legiscanService.findPersonByName(rep.name, rep.state);
+
+      if (person == null) {
         if (kDebugMode) {
-          print('Found LegiScan ID: $legiscanId for ${rep.name}');
+          print(
+              'Could not find ${rep.name} in LegiScan API. Trying direct bill search...');
         }
-        
-        // Get the bills sponsored by this person
-        final bills = await _legiscanService.getSponsoredBills(legiscanId);
-        _isLoadingLegiscan = false;
-        notifyListeners();
-        return bills;
+
+        // Parse name into first and last name
+        final nameParts = rep.name.split(' ');
+        String lastName = nameParts.last;
+        String firstName = nameParts.length > 1 ? nameParts.first : '';
+
+        // Try direct bill search by name
+        final bills = await _legiscanService.getDirectBillsForPerson(
+            firstName, lastName, rep.state);
+
+        if (bills.isNotEmpty) {
+          if (kDebugMode) {
+            print(
+                'Found ${bills.length} bills for ${rep.name} using direct bill search');
+          }
+          _isLoadingLegiscan = false;
+          notifyListeners();
+          return bills;
+        }
       }
-      
-      // If we couldn't find the person in LegiScan
-      if (kDebugMode) {
-        print('Could not find ${rep.name} (${rep.state}) in LegiScan');
-      }
-      
+
       _isLoadingLegiscan = false;
       notifyListeners();
       return [];
@@ -210,7 +225,8 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       if (kDebugMode) {
         print('Error fetching LegiScan bills: $e');
       }
-      _errorMessageLegiscan = 'Error fetching bills from LegiScan: ${e.toString()}';
+      _errorMessageLegiscan =
+          'Error fetching bills from LegiScan: ${e.toString()}';
       _isLoadingLegiscan = false;
       notifyListeners();
       return [];
@@ -225,10 +241,10 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       if (!await _checkNetworkBeforeRequest()) {
         return; // Don't proceed if no network
       }
-      
+
       // Verify API keys
       await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
-      
+
       _isLoadingFederal = true;
       _errorMessageFederal = null;
       _lastSearchedState = stateCode;
@@ -306,88 +322,94 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     }
   }
 
- // Add this enhanced method to your lib/providers/combined_representative_provider.dart file
+  // Add this enhanced method to your lib/providers/combined_representative_provider.dart file
 
 // Enhanced method to fetch local representatives by city with state support
-Future<void> fetchLocalRepresentativesByCity(String city) async {
-  try {
-    // Check network connectivity
-    if (!await _checkNetworkBeforeRequest()) {
-      return; // Don't proceed if no network
-    }
-    
-    // Verify API keys
-    await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
-    
-    _isLoadingLocal = true;
-    _errorMessageLocal = null;
-    
-    // Parse city and state if provided (e.g., "Gainesville, FL")
-    String searchCity = city;
-    String? stateCode;
-    
-    if (city.contains(',')) {
-      final parts = city.split(',');
-      if (parts.length >= 2) {
-        searchCity = parts[0].trim();
-        // Extract state code - normalize to uppercase and remove spaces
-        stateCode = parts[1].trim().toUpperCase().replaceAll(' ', '');
+  Future<void> fetchLocalRepresentativesByCity(String city) async {
+    try {
+      // Check network connectivity
+      if (!await _checkNetworkBeforeRequest()) {
+        return; // Don't proceed if no network
       }
-    }
-    
-    // Store the search parameters for caching and display
-    _lastSearchedCity = searchCity;
-    if (stateCode != null) {
-      _lastSearchedState = stateCode;
-    }
-    
-    notifyListeners();
 
-    // Clear existing local representatives
-    _localRepresentativesRaw = [];
-    // Also clear federal representatives to avoid confusion
-    _federalRepresentatives = [];
+      // Verify API keys
+      await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
 
-    // Add a small delay to make loading state visible
-    await Future.delayed(const Duration(milliseconds: 300));
+      _isLoadingLocal = true;
+      _errorMessageLocal = null;
 
-    // Using refined search with state code if available
-    if (stateCode != null) {
+      // Parse city and state if provided (e.g., "Gainesville, FL")
+      String searchCity = city;
+      String? stateCode;
+
+      if (city.contains(',')) {
+        final parts = city.split(',');
+        if (parts.length >= 2) {
+          searchCity = parts[0].trim();
+          // Extract state code - normalize to uppercase and remove spaces
+          stateCode = parts[1].trim().toUpperCase().replaceAll(' ', '');
+        }
+      }
+
+      // Store the search parameters for caching and display
+      _lastSearchedCity = searchCity;
+      if (stateCode != null) {
+        _lastSearchedState = stateCode;
+      }
+
+      notifyListeners();
+
+      // Clear existing local representatives
+      _localRepresentativesRaw = [];
+      // Also clear federal representatives to avoid confusion
+      _federalRepresentatives = [];
+
+      // Add a small delay to make loading state visible
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      // Using refined search with state code if available
+      if (stateCode != null) {
+        if (kDebugMode) {
+          print('Searching for representatives in $searchCity, $stateCode');
+        }
+
+        // If state code is available, use a more specific search
+        // First try with specific state filter
+        _localRepresentativesRaw = await _localService
+            .getLocalRepresentativesByStateCity(stateCode, searchCity);
+      } else {
+        // Regular city search without state specification
+        if (kDebugMode) {
+          print(
+              'Searching for representatives in $searchCity (no state specified)');
+        }
+
+        _localRepresentativesRaw =
+            await _localService.getLocalRepresentativesByCity(searchCity);
+      }
+
+      if (_localRepresentativesRaw.isEmpty) {
+        _errorMessageLocal =
+            'No local representatives found for $city. Please check the city name and try again.';
+      }
+
+      _isLoadingLocal = false;
+
+      // Save to cache
+      _saveLocalCityToCache();
+
+      notifyListeners();
+    } catch (e) {
+      _isLoadingLocal = false;
+      _errorMessageLocal =
+          'Error loading local representatives: ${e.toString()}';
       if (kDebugMode) {
-        print('Searching for representatives in $searchCity, $stateCode');
+        print(_errorMessageLocal);
       }
-      
-      // If state code is available, use a more specific search
-      // First try with specific state filter
-      _localRepresentativesRaw = await _localService.getLocalRepresentativesByStateCity(stateCode, searchCity);
-    } else {
-      // Regular city search without state specification
-      if (kDebugMode) {
-        print('Searching for representatives in $searchCity (no state specified)');
-      }
-      
-      _localRepresentativesRaw = await _localService.getLocalRepresentativesByCity(searchCity);
+      notifyListeners();
     }
-
-    if (_localRepresentativesRaw.isEmpty) {
-      _errorMessageLocal = 'No local representatives found for $city. Please check the city name and try again.';
-    }
-
-    _isLoadingLocal = false;
-
-    // Save to cache
-    _saveLocalCityToCache();
-
-    notifyListeners();
-  } catch (e) {
-    _isLoadingLocal = false;
-    _errorMessageLocal = 'Error loading local representatives: ${e.toString()}';
-    if (kDebugMode) {
-      print(_errorMessageLocal);
-    }
-    notifyListeners();
   }
-}
+
   // Fetch both federal and local representatives (Legacy method kept for compatibility)
   Future<void> fetchAllRepresentativesByAddress(String address) async {
     _lastSearchedAddress = address;
@@ -410,10 +432,10 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
       if (!await _checkNetworkBeforeRequest()) {
         return; // Don't proceed if no network
       }
-      
+
       // Verify API keys
       await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
-      
+
       _isLoadingFederal = true;
       _errorMessageFederal = null;
       notifyListeners();
@@ -464,10 +486,10 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
       if (!await _checkNetworkBeforeRequest()) {
         return; // Don't proceed if no network
       }
-      
+
       // Verify API keys
       await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
-      
+
       _isLoadingLocal = true;
       _errorMessageLocal = null;
       notifyListeners();
@@ -507,10 +529,10 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
       if (!await _checkNetworkBeforeRequest()) {
         return; // Don't proceed if no network
       }
-      
+
       // Verify API keys
       await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
-      
+
       _isLoadingDetails = true;
       _errorMessageLocal = null;
       _errorMessageFederal = null;
@@ -543,30 +565,29 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
           sponsoredBills: [],
           cosponsoredBills: [],
         );
-        
+
         // Now try to find bills in LegiScan for this local representative
         final localRepAsGeneric = localRep.toRepresentative();
-        
+
         // Only proceed if this is a state or local-level representative
         final chamber = localRep.level.toUpperCase();
-        if (!chamber.contains('NATIONAL') && 
-            chamber != 'SENATE' && 
+        if (!chamber.contains('NATIONAL') &&
+            chamber != 'SENATE' &&
             chamber != 'HOUSE' &&
             chamber != 'CONGRESS') {
-          
           if (kDebugMode) {
-            print('Searching for bills in LegiScan for local rep: ${localRep.name}');
+            print(
+                'Searching for bills in LegiScan for local rep: ${localRep.name}');
           }
-          
+
           try {
             // Fetch but don't wait for completion
             _isLoadingLegiscan = true;
             notifyListeners();
-            
+
             fetchLegiscanBills(localRepAsGeneric).then((legiscanBills) {
-              if (_selectedRepresentative != null && 
+              if (_selectedRepresentative != null &&
                   _selectedRepresentative!.bioGuideId == bioGuideId) {
-                
                 _selectedRepresentative!.addLegiscanBills(legiscanBills);
                 _isLoadingLegiscan = false;
                 notifyListeners();
@@ -594,21 +615,21 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
             details: detailsResponse['details'],
             sponsoredBills: detailsResponse['sponsoredBills'],
             cosponsoredBills: detailsResponse['cosponsoredBills']);
-            
+
         // For state-level representatives, try to get bills from LegiScan
         if (_selectedRepresentative != null) {
           final chamber = _selectedRepresentative!.chamber.toUpperCase();
-          
+
           // Only get LegiScan bills for state legislators, not federal ones
-          if (chamber.startsWith('STATE_') || 
-              chamber == 'STATE SENATE' || 
-              chamber == 'STATE HOUSE' || 
+          if (chamber.startsWith('STATE_') ||
+              chamber == 'STATE SENATE' ||
+              chamber == 'STATE HOUSE' ||
               chamber == 'STATE ASSEMBLY') {
-            
             if (kDebugMode) {
-              print('Searching for bills in LegiScan for state rep: ${_selectedRepresentative!.name}');
+              print(
+                  'Searching for bills in LegiScan for state rep: ${_selectedRepresentative!.name}');
             }
-            
+
             try {
               // Create a Representative object from the details
               final stateRep = Representative(
@@ -619,15 +640,14 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
                 state: _selectedRepresentative!.state,
                 district: _selectedRepresentative!.district,
               );
-              
+
               // Fetch but don't wait for completion
               _isLoadingLegiscan = true;
               notifyListeners();
-              
+
               fetchLegiscanBills(stateRep).then((legiscanBills) {
-                if (_selectedRepresentative != null && 
+                if (_selectedRepresentative != null &&
                     _selectedRepresentative!.bioGuideId == bioGuideId) {
-                  
                   _selectedRepresentative!.addLegiscanBills(legiscanBills);
                   _isLoadingLegiscan = false;
                   notifyListeners();
@@ -670,10 +690,10 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
       if (!await _checkNetworkBeforeRequest()) {
         return; // Don't proceed if no network
       }
-      
+
       // Verify API keys
       await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
-      
+
       _isLoadingLocal = true;
       _errorMessageLocal = null;
       notifyListeners();
@@ -711,7 +731,7 @@ Future<void> fetchLocalRepresentativesByCity(String city) async {
       notifyListeners();
     }
   }
-  
+
   // Save state search results to cache
   Future<void> _saveStateSearchToCache() async {
     try {

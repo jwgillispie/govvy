@@ -9,10 +9,10 @@ import 'package:http/http.dart' as http;
 class LegiscanService {
   final String _baseUrl = 'https://api.legiscan.com/';
   final NetworkService _networkService = NetworkService();
-  
+
   // Get API key from Remote Config
   String? get _apiKey => RemoteConfigService().getLegiscanApiKey;
-  
+
   // Check if API key is available
   bool get hasApiKey {
     final hasKey = _apiKey != null && _apiKey!.isNotEmpty;
@@ -21,93 +21,202 @@ class LegiscanService {
     }
     return hasKey;
   }
-  
-  // Find a person by name and state in LegiScan
-  Future<Map<String, dynamic>?> findPersonByName(String name, String state) async {
+
+  // Updated version of findPersonByName method focusing on the specific issue
+  Future<Map<String, dynamic>?> findPersonByName(
+      String name, String state) async {
     if (!hasApiKey) {
       return null;
     }
-    
+
     try {
-      // First, get the session list for the state to find current session ID
-      final sessionData = await _callApi('getSessionList', {'state': state});
-      
-      if (sessionData == null || !sessionData.containsKey('sessions')) {
+      if (kDebugMode) {
+        print('Searching for $name in state $state');
+      }
+
+      // Use direct search for the person - this is more reliable than session people lookup
+      final searchParams = {'state': state, 'query': name};
+
+      final searchResults = await _callApi('getSearch', searchParams);
+
+      if (searchResults == null) {
         if (kDebugMode) {
-          print('No session data found for state: $state');
+          print('No search results returned');
         }
         return null;
       }
-      
-      // Find the most recent (active or prefiled) session
-      int? sessionId;
-      for (var session in sessionData['sessions']) {
-        if (session['session_status'] == 'active' || session['session_status'] == 'prefiled') {
-          sessionId = session['session_id'];
-          break;
-        }
+
+      if (kDebugMode) {
+        print('Search results structure: ${searchResults.keys}');
       }
-      
-      if (sessionId == null && sessionData['sessions'].isNotEmpty) {
-        // If no active session, use the most recent one
-        sessionId = sessionData['sessions'][0]['session_id'];
-      }
-      
-      if (sessionId == null) {
+
+      if (!searchResults.containsKey('results') ||
+          !(searchResults['results'] is Map) ||
+          !searchResults['results'].containsKey('people') ||
+          !(searchResults['results']['people'] is List)) {
         if (kDebugMode) {
-          print('No valid session ID found for state: $state');
+          print('No people found in search results');
+        }
+
+        // Try with just the last name as a fallback
+        final nameParts = name.split(' ');
+        final lastName = nameParts.last;
+
+        final lastNameSearchParams = {'state': state, 'query': lastName};
+
+        final lastNameResults =
+            await _callApi('getSearch', lastNameSearchParams);
+
+        if (lastNameResults == null ||
+            !lastNameResults.containsKey('results') ||
+            !(lastNameResults['results'] is Map) ||
+            !lastNameResults['results'].containsKey('people') ||
+            !(lastNameResults['results']['people'] is List)) {
+          if (kDebugMode) {
+            print('No people found in last name search results');
+          }
+          return null;
+        }
+
+        final peopleList = lastNameResults['results']['people'] as List;
+        if (peopleList.isEmpty) {
+          if (kDebugMode) {
+            print('Empty people list in last name search results');
+          }
+          return null;
+        }
+
+        // Now search through the people list
+        final String lowercaseName = name.toLowerCase();
+
+        for (var personData in peopleList) {
+          if (personData is Map) {
+            final person = Map<String, dynamic>.from(personData);
+            final String fullName =
+                '${person['first_name']} ${person['last_name']}'.toLowerCase();
+            final String lastName =
+                person['last_name'].toString().toLowerCase();
+
+            if (fullName.contains(lowercaseName) ||
+                lowercaseName.contains(fullName) ||
+                lastName == lowercaseName.split(' ').last.toLowerCase()) {
+              if (kDebugMode) {
+                print(
+                    'Found person via last name search: ${person['people_id']} - $fullName');
+              }
+
+              // Ensure people_id is an integer
+              if (person['people_id'] is String) {
+                int? peopleId = int.tryParse(person['people_id']);
+                if (peopleId != null) {
+                  person['people_id'] = peopleId;
+                } else {
+                  if (kDebugMode) {
+                    print('Invalid people_id format: ${person['people_id']}');
+                  }
+                  continue;
+                }
+              }
+
+              return person;
+            }
+          }
+        }
+
+        return null;
+      }
+
+      // Process the people from the search results
+      final peopleList = searchResults['results']['people'] as List;
+      if (peopleList.isEmpty) {
+        if (kDebugMode) {
+          print('Empty people list in search results');
         }
         return null;
       }
-      
-      // Get people in this session
-      final peopleData = await _callApi('getSessionPeople', {'id': sessionId.toString()});
-      
-      if (peopleData == null || !peopleData.containsKey('people') || peopleData['people'] is! Map) {
-        if (kDebugMode) {
-          print('No people data found for session ID: $sessionId');
-        }
-        return null;
-      }
-      
-      // Search for the person by name
+
+      // Now search through the people list
       final String lowercaseName = name.toLowerCase();
-      final Map<String, dynamic> people = peopleData['people'];
-      
-      // First try exact match
-      for (var personId in people.keys) {
-        var person = people[personId];
-        if (person is! Map) continue;
-        
-        final String fullName = '${person['first_name']} ${person['last_name']}'.toLowerCase();
-        if (fullName == lowercaseName) {
-          if (kDebugMode) {
-            print('Found exact name match for $name: ${person['people_id']}');
+
+      for (var personData in peopleList) {
+        if (personData is Map) {
+          final person = Map<String, dynamic>.from(personData);
+          final String fullName =
+              '${person['first_name']} ${person['last_name']}'.toLowerCase();
+
+          if (fullName.contains(lowercaseName) ||
+              lowercaseName.contains(fullName)) {
+            if (kDebugMode) {
+              print(
+                  'Found person via search: ${person['people_id']} - $fullName');
+            }
+
+            // Ensure people_id is an integer
+            if (person['people_id'] is String) {
+              int? peopleId = int.tryParse(person['people_id']);
+              if (peopleId != null) {
+                person['people_id'] = peopleId;
+              } else {
+                if (kDebugMode) {
+                  print('Invalid people_id format: ${person['people_id']}');
+                }
+                continue;
+              }
+            }
+
+            return person;
           }
-          return Map<String, dynamic>.from(person);
         }
       }
-      
-      // Then try partial match
-      for (var personId in people.keys) {
-        var person = people[personId];
-        if (person is! Map) continue;
-        
-        final String firstName = '${person['first_name']}'.toLowerCase();
-        final String lastName = '${person['last_name']}'.toLowerCase();
-        final String fullName = '$firstName $lastName';
-        
-        // Check if the representative name contains the legiscan name or vice versa
-        if (lowercaseName.contains(lastName) || 
-            fullName.contains(lowercaseName) || 
-            lowercaseName.contains(fullName)) {
-          if (kDebugMode) {
-            print('Found partial name match for $name: ${person['people_id']} ($fullName)');
+
+      // Try one last approach - direct API call to the person search endpoint
+      // This is not officially documented but may work
+      final directSearchResults = await _callApi(
+          'getSearch', {'state': state, 'query': name, 'type': 'people'});
+
+      if (directSearchResults != null &&
+          directSearchResults.containsKey('results') &&
+          directSearchResults['results'] is Map &&
+          directSearchResults['results'].containsKey('people') &&
+          directSearchResults['results']['people'] is List) {
+        final directPeopleList =
+            directSearchResults['results']['people'] as List;
+
+        if (directPeopleList.isNotEmpty) {
+          for (var personData in directPeopleList) {
+            if (personData is Map) {
+              final person = Map<String, dynamic>.from(personData);
+              final String fullName =
+                  '${person['first_name']} ${person['last_name']}'
+                      .toLowerCase();
+
+              if (fullName.contains(lowercaseName) ||
+                  lowercaseName.contains(fullName)) {
+                if (kDebugMode) {
+                  print(
+                      'Found person via direct search: ${person['people_id']} - $fullName');
+                }
+
+                // Ensure people_id is an integer
+                if (person['people_id'] is String) {
+                  int? peopleId = int.tryParse(person['people_id']);
+                  if (peopleId != null) {
+                    person['people_id'] = peopleId;
+                  } else {
+                    if (kDebugMode) {
+                      print('Invalid people_id format: ${person['people_id']}');
+                    }
+                    continue;
+                  }
+                }
+
+                return person;
+              }
+            }
           }
-          return Map<String, dynamic>.from(person);
         }
       }
-      
+
       if (kDebugMode) {
         print('No matching person found for: $name in $state');
       }
@@ -120,97 +229,130 @@ class LegiscanService {
     }
   }
   
-  // Get sponsored bills for a person
+
   Future<List<RepresentativeBill>> getSponsoredBills(int personId) async {
     if (!hasApiKey) {
       return [];
     }
-    
+
     try {
+      if (kDebugMode) {
+        print('Getting sponsored bills for person ID: $personId');
+      }
+
       // Get person details including sponsored bills
-      final personData = await _callApi('getPerson', {'id': personId.toString()});
-      
-      if (personData == null || !personData.containsKey('person')) {
+      final personData =
+          await _callApi('getPerson', {'id': personId.toString()});
+
+      if (personData == null) {
         if (kDebugMode) {
-          print('No person data found for ID: $personId');
+          print('No person data returned for ID: $personId');
         }
         return [];
       }
-      
+
+      if (!personData.containsKey('person')) {
+        if (kDebugMode) {
+          print('No person key found in response for ID: $personId');
+        }
+        return [];
+      }
+
       final person = personData['person'];
-      
-      if (!person.containsKey('sponsor_bills') || person['sponsor_bills'] is! List) {
+
+      // Check for different variations of the sponsored bills key
+      List<dynamic> bills = [];
+      if (person.containsKey('sponsor_bills') &&
+          person['sponsor_bills'] is List) {
+        bills = person['sponsor_bills'] as List;
+      } else if (person.containsKey('sponsored_bills') &&
+          person['sponsored_bills'] is List) {
+        bills = person['sponsored_bills'] as List;
+      } else if (person.containsKey('bills') && person['bills'] is List) {
+        bills = person['bills'] as List;
+      }
+
+      if (bills.isEmpty) {
         if (kDebugMode) {
           print('No sponsored bills found for person ID: $personId');
         }
-        return [];
+
+        // Try direct search as a fallback - using getSearch operation with sponsor ID
+        final searchResults = await _callApi('getSearch', {
+          'state':
+              'GA', // Using GA as a default since that's the state we're looking at
+          'query': 'sponsor:$personId'
+        });
+
+        if (searchResults != null &&
+            searchResults.containsKey('results') &&
+            searchResults['results'] is Map &&
+            searchResults['results'].containsKey('bills') &&
+            searchResults['results']['bills'] is List) {
+          bills = searchResults['results']['bills'] as List;
+
+          if (kDebugMode) {
+            print(
+                'Found ${bills.length} bills via search for sponsor:$personId');
+          }
+        }
+
+        if (bills.isEmpty) {
+          return [];
+        }
       }
-      
-      final bills = person['sponsor_bills'] as List;
+
       final List<RepresentativeBill> result = [];
-      
+
       // Limit to 10 most recent bills to avoid too many API calls
       final billsToProcess = bills.length > 10 ? bills.sublist(0, 10) : bills;
-      
+
       for (var bill in billsToProcess) {
         if (bill is! Map) continue;
-        
+
         try {
-          // Get more details about the bill
-          final billData = await _callApi('getBill', {'id': bill['bill_id'].toString()});
-          
-          if (billData != null && billData.containsKey('bill')) {
-            final billDetails = billData['bill'];
-            if (billDetails is! Map) continue;
-            
-            // Parse bill number to extract type and number
-            String billNumber = billDetails['bill_number']?.toString() ?? '';
-            String billType = '';
-            String number = '';
-            
-            // Handle different bill number formats
-            final RegExp regex = RegExp(r'([A-Za-z]+)(\s*)(\d+)');
-            final match = regex.firstMatch(billNumber);
-            
-            if (match != null) {
-              billType = match.group(1) ?? '';
-              number = match.group(3) ?? '';
-            } else {
-              // Fallback: try to extract type from bill_type
-              billType = billDetails['bill_type'] ?? '';
-              number = billNumber;
-            }
-            
-            // Get latest action
-            String latestAction = '';
-            if (billDetails.containsKey('history') && billDetails['history'] is List && (billDetails['history'] as List).isNotEmpty) {
-              final history = billDetails['history'] as List;
-              final latestEvent = history.first;
-              if (latestEvent is Map) {
-                latestAction = latestEvent['action'] ?? '';
-              }
-            } else if (billDetails.containsKey('status')) {
-              latestAction = 'Status: ${billDetails['status']}';
-            }
-            
-            result.add(RepresentativeBill(
-              congress: billDetails['session']['session_name'] ?? '',
-              billType: billType,
-              billNumber: number,
-              title: billDetails['title'] ?? 'Untitled Bill',
-              introducedDate: billDetails['date'] ?? '',
-              latestAction: latestAction,
-            ));
+          // Extract basic bill information
+          final billId = bill['bill_id']?.toString();
+          if (billId == null) continue;
+
+          // Create a simple bill object with basic info
+          String billNumber = bill['bill_number']?.toString() ?? 'Unknown';
+          String title = bill['title']?.toString() ?? 'Untitled Bill';
+          String session = bill['session_name']?.toString() ??
+              bill['session']?.toString() ??
+              '';
+          String billType = '';
+
+          // Parse bill number to extract type
+          final RegExp regex = RegExp(r'([A-Za-z]+)(\s*)(\d+)');
+          final match = regex.firstMatch(billNumber);
+
+          if (match != null) {
+            billType = match.group(1) ?? '';
+            billNumber = match.group(3) ?? billNumber;
+          } else {
+            // Default type if we can't parse it
+            billType = 'Bill';
           }
+
+          // Create the bill object
+          result.add(RepresentativeBill(
+            congress: session,
+            billType: billType,
+            billNumber: billNumber,
+            title: title,
+            introducedDate: bill['date']?.toString() ?? '',
+            latestAction: bill['status']?.toString() ?? '',
+            source: 'LegiScan',
+          ));
         } catch (billError) {
           if (kDebugMode) {
-            print('Error fetching bill details: $billError');
+            print('Error processing bill: $billError');
           }
-          // Continue to next bill rather than failing the whole request
           continue;
         }
       }
-      
+
       return result;
     } catch (e) {
       if (kDebugMode) {
@@ -219,46 +361,70 @@ class LegiscanService {
       return [];
     }
   }
-  
-  // Helper method to call the LegiScan API
-  Future<Map<String, dynamic>?> _callApi(String operation, Map<String, String> params) async {
+
+  Future<Map<String, dynamic>?> _callApi(
+      String operation, Map<String, String> params) async {
     try {
       if (!await _networkService.checkConnectivity()) {
         throw Exception('No network connectivity');
       }
-      
+
       // Build URL parameters
       final Map<String, String> queryParams = {
         'key': _apiKey!,
         'op': operation,
         ...params,
       };
-      
+
       final url = Uri.parse(_baseUrl).replace(queryParameters: queryParams);
-      
+
       if (kDebugMode) {
         final redactedUrl = url.toString().replaceAll(_apiKey!, '[REDACTED]');
         print('LegiScan API call: $redactedUrl');
       }
-      
-      final response = await http.get(url).timeout(const Duration(seconds: 15));
-      
+
+      final response = await http.get(url).timeout(const Duration(seconds: 20));
+
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        
+
+        // Debug the response
+        if (kDebugMode) {
+          print('API response status: ${data['status']}');
+          if (data['status'] != 'OK') {
+            print(
+                'Response contains error: ${data['alert'] ?? "Unknown error"}');
+          }
+        }
+
         // LegiScan API uses 'status' field to indicate success/failure
-        if (data.containsKey('status') && data['status'] == 'OK') {
-          return data;
+        if (data.containsKey('status')) {
+          if (data['status'] == 'OK') {
+            return data;
+          } else {
+            if (kDebugMode) {
+              print('LegiScan API returned error status: ${data['status']}');
+              if (data.containsKey('alert')) {
+                print('Alert: ${data['alert']}');
+              }
+            }
+
+            // Some API errors still include useful data
+            if (operation == 'getSearch' || operation == 'getSessionList') {
+              return data; // Return the data anyway for these operations
+            }
+            return null;
+          }
         } else {
           if (kDebugMode) {
-            print('LegiScan API returned error status: ${data['status']}');
-            if (data.containsKey('alert')) {
-              print('Alert: ${data['alert']}');
-            }
+            print('LegiScan API response missing status field');
           }
-          return null;
+          return data; // Return the data anyway
         }
       } else {
+        if (kDebugMode) {
+          print('API error: ${response.statusCode} - ${response.body}');
+        }
         throw Exception('API error: ${response.statusCode}');
       }
     } catch (e) {
@@ -268,7 +434,7 @@ class LegiscanService {
       return null;
     }
   }
-  
+
   // Generate mock data for testing when API key is not available
   Future<List<RepresentativeBill>> getMockSponsoredBills() async {
     return [
@@ -298,7 +464,98 @@ class LegiscanService {
       ),
     ];
   }
+  // Add this helper method to your LegiscanService class
+
+Future<List<RepresentativeBill>> getDirectBillsForPerson(String firstName, String lastName, String state) async {
+  if (!hasApiKey) {
+    return [];
+  }
   
+  try {
+    if (kDebugMode) {
+      print('Directly searching for bills for $firstName $lastName in $state');
+    }
+    
+    // Search for bills with this person's name as sponsor
+    final searchParams = {
+      'state': state,
+      'query': 'sponsor:"$firstName $lastName"' 
+    };
+    
+    final searchResults = await _callApi('getSearch', searchParams);
+    
+    if (searchResults == null) {
+      return [];
+    }
+    
+    if (!searchResults.containsKey('results') || 
+        !(searchResults['results'] is Map) ||
+        !searchResults['results'].containsKey('bills') ||
+        !(searchResults['results']['bills'] is List)) {
+      return [];
+    }
+    
+    final billsList = searchResults['results']['bills'] as List;
+    if (billsList.isEmpty) {
+      return [];
+    }
+    
+    final List<RepresentativeBill> result = [];
+    
+    // Limit to 10 most recent bills
+    final billsToProcess = billsList.length > 10 ? billsList.sublist(0, 10) : billsList;
+    
+    for (var bill in billsToProcess) {
+      if (bill is! Map) continue;
+      
+      try {
+        // Extract basic bill information
+        String billNumber = bill['bill_number']?.toString() ?? 'Unknown';
+        String title = bill['title']?.toString() ?? 'Untitled Bill';
+        String session = bill['session']?.toString() ?? '';
+        String billType = '';
+        
+        // Parse bill number to extract type
+        final RegExp regex = RegExp(r'([A-Za-z]+)(\s*)(\d+)');
+        final match = regex.firstMatch(billNumber);
+        
+        if (match != null) {
+          billType = match.group(1) ?? '';
+          billNumber = match.group(3) ?? billNumber;
+        } else {
+          // Default type if we can't parse it
+          billType = 'Bill';
+        }
+        
+        // Create the bill object
+        result.add(RepresentativeBill(
+          congress: session,
+          billType: billType,
+          billNumber: billNumber,
+          title: title,
+          introducedDate: bill['date']?.toString() ?? '',
+          latestAction: bill['status']?.toString() ?? '',
+          source: 'LegiScan',
+        ));
+      } catch (billError) {
+        if (kDebugMode) {
+          print('Error processing bill: $billError');
+        }
+        continue;
+      }
+    }
+    
+    return result;
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error getting direct bills for person: $e');
+    }
+    return [];
+  }
+}
+
+
+
   // Check network connectivity
   Future<bool> checkNetworkConnectivity() async {
     return await _networkService.checkConnectivity();
