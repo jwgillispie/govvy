@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:govvy/firebase_options.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
+import 'package:govvy/providers/csv_representative_provider.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
 import 'package:govvy/screens/landing/landing_page.dart';
 import 'package:govvy/services/network_service.dart';
@@ -101,6 +102,10 @@ class RepresentativeApp extends StatelessWidget {
 
         // Remote Config Service (add this)
         Provider(create: (_) => RemoteConfigService()),
+        ChangeNotifierProvider(
+          create: (_) => CSVRepresentativeProvider(),
+          lazy: false,
+        ),
 
         // Auth Service
         ChangeNotifierProvider(create: (_) => AuthService()),
@@ -156,8 +161,7 @@ class RepresentativeApp extends StatelessWidget {
             ),
           ),
         ),
-        home:  const AuthWrapper(),
-
+        home: const AuthWrapper(),
       ),
     );
   }

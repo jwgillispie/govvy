@@ -10,6 +10,25 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:govvy/widgets/representatives/role_info_widget.dart';
 import 'package:govvy/data/government_roles.dart';
 import 'package:govvy/widgets/representatives/email_template_dialog.dart';
+import 'package:govvy/providers/csv_representative_provider.dart';
+
+// Extension methods for RepresentativeDetails to add additional functionality
+extension RepresentativeDetailsExtension on RepresentativeDetails {
+  // Check if this representative is a local or state representative (not federal)
+  bool isLocalOrStateRepresentative() {
+    final chamberUpper = chamber.toUpperCase();
+    
+    // Check if NOT a federal representative
+    return !(
+      chamberUpper.contains('NATIONAL') ||
+      chamberUpper == 'SENATE' ||
+      chamberUpper == 'HOUSE' ||
+      chamberUpper == 'CONGRESS' ||
+      chamberUpper == 'REPRESENTATIVE' ||
+      chamberUpper == 'SENATOR'
+    );
+  }
+}
 
 class RepresentativeDetailsScreen extends StatefulWidget {
   final String bioGuideId;
@@ -47,9 +66,17 @@ class _RepresentativeDetailsScreenState
   }
 
   Future<void> _fetchRepresentativeDetails() async {
-    final provider =
-        Provider.of<CombinedRepresentativeProvider>(context, listen: false);
+    final provider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
     await provider.fetchRepresentativeDetails(widget.bioGuideId);
+    
+    // After getting the representative details, also check for CSV-sourced bills
+    final rep = provider.selectedRepresentative;
+    if (rep != null && rep.isLocalOrStateRepresentative()) {
+      // Use Provider.of to get the CSVRepresentativeProvider
+      final csvProvider = Provider.of<CSVRepresentativeProvider>(context, listen: false);
+      await csvProvider.initialize();
+      await csvProvider.addCSVBillsToRepresentative(rep);
+    }
   }
 
   Future<void> _launchUrl(String? url) async {
@@ -1053,14 +1080,14 @@ class _RepresentativeDetailsScreenState
     return rep.district ?? rep.state;
   }
 
-  // Updated to show LegiScan loading state
+  // Build the bills tab
   Widget _buildBillsTab(
     List<RepresentativeBill> bills, 
     String emptyMessage,
-    bool isLoadingLegiscan,
+    bool isLoadingBills,
   ) {
-    // Show loading indicator if LegiScan bills are being loaded
-    if (isLoadingLegiscan) {
+    // Show loading indicator if bills are being loaded
+    if (isLoadingBills) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1068,7 +1095,7 @@ class _RepresentativeDetailsScreenState
             const CircularProgressIndicator(),
             const SizedBox(height: 16),
             Text(
-              'Loading additional bills from LegiScan...',
+              'Loading additional bills...',
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
@@ -1102,7 +1129,7 @@ class _RepresentativeDetailsScreenState
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: bill.source == 'LegiScan'
+                    color: bill.source == 'CSV' || bill.source == 'LegiScan'
                         ? Colors.green
                         : Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(4),
@@ -1117,7 +1144,7 @@ class _RepresentativeDetailsScreenState
                   ),
                 ),
                 const SizedBox(width: 8),
-                if (bill.source == 'LegiScan')
+                if (bill.source == 'CSV' || bill.source == 'LegiScan')
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
@@ -1126,7 +1153,7 @@ class _RepresentativeDetailsScreenState
                       border: Border.all(color: Colors.green.shade300),
                     ),
                     child: Text(
-                      'State',
+                      bill.source == 'CSV' ? 'Local' : 'State',
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,

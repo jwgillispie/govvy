@@ -228,7 +228,6 @@ class LegiscanService {
       return null;
     }
   }
-  
 
   Future<List<RepresentativeBill>> getSponsoredBills(int personId) async {
     if (!hasApiKey) {
@@ -394,6 +393,8 @@ class LegiscanService {
           if (data['status'] != 'OK') {
             print(
                 'Response contains error: ${data['alert'] ?? "Unknown error"}');
+          } else {
+            print(data);
           }
         }
 
@@ -466,95 +467,96 @@ class LegiscanService {
   }
   // Add this helper method to your LegiscanService class
 
-Future<List<RepresentativeBill>> getDirectBillsForPerson(String firstName, String lastName, String state) async {
-  if (!hasApiKey) {
-    return [];
-  }
-  
-  try {
-    if (kDebugMode) {
-      print('Directly searching for bills for $firstName $lastName in $state');
-    }
-    
-    // Search for bills with this person's name as sponsor
-    final searchParams = {
-      'state': state,
-      'query': 'sponsor:"$firstName $lastName"' 
-    };
-    
-    final searchResults = await _callApi('getSearch', searchParams);
-    
-    if (searchResults == null) {
+  Future<List<RepresentativeBill>> getDirectBillsForPerson(
+      String firstName, String lastName, String state) async {
+    if (!hasApiKey) {
       return [];
     }
-    
-    if (!searchResults.containsKey('results') || 
-        !(searchResults['results'] is Map) ||
-        !searchResults['results'].containsKey('bills') ||
-        !(searchResults['results']['bills'] is List)) {
-      return [];
-    }
-    
-    final billsList = searchResults['results']['bills'] as List;
-    if (billsList.isEmpty) {
-      return [];
-    }
-    
-    final List<RepresentativeBill> result = [];
-    
-    // Limit to 10 most recent bills
-    final billsToProcess = billsList.length > 10 ? billsList.sublist(0, 10) : billsList;
-    
-    for (var bill in billsToProcess) {
-      if (bill is! Map) continue;
-      
-      try {
-        // Extract basic bill information
-        String billNumber = bill['bill_number']?.toString() ?? 'Unknown';
-        String title = bill['title']?.toString() ?? 'Untitled Bill';
-        String session = bill['session']?.toString() ?? '';
-        String billType = '';
-        
-        // Parse bill number to extract type
-        final RegExp regex = RegExp(r'([A-Za-z]+)(\s*)(\d+)');
-        final match = regex.firstMatch(billNumber);
-        
-        if (match != null) {
-          billType = match.group(1) ?? '';
-          billNumber = match.group(3) ?? billNumber;
-        } else {
-          // Default type if we can't parse it
-          billType = 'Bill';
-        }
-        
-        // Create the bill object
-        result.add(RepresentativeBill(
-          congress: session,
-          billType: billType,
-          billNumber: billNumber,
-          title: title,
-          introducedDate: bill['date']?.toString() ?? '',
-          latestAction: bill['status']?.toString() ?? '',
-          source: 'LegiScan',
-        ));
-      } catch (billError) {
-        if (kDebugMode) {
-          print('Error processing bill: $billError');
-        }
-        continue;
+
+    try {
+      if (kDebugMode) {
+        print(
+            'Directly searching for bills for $firstName $lastName in $state');
       }
+
+      // Search for bills with this person's name as sponsor
+      final searchParams = {
+        'state': state,
+        'query': 'sponsor:"$firstName $lastName"'
+      };
+
+      final searchResults = await _callApi('getSearch', searchParams);
+
+      if (searchResults == null) {
+        return [];
+      }
+
+      if (!searchResults.containsKey('results') ||
+          !(searchResults['results'] is Map) ||
+          !searchResults['results'].containsKey('bills') ||
+          !(searchResults['results']['bills'] is List)) {
+        return [];
+      }
+
+      final billsList = searchResults['results']['bills'] as List;
+      if (billsList.isEmpty) {
+        return [];
+      }
+
+      final List<RepresentativeBill> result = [];
+
+      // Limit to 10 most recent bills
+      final billsToProcess =
+          billsList.length > 10 ? billsList.sublist(0, 10) : billsList;
+
+      for (var bill in billsToProcess) {
+        if (bill is! Map) continue;
+
+        try {
+          // Extract basic bill information
+          String billNumber = bill['bill_number']?.toString() ?? 'Unknown';
+          String title = bill['title']?.toString() ?? 'Untitled Bill';
+          String session = bill['session']?.toString() ?? '';
+          String billType = '';
+
+          // Parse bill number to extract type
+          final RegExp regex = RegExp(r'([A-Za-z]+)(\s*)(\d+)');
+          final match = regex.firstMatch(billNumber);
+
+          if (match != null) {
+            billType = match.group(1) ?? '';
+            billNumber = match.group(3) ?? billNumber;
+          } else {
+            // Default type if we can't parse it
+            billType = 'Bill';
+          }
+
+          // Create the bill object
+          result.add(RepresentativeBill(
+            congress: session,
+            billType: billType,
+            billNumber: billNumber,
+            title: title,
+            introducedDate: bill['date']?.toString() ?? '',
+            latestAction: bill['status']?.toString() ?? '',
+            source: 'LegiScan',
+          ));
+        } catch (billError) {
+          if (kDebugMode) {
+            print('Error processing bill: $billError');
+          }
+          continue;
+        }
+      }
+
+      return result;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error getting direct bills for person: $e');
+      }
+      return [];
     }
-    
-    return result;
-  } catch (e) {
-    if (kDebugMode) {
-      print('Error getting direct bills for person: $e');
-    }
-    return [];
   }
-}
-
-
 
   // Check network connectivity
   Future<bool> checkNetworkConnectivity() async {

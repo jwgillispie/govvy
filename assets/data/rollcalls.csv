@@ -1,0 +1,1262 @@
+bill_id,roll_call_id,date,chamber,description,yea,nay,nv,absent,total
+1916627,1508372,2025-03-06,House,"Adopt: House Vote #220",172,0,2,6,180
+1916627,1531753,2025-03-31,Senate,"Adoption By Substitute: Senate Vote #366",49,0,4,3,56
+1916627,1537593,2025-04-04,House,"Agree To Senate Sub As Amended By House: House Vote #418",166,0,3,11,180
+1916627,1537731,2025-04-04,Senate,"Agree To House Amendment To Senate Substitute: Senate Vote #467",50,0,3,3,56
+1916635,1479389,2025-02-03,Senate,"Adoption: Senate Vote #19",52,0,3,1,56
+1916635,1498375,2025-02-24,House,"Adopt: House Vote #78",174,0,1,5,180
+1916635,1531688,2025-03-31,Senate,"Agree To House Substitute: Senate Vote #359",50,0,6,0,56
+1916648,1482986,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1916648,1488596,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1916686,1482780,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1916686,1488573,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1916690,1505413,2025-03-04,Senate,"Passage By Substitute: Senate Vote #143",36,11,8,1,56
+1916690,1508296,2025-03-06,Senate,"Motion For Reconsideration: Senate Vote #158",20,32,4,0,56
+1916713,1500948,2025-02-26,House,"Passage: House Vote #89",157,4,6,13,180
+1916713,1535228,2025-04-02,Senate,"Passage By Substitute: Senate Vote #401",47,9,0,0,56
+1916730,1483454,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1916730,1488436,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1916749,1471322,2025-01-13,Senate,"Adoption: Senate Vote #8",56,0,0,0,56
+1916753,1488557,2025-02-12,Senate,"Passage: Senate Vote #47",51,1,1,3,56
+1916753,1535485,2025-04-02,House,"Passage: House Vote #378",169,2,3,6,180
+1916753,1537809,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #478",52,0,3,1,56
+1916772,1471323,2025-01-13,Senate,"Motion To Engross: Senate Vote #4",32,24,0,0,56
+1916772,1471324,2025-01-13,Senate,"Adoption: Senate Vote #5",56,0,0,0,56
+1916776,1505558,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1916776,1517783,2025-03-13,Senate,"Local Consent Calendar: Senate Vote #229",48,0,4,4,56
+1916785,1482758,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1916785,1488509,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1916808,1505426,2025-03-04,Senate,"Adoption By Substitute: Senate Vote #137",49,0,3,4,56
+1916808,1535435,2025-04-02,House,"Adopt: House Vote #387",168,0,1,11,180
+1916808,1537793,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #465",49,0,5,2,56
+1916814,1483001,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1916814,1488589,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1916827,1471325,2025-01-13,Senate,"Motion To Engross: Senate Vote #6",33,23,0,0,56
+1916831,1471326,2025-01-13,Senate,"Motion To Engross: Senate Vote #2",32,24,0,0,56
+1916831,1471327,2025-01-13,Senate,"Adoption: Senate Vote #3",55,1,0,0,56
+1916845,1483071,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1916845,1488591,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1916850,1483711,2025-02-06,Senate,"Adoption Of Amendment #1 By The Senator From The 22nd: Senate Vote #23",19,32,1,4,56
+1916850,1483712,2025-02-06,Senate,"Adoption Of Amendment #2 By The Senator From The 41st: Senate Vote #24",18,34,0,4,56
+1916850,1483713,2025-02-06,Senate,"Adoption Of Amendment #3 By The Senator From The 44th: Senate Vote #25",19,33,0,4,56
+1916850,1483714,2025-02-06,Senate,"Passage By Substitute: Senate Vote #26",35,17,0,4,56
+1916850,1531583,2025-03-31,House,"Passage: House Vote #350",100,64,5,11,180
+1916850,1531584,2025-03-31,Senate,"Agree To House Substitute As Amended: Senate Vote #372",17,37,1,1,56
+1916850,1531585,2025-03-31,Senate,"Agree To House Substitute: Senate Vote #373",34,20,1,1,56
+1916854,1482996,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1916854,1488467,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1916909,1488555,2025-02-12,House,"Passage: House Vote #26",163,1,9,7,180
+1916909,1511993,2025-03-10,Senate,"Passage: Senate Vote #222",46,1,1,8,56
+1919082,1496940,2025-02-21,House,"Passage: House Vote #60",153,4,13,10,180
+1919082,1524391,2025-03-21,Senate,"Passage By Substitute: Senate Vote #267",53,2,0,1,56
+1919082,1529728,2025-03-27,House,"Agree To Senate Sub As Am: House Vote #328",162,1,3,14,180
+1919082,1531535,2025-03-31,Senate,"Agree To House Amendment To Senate Substitute As Amended: Senate Vote #361",12,41,2,1,56
+1919082,1531536,2025-03-31,Senate,"Agree To House Amendment To Senate Substitute: Senate Vote #362",54,0,1,1,56
+1919119,1496060,2025-02-20,House,"Passage: House Vote #49",120,55,2,3,180
+1919129,1508370,2025-03-06,House,"Passage: House Vote #218",172,0,3,5,180
+1919140,1508350,2025-03-06,House,"Passage: House Vote #194",170,5,2,3,180
+1919144,1508235,2025-03-06,House,"Passage: House Vote #233",177,0,2,1,180
+1919144,1535450,2025-04-02,Senate,"Adoption Of Amendment #2 By The Senator From The 41st: Senate Vote #398",23,30,2,1,56
+1919144,1535451,2025-04-02,Senate,"Passage By Substitute: Senate Vote #399",54,1,0,1,56
+1919144,1537559,2025-04-04,House,"Agree To Senate Sub As Amend By House: House Vote #438",157,0,11,12,180
+1919150,1505545,2025-03-04,Senate,"Passage By Substitute: Senate Vote #145",46,9,0,1,56
+1919150,1529641,2025-03-27,House,"Passage: House Vote #322",152,12,4,12,180
+1919153,1505365,2025-03-04,House,"Passage: House Vote #162",169,2,3,6,180
+1919153,1535364,2025-04-02,Senate,"Passage By Substitute: Senate Vote #385",52,1,1,2,56
+1919153,1537481,2025-04-04,House,"Agree To Senate Substitute: House Vote #408",163,0,8,9,180
+1919187,1496103,2025-02-20,House,"Passage: House Vote #48",164,0,13,3,180
+1919187,1527041,2025-03-25,Senate,"Passage By Substitute: Senate Vote #279",54,0,1,1,56
+1919187,1529587,2025-03-27,House,"Agree To Senate Substitute: House Vote #327",163,0,4,13,180
+1919191,1498549,2025-02-24,House,"Passage: House Vote #77",171,2,1,6,180
+1919212,1483073,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1919212,1488437,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1919221,1485807,2025-02-10,Senate,"Passage: Senate Vote #28",51,1,3,1,56
+1919221,1532120,2025-03-31,House,"Passage: House Vote #348",79,87,6,8,180
+1919221,1532121,2025-03-31,House,"Reconsider: House Vote #349",94,74,6,6,180
+1919231,1488593,2025-02-12,House,"Passage: House Vote #27",166,1,6,7,180
+1919231,1523743,2025-03-20,Senate,"Passage By Substitute: Senate Vote #254",51,1,0,4,56
+1919231,1527162,2025-03-25,House,"Agree To Senate Substitute: House Vote #314",166,0,9,5,180
+1919239,1489883,2025-02-13,House,"Passage: House Vote #33",99,70,5,6,180
+1919239,1535193,2025-04-02,Senate,"Adoption Of Amendment #1 By The Senator From The 49th: Senate Vote #409",38,13,2,3,56
+1919239,1535194,2025-04-02,Senate,"Passage By Substitute: Senate Vote #410",49,4,0,3,56
+1919239,1537596,2025-04-04,House,"Agree To Senate Substitute: House Vote #407",165,2,5,8,180
+1919249,1485661,2025-02-10,Senate,"Passage By Substitute: Senate Vote #31",55,0,0,1,56
+1919249,1520517,2025-03-18,House,"Passage: House Vote #283",170,0,4,6,180
+1919254,1494475,2025-02-19,House,"Passage: House Vote #42",169,3,5,3,180
+1919254,1530530,2025-03-28,Senate,"Passage: Senate Vote #315",46,5,0,5,56
+1922171,1504484,2025-02-28,House,"Passage: House Vote #117",164,2,5,9,180
+1922171,1535550,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1922179,1498499,2025-02-24,Senate,"Passage: Senate Vote #85",42,11,2,1,56
+1922179,1524432,2025-03-21,House,"Passage: House Vote #299",109,50,6,15,180
+1922179,1530047,2025-03-27,Senate,"Agree To House Substitute: Senate Vote #308",50,0,4,2,56
+1922188,1496979,2025-02-21,Senate,"Passage By Substitute: Senate Vote #80",49,0,5,2,56
+1922188,1537598,2025-04-04,House,"Passage: House Vote #432",167,1,1,11,180
+1922188,1537736,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #490",53,1,1,1,56
+1922222,1508108,2025-03-06,Senate,"Passage By Substitute: Senate Vote #163",55,0,0,1,56
+1922222,1535493,2025-04-02,House,"Passage: House Vote #380",171,0,1,8,180
+1922239,1496993,2025-02-21,Senate,"Passage By Substitute: Senate Vote #79",49,0,6,1,56
+1922239,1537825,2025-04-04,House,"Passage: House Vote #425",161,7,4,8,180
+1922267,1479363,2025-02-03,Senate,"Passage: Senate Vote #18",51,2,2,1,56
+1922267,1496919,2025-02-21,House,"Passage: House Vote #65",159,6,4,11,180
+1922273,1487138,2025-02-11,House,"Passage: House Vote #21",165,0,7,8,180
+1925793,1504876,2025-03-03,House,"Passage: House Vote #139",169,0,6,5,180
+1925893,1505467,2025-03-04,House,"Passage: House Vote #154",171,2,4,3,180
+1925923,1504172,2025-03-03,House,"Adopt: House Vote #134",168,5,1,6,180
+1925923,1520571,2025-03-18,Senate,"Motion To Engross: Hb 90, Hb 223, Hr 32: Senate Vote #236",29,23,1,3,56
+1925923,1520572,2025-03-18,Senate,"Adoption Of Constitutional Amendment: Senate Vote #240",50,1,1,4,56
+1926025,1496135,2025-02-20,House,"Passage: House Vote #52",167,6,2,5,180
+1926025,1530133,2025-03-27,Senate,"Adoption Of Amendment #1 By The Senator From The 56th: Senate Vote #294",30,23,1,2,56
+1926025,1530134,2025-03-27,Senate,"Motion To Reconsider Amendment #1: Senate Vote #295",23,31,1,1,56
+1926025,1530135,2025-03-27,Senate,"Passage As Amended: Senate Vote #296",45,10,0,1,56
+1926025,1530507,2025-03-28,Senate,"Recede From Senate Amendment: Senate Vote #335",46,2,2,6,56
+1926097,1508333,2025-03-06,House,"Passage: House Vote #241",171,2,2,5,180
+1926127,1483788,2025-02-06,House,"Passage: House Vote #17",166,3,2,9,180
+1926127,1500877,2025-02-26,Senate,"Passage By Substitute: Senate Vote #94",55,1,0,0,56
+1926127,1504100,2025-03-03,Senate,"Agree To House Amendment To Senate Substitute: Senate Vote #121",55,1,0,0,56
+1926127,1504417,2025-03-03,House,"Agree To Senate Sub As Am: House Vote #133",170,3,3,4,180
+1926170,1515571,2025-03-11,House,"Passage: House Vote #272",171,4,1,4,180
+1926170,1530436,2025-03-28,Senate,"Passage By Substitute: Senate Vote #316",48,7,0,1,56
+1926170,1537527,2025-04-04,House,"Adopt Conference Comm. Report: House Vote #420",170,5,1,4,180
+1926170,1537784,2025-04-04,Senate,"Adopt Conference Committee Report: Senate Vote #456",54,1,0,1,56
+1926200,1496070,2025-02-20,House,"Passage: House Vote #53",138,29,5,8,180
+1926200,1502042,2025-02-27,Senate,"Local Consent Calendar: Senate Vote #98",48,0,5,3,56
+1926215,1489907,2025-02-13,House,"Passage: House Vote #34",169,0,3,8,180
+1926215,1531618,2025-03-31,Senate,"Passage: Senate Vote #352",51,0,2,3,56
+1926228,1496055,2025-02-20,House,"Passage: House Vote #51",163,7,3,7,180
+1926228,1530426,2025-03-28,Senate,"Adoption Of Amendment #1 By The Senator From The 26th: Senate Vote #317",18,33,2,3,56
+1926228,1530427,2025-03-28,Senate,"Passage: Senate Vote #318",51,2,1,2,56
+1926244,1489813,2025-02-13,House,"Passage: House Vote #35",165,2,3,10,180
+1926244,1517631,2025-03-13,Senate,"Passage: Senate Vote #232",48,2,1,5,56
+1926258,1496080,2025-02-20,House,"Passage: House Vote #56",111,62,1,6,180
+1926258,1520598,2025-03-18,Senate,"Motion To Engross: Hb 90, Hb 223, Hr 32: Senate Vote #236",29,23,1,3,56
+1926258,1520599,2025-03-18,Senate,"Passage: Senate Vote #239",47,3,2,4,56
+1926286,1498466,2025-02-24,House,"Passage: House Vote #72",161,9,2,8,180
+1926286,1535342,2025-04-02,Senate,"Passage: Senate Vote #427",35,18,2,1,56
+1926300,1492915,2025-02-18,House,"Passage: House Vote #40",173,1,1,5,180
+1926300,1527051,2025-03-25,Senate,"Motion To Engross: Hb 92, Hb 290: Senate Vote #278",31,22,2,1,56
+1926300,1527052,2025-03-25,Senate,"Passage By Substitute: Senate Vote #280",52,2,2,0,56
+1926300,1529691,2025-03-27,House,"Agree To Senate Substitute: House Vote #329",165,0,1,14,180
+1926329,1496123,2025-02-20,Senate,"Adoption Of Amendment #1 By The Senator From The 14th: Senate Vote #74",22,30,0,4,56
+1926329,1496124,2025-02-20,Senate,"Adoption: Senate Vote #75",34,18,0,4,56
+1926358,1504143,2025-03-03,Senate,"Passage By Substitute: Senate Vote #116",54,2,0,0,56
+1926358,1535150,2025-04-02,House,"Passage: House Vote #399",160,5,2,13,180
+1926358,1537816,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #450",50,2,2,2,56
+1926388,1504300,2025-03-03,House,"Passage: House Vote #126",168,7,2,3,180
+1926388,1520587,2025-03-18,Senate,"Passage: Senate Vote #237",50,1,1,4,56
+1926416,1505526,2025-03-04,House,"Passage: House Vote #165",165,8,2,5,180
+1926416,1535487,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1929057,1501027,2025-02-26,House,"Passage: House Vote #85",158,10,4,8,180
+1929066,1487281,2025-02-11,House,"Passage: House Vote #22",165,0,7,8,180
+1929066,1531860,2025-03-31,Senate,"Passage: Senate Vote #341",52,0,3,1,56
+1929228,1482992,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1929228,1488453,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1929248,1537597,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+1929278,1502040,2025-02-27,House,"Passage: House Vote #101",148,17,7,8,180
+1929278,1530572,2025-03-28,Senate,"Passage By Substitute: Senate Vote #319",51,0,1,4,56
+1929278,1531728,2025-03-31,House,"Agree To Senate Substitute: House Vote #354",146,18,7,9,180
+1929319,1492841,2025-02-18,House,"Adopt: House Vote #38",172,0,3,5,180
+1929319,1523945,2025-03-20,Senate,"Motion To Engross: Hb 112, Hr 42: Senate Vote #253",32,20,4,0,56
+1929319,1523946,2025-03-20,Senate,"Adoption: Senate Vote #263",53,1,0,2,56
+1929329,1508343,2025-03-06,House,"Passage: House Vote #197",175,0,1,4,180
+1929329,1523833,2025-03-20,Senate,"Motion To Engross: Hb 112, Hr 42: Senate Vote #253",32,20,4,0,56
+1929329,1523834,2025-03-20,Senate,"Passage: Senate Vote #257",52,0,1,3,56
+1929371,1494479,2025-02-19,House,"Passage: House Vote #43",165,7,2,6,180
+1929381,1496050,2025-02-20,House,"Passage: House Vote #54",162,5,6,7,180
+1929381,1531725,2025-03-31,Senate,"Passage: Senate Vote #342",51,0,3,2,56
+1929412,1489826,2025-02-13,House,"Passage: House Vote #36",168,0,5,7,180
+1929412,1535490,2025-04-02,Senate,"Passage By Substitute: Senate Vote #386",51,0,3,2,56
+1929412,1537560,2025-04-04,House,"Agree To Senate Substitute: House Vote #411",164,0,7,9,180
+1929422,1502053,2025-02-27,House,"Passage: House Vote #108",162,2,4,12,180
+1929422,1531549,2025-03-31,Senate,"Passage By Substitute: Senate Vote #353",52,1,0,3,56
+1929422,1535273,2025-04-02,House,"Agree To Senate Substitute: House Vote #383",162,3,6,9,180
+1929452,1508201,2025-03-06,House,"Passage: House Vote #196",110,60,2,8,180
+1929452,1523864,2025-03-20,Senate,"Motion To Engross: Senate Vote #252",30,24,2,0,56
+1929452,1523865,2025-03-20,Senate,"Motion To Table: Senate Vote #255",21,30,2,3,56
+1929452,1523866,2025-03-20,Senate,"Passage: Senate Vote #256",30,23,1,2,56
+1929493,1485781,2025-02-10,Senate,"Passage: Senate Vote #29",47,8,0,1,56
+1929503,1489872,2025-02-13,Senate,"Adoption Of The Amendment By The Sen From The 55th As Amended: Senate Vote #53",20,31,0,5,56
+1929503,1489873,2025-02-13,Senate,"Passage By Substitute: Senate Vote #54",33,18,0,5,56
+1929543,1501016,2025-02-26,House,"Passage: House Vote #80",164,0,9,7,180
+1943159,1505459,2025-03-04,House,"Passage: House Vote #160",172,0,3,5,180
+1943159,1531610,2025-03-31,Senate,"Passage By Substitute: Senate Vote #354",53,1,0,2,56
+1943159,1531611,2025-03-31,House,"Agree To Senate Substitute: House Vote #375",150,3,13,14,180
+1943162,1505390,2025-03-04,Senate,"Passage: Senate Vote #142",32,23,0,1,56
+1943162,1535229,2025-04-02,House,"Passage: House Vote #401",96,70,2,12,180
+1943173,1488425,2025-02-12,House,"Passage: House Vote #28",152,9,12,7,180
+1943173,1531736,2025-03-31,Senate,"Passage: Senate Vote #343",45,5,4,2,56
+1943180,1500972,2025-02-26,House,"Passage: House Vote #92",166,0,2,12,180
+1943180,1535060,2025-04-02,Senate,"Passage By Substitute: Senate Vote #428",54,0,0,2,56
+1943180,1537578,2025-04-04,House,"Agree To Senate Substitute: House Vote #406",163,1,8,8,180
+1943190,1508174,2025-03-06,House,"Passage: House Vote #246",172,3,2,3,180
+1943190,1535322,2025-04-02,Senate,"Motion To Remove From The Table: Senate Vote #434",33,21,0,2,56
+1943190,1535323,2025-04-02,Senate,"Motion To Table: Senate Vote #435",21,33,1,1,56
+1943190,1536871,2025-04-02,Senate,"Shall The Ruling Of The Chair Be Sustained: Senate Vote #437",33,22,0,1,56
+1943190,1536872,2025-04-02,Senate,"Motion To Resolve Debate: Senate Vote #438",33,22,0,1,56
+1943190,1536873,2025-04-02,Senate,"Shall The Ruling Of The Chair Be Sustained: Senate Vote #439",33,22,0,1,56
+1943190,1536874,2025-04-02,Senate,"Motion To Reconsider The Motion To Resolve Debate: Senate Vote #440",22,33,0,1,56
+1943190,1536875,2025-04-02,Senate,"Motion To Table: Senate Vote #441",22,33,0,1,56
+1943190,1536876,2025-04-02,Senate,"Passage By Substitute: Senate Vote #442",33,21,1,1,56
+1943190,1536877,2025-04-03,Senate,"Motion For Reconsideration: Senate Vote #443",22,33,0,1,56
+1943202,1508289,2025-03-06,Senate,"Passage By Substitute: Senate Vote #168",50,6,0,0,56
+1943210,1500800,2025-02-26,House,"Passage: House Vote #91",160,0,4,16,180
+1943210,1535340,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1943214,1504078,2025-03-03,Senate,"Motion To Engross: Sb 31, Sb 175: Senate Vote #115",33,23,0,0,56
+1943214,1504079,2025-03-03,Senate,"Passage: Senate Vote #117",53,1,2,0,56
+1943224,1498372,2025-02-24,House,"Passage: House Vote #70",173,0,2,5,180
+1943229,1498414,2025-02-24,House,"Passage: House Vote #75",170,2,2,6,180
+1943229,1530419,2025-03-28,Senate,"Motion To Engross: Senate Vote #314",31,21,2,2,56
+1943229,1530420,2025-03-28,Senate,"Passage By Substitute: Senate Vote #320",50,0,2,4,56
+1943229,1535455,2025-04-02,House,"Agree To Senate Sub As Am: House Vote #397",163,4,2,11,180
+1943229,1537811,2025-04-04,Senate,"Agree To House Amendment To Senate Substitute: Senate Vote #449",54,0,0,2,56
+1943250,1504458,2025-03-03,House,"Adopt: House Vote #143",171,1,2,6,180
+1943292,1508246,2025-03-06,Senate,"Passage By Substitute: Senate Vote #193",52,1,2,1,56
+1943345,1505389,2025-03-04,House,"Passage: House Vote #156",165,7,6,2,180
+1943345,1535357,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1943345,1535358,2025-04-02,Senate,"Passage By Substitute: Senate Vote #387",44,9,2,1,56
+1943345,1535359,2025-04-02,House,"Agree To Senate Substitute: House Vote #398",149,13,4,14,180
+1943372,1504022,2025-03-03,Senate,"Adoption Of Amendment #1 By The Senator From The 44th: Senate Vote #119",20,34,2,0,56
+1943372,1504023,2025-03-03,Senate,"Passage: Senate Vote #120",34,19,3,0,56
+1943382,1498497,2025-02-24,Senate,"Adoption Of Amendment #1 By The Senator From The 27th: Senate Vote #88",32,22,2,0,56
+1943382,1498498,2025-02-24,Senate,"Passage By Substitute: Senate Vote #89",33,21,2,0,56
+1943389,1504081,2025-03-03,Senate,"Passage As Amended: Senate Vote #133",44,11,0,1,56
+1943393,1485671,2025-02-10,Senate,"Passage By Substitute: Senate Vote #30",55,0,0,1,56
+1943393,1520521,2025-03-18,House,"Passage: House Vote #286",168,0,6,6,180
+1945107,1488398,2025-02-12,Senate,"Motion To Engross: Senate Vote #46",30,22,1,3,56
+1945107,1488399,2025-02-12,Senate,"Passage By Substitute: Senate Vote #48",31,21,0,4,56
+1945108,1504050,2025-03-03,Senate,"Passage: Senate Vote #123",51,3,1,1,56
+1945108,1520668,2025-03-18,House,"Passage: House Vote #280",163,2,9,6,180
+1945111,1494466,2025-02-19,Senate,"Motion To Engross: Sb 45, Sb 59, Sb 89, And Sr 56: Senate Vote #63",31,21,1,3,56
+1945111,1494467,2025-02-19,Senate,"Adoption Of Constitutional Amendment: Senate Vote #64",51,1,0,4,56
+1945117,1505610,2025-03-04,House,"Passage: House Vote #155",171,2,4,3,180
+1945117,1531528,2025-03-31,Senate,"Motion To Engross: Hb 144, Hb 153, Hb 511: Senate Vote #340",30,20,5,1,56
+1945117,1531529,2025-03-31,Senate,"Passage: Senate Vote #355",48,5,1,2,56
+1945123,1489803,2025-02-13,Senate,"Passage By Substitute: Senate Vote #51",51,0,0,5,56
+1945123,1530508,2025-03-28,House,"Passage: House Vote #336",138,23,3,16,180
+1945128,1487102,2025-02-11,Senate,"Adoption Of Amendment #2 By The Senator From The 41st: Senate Vote #39",19,33,1,3,56
+1945128,1487103,2025-02-11,Senate,"Motion To Reconsider Amendment #2: Senate Vote #40",19,33,1,3,56
+1945128,1487104,2025-02-11,Senate,"Passage By Substitute: Senate Vote #41",33,19,1,3,56
+1945128,1487105,2025-02-11,Senate,"Motion To Immediately Transmit: Senate Vote #42",32,18,3,3,56
+1945130,1482799,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1945130,1488489,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1945137,1502054,2025-02-27,House,"Passage: House Vote #100",165,0,8,7,180
+1945137,1527133,2025-03-25,Senate,"Passage: Senate Vote #281",53,0,2,1,56
+1945140,1494451,2025-02-19,Senate,"Motion To Engross: Sb 45, Sb 59, Sb 89, And Sr 56: Senate Vote #63",31,21,1,3,56
+1945140,1494452,2025-02-19,Senate,"Passage: Senate Vote #65",51,1,1,3,56
+1945147,1504185,2025-03-03,House,"Passage: House Vote #144",158,16,1,5,180
+1945147,1535728,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1945148,1502155,2025-02-27,Senate,"Passage: Senate Vote #100",50,0,3,3,56
+1945148,1527044,2025-03-25,House,"Passage: House Vote #309",169,0,5,6,180
+1945151,1502139,2025-02-27,House,"Passage: House Vote #109",161,3,3,13,180
+1945156,1496028,2025-02-20,House,"Passage: House Vote #55",172,0,3,5,180
+1945156,1531740,2025-03-31,Senate,"Passage: Senate Vote #356",44,7,2,3,56
+1945156,1531741,2025-03-31,Senate,"Passage By Substitute: Senate Vote #358",54,0,1,1,56
+1945156,1533754,2025-03-31,Senate,"Adoption Of Amendment #1 By The Senator From The 50th: Senate Vote #357",47,4,3,2,56
+1945156,1535231,2025-04-02,House,"Agree To Senate Sub As Am: House Vote #396",130,35,5,10,180
+1945156,1537592,2025-04-04,House,"Agree To Senate Amend To Ham To Ssub: House Vote #451",117,49,2,12,180
+1945156,1537820,2025-04-04,Senate,"Agree To House Amendment To Senate Substitute As Amended By Am #2: Senate Vote #468",36,17,1,2,56
+1945157,1485823,2025-02-10,House,"Local Calendar : House Vote #19",167,0,5,8,180
+1945157,1530380,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+1945160,1494432,2025-02-19,House,"Passage: House Vote #44",172,0,3,5,180
+1945160,1535327,2025-04-02,Senate,"Passage: Senate Vote #411",52,0,1,3,56
+1945161,1496110,2025-02-20,House,"Passage: House Vote #50",172,0,3,5,180
+1945166,1537547,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+1945167,1500878,2025-02-26,Senate,"Passage By Substitute: Senate Vote #92",51,3,2,0,56
+1945167,1529713,2025-03-27,House,"Passage: House Vote #326",159,3,5,13,180
+1945167,1535195,2025-04-02,Senate,"Agree To House Substitute As Amended: Senate Vote #415",49,4,1,2,56
+1945167,1535196,2025-04-02,House,"Agree To Sam To Hsub: House Vote #403",91,63,5,21,180
+1945169,1498432,2025-02-24,House,"Passage: House Vote #74",168,3,2,7,180
+1945169,1531743,2025-03-31,Senate,"Motion To Engross: Hb 144, Hb 153, Hb 511: Senate Vote #340",30,20,5,1,56
+1945169,1531744,2025-03-31,Senate,"Passage: Senate Vote #356",44,7,2,3,56
+1945171,1505518,2025-03-04,House,"Passage: House Vote #149",172,0,6,2,180
+1945172,1492922,2025-02-18,Senate,"Motion To Engross: Senate Vote #57",31,20,2,3,56
+1945172,1492923,2025-02-18,Senate,"Passage By Substitute: Senate Vote #58",53,0,0,3,56
+1945173,1508120,2025-03-06,House,"Passage: House Vote #203",145,22,9,4,180
+1945173,1531590,2025-03-31,Senate,"Adoption Of Amendment #1 By The Senator From The 30th: Senate Vote #344",32,21,1,2,56
+1945173,1531591,2025-03-31,Senate,"Passage By Substitute: Senate Vote #345",32,19,3,2,56
+1945173,1537607,2025-04-04,House,"Agree To Senate Substitute: House Vote #409",98,64,6,12,180
+1945175,1494470,2025-02-19,House,"Passage: House Vote #45",172,0,3,5,180
+1945178,1508440,2025-03-06,House,"Passage: House Vote #198",162,10,4,4,180
+1945178,1524361,2025-03-21,Senate,"Passage: Senate Vote #268",49,6,0,1,56
+1945181,1504130,2025-03-03,Senate,"Passage: Senate Vote #118",51,4,1,0,56
+1945181,1535427,2025-04-02,House,"Passage: House Vote #400",128,35,3,14,180
+1945189,1508280,2025-03-06,House,"Passage: House Vote #217",158,8,7,7,180
+1945189,1523870,2025-03-20,Senate,"Passage By Substitute: Senate Vote #258",48,4,1,3,56
+1945189,1527034,2025-03-25,House,"Agree To Senate Substitute: House Vote #308",150,18,6,6,180
+1945190,1504066,2025-03-03,Senate,"Passage: Senate Vote #122",54,1,1,0,56
+1945193,1500863,2025-02-26,House,"Passage: House Vote #88",162,7,3,8,180
+1945193,1535227,2025-04-02,Senate,"Passage As Amended: Senate Vote #432",53,0,1,2,56
+1945193,1537601,2025-04-04,House,"Agree To Senate Amendment: House Vote #410",159,3,7,11,180
+1947461,1494471,2025-02-19,Senate,"Motion To Engross: Sb 45, Sb 59, Sb 89, And Sr 56: Senate Vote #63",31,21,1,3,56
+1947461,1494472,2025-02-19,Senate,"Passage: Senate Vote #66",50,1,0,5,56
+1947465,1498322,2025-02-24,House,"Passage: House Vote #76",164,9,1,6,180
+1947465,1529999,2025-03-27,Senate,"Passage: Senate Vote #297",55,1,0,0,56
+1947482,1487300,2025-02-11,House,"Adopt: House Vote #23",166,0,6,8,180
+1947482,1517169,2025-03-11,Senate,"Adoption By Substitute: Senate Vote #225",49,0,1,6,56
+1947482,1530147,2025-03-25,House,"Agree To Senate Substitute: House Vote #312",162,0,11,7,180
+1947484,1504406,2025-03-03,House,"Passage: House Vote #127",171,0,6,3,180
+1947487,1506177,2025-03-04,House,"Passage: House Vote #163",171,0,4,5,180
+1947487,1535591,2025-04-02,Senate,"Passage: Senate Vote #391",48,2,3,3,56
+1947499,1505360,2025-03-04,House,"Passage: House Vote #172",169,0,5,6,180
+1947499,1535276,2025-04-02,Senate,"Passage By Substitute: Senate Vote #390",52,0,2,2,56
+1947499,1537599,2025-04-04,House,"Agree To Senate Substitute: House Vote #412",167,0,5,8,180
+1947505,1500988,2025-02-26,House,"Passage: House Vote #86",168,0,5,7,180
+1947505,1535115,2025-04-02,Senate,"Passage: Senate Vote #425",51,0,4,1,56
+1947514,1487196,2025-02-11,House,"Adopt: House Vote #24",166,0,6,8,180
+1947514,1515565,2025-03-11,Senate,"Adoption By Substitute: Senate Vote #226",49,0,1,6,56
+1947514,1527142,2025-03-25,House,"Agree To Senate Substitute: House Vote #313",166,0,9,5,180
+1947525,1496949,2025-02-21,House,"Passage: House Vote #59",159,0,14,7,180
+1947525,1517817,2025-03-13,Senate,"Passage: Senate Vote #233",50,0,0,6,56
+1947533,1504393,2025-03-03,House,"Passage: House Vote #145",173,0,2,5,180
+1947549,1496942,2025-02-21,House,"Passage: House Vote #62",154,0,13,13,180
+1947564,1508258,2025-03-06,Senate,"Passage By Substitute: Senate Vote #164",33,22,0,1,56
+1947568,1492896,2025-02-18,Senate,"Passage: Senate Vote #59",53,0,0,3,56
+1947568,1524367,2025-03-21,House,"Passage: House Vote #296",161,0,6,13,180
+1947576,1505559,2025-03-04,House,"Passage: House Vote #176",170,0,5,5,180
+1947576,1529860,2025-03-27,Senate,"Passage: Senate Vote #298",54,0,2,0,56
+1947579,1502066,2025-02-27,House,"Passage: House Vote #110",157,2,7,14,180
+1947586,1508203,2025-03-06,Senate,"Adoption Of Amend #1a By Sen From The 50th To Amend #1 By Sen From The 13th: Senate Vote #185",32,22,2,0,56
+1947586,1508204,2025-03-06,Senate,"Adoption Of The Amendment By The Sen From The 13th As Amended: Senate Vote #186",49,7,0,0,56
+1947586,1508205,2025-03-06,Senate,"Adoption Of Amend #3b By Sen From The 19th To Amend #3 By Sen From The 18th: Senate Vote #187",33,22,1,0,56
+1947586,1508206,2025-03-06,Senate,"Passage By Substitute: Senate Vote #188",13,43,0,0,56
+1947600,1500954,2025-02-26,House,"Passage: House Vote #82",164,4,6,6,180
+1947600,1537805,2025-04-04,Senate,"Passage: Senate Vote #457",43,4,7,2,56
+1947610,1508328,2025-03-06,House,"Passage: House Vote #199",171,2,2,5,180
+1947628,1504089,2025-03-03,Senate,"Passage By Substitute: Senate Vote #134",54,1,0,1,56
+1947628,1529827,2025-03-27,House,"Passage: House Vote #325",165,0,4,11,180
+1947632,1498502,2025-02-24,House,"Passage: House Vote #69",171,0,4,5,180
+1947632,1530469,2025-03-28,Senate,"Passage By Substitute: Senate Vote #321",46,0,5,5,56
+1947632,1535453,2025-04-02,House,"Agree To Senate Sub As Am: House Vote #384",166,2,3,9,180
+1947637,1505494,2025-03-04,Senate,"Passage As Amended: Senate Vote #152",53,0,1,2,56
+1947637,1529711,2025-03-27,House,"Passage: House Vote #319",166,0,9,5,180
+1947637,1537777,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #448",51,0,3,2,56
+1947641,1502133,2025-02-27,House,"Passage: House Vote #106",160,0,7,13,180
+1947662,1482983,2025-02-05,House,"Local Calendar : House Vote #15",160,1,14,5,180
+1947662,1488629,2025-02-12,Senate,"Local Consent Calendar: Senate Vote #45",52,1,1,2,56
+1947679,1500897,2025-02-26,House,"Passage: House Vote #94",160,0,7,13,180
+1947692,1494385,2025-02-19,House,"Passage: House Vote #46",164,3,7,6,180
+1947692,1535440,2025-04-02,Senate,"Passage: Senate Vote #431",52,1,2,1,56
+1949611,1488480,2025-02-12,House,"Passage: House Vote #30",163,2,7,8,180
+1949611,1531729,2025-03-31,Senate,"Passage: Senate Vote #365",50,2,1,3,56
+1949614,1496939,2025-02-21,House,"Passage: House Vote #66",168,0,4,8,180
+1949614,1529862,2025-03-27,Senate,"Passage By Substitute: Senate Vote #299",55,0,1,0,56
+1949614,1531561,2025-03-31,House,"Agree To Senate Substitute: House Vote #355",166,0,5,9,180
+1949616,1505568,2025-03-04,House,"Passage: House Vote #153",174,0,4,2,180
+1949616,1535377,2025-04-02,Senate,"Passage By Substitute: Senate Vote #433",53,0,1,2,56
+1949616,1537472,2025-04-04,House,"Agree To Senate Substitute: House Vote #413",162,0,6,12,180
+1949619,1500980,2025-02-26,House,"Passage: House Vote #81",167,0,7,6,180
+1949619,1529875,2025-03-27,Senate,"Passage By Substitute: Senate Vote #300",55,0,1,0,56
+1949619,1531568,2025-03-31,House,"Agree To Senate Substitute: House Vote #353",164,0,7,9,180
+1949620,1505530,2025-03-04,House,"Passage: House Vote #175",167,2,7,4,180
+1949654,1496972,2025-02-21,House,"Passage: House Vote #61",155,1,13,11,180
+1949654,1530517,2025-03-28,Senate,"Passage: Senate Vote #322",48,1,2,5,56
+1949657,1496956,2025-02-21,Senate,"Adoption Of Amend #2a By Sen From The 7th To Amend #2 By Sen From The 7th: Senate Vote #81",21,33,0,2,56
+1949657,1496957,2025-02-21,Senate,"Adoption Of Amendment #2 By The Senator From The 7th: Senate Vote #82",21,33,0,2,56
+1949657,1496958,2025-02-21,Senate,"Passage By Substitute: Senate Vote #83",33,21,0,2,56
+1949657,1523850,2025-03-20,House,"Passage: House Vote #290",91,82,1,6,180
+1949657,1523851,2025-03-20,House,"Immediately Transmit: House Vote #291",94,77,3,6,180
+1949657,1524304,2025-03-21,Senate,"Agree To House Substitute As Amended: Senate Vote #272",22,32,1,1,56
+1949657,1524305,2025-03-21,Senate,"Agree To House Substitute: Senate Vote #273",34,21,0,1,56
+1949659,1500872,2025-02-26,House,"Adopt: House Vote #96",163,0,4,13,180
+1949659,1534306,2025-03-31,Senate,"Adoption: Senate Vote #377",54,0,1,1,56
+1949664,1496973,2025-02-21,House,"Passage: House Vote #64",162,1,5,12,180
+1949665,1488550,2025-02-12,House,"Passage: House Vote #29",165,0,7,8,180
+1949665,1531746,2025-03-31,Senate,"Passage By Substitute: Senate Vote #346",54,0,0,2,56
+1949665,1531747,2025-03-31,House,"Agree To Senate Substitute: House Vote #358",164,0,6,10,180
+1949666,1502146,2025-02-27,Senate,"Passage: Senate Vote #104",52,0,0,4,56
+1949666,1529672,2025-03-27,House,"Passage: House Vote #323",98,69,3,10,180
+1949666,1530470,2025-03-28,Senate,"Agree To House Substitute As Amended: Senate Vote #336",52,0,0,4,56
+1949666,1531612,2025-03-31,House,"Agree To Sam To Hsub: House Vote #360",120,42,6,12,180
+1952853,1503972,2025-03-03,Senate,"Passage By Substitute: Senate Vote #125",32,23,1,0,56
+1952855,1508175,2025-03-06,House,"Passage: House Vote #260",169,2,2,7,180
+1952855,1530540,2025-03-28,Senate,"Passage As Amended: Senate Vote #323",44,2,6,4,56
+1952855,1537586,2025-04-04,House,"Agree To Senate Amendment: House Vote #414",143,22,4,11,180
+1952861,1498506,2025-02-24,Senate,"Passage By Substitute: Senate Vote #86",56,0,0,0,56
+1952861,1529699,2025-03-27,House,"Passage: House Vote #318",161,0,16,3,180
+1952886,1492842,2025-02-18,Senate,"Passage By Substitute: Senate Vote #60",52,1,0,3,56
+1952886,1517682,2025-03-13,House,"Passage: House Vote #274",165,5,5,5,180
+1952888,1494494,2025-02-19,Senate,"Local Consent Calendar: Senate Vote #62",51,0,2,3,56
+1952888,1505427,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1952888,1524464,2025-03-21,Senate,"Agree To House Substitute As Amended By Amendment #2: Senate Vote #274",55,0,0,1,56
+1952891,1508238,2025-03-06,House,"Adopt: House Vote #268",151,12,4,13,180
+1952896,1492931,2025-02-18,House,"Passage: House Vote #39",173,0,2,5,180
+1952896,1520604,2025-03-18,Senate,"Motion To Engross: Hb 90, Hb 223, Hr 32: Senate Vote #236",29,23,1,3,56
+1952896,1520605,2025-03-18,Senate,"Passage By Substitute: Senate Vote #238",50,1,1,4,56
+1952896,1524384,2025-03-21,House,"Agree To Senate Substitute: House Vote #300",153,0,9,18,180
+1952899,1487290,2025-02-11,Senate,"Passage By Substitute: Senate Vote #38",52,0,0,4,56
+1952899,1524482,2025-03-21,House,"Passage: House Vote #297",162,0,5,13,180
+1952902,1504101,2025-03-03,Senate,"Passage By Substitute: Senate Vote #126",53,0,3,0,56
+1952902,1529764,2025-03-27,House,"Passage: House Vote #320",166,2,5,7,180
+1952902,1537751,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #452",53,1,0,2,56
+1952914,1508442,2025-03-06,House,"Passage: House Vote #216",172,0,2,6,180
+1952914,1537735,2025-04-04,Senate,"Passage: Senate Vote #484",51,0,4,1,56
+1952916,1496006,2025-02-20,Senate,"Adoption By Substitute: Senate Vote #76",40,9,1,6,56
+1952930,1487253,2025-02-11,Senate,"Local Consent Calendar: Senate Vote #33",49,0,5,2,56
+1952930,1505600,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1952930,1524467,2025-03-21,Senate,"Agree To House Substitute: Senate Vote #275",54,0,1,1,56
+1952957,1500960,2025-02-26,Senate,"Passage: Senate Vote #95",50,3,2,1,56
+1952957,1530579,2025-03-28,House,"Passage: House Vote #339",131,31,3,15,180
+1952957,1530580,2025-03-28,House,"Immediately Transmit: House Vote #340",99,62,4,15,180
+1952957,1530581,2025-03-28,Senate,"Agree To House Substitute: Senate Vote #334",49,0,0,7,56
+1952970,1488541,2025-02-12,Senate,"Adoption By Substitute: Senate Vote #49",47,4,1,4,56
+1952978,1487191,2025-02-11,Senate,"Local Consent Calendar: Senate Vote #33",49,0,5,2,56
+1952978,1505733,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1952980,1508200,2025-03-06,Senate,"Passage By Substitute: Senate Vote #194",44,9,1,2,56
+1952980,1531668,2025-03-31,House,"Passage: House Vote #352",107,62,3,8,180
+1952980,1537778,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #479",44,10,1,1,56
+1952988,1505500,2025-03-04,House,"Passage: House Vote #169",129,37,3,11,180
+1952988,1537787,2025-04-04,Senate,"Passage By Substitute: Senate Vote #455",46,9,0,1,56
+1952997,1487235,2025-02-11,Senate,"Local Consent Calendar: Senate Vote #33",49,0,5,2,56
+1952997,1505367,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1952999,1505524,2025-03-04,House,"Passage: House Vote #174",168,0,4,8,180
+1953019,1500965,2025-02-26,House,"Passage: House Vote #83",169,0,5,6,180
+1953019,1537789,2025-04-04,Senate,"Passage: Senate Vote #458",52,0,2,2,56
+1953032,1489885,2025-02-13,Senate,"Passage By Substitute: Senate Vote #52",52,0,0,4,56
+1955584,1494457,2025-02-19,Senate,"Motion To Engross: Sb 45, Sb 59, Sb 89, And Sr 56: Senate Vote #63",31,21,1,3,56
+1955584,1494458,2025-02-19,Senate,"Passage: Senate Vote #67",49,0,1,6,56
+1955587,1502017,2025-02-27,House,"Passage: House Vote #103",102,54,10,14,180
+1955591,1504270,2025-03-03,House,"Passage: House Vote #142",169,2,2,7,180
+1955594,1505469,2025-03-04,House,"Passage: House Vote #166",159,13,2,6,180
+1955594,1531646,2025-03-31,Senate,"Adoption Of Amendment #2 By The Senator From The 41st: Senate Vote #347",25,29,0,2,56
+1955594,1531647,2025-03-31,Senate,"Passage By Substitute: Senate Vote #348",45,9,0,2,56
+1955594,1531648,2025-03-31,House,"Agree To Senate Substitute: House Vote #365",154,12,3,11,180
+1955596,1497169,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1955596,1501995,2025-02-27,Senate,"Local Consent Calendar: Senate Vote #98",48,0,5,3,56
+1955597,1504306,2025-03-03,House,"Passage: House Vote #146",173,0,2,5,180
+1955607,1489896,2025-02-13,House,"Local Calendar : House Vote #32",163,0,11,6,180
+1955607,1497005,2025-02-21,Senate,"Local Consent Calendar: Senate Vote #78",46,0,9,1,56
+1955610,1502075,2025-02-27,House,"Passage: House Vote #107",160,3,4,13,180
+1955610,1530066,2025-03-27,Senate,"Passage: Senate Vote #301",53,3,0,0,56
+1955612,1500936,2025-02-26,House,"Passage: House Vote #87",166,0,5,9,180
+1955612,1535284,2025-04-02,Senate,"Passage By Substitute: Senate Vote #422",55,0,0,1,56
+1955612,1537479,2025-04-04,House,"Agree To Senate Sub As Amended By House: House Vote #439",146,15,5,14,180
+1955616,1505575,2025-03-04,Senate,"Passage: Senate Vote #141",52,2,1,1,56
+1955619,1502899,2025-02-28,Senate,"Passage By Substitute: Senate Vote #108",48,6,0,2,56
+1955619,1520679,2025-03-18,House,"Passage: House Vote #281",171,0,4,5,180
+1955630,1502152,2025-02-27,House,"Passage: House Vote #104",166,0,3,11,180
+1955638,1505479,2025-03-04,House,"Passage: House Vote #150",162,7,8,3,180
+1955640,1508202,2025-03-06,Senate,"Passage By Substitute: Senate Vote #207",50,3,3,0,56
+1955640,1531714,2025-03-31,House,"Passage: House Vote #346",168,0,5,7,180
+1955640,1535503,2025-04-02,Senate,"Agree To House Substitute: Senate Vote #417",55,0,0,1,56
+1955650,1508386,2025-03-06,House,"Passage: House Vote #264",171,0,2,7,180
+1955650,1524404,2025-03-21,Senate,"Motion To Engross: Hb 266, Hb 426: Senate Vote #266",32,22,1,1,56
+1955650,1524405,2025-03-21,Senate,"Passage By Substitute: Senate Vote #269",53,2,0,1,56
+1955650,1531676,2025-03-31,House,"Agree To Senate Sub As Am: House Vote #364",164,0,5,11,180
+1955650,1535470,2025-04-02,Senate,"Agree To House Amendment To Senate Substitute As Amended: Senate Vote #412",52,0,4,0,56
+1955650,1537576,2025-04-04,House,"Agree To Senate Amend To Ham To Ssub: House Vote #419",167,0,3,10,180
+1955657,1504456,2025-03-03,House,"Passage: House Vote #141",168,0,5,7,180
+1955660,1501030,2025-02-26,House,"Passage: House Vote #90",152,2,12,14,180
+1955660,1535184,2025-04-02,Senate,"Adoption Of Amendment #1 By The Senator From The 19th: Senate Vote #402",17,36,3,0,56
+1955660,1535185,2025-04-02,Senate,"Passage By Substitute: Senate Vote #403",52,1,3,0,56
+1955660,1537585,2025-04-04,House,"Agree To Senate Substitute: House Vote #442",113,51,3,13,180
+1955679,1485820,2025-02-10,House,"Local Calendar : House Vote #19",167,0,5,8,180
+1955679,1496991,2025-02-21,Senate,"Local Consent Calendar: Senate Vote #78",46,0,9,1,56
+1955680,1508426,2025-03-06,House,"Passage: House Vote #263",172,0,3,5,180
+1955680,1531819,2025-03-31,Senate,"Passage: Senate Vote #364",49,0,3,4,56
+1955683,1505458,2025-03-04,House,"Passage: House Vote #168",173,0,3,4,180
+1955683,1537817,2025-04-04,Senate,"Passage: Senate Vote #459",54,0,0,2,56
+1955694,1508297,2025-03-06,House,"Passage: House Vote #215",165,7,2,6,180
+1955697,1505385,2025-03-04,House,"Passage: House Vote #177",171,0,3,6,180
+1955697,1537767,2025-04-04,Senate,"Passage: Senate Vote #463",52,0,3,1,56
+1955711,1498538,2025-02-24,House,"Passage: House Vote #73",165,5,3,7,180
+1955716,1496129,2025-02-20,Senate,"Passage: Senate Vote #69",35,18,1,2,56
+1955716,1524415,2025-03-21,House,"Passage: House Vote #295",162,0,5,13,180
+1955716,1530026,2025-03-27,Senate,"Agree To House Substitute: Senate Vote #309",51,0,1,4,56
+1955723,1508253,2025-03-06,House,"Passage: House Vote #219",170,3,2,5,180
+1955724,1504222,2025-02-28,House,"Passage: House Vote #121",165,0,6,9,180
+1955724,1531722,2025-03-31,Senate,"Passage: Senate Vote #378",51,1,3,1,56
+1955727,1502134,2025-02-27,House,"Passage: House Vote #111",164,1,2,13,180
+1958346,1505541,2025-03-04,House,"Passage: House Vote #182",168,0,7,5,180
+1958355,1508346,2025-03-06,House,"Passage: House Vote #240",169,4,4,3,180
+1958365,1505643,2025-03-04,Senate,"Passage: Senate Vote #146",55,0,0,1,56
+1958365,1527205,2025-03-25,House,"Passage: House Vote #306",166,1,6,7,180
+1958373,1498532,2025-02-24,House,"Passage: House Vote #68",171,0,4,5,180
+1958373,1515422,2025-03-11,Senate,"Passage: Senate Vote #224",50,0,0,6,56
+1958374,1504157,2025-03-03,House,"Passage: House Vote #128",176,0,2,2,180
+1958374,1527268,2025-03-25,Senate,"Motion To Engross: Hb 92, Hb 290: Senate Vote #278",31,22,2,1,56
+1958374,1527269,2025-03-25,Senate,"Passage: Senate Vote #282",54,0,0,2,56
+1958385,1496018,2025-02-20,Senate,"Passage By Substitute: Senate Vote #70",50,0,3,3,56
+1958385,1524308,2025-03-21,House,"Passage: House Vote #298",162,0,5,13,180
+1958404,1496912,2025-02-21,House,"Passage: House Vote #63",155,6,8,11,180
+1958409,1508380,2025-03-06,House,"Passage: House Vote #204",146,20,9,5,180
+1958409,1531669,2025-03-31,Senate,"Passage By Substitute: Senate Vote #349",55,0,0,1,56
+1958409,1531670,2025-03-31,House,"Agree To Senate Substitute: House Vote #367",152,14,4,10,180
+1958413,1505425,2025-03-04,House,"Passage: House Vote #161",171,2,3,4,180
+1958414,1505482,2025-03-04,Senate,"Passage By Substitute: Senate Vote #153",52,1,0,3,56
+1958414,1527055,2025-03-25,House,"Passage: House Vote #310",100,69,4,7,180
+1958422,1496102,2025-02-20,Senate,"Passage By Substitute: Senate Vote #71",49,3,0,4,56
+1958425,1508325,2025-03-06,Senate,"Passage: Senate Vote #196",55,0,1,0,56
+1958425,1535187,2025-04-02,House,"Passage: House Vote #386",145,14,6,15,180
+1958428,1508122,2025-03-06,Senate,"Passage By Substitute: Senate Vote #179",53,0,1,2,56
+1958428,1520640,2025-03-18,House,"Passage: House Vote #285",172,0,3,5,180
+1958429,1504360,2025-03-03,House,"Passage: House Vote #124",154,17,6,3,180
+1958429,1537831,2025-04-04,Senate,"Adoption Of Amendment #1 By The Senator From The 42nd: Senate Vote #481",51,2,2,1,56
+1958429,1537832,2025-04-04,Senate,"Adoption Of Amendment #2 By The Senator From The 46th: Senate Vote #482",13,39,3,1,56
+1958429,1537833,2025-04-04,Senate,"Passage As Amended: Senate Vote #483",51,3,1,1,56
+1958429,1537834,2025-04-04,House,"Agree To Senate Amendment: House Vote #448",163,3,2,12,180
+1958430,1504131,2025-03-03,Senate,"Passage: Senate Vote #129",53,2,0,1,56
+1958439,1502074,2025-02-27,Senate,"Passage: Senate Vote #101",46,4,2,4,56
+1958439,1537523,2025-04-04,House,"Passage: House Vote #427",167,2,3,8,180
+1958439,1537792,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #489",51,1,3,1,56
+1958444,1489899,2025-02-13,Senate,"Passage By Substitute: Senate Vote #55",49,1,2,4,56
+1958444,1531724,2025-03-31,House,"Passage: House Vote #370",152,11,5,12,180
+1958444,1537819,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #475",50,3,2,1,56
+1958450,1508379,2025-03-06,Senate,"Passage: Senate Vote #162",52,0,2,2,56
+1958450,1529586,2025-03-27,House,"Passage: House Vote #324",168,0,2,10,180
+1958450,1537737,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #476",51,1,3,1,56
+1958458,1504268,2025-02-28,House,"Passage: House Vote #122",167,0,4,9,180
+1958458,1531704,2025-03-31,Senate,"Passage: Senate Vote #351",52,0,2,2,56
+1960976,1505564,2025-03-04,House,"Passage: House Vote #171",169,0,6,5,180
+1960976,1531766,2025-03-31,Senate,"Passage: Senate Vote #375",52,0,3,1,56
+1960977,1505523,2025-03-04,Senate,"Passage: Senate Vote #154",50,1,2,3,56
+1960981,1508164,2025-03-06,Senate,"Passage By Substitute: Senate Vote #210",53,2,1,0,56
+1960981,1531597,2025-03-31,House,"Passage: House Vote #347",157,11,5,7,180
+1960981,1531598,2025-03-31,Senate,"Agree To House Substitute: Senate Vote #371",51,2,0,3,56
+1960984,1505522,2025-03-04,House,"Passage: House Vote #152",93,77,8,2,180
+1960986,1505493,2025-03-04,Senate,"Passage By Substitute: Senate Vote #144",37,16,2,1,56
+1960989,1508349,2025-03-06,House,"Passage: House Vote #227",161,13,3,3,180
+1960989,1524301,2025-03-21,Senate,"Passage: Senate Vote #270",53,1,1,1,56
+1960990,1505539,2025-03-04,House,"Passage: House Vote #158",168,0,8,4,180
+1960990,1535430,2025-04-02,Senate,"Passage: Senate Vote #393",52,0,0,4,56
+1960991,1500923,2025-02-26,House,"Passage: House Vote #84",170,1,3,6,180
+1960991,1535312,2025-04-02,Senate,"Adoption Of The Amendment By The Sen From The 32nd As Amended: Senate Vote #419",50,5,0,1,56
+1960991,1535313,2025-04-02,Senate,"Passage As Amended: Senate Vote #420",47,6,2,1,56
+1960991,1537605,2025-04-04,House,"Agree To Senate Amendment: House Vote #415",104,60,3,13,180
+1960996,1504444,2025-02-28,House,"Passage: House Vote #113",166,0,7,7,180
+1960996,1530018,2025-03-27,Senate,"Passage By Substitute: Senate Vote #302",55,0,0,1,56
+1960996,1531663,2025-03-31,House,"Agree To Senate Substitute: House Vote #357",167,0,4,9,180
+1961004,1508226,2025-03-06,House,"Passage: House Vote #248",174,2,1,3,180
+1961012,1505387,2025-03-04,House,"Passage: House Vote #173",166,0,8,6,180
+1961012,1535272,2025-04-02,Senate,"Passage: Senate Vote #421",46,7,2,1,56
+1961013,1505456,2025-03-04,House,"Passage: House Vote #185",143,29,2,6,180
+1961013,1527179,2025-03-25,Senate,"Adoption Of Amend #1a By Sen From The 7th To Amend #1 By Sen From The 7th: Senate Vote #287",23,32,1,0,56
+1961013,1527180,2025-03-25,Senate,"Adoption Of Amendment #1 By The Senator From The 7th: Senate Vote #288",15,39,2,0,56
+1961013,1527181,2025-03-25,Senate,"Passage: Senate Vote #289",54,2,0,0,56
+1961023,1504284,2025-03-03,House,"Passage: House Vote #129",176,0,2,2,180
+1961023,1531573,2025-03-31,Senate,"Passage: Senate Vote #368",49,0,5,2,56
+1961024,1505532,2025-03-04,House,"Passage: House Vote #151",169,3,5,3,180
+1961031,1508224,2025-03-06,Senate,"Passage: Senate Vote #204",53,0,3,0,56
+1961031,1527059,2025-03-25,House,"Passage: House Vote #311",168,0,5,7,180
+1961033,1501993,2025-02-27,House,"Passage: House Vote #105",167,0,3,10,180
+1961034,1498423,2025-02-24,Senate,"Passage: Senate Vote #87",56,0,0,0,56
+1961034,1535145,2025-04-02,House,"Passage: House Vote #385",104,61,7,8,180
+1961034,1537754,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #470",37,14,2,3,56
+1961035,1500890,2025-02-26,Senate,"Passage: Senate Vote #96",54,0,0,2,56
+1961035,1527159,2025-03-25,House,"Passage: House Vote #305",160,1,10,9,180
+1961041,1508314,2025-03-06,House,"Passage: House Vote #267",98,75,1,6,180
+1964475,1494492,2025-02-19,Senate,"Local Consent Calendar: Senate Vote #62",51,0,2,3,56
+1964475,1502083,2025-02-27,House,"Local Calendar : House Vote #99",169,0,5,6,180
+1964479,1504076,2025-03-03,Senate,"Passage By Substitute: Senate Vote #124",31,22,2,1,56
+1964479,1517767,2025-03-13,House,"Passage: House Vote #275",96,74,3,7,180
+1964491,1489906,2025-02-13,House,"Local Calendar : House Vote #32",163,0,11,6,180
+1964491,1512485,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1964501,1501999,2025-02-27,Senate,"Passage By Substitute: Senate Vote #102",49,1,1,5,56
+1964501,1535350,2025-04-02,House,"Passage: House Vote #381",166,3,2,9,180
+1964507,1505376,2025-03-04,House,"Passage: House Vote #187",156,14,5,5,180
+1964521,1500795,2025-02-26,Senate,"Passage: Senate Vote #93",52,4,0,0,56
+1964521,1531623,2025-03-31,House,"Passage: House Vote #369",155,7,6,12,180
+1964523,1508183,2025-03-06,Senate,"Passage By Substitute: Senate Vote #209",55,0,1,0,56
+1964523,1535126,2025-04-02,House,"Passage: House Vote #390",142,24,3,11,180
+1964523,1537729,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #469",50,1,3,2,56
+1964525,1504158,2025-02-28,House,"Passage: House Vote #118",166,0,5,9,180
+1964528,1508361,2025-03-06,House,"Passage: House Vote #210",96,77,4,3,180
+1964528,1535282,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1964528,1535283,2025-04-02,Senate,"Passage By Substitute: Senate Vote #426",43,11,0,2,56
+1964528,1537589,2025-04-04,House,"Agree To Senate Sub As Amended By House: House Vote #423",141,31,1,7,180
+1964543,1496033,2025-02-20,Senate,"Adoption Of Amendment #1 By The Senator From The 9th: Senate Vote #72",21,32,1,2,56
+1964543,1496034,2025-02-20,Senate,"Passage By Substitute: Senate Vote #73",32,22,0,2,56
+1964543,1517758,2025-03-13,House,"Passage: House Vote #276",96,69,5,10,180
+1964561,1489886,2025-02-13,House,"Local Calendar : House Vote #32",163,0,11,6,180
+1964582,1508268,2025-03-06,Senate,"Passage: Senate Vote #197",54,1,1,0,56
+1964582,1531698,2025-03-31,House,"Passage: House Vote #345",166,0,7,7,180
+1964582,1531699,2025-03-31,Senate,"Agree To House Substitute: Senate Vote #370",52,0,1,3,56
+1964583,1508208,2025-03-06,House,"Passage: House Vote #211",168,3,6,3,180
+1964583,1530562,2025-03-28,Senate,"Motion To Remove From The Table: Senate Vote #332",34,17,0,5,56
+1964583,1530563,2025-03-28,Senate,"Passage: Senate Vote #333",26,24,1,5,56
+1964583,1531636,2025-03-31,Senate,"Motion For Reconsideration: Senate Vote #337",51,4,1,0,56
+1964583,1537522,2025-04-04,House,"Agree To Senate Amendment: House Vote #443",158,5,7,10,180
+1964583,1537779,2025-04-04,Senate,"Passage As Amended: Senate Vote #460",49,6,0,1,56
+1964590,1498436,2025-02-24,House,"Passage: House Vote #71",169,2,2,7,180
+1964590,1537610,2025-04-04,House,"Agree To Senate Substitute: House Vote #452",163,2,3,12,180
+1964590,1537750,2025-04-04,Senate,"Passage By Substitute: Senate Vote #462",51,1,1,3,56
+1964596,1505557,2025-03-04,House,"Passage: House Vote #159",168,0,7,5,180
+1964596,1530587,2025-03-28,Senate,"Adoption Of Amendment #1 By The Senator From The 2nd: Senate Vote #324",18,32,2,4,56
+1964596,1530588,2025-03-28,Senate,"Adoption Of Amendment #2 By The Senator From The 9th: Senate Vote #325",19,31,2,4,56
+1964596,1530589,2025-03-28,Senate,"Passage: Senate Vote #326",47,2,3,4,56
+1964600,1508264,2025-03-06,Senate,"Motion To Engross: Senate Vote #160",33,18,3,2,56
+1964600,1508265,2025-03-06,Senate,"Passage By Substitute: Senate Vote #213",56,0,0,0,56
+1964604,1505215,2025-03-03,House,"Passage: House Vote #132",162,11,4,3,180
+1964607,1489909,2025-02-13,House,"Local Calendar : House Vote #32",163,0,11,6,180
+1964607,1496998,2025-02-21,Senate,"Local Consent Calendar: Senate Vote #78",46,0,9,1,56
+1964610,1504494,2025-02-28,House,"Passage: House Vote #120",164,1,5,10,180
+1964614,1504184,2025-03-03,House,"Passage: House Vote #125",120,50,7,3,180
+1964614,1531755,2025-03-31,Senate,"Passage: Senate Vote #376",35,20,0,1,56
+1964618,1520709,2025-03-18,Senate,"Adoption Of Amendment #1 By The Senator From The 53rd: Senate Vote #241",22,29,1,4,56
+1964618,1520710,2025-03-18,Senate,"Adoption By Substitute: Senate Vote #242",47,5,0,4,56
+1964619,1489908,2025-02-13,House,"Local Calendar : House Vote #32",163,0,11,6,180
+1964619,1494391,2025-02-19,Senate,"Local Consent Calendar: Senate Vote #62",51,0,2,3,56
+1964638,1508309,2025-03-06,House,"Passage: House Vote #261",170,2,1,7,180
+1964638,1535279,2025-04-02,Senate,"Passage By Substitute: Senate Vote #396",50,4,2,0,56
+1964638,1537604,2025-04-04,House,"Agree To Senate Substitute: House Vote #422",168,3,2,7,180
+1964649,1508274,2025-03-06,House,"Passage: House Vote #249",175,0,2,3,180
+1964649,1530544,2025-03-28,Senate,"Adoption Of Amendment #1 By The Senator From The 6th: Senate Vote #327",46,3,2,5,56
+1964649,1530545,2025-03-28,Senate,"Passage As Amended: Senate Vote #328",47,0,3,6,56
+1964649,1531739,2025-03-31,House,"Agree To Senate Amendment: House Vote #356",163,0,8,9,180
+1965755,1508188,2025-03-06,Senate,"Passage As Amended: Senate Vote #215",55,0,1,0,56
+1965755,1530575,2025-03-28,House,"Passage: House Vote #337",163,0,4,13,180
+1965755,1531525,2025-03-31,Senate,"Agree To House Substitute: Senate Vote #360",51,0,4,1,56
+1965777,1504400,2025-03-03,House,"Passage: House Vote #140",171,2,1,6,180
+1965777,1535442,2025-04-02,Senate,"Passage: Senate Vote #395",54,2,0,0,56
+1965778,1508159,2025-03-06,House,"Passage: House Vote #266",159,13,1,7,180
+1965778,1535361,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1965778,1535362,2025-04-02,Senate,"Passage By Substitute: Senate Vote #394",33,23,0,0,56
+1965782,1502106,2025-02-27,Senate,"Motion To Engross: Senate Vote #99",29,21,3,3,56
+1965782,1502107,2025-02-27,Senate,"Passage By Substitute: Senate Vote #103",51,0,1,4,56
+1965782,1531731,2025-03-31,House,"Passage: House Vote #343",166,0,9,5,180
+1965782,1531732,2025-03-31,Senate,"Agree To House Substitute: Senate Vote #369",47,6,1,2,56
+1965788,1496996,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1965788,1520704,2025-03-18,Senate,"Local Consent Calendar: Senate Vote #235",51,0,2,3,56
+1965789,1502914,2025-02-28,Senate,"Passage: Senate Vote #109",53,0,1,2,56
+1965789,1520672,2025-03-18,House,"Passage: House Vote #282",172,0,3,5,180
+1965798,1496970,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1965798,1502123,2025-02-27,Senate,"Local Consent Calendar: Senate Vote #98",48,0,5,3,56
+1965802,1508348,2025-03-06,House,"Passage: House Vote #242",171,0,2,7,180
+1965811,1505519,2025-03-04,House,"Passage: House Vote #164",167,7,2,4,180
+1965811,1523766,2025-03-20,Senate,"Passage: Senate Vote #259",53,0,0,3,56
+1965820,1496997,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1965820,1502894,2025-02-28,Senate,"Local Consent Calendar: Senate Vote #106",51,1,2,2,56
+1965824,1501055,2025-02-26,House,"Passage: House Vote #93",164,0,4,12,180
+1965824,1527194,2025-03-25,Senate,"Passage: Senate Vote #283",54,0,0,2,56
+1965827,1504193,2025-03-03,House,"Passage: House Vote #136",163,4,6,7,180
+1965827,1537588,2025-04-04,House,"Agree To Senate Substitute: House Vote #447",159,5,5,11,180
+1965827,1537821,2025-04-04,Senate,"Passage By Substitute: Senate Vote #464",41,9,4,2,56
+1965834,1505591,2025-03-04,Senate,"Passage By Substitute: Senate Vote #147",42,12,2,0,56
+1965834,1517793,2025-03-13,House,"Passage: House Vote #277",101,58,5,16,180
+1965839,1497003,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1965839,1502150,2025-02-27,Senate,"Local Consent Calendar: Senate Vote #98",48,0,5,3,56
+1968076,1500940,2025-02-26,House,"Passage: House Vote #98",164,0,3,13,180
+1968076,1530445,2025-03-28,Senate,"Passage: Senate Vote #329",47,0,2,7,56
+1968079,1497002,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1968079,1502151,2025-02-27,Senate,"Local Consent Calendar: Senate Vote #98",48,0,5,3,56
+1968082,1508410,2025-03-06,House,"Passage: House Vote #244",168,0,8,4,180
+1968085,1505465,2025-03-04,Senate,"Adoption Of Amendment #1 By The Senator From The 14th: Senate Vote #155",21,32,1,2,56
+1968085,1505466,2025-03-04,Senate,"Passage: Senate Vote #156",37,17,0,2,56
+1968085,1524398,2025-03-21,House,"Passage: House Vote #294",144,15,7,14,180
+1968085,1531707,2025-03-31,Senate,"Agree To House Substitute: Senate Vote #363",44,8,1,3,56
+1968086,1508198,2025-03-06,Senate,"Passage: Senate Vote #180",50,4,1,1,56
+1968086,1527164,2025-03-25,House,"Passage: House Vote #304",162,2,8,8,180
+1968089,1502824,2025-02-28,Senate,"Passage: Senate Vote #110",51,1,2,2,56
+1968089,1523891,2025-03-20,House,"Passage: House Vote #288",169,0,5,6,180
+1968089,1529883,2025-03-27,Senate,"Agree To House Substitute: Senate Vote #310",50,1,2,3,56
+1968091,1502835,2025-02-28,Senate,"Motion To Engross: Senate Vote #107",31,22,2,1,56
+1968091,1502836,2025-02-28,Senate,"Passage By Substitute: Senate Vote #111",32,22,1,1,56
+1968093,1504168,2025-03-03,House,"Passage: House Vote #131",172,0,6,2,180
+1968093,1531524,2025-03-31,Senate,"Passage: Senate Vote #374",47,8,0,1,56
+1968098,1502000,2025-02-27,House,"Passage: House Vote #102",172,0,1,7,180
+1968098,1530090,2025-03-27,Senate,"Passage By Substitute: Senate Vote #293",53,1,0,2,56
+1968098,1530407,2025-03-28,House,"Agree To Senate Substitute: House Vote #333",160,0,6,14,180
+1968108,1508293,2025-03-06,Senate,"Passage By Substitute: Senate Vote #195",53,0,3,0,56
+1968112,1500993,2025-02-26,House,"Passage: House Vote #97",153,9,5,13,180
+1968113,1508347,2025-03-06,House,"Passage: House Vote #232",177,0,1,2,180
+1968113,1530600,2025-03-28,Senate,"Passage: Senate Vote #330",43,7,0,6,56
+1968129,1504290,2025-02-28,House,"Passage: House Vote #119",163,0,7,10,180
+1968129,1537546,2025-04-04,House,"Agree To Senate Substitute: House Vote #450",163,0,4,13,180
+1968129,1537802,2025-04-04,Senate,"Passage By Substitute: Senate Vote #461",52,1,1,2,56
+1968139,1504298,2025-03-03,House,"Passage: House Vote #130",162,13,3,2,180
+1968148,1508255,2025-03-06,Senate,"Passage By Substitute: Senate Vote #205",53,1,2,0,56
+1968148,1537565,2025-04-04,House,"Passage: House Vote #445",165,0,6,9,180
+1968150,1505350,2025-03-04,House,"Passage: House Vote #178",166,1,6,7,180
+1968155,1505502,2025-03-04,Senate,"Passage: Senate Vote #148",53,1,0,2,56
+1968157,1500966,2025-02-26,Senate,"Motion To Withdraw And Commit: Senate Vote #91",31,23,2,0,56
+1968157,1504133,2025-03-03,Senate,"Passage: Senate Vote #130",32,23,0,1,56
+1968157,1531658,2025-03-31,House,"Passage: House Vote #362",101,63,6,10,180
+1968163,1505418,2025-03-04,House,"Passage: House Vote #180",111,59,4,6,180
+1968163,1524312,2025-03-21,Senate,"Motion To Engross: Hb 266, Hb 426: Senate Vote #266",32,22,1,1,56
+1968163,1524313,2025-03-21,Senate,"Passage: Senate Vote #271",43,11,1,1,56
+1968166,1508259,2025-03-06,House,"Passage: House Vote #195",171,2,4,3,180
+1968177,1508285,2025-03-06,Senate,"Adoption Of Amend #1a By Sen From The 56th To Amend #1 By Sen From The 44th: Senate Vote #181",33,23,0,0,56
+1968177,1508286,2025-03-06,Senate,"Passage By Substitute: Senate Vote #182",33,23,0,0,56
+1968179,1496944,2025-02-21,Senate,"Local Consent Calendar: Senate Vote #78",46,0,9,1,56
+1968181,1508326,2025-03-06,House,"Passage: House Vote #238",166,0,7,7,180
+1968186,1502048,2025-02-27,House,"Local Calendar : House Vote #99",169,0,5,6,180
+1968186,1512453,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1968188,1504461,2025-02-28,House,"Passage: House Vote #114",163,0,8,9,180
+1968188,1523916,2025-03-20,Senate,"Passage: Senate Vote #260",53,0,0,3,56
+1968192,1508305,2025-03-06,House,"Passage: House Vote #225",170,1,3,6,180
+1970314,1496992,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1970314,1504095,2025-03-03,Senate,"Local Consent Calendar: Senate Vote #114",52,0,4,0,56
+1970317,1508374,2025-03-06,Senate,"Passage: Senate Vote #201",49,5,2,0,56
+1970317,1535633,2025-04-02,House,"Passage: House Vote #379",168,0,3,9,180
+1970320,1505595,2025-03-04,House,"Passage: House Vote #184",170,1,5,4,180
+1970321,1508287,2025-03-06,House,"Passage: House Vote #223",168,1,4,7,180
+1970324,1505406,2025-03-04,Senate,"Motion To Engross: Sb 177, Sb 199: Senate Vote #136",29,17,4,6,56
+1970324,1505407,2025-03-04,Senate,"Passage: Senate Vote #149",36,18,0,2,56
+1970327,1508301,2025-03-06,House,"Passage: House Vote #226",168,2,7,3,180
+1970331,1508303,2025-03-06,Senate,"Passage By Substitute: Senate Vote #219",50,2,3,1,56
+1970331,1531694,2025-03-31,House,"Passage: House Vote #351",165,3,3,9,180
+1970333,1508191,2025-03-06,House,"Passage: House Vote #208",172,0,4,4,180
+1970337,1505491,2025-03-04,House,"Passage: House Vote #186",149,15,9,7,180
+1970341,1505473,2025-03-04,House,"Passage: House Vote #179",165,1,7,7,180
+1970341,1537743,2025-04-04,Senate,"Passage By Substitute: Senate Vote #486",48,5,2,1,56
+1970346,1496947,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1970346,1512466,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1970350,1508256,2025-03-06,House,"Passage: House Vote #222",167,0,6,7,180
+1970350,1535163,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1970352,1504249,2025-03-03,House,"Passage: House Vote #138",157,14,4,5,180
+1970352,1535320,2025-04-02,Senate,"Passage: Senate Vote #388",47,0,9,0,56
+1970353,1500981,2025-02-26,House,"Passage: House Vote #95",158,3,5,14,180
+1970356,1505382,2025-03-04,House,"Passage: House Vote #157",172,0,5,3,180
+1970363,1503979,2025-03-03,Senate,"Motion To Engross: Sb 31, Sb 175: Senate Vote #115",33,23,0,0,56
+1970363,1503980,2025-03-03,Senate,"Passage: Senate Vote #131",36,19,0,1,56
+1970365,1508141,2025-03-06,House,"Passage: House Vote #228",159,16,1,4,180
+1970366,1508243,2025-03-06,Senate,"Passage By Substitute: Senate Vote #165",54,1,0,1,56
+1970366,1537551,2025-04-04,House,"Passage: House Vote #430",169,0,4,7,180
+1970371,1505560,2025-03-04,House,"Passage: House Vote #188",171,0,2,7,180
+1970371,1535388,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1970381,1505436,2025-03-04,Senate,"Passage: Senate Vote #151",53,1,0,2,56
+1970381,1530539,2025-03-28,House,"Passage: House Vote #334",158,0,8,14,180
+1974124,1508437,2025-03-06,House,"Passage: House Vote #206",173,0,2,5,180
+1974124,1530014,2025-03-27,Senate,"Passage: Senate Vote #304",52,2,0,2,56
+1974127,1504295,2025-02-28,House,"Passage: House Vote #115",161,2,7,10,180
+1974127,1527115,2025-03-25,Senate,"Adoption Of Amendment #2 By The Senator From The 53rd: Senate Vote #284",3,49,3,1,56
+1974127,1527116,2025-03-25,Senate,"Passage As Amended: Senate Vote #285",49,5,1,1,56
+1974127,1529686,2025-03-27,House,"Agree To Senate Amendment: House Vote #330",159,2,3,16,180
+1974129,1504025,2025-03-03,Senate,"Adoption Of Amendment #1 By The Senator From The 44th: Senate Vote #127",19,34,2,1,56
+1974129,1504026,2025-03-03,Senate,"Passage: Senate Vote #128",37,15,3,1,56
+1974129,1535414,2025-04-02,House,"Passage: House Vote #391",100,2,7,71,180
+1974140,1527020,2025-03-25,House,"Adopt: House Vote #307",165,0,9,6,180
+1974154,1496995,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1974154,1502805,2025-02-28,Senate,"Local Consent Calendar: Senate Vote #106",51,1,2,2,56
+1974157,1497000,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1974157,1502905,2025-02-28,Senate,"Local Consent Calendar: Senate Vote #106",51,1,2,2,56
+1974187,1508358,2025-03-06,House,"Passage: House Vote #262",169,0,4,7,180
+1974199,1496990,2025-02-21,House,"Local Calendar : House Vote #58",170,0,7,3,180
+1974199,1502917,2025-02-28,Senate,"Local Consent Calendar: Senate Vote #106",51,1,2,2,56
+1974215,1505669,2025-03-04,Senate,"Passage By Substitute: Senate Vote #139",48,0,3,5,56
+1974215,1527177,2025-03-25,House,"Passage: House Vote #303",159,2,12,7,180
+1974215,1537753,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #474",50,1,4,1,56
+1974226,1508388,2025-03-06,House,"Passage: House Vote #200",175,0,2,3,180
+1974246,1504349,2025-02-28,House,"Passage: House Vote #116",167,0,4,9,180
+1974246,1531662,2025-03-31,Senate,"Passage: Senate Vote #350",50,1,1,4,56
+1974259,1508429,2025-03-06,House,"Passage: House Vote #212",160,14,2,4,180
+1974263,1503976,2025-03-03,Senate,"Passage As Amended: Senate Vote #132",55,0,0,1,56
+1974332,1508290,2025-03-06,House,"Passage: House Vote #258",142,31,1,6,180
+1974346,1508344,2025-03-06,Senate,"Passage: Senate Vote #198",38,16,1,1,56
+1974346,1531545,2025-03-31,House,"Passage: House Vote #374",146,16,5,13,180
+1974349,1508306,2025-03-06,House,"Passage: House Vote #247",168,5,4,3,180
+1974411,1504392,2025-03-03,House,"Passage: House Vote #135",170,0,4,6,180
+1974411,1530023,2025-03-27,Senate,"Passage: Senate Vote #303",53,0,1,2,56
+1974431,1508249,2025-03-06,House,"Passage: House Vote #224",171,3,2,4,180
+1974431,1535391,2025-04-02,Senate,"Passage As Amended: Senate Vote #424",52,3,0,1,56
+1974431,1537492,2025-04-04,House,"Agree To Senate Am As Amended By House: House Vote #424",170,0,4,6,180
+1974431,1538924,2025-04-04,Senate,"Agree To House Amendment To Senate Amendment: Senate Vote #487",52,1,2,1,56
+1976257,1508443,2025-03-06,House,"Passage: House Vote #207",174,0,1,5,180
+1976266,1508423,2025-03-06,Senate,"Passage By Substitute: Senate Vote #177",34,21,1,0,56
+1976266,1537781,2025-04-04,House,"Passage: House Vote #431",149,18,4,9,180
+1976273,1505603,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1976273,1517769,2025-03-13,Senate,"Local Consent Calendar: Senate Vote #229",48,0,4,4,56
+1976290,1508313,2025-03-06,House,"Passage: House Vote #231",165,10,4,1,180
+1976292,1505495,2025-03-04,Senate,"Motion To Engross: Sb 177, Sb 199: Senate Vote #136",29,17,4,6,56
+1976292,1505496,2025-03-04,Senate,"Passage By Substitute: Senate Vote #140",55,0,0,1,56
+1976292,1531631,2025-03-31,House,"Passage: House Vote #366",167,1,3,9,180
+1976309,1508232,2025-03-06,House,"Passage: House Vote #265",169,2,2,7,180
+1976310,1535432,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+1976312,1502068,2025-02-27,House,"Move From P&ch To Hth: House Vote #112",95,62,11,12,180
+1976313,1508356,2025-03-06,Senate,"Passage As Amended: Senate Vote #200",53,1,2,0,56
+1976313,1531723,2025-03-31,House,"Passage: House Vote #373",155,7,5,13,180
+1976315,1508330,2025-03-06,House,"Passage: House Vote #245",161,13,2,4,180
+1976323,1508395,2025-03-06,House,"Passage: House Vote #230",178,0,1,1,180
+1976331,1508109,2025-03-06,House,"Passage: House Vote #234",177,0,1,2,180
+1976331,1531656,2025-03-31,Senate,"Motion To Engross: Hb 144, Hb 153, Hb 511: Senate Vote #340",30,20,5,1,56
+1976331,1531657,2025-03-31,Senate,"Passage: Senate Vote #367",54,0,0,2,56
+1976332,1505563,2025-03-04,Senate,"Passage By Substitute: Senate Vote #157",53,1,0,2,56
+1976332,1531711,2025-03-31,House,"Passage: House Vote #368",163,1,5,11,180
+1976332,1537814,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #447",49,1,5,1,56
+1976335,1508401,2025-03-06,House,"Passage: House Vote #193",168,0,9,3,180
+1976335,1535223,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1976335,1535224,2025-04-02,Senate,"Passage: Senate Vote #392",44,5,2,5,56
+1976338,1508283,2025-03-06,Senate,"Passage: Senate Vote #211",51,4,0,1,56
+1976338,1537590,2025-04-04,House,"Table: House Vote #428",75,95,4,6,180
+1976338,1537591,2025-04-04,House,"Passage: House Vote #429",99,74,2,5,180
+1976343,1505464,2025-03-04,House,"Passage: House Vote #183",164,5,6,5,180
+1976343,1537614,2025-04-04,House,"Agree To Senate Substitute: House Vote #453",94,71,3,12,180
+1976343,1537759,2025-04-04,Senate,"Passage By Substitute: Senate Vote #480",49,1,5,1,56
+1976352,1514026,2025-03-10,House,"Local Calendar : House Vote #270",165,0,8,7,180
+1976352,1524413,2025-03-21,Senate,"Local Consent Calendar: Senate Vote #265",53,0,2,1,56
+1976357,1508357,2025-03-06,House,"Passage: House Vote #214",169,1,3,7,180
+1976357,1535301,2025-04-02,Senate,"Passage By Substitute: Senate Vote #389",50,2,2,2,56
+1976357,1537608,2025-04-04,House,"Agree To Senate Substitute: House Vote #440",163,2,6,9,180
+1976359,1535421,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1976359,1535422,2025-04-02,Senate,"Passage By Substitute: Senate Vote #397",33,23,0,0,56
+1976361,1508210,2025-03-06,Senate,"Adoption Of Amendment #1 By The Senator From The 37th: Senate Vote #172",12,44,0,0,56
+1976361,1508211,2025-03-06,Senate,"Adoption Of Amendment #2 By The Senator From The 6th: Senate Vote #173",47,8,1,0,56
+1976361,1508212,2025-03-06,Senate,"Adoption Of Amendment #3 By The Senator From The 23rd: Senate Vote #174",13,43,0,0,56
+1976361,1508213,2025-03-06,Senate,"Adoption Of Amendment #4 By The Senator From The 29th: Senate Vote #175",12,43,1,0,56
+1976361,1508214,2025-03-06,Senate,"Passage By Substitute: Senate Vote #176",39,17,0,0,56
+1976368,1504058,2025-03-03,Senate,"Local Consent Calendar: Senate Vote #114",52,0,4,0,56
+1976368,1530486,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+1976372,1537722,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+1976382,1508338,2025-03-06,Senate,"Passage: Senate Vote #178",55,0,1,0,56
+1976382,1537603,2025-04-04,House,"Passage: House Vote #433",170,0,1,9,180
+1976382,1537747,2025-04-04,Senate,"Agree To House Amendment To Senate Amendment: Senate Vote #487",52,1,2,1,56
+1976382,1539183,2025-04-04,Senate,"Agree To House Substitute As Amended: Senate Vote #488",53,0,2,1,56
+1976383,1505602,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1976383,1517635,2025-03-13,Senate,"Local Consent Calendar: Senate Vote #229",48,0,4,4,56
+1976386,1508336,2025-03-06,Senate,"Motion To Engross: Senate Vote #161",32,20,2,2,56
+1976386,1508337,2025-03-06,Senate,"Passage: Senate Vote #218",33,19,2,2,56
+1976386,1531712,2025-03-31,House,"Passage: House Vote #363",98,66,5,11,180
+1976386,1535498,2025-04-02,Senate,"Agree To House Substitute: Senate Vote #416",53,0,1,2,56
+1976389,1535667,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+1978202,1505370,2025-03-04,House,"Passage: House Vote #167",168,2,6,4,180
+1978202,1530015,2025-03-27,Senate,"Passage By Substitute: Senate Vote #305",48,3,3,2,56
+1978202,1531733,2025-03-31,House,"Agree To Senate Sub As Am: House Vote #359",162,3,4,11,180
+1978202,1535242,2025-04-02,Senate,"Agree To House Amendment To Senate Substitute: Senate Vote #414",50,3,0,3,56
+1978207,1505599,2025-03-04,Senate,"Adoption: Senate Vote #138",49,0,3,4,56
+1978207,1535074,2025-04-02,House,"Adopt: House Vote #388",163,0,4,13,180
+1978207,1537812,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #466",52,0,2,2,56
+1978213,1505593,2025-03-04,House,"Passage: House Vote #191",168,0,4,8,180
+1978282,1505635,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1978282,1524503,2025-03-21,Senate,"Local Consent Calendar: Senate Vote #265",53,0,2,1,56
+1978309,1502196,2025-02-27,House,"Local Calendar : House Vote #99",169,0,5,6,180
+1978309,1511653,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1978341,1512458,2025-03-10,House,"Local Calendar : House Vote #270",165,0,8,7,180
+1978353,1535305,2025-04-02,Senate,"Adoption By Substitute: Senate Vote #384",53,0,0,3,56
+1978358,1502162,2025-02-27,House,"Local Calendar : House Vote #99",169,0,5,6,180
+1978358,1512480,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1978412,1505621,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1978412,1524514,2025-03-21,Senate,"Local Consent Calendar: Senate Vote #265",53,0,2,1,56
+1978465,1508393,2025-03-06,House,"Passage: House Vote #202",164,0,12,4,180
+1979973,1508400,2025-03-06,House,"Passage: House Vote #256",170,1,3,6,180
+1979973,1535617,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1979973,1535618,2025-04-02,Senate,"Passage By Substitute: Senate Vote #404",55,1,0,0,56
+1979973,1537835,2025-04-04,House,"Agree To Senate Substitute: House Vote #405",161,0,11,8,180
+1979975,1505399,2025-03-04,House,"Passage: House Vote #190",170,0,3,7,180
+1979977,1505361,2025-03-04,House,"Passage: House Vote #181",165,1,8,6,180
+1979977,1530432,2025-03-28,Senate,"Passage By Substitute: Senate Vote #331",50,0,0,6,56
+1979977,1535578,2025-04-02,House,"Agree To Senate Substitute: House Vote #382",167,1,4,8,180
+1979978,1520623,2025-03-18,Senate,"Adoption Of Amend #1a By Sen From The 37th To Amend #1 By Sen From The 9th: Senate Vote #244",29,16,6,5,56
+1979978,1520624,2025-03-18,Senate,"Adoption Of The Amendment By The Sen From The 9th As Amended: Senate Vote #245",20,29,2,5,56
+1979978,1520625,2025-03-18,Senate,"Adoption Of Amendment #2 By The Senator From The 10th: Senate Vote #246",17,31,3,5,56
+1979978,1520626,2025-03-18,Senate,"Adoption Of Amendment #3 By The Senator From The 14th: Senate Vote #247",18,31,2,5,56
+1979978,1520627,2025-03-18,Senate,"Adoption: Senate Vote #248",31,18,3,4,56
+1979979,1508146,2025-03-06,House,"Passage: House Vote #255",159,12,1,8,180
+1979988,1508307,2025-03-06,House,"Passage: House Vote #253",174,2,1,3,180
+1979988,1535381,2025-04-02,Senate,"Passage By Substitute: Senate Vote #408",52,1,2,1,56
+1979988,1537499,2025-04-04,House,"Agree To Senate Substitute: House Vote #416",165,2,1,12,180
+1979989,1512462,2025-03-10,House,"Local Calendar : House Vote #270",165,0,8,7,180
+1979989,1524317,2025-03-21,Senate,"Local Consent Calendar: Senate Vote #265",53,0,2,1,56
+1980000,1508228,2025-03-06,Senate,"Passage By Substitute: Senate Vote #184",51,4,1,0,56
+1980000,1529565,2025-03-27,House,"Passage: House Vote #321",164,2,3,11,180
+1980001,1504147,2025-03-03,Senate,"Local Consent Calendar: Senate Vote #114",52,0,4,0,56
+1980001,1537768,2025-04-04,House,"Local Calendar : House Vote #434",112,59,1,8,180
+1980001,1537769,2025-04-04,House,"Recon Sb 234,  235,  & 336: House Vote #435",135,0,35,10,180
+1980001,1537770,2025-04-04,House,"Sbs 234,  235,  & 336 Passage: House Vote #436",147,2,17,14,180
+1980002,1537502,2025-04-04,House,"Adopt: House Vote #426",172,0,3,5,180
+1980004,1504135,2025-03-03,Senate,"Local Consent Calendar: Senate Vote #114",52,0,4,0,56
+1980004,1537771,2025-04-04,House,"Local Calendar : House Vote #434",112,59,1,8,180
+1980004,1537772,2025-04-04,House,"Recon Sb 234,  235,  & 336: House Vote #435",135,0,35,10,180
+1980004,1537773,2025-04-04,House,"Sbs 234,  235,  & 336 Passage: House Vote #436",147,2,17,14,180
+1980007,1508284,2025-03-06,House,"Passage: House Vote #236",162,11,5,2,180
+1980009,1502210,2025-02-27,House,"Local Calendar : House Vote #99",169,0,5,6,180
+1980009,1511970,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1980011,1506659,2025-02-28,Senate,"Adoption: Senate Vote #112",35,14,6,1,56
+1980012,1508223,2025-03-06,House,"Passage: House Vote #201",158,2,16,4,180
+1980012,1529852,2025-03-27,Senate,"Passage: Senate Vote #306",53,0,0,3,56
+1980015,1502893,2025-02-28,Senate,"Local Consent Calendar: Senate Vote #106",51,1,2,2,56
+1980015,1517811,2025-03-13,House,"Local Calendar : House Vote #273",169,0,5,6,180
+1980026,1505505,2025-03-04,House,"Passage: House Vote #189",171,0,3,6,180
+1980026,1523822,2025-03-20,Senate,"Passage By Substitute: Senate Vote #261",52,0,0,4,56
+1980026,1530578,2025-03-28,House,"Agree To Senate Substitute: House Vote #338",163,0,4,13,180
+1980027,1508447,2025-03-06,House,"Passage: House Vote #205",171,0,3,6,180
+1980034,1505613,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1980034,1530532,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1980039,1505474,2025-03-04,Senate,"Passage: Senate Vote #150",52,1,1,2,56
+1980039,1531686,2025-03-31,House,"Passage: House Vote #372",157,4,3,16,180
+1980046,1520691,2025-03-18,Senate,"Adoption: Senate Vote #243",37,10,4,5,56
+1980047,1502037,2025-02-27,House,"Local Calendar : House Vote #99",169,0,5,6,180
+1980047,1512469,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1980049,1508321,2025-03-06,House,"Passage: House Vote #254",166,2,5,7,180
+1980049,1535489,2025-04-02,Senate,"Passage By Substitute: Senate Vote #407",53,1,1,1,56
+1980049,1537563,2025-04-04,House,"Agree To Senate Substitute: House Vote #417",164,0,5,11,180
+1980051,1508176,2025-03-06,Senate,"Passage By Substitute: Senate Vote #208",54,1,1,0,56
+1980053,1502116,2025-02-27,House,"Local Calendar : House Vote #99",169,0,5,6,180
+1980053,1511760,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1980055,1504151,2025-03-03,Senate,"Local Consent Calendar: Senate Vote #114",52,0,4,0,56
+1980055,1524475,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1982018,1508217,2025-03-06,House,"Passage: House Vote #229",150,20,2,8,180
+1982018,1523965,2025-03-20,Senate,"Local Consent Calendar: Senate Vote #250",51,0,4,1,56
+1982042,1504167,2025-03-03,House,"Passage: House Vote #137",170,2,3,5,180
+1982071,1508394,2025-03-06,Senate,"Passage As Amended: Senate Vote #214",55,0,0,1,56
+1982071,1535260,2025-04-02,House,"Passage: House Vote #392",103,61,2,14,180
+1982071,1537730,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #471",35,18,0,3,56
+1982083,1505607,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1982083,1520735,2025-03-18,Senate,"Local Consent Calendar: Senate Vote #235",51,0,2,3,56
+1982089,1535213,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+1982098,1505592,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1982098,1517772,2025-03-13,Senate,"Local Consent Calendar: Senate Vote #229",48,0,4,4,56
+1982104,1508308,2025-03-06,House,"Passage: House Vote #239",170,2,4,4,180
+1982146,1505611,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1982146,1517735,2025-03-13,Senate,"Local Consent Calendar: Senate Vote #229",48,0,4,4,56
+1982161,1508402,2025-03-06,House,"Passage: House Vote #213",168,1,2,9,180
+1982161,1523957,2025-03-20,Senate,"Passage By Substitute: Senate Vote #262",50,1,1,4,56
+1982161,1527200,2025-03-25,House,"Agree To Senate Substitute: House Vote #315",168,1,5,6,180
+1982164,1508340,2025-03-06,Senate,"Passage: Senate Vote #202",56,0,0,0,56
+1982164,1530417,2025-03-28,House,"Passage: House Vote #335",160,1,4,15,180
+1982164,1535261,2025-04-02,Senate,"Agree To House Substitute: Senate Vote #413",52,0,4,0,56
+1982172,1505694,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1982172,1517813,2025-03-13,Senate,"Local Consent Calendar: Senate Vote #229",48,0,4,4,56
+1982216,1505590,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1982216,1517807,2025-03-13,Senate,"Local Consent Calendar: Senate Vote #229",48,0,4,4,56
+1983840,1508276,2025-03-06,Senate,"Adoption Of Amendment #1 By The Senator From The 29th: Senate Vote #169",29,27,0,0,56
+1983840,1508277,2025-03-06,Senate,"Motion To Reconsider Amendment #1: Senate Vote #170",27,29,0,0,56
+1983840,1508278,2025-03-06,Senate,"Passage By Substitute: Senate Vote #171",42,14,0,0,56
+1983845,1508140,2025-03-06,Senate,"Passage By Substitute: Senate Vote #216",51,2,3,0,56
+1983845,1531602,2025-03-31,House,"Passage: House Vote #344",163,1,10,6,180
+1983848,1508281,2025-03-06,Senate,"Passage: Senate Vote #183",33,23,0,0,56
+1983848,1535531,2025-04-02,House,"Passage: House Vote #402",91,67,3,19,180
+1983848,1537788,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #451",31,22,0,3,56
+1983849,1508279,2025-03-06,Senate,"Passage: Senate Vote #199",56,0,0,0,56
+1983849,1523874,2025-03-20,House,"Passage: House Vote #289",169,0,3,8,180
+1983849,1529867,2025-03-27,Senate,"Agree To House Substitute: Senate Vote #311",52,0,1,3,56
+1985822,1508244,2025-03-06,Senate,"Passage By Substitute: Senate Vote #167",55,0,0,1,56
+1985822,1535304,2025-04-02,House,"Passage: House Vote #389",163,0,3,14,180
+1985826,1505616,2025-03-04,House,"Passage: House Vote #170",164,8,4,4,180
+1985826,1537526,2025-04-04,House,"Agree To Senate Sub As House Amended: House Vote #446",140,29,3,8,180
+1985826,1537785,2025-04-04,Senate,"Adoption Of Amendment #1 By The Senator From The 44th: Senate Vote #453",40,15,0,1,56
+1985826,1537786,2025-04-04,Senate,"Passage By Substitute: Senate Vote #454",51,3,1,1,56
+1985836,1505499,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1985836,1523938,2025-03-20,Senate,"Local Consent Calendar: Senate Vote #250",51,0,4,1,56
+1985859,1505726,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1985859,1530016,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+1985862,1512456,2025-03-10,House,"Local Calendar : House Vote #270",165,0,8,7,180
+1985862,1524424,2025-03-21,Senate,"Local Consent Calendar: Senate Vote #265",53,0,2,1,56
+1985869,1508115,2025-03-06,Senate,"Passage By Substitute: Senate Vote #203",52,1,3,0,56
+1985882,1505601,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1985882,1520546,2025-03-18,Senate,"Local Consent Calendar: Senate Vote #235",51,0,2,3,56
+1985886,1505731,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1985886,1520633,2025-03-18,Senate,"Local Consent Calendar: Senate Vote #235",51,0,2,3,56
+1985888,1508332,2025-03-06,House,"Passage: House Vote #243",170,4,2,4,180
+1985905,1505714,2025-03-04,House,"Local Calendar : House Vote #148",172,0,6,2,180
+1985905,1520690,2025-03-18,Senate,"Local Consent Calendar: Senate Vote #235",51,0,2,3,56
+1985908,1508161,2025-03-06,House,"Passage: House Vote #221",145,22,5,8,180
+1985930,1508367,2025-03-06,Senate,"Adoption Of Amend #1a By Sen From The 14th To Amend #1 By Sen From The 14th: Senate Vote #189",34,22,0,0,56
+1985930,1508368,2025-03-06,Senate,"Adoption Of The Amendment By The Sen From The 14th As Amended: Senate Vote #190",24,32,0,0,56
+1985930,1508369,2025-03-06,Senate,"Passage By Substitute: Senate Vote #191",33,23,0,0,56
+1985930,1535495,2025-04-02,House,"Passage: House Vote #393",95,68,2,15,180
+1985930,1537808,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #472",33,21,0,2,56
+1985948,1508414,2025-03-06,House,"Passage: House Vote #257",165,3,4,8,180
+1985948,1535338,2025-04-02,Senate,"Passage By Substitute: Senate Vote #429",52,1,2,1,56
+1985948,1537611,2025-04-04,House,"Agree To Senate Substitute: House Vote #421",173,1,1,5,180
+1985954,1508383,2025-03-06,House,"Passage: House Vote #237",156,2,16,6,180
+1985990,1508227,2025-03-06,House,"Passage: House Vote #209",98,76,4,2,180
+1985990,1517802,2025-03-13,Senate,"Motion To Withdraw And Commit: Senate Vote #228",34,18,0,4,56
+1985992,1512491,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1986002,1512430,2025-03-10,House,"Local Calendar : House Vote #270",165,0,8,7,180
+1986002,1524466,2025-03-21,Senate,"Local Consent Calendar: Senate Vote #265",53,0,2,1,56
+1986014,1535345,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+1986043,1508351,2025-03-06,House,"Passage: House Vote #259",123,49,2,6,180
+1986043,1535289,2025-04-02,Senate,"Adoption Of Amendment #1 By The Senator From The 1st: Senate Vote #405",50,3,3,0,56
+1986043,1535290,2025-04-02,Senate,"Passage As Amended: Senate Vote #406",52,2,2,0,56
+1986043,1537602,2025-04-04,House,"Agree To Senate Amendment: House Vote #441",166,0,4,10,180
+1986059,1521110,2025-03-18,House,"Local Calendar : House Vote #279",171,0,6,3,180
+1986059,1530586,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1986128,1508292,2025-03-06,House,"Passage: House Vote #252",171,2,3,4,180
+1986128,1535347,2025-04-02,Senate,"Passage: Senate Vote #430",53,1,1,1,56
+1986158,1508390,2025-03-06,Senate,"Passage: Senate Vote #212",54,1,0,1,56
+1986188,1508207,2025-03-06,Senate,"Passage: Senate Vote #166",54,1,0,1,56
+1986188,1520618,2025-03-18,House,"Passage: House Vote #284",168,2,5,5,180
+1986216,1508396,2025-03-06,Senate,"Passage: Senate Vote #217",38,17,1,0,56
+1986229,1508342,2025-03-06,House,"Passage: House Vote #251",167,4,6,3,180
+1986229,1535396,2025-04-02,Senate,"Motion To Engross: Sb 214, Hb 66, Hb 79, Hb 129, Hb 134, Hb 141, Hb 370, Hb 397, Hb 445, Hb 463, Hb 532, Hb 586, Hb 652: Senate Vote #383",31,24,0,1,56
+1986229,1537485,2025-04-04,House,"Agree To Senate Substitute: House Vote #449",163,0,4,13,180
+1986229,1537766,2025-04-04,Senate,"Passage By Substitute: Senate Vote #485",54,0,1,1,56
+1987838,1537557,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+1987864,1508130,2025-03-06,Senate,"Passage: Senate Vote #192",56,0,0,0,56
+1987878,1508252,2025-03-06,Senate,"Passage By Substitute: Senate Vote #206",54,2,0,0,56
+1987878,1531564,2025-03-31,House,"Passage: House Vote #371",142,23,3,12,180
+1987878,1537862,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #477",44,8,3,1,56
+1987904,1504169,2025-03-03,Senate,"Local Consent Calendar: Senate Vote #114",52,0,4,0,56
+1987904,1520686,2025-03-18,House,"Local Calendar : House Vote #279",171,0,6,3,180
+1987905,1533743,2025-03-27,Senate,"Adoption: Senate Vote #307",33,21,0,2,56
+1987909,1535597,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+1987916,1508291,2025-03-06,House,"Passage: House Vote #250",173,1,1,5,180
+1989259,1527169,2025-03-25,Senate,"Adoption: Senate Vote #286",54,0,1,1,56
+1989270,1512214,2025-03-10,House,"Local Calendar : House Vote #270",165,0,8,7,180
+1989270,1530231,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+1989272,1512060,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1989287,1511836,2025-03-10,Senate,"Local Consent Calendar: Senate Vote #221",43,1,3,9,56
+1989292,1535602,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+1989310,1535491,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+1990320,1512433,2025-03-10,House,"Local Calendar : House Vote #270",165,0,8,7,180
+1990320,1524319,2025-03-21,Senate,"Local Consent Calendar: Senate Vote #265",53,0,2,1,56
+1990326,1517797,2025-03-13,House,"Local Calendar : House Vote #273",169,0,5,6,180
+1990326,1530596,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1990327,1512494,2025-03-10,House,"Local Calendar : House Vote #270",165,0,8,7,180
+1990327,1527134,2025-03-25,Senate,"Local Consent Calendar: Senate Vote #277",52,0,4,0,56
+1990335,1530605,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+1990335,1537863,2025-04-04,Senate,"Local Consent Calendar: Senate Vote #446",51,1,3,1,56
+1990340,1511611,2025-03-10,House,"Local Calendar : House Vote #270",165,0,8,7,180
+1990340,1527210,2025-03-25,Senate,"Local Consent Calendar: Senate Vote #277",52,0,4,0,56
+1990352,1508427,2025-03-06,House,"Passage: House Vote #235",174,1,2,3,180
+1990356,1517809,2025-03-13,House,"Local Calendar : House Vote #273",169,0,5,6,180
+1990356,1527135,2025-03-25,Senate,"Local Consent Calendar: Senate Vote #277",52,0,4,0,56
+1990377,1517812,2025-03-13,House,"Local Calendar : House Vote #273",169,0,5,6,180
+1990377,1527184,2025-03-25,Senate,"Local Consent Calendar: Senate Vote #277",52,0,4,0,56
+1991458,1524374,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1991458,1530461,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1991470,1517801,2025-03-13,House,"Local Calendar : House Vote #273",169,0,5,6,180
+1991470,1527018,2025-03-25,Senate,"Local Consent Calendar: Senate Vote #277",52,0,4,0,56
+1991473,1517810,2025-03-13,House,"Local Calendar : House Vote #273",169,0,5,6,180
+1991473,1527298,2025-03-25,Senate,"Local Consent Calendar: Senate Vote #277",52,0,4,0,56
+1991506,1517804,2025-03-13,House,"Local Calendar : House Vote #273",169,0,5,6,180
+1991506,1527185,2025-03-25,Senate,"Local Consent Calendar: Senate Vote #277",52,0,4,0,56
+1991533,1517729,2025-03-13,House,"Local Calendar : House Vote #273",169,0,5,6,180
+1991533,1527219,2025-03-25,Senate,"Local Consent Calendar: Senate Vote #277",52,0,4,0,56
+1994186,1520684,2025-03-18,House,"Local Calendar : House Vote #279",171,0,6,3,180
+1994186,1530615,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1994187,1520583,2025-03-18,House,"Local Calendar : House Vote #279",171,0,6,3,180
+1994187,1530616,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1994198,1520653,2025-03-18,House,"Local Calendar : House Vote #279",171,0,6,3,180
+1994198,1530561,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1994202,1520730,2025-03-18,House,"Local Calendar : House Vote #279",171,0,6,3,180
+1994202,1530330,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+1994234,1520685,2025-03-18,House,"Local Calendar : House Vote #279",171,0,6,3,180
+1994234,1529945,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+1994315,1520497,2025-03-18,House,"Local Calendar : House Vote #279",171,0,6,3,180
+1994315,1530557,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1994324,1520688,2025-03-18,House,"Local Calendar : House Vote #279",171,0,6,3,180
+1994324,1530334,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+1996814,1524485,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1996814,1530158,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+1996816,1537822,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+1996818,1524341,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1996818,1531665,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+1996819,1524299,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1996819,1530604,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1996820,1537774,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+1996821,1524490,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1996821,1530398,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+1996822,1524489,2025-03-21,Senate,"Local Consent Calendar: Senate Vote #265",53,0,2,1,56
+1996822,1535464,2025-04-02,House,"Local Calendar : House Vote #377",168,0,7,5,180
+1996826,1524484,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1996826,1530055,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+1996828,1524278,2025-03-21,Senate,"Local Consent Calendar: Senate Vote #265",53,0,2,1,56
+1996828,1535444,2025-04-02,House,"Local Calendar : House Vote #377",168,0,7,5,180
+1996830,1527153,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+1996830,1530566,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1996832,1524487,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1996832,1530617,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1996843,1524408,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1996843,1531821,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+1996854,1524486,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1996854,1530622,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+1996855,1524423,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+1996855,1530601,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2000269,1527125,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2000269,1530619,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2000271,1527122,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2000271,1530537,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2000278,1531832,2025-03-31,House,"Supplemental Local Calendar : House Vote #361",167,0,3,10,180
+2000278,1535064,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2000279,1527289,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2000279,1530614,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2000282,1527156,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2000297,1527302,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2000297,1530437,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2000306,1535560,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2000309,1523857,2025-03-20,Senate,"Local Consent Calendar: Senate Vote #250",51,0,4,1,56
+2000309,1537872,2025-04-04,House,"Supplemental Local Calendar : House Vote #437",150,7,12,11,180
+2000310,1527140,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2000310,1530465,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2000313,1527063,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2000313,1530609,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2000315,1527056,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2000315,1530606,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2000316,1523810,2025-03-20,Senate,"Passage As Amended: Senate Vote #251",54,0,2,0,56
+2000316,1530565,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+2000316,1537763,2025-04-04,Senate,"Agree To House Substitute: Senate Vote #473",51,0,4,1,56
+2000319,1527149,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2000319,1530556,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2005471,1527117,2025-03-25,Senate,"Local Consent Calendar: Senate Vote #277",52,0,4,0,56
+2005471,1537577,2025-04-04,House,"Local Calendar : House Vote #434",112,59,1,8,180
+2006947,1524378,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+2006947,1535259,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2006957,1535601,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2006960,1523912,2025-03-20,Senate,"Local Consent Calendar: Senate Vote #250",51,0,4,1,56
+2006960,1537715,2025-04-04,House,"Local Calendar : House Vote #434",112,59,1,8,180
+2006960,1537716,2025-04-04,House,"Recon Sb 234,  235,  & 336: House Vote #435",135,0,35,10,180
+2006960,1537717,2025-04-04,House,"Sbs 234,  235,  & 336 Passage: House Vote #436",147,2,17,14,180
+2006965,1523915,2025-03-20,Senate,"Local Consent Calendar: Senate Vote #250",51,0,4,1,56
+2006974,1524476,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+2006974,1530554,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2006977,1524410,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+2006977,1530559,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2006978,1535454,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2006983,1524481,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+2006983,1535280,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2006984,1529758,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2006984,1531569,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2006989,1523920,2025-03-20,Senate,"Local Consent Calendar: Senate Vote #250",51,0,4,1,56
+2006990,1527102,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2006990,1530525,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2006997,1524478,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+2006997,1535278,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2007007,1523925,2025-03-20,Senate,"Local Consent Calendar: Senate Vote #250",51,0,4,1,56
+2007011,1524479,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+2007011,1531599,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2007012,1524411,2025-03-21,House,"Local Calendar : House Vote #293",158,0,9,13,180
+2007012,1530603,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2010529,1529705,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010529,1531727,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010533,1529836,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010533,1531840,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010534,1529717,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010534,1535496,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2010544,1529853,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010544,1535411,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2010556,1527166,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2010556,1530597,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2010561,1529741,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010561,1531813,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010565,1529856,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010565,1531806,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010568,1530180,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+2010568,1535433,2025-04-02,House,"Local Calendar : House Vote #377",168,0,7,5,180
+2010572,1527253,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2010572,1530558,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2010581,1529763,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010581,1531779,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010583,1537830,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+2010585,1529787,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010585,1531789,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010587,1529762,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010587,1531550,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010591,1529755,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010591,1531737,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010592,1529643,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010592,1531769,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010595,1529843,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010595,1531593,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010608,1527151,2025-03-25,House,"Local Calendar : House Vote #302",170,0,6,4,180
+2010608,1530533,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2010611,1529564,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010611,1531778,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2010613,1529657,2025-03-27,House,"Local Calendar : House Vote #317",164,0,12,4,180
+2010613,1531679,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2011447,1530025,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+2011447,1535566,2025-04-02,House,"Local Calendar : House Vote #377",168,0,7,5,180
+2011451,1529962,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+2011451,1535559,2025-04-02,House,"Local Calendar : House Vote #377",168,0,7,5,180
+2012183,1530371,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+2012183,1535439,2025-04-02,House,"Local Calendar : House Vote #377",168,0,7,5,180
+2012185,1530638,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+2012185,1535410,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2012194,1530499,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+2012194,1535554,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2012195,1530595,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+2012195,1535501,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2012196,1535548,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2012197,1535091,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2012206,1530355,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+2012211,1530476,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+2012211,1535519,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2012214,1530591,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+2012214,1535249,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2012222,1530626,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+2012222,1535235,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2012223,1535263,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2012228,1535300,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2012229,1530314,2025-03-27,Senate,"Passage As Amended: Senate Vote #292",52,0,1,3,56
+2012231,1529925,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+2012242,1529855,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+2012243,1530528,2025-03-28,House,"Local Calendar : House Vote #332",160,0,8,12,180
+2012243,1535523,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2012768,1531773,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2012768,1535336,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2012771,1531705,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2012771,1535574,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2012782,1531858,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2012782,1537885,2025-04-04,Senate,"Local Consent Calendar: Senate Vote #446",51,1,3,1,56
+2012783,1535244,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2012787,1529874,2025-03-27,Senate,"Local Consent Calendar: Senate Vote #291",52,0,0,4,56
+2012794,1531770,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2012794,1535603,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2012795,1531675,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2012795,1535418,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2012797,1531843,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2012797,1537865,2025-04-04,Senate,"Local Consent Calendar: Senate Vote #446",51,1,3,1,56
+2012804,1530534,2025-03-28,Senate,"Local Consent Calendar: Senate Vote #313",53,0,1,2,56
+2012809,1531781,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2012809,1535563,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2012820,1537826,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+2014653,1531830,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014653,1535392,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014654,1531540,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014654,1535267,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2014660,1531626,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014660,1537794,2025-04-04,Senate,"Local Consent Calendar: Senate Vote #446",51,1,3,1,56
+2014662,1531785,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014664,1531793,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014664,1535564,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014670,1531752,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014670,1535520,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014672,1531803,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2014673,1531896,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014673,1535631,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014680,1531827,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014680,1535558,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2014684,1531730,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014684,1535499,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014690,1531825,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014690,1537760,2025-04-04,Senate,"Local Consent Calendar: Senate Vote #446",51,1,3,1,56
+2014693,1531754,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014693,1535368,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014695,1531799,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014695,1535575,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014696,1531889,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014696,1535135,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014698,1531888,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014698,1535585,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014702,1531749,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014707,1531864,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2014708,1531839,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014710,1535374,2025-04-02,House,"Supplemental Local Calendar : House Vote #394",63,88,12,17,180
+2014710,1535375,2025-04-02,House,"Reconsider: House Vote #395",67,96,4,13,180
+2014720,1531680,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014720,1535452,2025-04-02,Senate,"Local Consent Calendar: Senate Vote #381",51,0,2,3,56
+2014728,1531748,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014728,1537799,2025-04-04,Senate,"Local Consent Calendar: Senate Vote #446",51,1,3,1,56
+2014731,1531862,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014731,1535517,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014736,1531834,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014736,1535584,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014737,1531758,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014737,1535511,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014738,1531776,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014738,1535514,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014743,1531892,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014743,1535596,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014748,1531735,2025-03-31,Senate,"Local Consent Calendar: Senate Vote #339",49,0,5,2,56
+2014749,1531768,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014749,1535532,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014750,1531757,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014750,1537861,2025-04-04,Senate,"Local Consent Calendar: Senate Vote #446",51,1,3,1,56
+2014753,1531895,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014753,1535071,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014755,1531734,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014755,1535562,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014758,1531772,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014758,1535521,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2014759,1531777,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2014759,1535582,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2015499,1535516,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2016071,1535331,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2016090,1537790,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+2016094,1531907,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2016094,1535148,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2016113,1535551,2025-04-02,Senate,"Consent Calendar For Senate Study Committees: Senate Vote #380",52,0,3,1,56
+2016138,1531771,2025-03-31,House,"Local Calendar Without Hbs 851 & 852: House Vote #342",165,0,10,5,180
+2016138,1535354,2025-04-02,Senate,"Supplemental Local Consent Calendar: Senate Vote #400",55,1,0,0,56
+2016609,1537813,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+2017638,1537871,2025-04-04,House,"Local Calendar : House Vote #434",112,59,1,8,180
+2017654,1537613,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
+2017665,1537738,2025-04-04,House,"Uncontested House Resolutions: House Vote #444",166,0,5,9,180
