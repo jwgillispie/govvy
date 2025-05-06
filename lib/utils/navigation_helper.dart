@@ -1,8 +1,9 @@
 // lib/utils/navigation_helper.dart
 import 'package:flutter/material.dart';
+import 'package:govvy/models/representative_model.dart';
+import 'package:govvy/screens/bills/bill_screen.dart';
 import 'package:govvy/screens/representatives/representative_details_screen.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
-import 'package:govvy/screens/bills/bill_list_screen.dart';
 import 'package:govvy/screens/representatives/find_representatives_screen.dart';
 import 'package:govvy/providers/bill_provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
@@ -50,7 +51,7 @@ class NavigationHelper {
       if (representative != null) {
         // Then navigate to the bill list screen with a filter for this representative
         final billProvider = Provider.of<BillProvider>(context, listen: false);
-        billProvider.fetchBillsByRepresentative(representative);
+        billProvider.fetchBillsByRepresentative(representative as Representative);
         
         // Navigate to the bill list screen or refresh the current one
         Navigator.push(

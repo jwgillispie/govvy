@@ -23,18 +23,41 @@ class AuthWrapper extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: authService.authStateChanges,
       builder: (context, snapshot) {
+        // If still loading the auth state
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+        
         // If authenticated
         if (snapshot.hasData) {
           return const HomeScreenWrapper();
         }
         
-        // Show landing page for first-time users
-        if (authService.isFirstTimeUser()) {
-          return const LandingPage();
-        }
-        
-        // Otherwise show login screen
-        return const LoginScreen();
+        // If not authenticated, check if first time user
+        return FutureBuilder<bool>(
+          future: authService.isFirstTimeUser(),
+          builder: (context, firstTimeSnapshot) {
+            if (firstTimeSnapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            }
+            
+            // Show landing page for first-time users
+            if (firstTimeSnapshot.data == true) {
+              return const LandingPage();
+            }
+            
+            // Otherwise show login screen
+            return const LoginScreen();
+          },
+        );
       },
     );
   }

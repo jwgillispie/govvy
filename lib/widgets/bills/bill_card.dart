@@ -174,7 +174,7 @@ class BillCard extends StatelessWidget {
         style: TextStyle(
           fontSize: 10,
           fontWeight: FontWeight.bold,
-          color: color.shade800,
+          color: Colors.black26,
         ),
       ),
     );

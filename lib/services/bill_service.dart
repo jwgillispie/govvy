@@ -319,13 +319,26 @@ class BillService {
         final masterList = masterListData['masterlist'];
         
         if (masterList is Map) {
-          bills.addAll(_processMasterList(masterList, stateCode));
+          // Use the _processMasterList method to extract bills
+          final extractedBills = _processMasterList(masterList as Map<String, dynamic>, stateCode);
+          
+          // Add the extracted bills to our list
+          bills.addAll(extractedBills);
+          
+          // Add debug logging
+          if (kDebugMode) {
+            print('Extracted ${extractedBills.length} bills from masterlist for $stateCode');
+          }
+        }
+      } else {
+        if (kDebugMode) {
+          print('No masterlist found in response for $stateCode');
+          print('Response keys: ${masterListData?.keys.join(', ')}');
         }
       }
     }
     
     // Use CSV data for local bills (if available)
-    // This would involve filtering CSV bills by state
     // TODO: Implement CSV bill filtering by state
     
     return bills;
@@ -335,38 +348,45 @@ class BillService {
   List<BillModel> _processMasterList(Map<String, dynamic> masterList, String stateCode) {
     final List<BillModel> bills = [];
     
-    // LegiScan masterlist contains items which are the bills
-    if (!masterList.containsKey('items')) {
-      return bills;
-    }
-    
-    final items = masterList['items'];
-    
-    if (items is! List) {
-      return bills;
-    }
-    
-    for (final item in items) {
-      if (item is Map) {
-        try {
-          final billData = item is Map<dynamic, dynamic> 
-    ? Map<String, dynamic>.from(item) 
-    : <String, dynamic>{};
-          
-          // Add state code
-          billData['state'] = stateCode;
-          
-          // Add bill type
-          billData['type'] = 'state';
-          
-          bills.add(BillModel.fromMap(billData));
-        } catch (e) {
-          if (kDebugMode) {
-            print('Error processing bill data: $e');
-          }
-          continue;
+    // The masterlist contains numeric keys for bills and 'session' for metadata
+    // We need to iterate through all keys and filter out non-bill entries
+    masterList.forEach((key, value) {
+      // Skip the session metadata and any non-map entries
+      if (key == 'session' || !(value is Map)) {
+        return;
+      }
+      
+      try {
+        // Create a properly typed map for the bill data
+        final Map<String, dynamic> billData = {};
+        
+        // Copy all entries with proper typing
+        (value as Map).forEach((k, v) {
+          billData[k.toString()] = v;
+        });
+        
+        // Add state code
+        billData['state'] = stateCode;
+        
+        // Add bill type
+        billData['type'] = 'state';
+        
+        // Create and add the bill model
+        bills.add(BillModel.fromMap(billData));
+        
+        if (kDebugMode && bills.length <= 2) {
+          // Print details of first few bills for debugging
+          print('Processed bill: ${billData['number']} - ${billData['title']}');
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error processing bill with key $key: $e');
         }
       }
+    });
+    
+    if (kDebugMode) {
+      print('Total bills processed: ${bills.length}');
     }
     
     return bills;
@@ -390,7 +410,7 @@ class BillService {
     for (final item in billResults) {
       if (item is Map) {
         try {
-          final billData = Map<String, dynamic>.from(item);
+          final billData = Map<String, dynamic>.from(item as Map);
           
           // Add state code
           billData['state'] = stateCode;
@@ -423,7 +443,7 @@ class BillService {
       throw Exception('Invalid bill format');
     }
     
-    final Map<String, dynamic> billMap = Map<String, dynamic>.from(bill);
+    final Map<String, dynamic> billMap = Map<String, dynamic>.from(bill as Map);
     
     // Add state code
     billMap['state'] = stateCode;
@@ -440,7 +460,7 @@ class BillService {
     if (bill.containsKey('sponsors') && bill['sponsors'] is List) {
       for (final sponsor in bill['sponsors']) {
         if (sponsor is Map) {
-          final sponsorData = Map<String, dynamic>.from(sponsor);
+          final sponsorData = Map<String, dynamic>.from(sponsor as Map);
           sponsors.add(RepresentativeSponsor.fromMap(sponsorData));
         }
       }
@@ -452,7 +472,7 @@ class BillService {
     if (bill.containsKey('history') && bill['history'] is List) {
       for (final action in bill['history']) {
         if (action is Map) {
-          final actionData = Map<String, dynamic>.from(action);
+          final actionData = Map<String, dynamic>.from(action as Map);
           history.add(BillHistory.fromMap(actionData));
         }
       }
@@ -494,7 +514,7 @@ class BillService {
     for (final text in texts) {
       if (text is Map) {
         try {
-          final textData = Map<String, dynamic>.from(text);
+          final textData = Map<String, dynamic>.from(text as Map);
           documents.add(BillDocument.fromMap(textData));
         } catch (e) {
           if (kDebugMode) {
@@ -543,7 +563,7 @@ class BillService {
           final billsData = entry.value as List<dynamic>;
           
           _stateCache[stateCode] = billsData
-              .map((data) => BillModel.fromMap(Map<String, dynamic>.from(data)))
+              .map((data) => BillModel.fromMap(Map<String, dynamic>.from(data as Map)))
               .toList();
         }
       }
@@ -554,7 +574,7 @@ class BillService {
         
         for (final entry in detailsData.entries) {
           final billId = int.parse(entry.key);
-          final billData = Map<String, dynamic>.from(entry.value);
+          final billData = Map<String, dynamic>.from(entry.value as Map);
           
           _billDetailsCache[billId] = BillModel.fromMap(billData);
         }

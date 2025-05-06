@@ -1,6 +1,6 @@
 // lib/screens/home/home_screen_wrapper.dart
 import 'package:flutter/material.dart';
-import 'package:govvy/screens/bills/bill_list_screen.dart';
+import 'package:govvy/screens/bills/bill_screen.dart';
 import 'package:govvy/screens/representatives/find_representatives_screen.dart';
 import 'package:govvy/screens/profile/profile_screen.dart';
 

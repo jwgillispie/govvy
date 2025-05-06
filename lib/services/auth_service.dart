@@ -6,6 +6,7 @@ import 'package:govvy/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:govvy/services/network_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 // Import these conditionally to fix platform compatibility
 import 'package:universal_html/html.dart' show window;
 
@@ -327,6 +328,30 @@ class AuthService with ChangeNotifier {
       return null;
     }
   }
+
+  Future<bool> isFirstTimeUser() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('first_time_user') ?? true;
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error checking first time user: $e');
+    }
+    return true; // Default to true if there's an error
+  }
+}
+
+// Set that the user has used the app before
+Future<void> setUserHasUsedApp() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('first_time_user', false);
+  } catch (e) {
+    if (kDebugMode) {
+      print('Error setting user has used app: $e');
+    }
+  }
+}
   
   // Get current user data from Firestore
   Future<UserModel?> getCurrentUserData() async {

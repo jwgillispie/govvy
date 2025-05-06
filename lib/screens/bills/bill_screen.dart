@@ -707,7 +707,5 @@ class _BillListScreenState extends State<BillListScreen>
         );
       },
     );
-  }('Education'),
-            _buildKeywordChip('Healthcare'),
-            _buildKeywordChip('Environment'),
-            _buildKeywordChip
+  }
+}
