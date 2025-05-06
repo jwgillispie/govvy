@@ -37,7 +37,7 @@ class LegiscanService {
       // Use direct search for the person - this is more reliable than session people lookup
       final searchParams = {'state': state, 'query': name};
 
-      final searchResults = await _callApi('getSearch', searchParams);
+      final searchResults = await callApi('getSearch', searchParams);
 
       if (searchResults == null) {
         if (kDebugMode) {
@@ -65,7 +65,7 @@ class LegiscanService {
         final lastNameSearchParams = {'state': state, 'query': lastName};
 
         final lastNameResults =
-            await _callApi('getSearch', lastNameSearchParams);
+            await callApi('getSearch', lastNameSearchParams);
 
         if (lastNameResults == null ||
             !lastNameResults.containsKey('results') ||
@@ -171,7 +171,7 @@ class LegiscanService {
 
       // Try one last approach - direct API call to the person search endpoint
       // This is not officially documented but may work
-      final directSearchResults = await _callApi(
+      final directSearchResults = await callApi(
           'getSearch', {'state': state, 'query': name, 'type': 'people'});
 
       if (directSearchResults != null &&
@@ -241,7 +241,7 @@ class LegiscanService {
 
       // Get person details including sponsored bills
       final personData =
-          await _callApi('getPerson', {'id': personId.toString()});
+          await callApi('getPerson', {'id': personId.toString()});
 
       if (personData == null) {
         if (kDebugMode) {
@@ -277,7 +277,7 @@ class LegiscanService {
         }
 
         // Try direct search as a fallback - using getSearch operation with sponsor ID
-        final searchResults = await _callApi('getSearch', {
+        final searchResults = await callApi('getSearch', {
           'state':
               'GA', // Using GA as a default since that's the state we're looking at
           'query': 'sponsor:$personId'
@@ -361,7 +361,7 @@ class LegiscanService {
     }
   }
 
-  Future<Map<String, dynamic>?> _callApi(
+  Future<Map<String, dynamic>?> callApi(
       String operation, Map<String, String> params) async {
     try {
       if (!await _networkService.checkConnectivity()) {
@@ -485,7 +485,7 @@ class LegiscanService {
         'query': 'sponsor:"$firstName $lastName"'
       };
 
-      final searchResults = await _callApi('getSearch', searchParams);
+      final searchResults = await callApi('getSearch', searchParams);
 
       if (searchResults == null) {
         return [];

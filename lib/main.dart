@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:govvy/firebase_options.dart';
+import 'package:govvy/providers/bill_provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/providers/csv_representative_provider.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
 import 'package:govvy/screens/landing/landing_page.dart';
+import 'package:govvy/services/bill_service.dart';
 import 'package:govvy/services/network_service.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:provider/provider.dart';
@@ -97,13 +99,24 @@ class RepresentativeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // Network Service (add this)
+        // Network Service
         Provider(create: (_) => NetworkService()),
 
-        // Remote Config Service (add this)
+        // Remote Config Service
         Provider(create: (_) => RemoteConfigService()),
+        
+        // Bill Service
+        Provider(create: (_) => BillService()),
+        
+        // CSV Representative Provider
         ChangeNotifierProvider(
           create: (_) => CSVRepresentativeProvider(),
+          lazy: false,
+        ),
+
+        // Bill Provider
+        ChangeNotifierProvider(
+          create: (_) => BillProvider(),
           lazy: false,
         ),
 
