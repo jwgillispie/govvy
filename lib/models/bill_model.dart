@@ -67,20 +67,59 @@ class BillModel {
 
   // Factory method to create from LegiScan/CSV data
   factory BillModel.fromMap(Map<String, dynamic> map) {
+    // Handle LegiScan search results which use different key names
+    final String title = map['title'] as String? ?? 'Untitled';
+    final String description = map['description'] as String? ?? '';
+    
+    // Handle either status_desc or last_action for status
+    final String status = map['status_desc'] != null 
+        ? map['status_desc'] as String
+        : map['last_action'] != null
+            ? map['last_action'] as String
+            : 'Unknown status';
+    
+    // Handle various date formats and names
+    final String? statusDate = map['status_date'] as String?;
+    final String? lastActionDate = map['last_action_date'] as String?;
+    
+    // Handle Bill ID being different types across APIs
+    int billId;
+    if (map['bill_id'] is int) {
+      billId = map['bill_id'] as int;
+    } else if (map['bill_id'] is String) {
+      billId = int.tryParse(map['bill_id'] as String) ?? map.hashCode;
+    } else {
+      // Generate a unique ID based on bill properties
+      billId = '${map['state']}-${map['bill_number']}'.hashCode;
+    }
+    
+    // Handle missing bill_number
+    final String billNumber = map['bill_number'] as String? ?? 'Unknown';
+    
+    // Handle URL field variations
+    final String url = map['url'] as String? ?? 
+                     map['text_url'] as String? ?? 
+                     map['research_url'] as String? ?? 
+                     '';
+    
+    // Clean up escaped forward slashes in URLs
+    final cleanedUrl = url.replaceAll(r'\/', '/');
+    
+    // Create model with safely extracted values
     return BillModel(
-      billId: map['bill_id'] as int,
-      billNumber: map['bill_number'] as String,
-      title: map['title'] as String,
-      description: map['description'] as String?,
-      status: map['status_desc'] as String,
-      statusDate: map['status_date'] as String?,
-      lastActionDate: map['last_action_date'] as String?,
+      billId: billId,
+      billNumber: billNumber,
+      title: title,
+      description: description.isNotEmpty ? description : null,
+      status: status,
+      statusDate: statusDate,
+      introducedDate: map['introduced_date'] as String?,
+      lastActionDate: lastActionDate,
       lastAction: map['last_action'] as String?,
       committee: map['committee'] as String?,
       type: map['type'] ?? 'state', // Default to state if not specified
       state: map['state'] as String,
-      url: map['url'] as String,
-      introducedDate: null, // To be populated from history
+      url: cleanedUrl,
       sponsors: null, // To be populated separately
       history: null, // To be populated separately
       subjects: null, // To be populated separately
