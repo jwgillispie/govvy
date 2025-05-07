@@ -1,4 +1,5 @@
 // lib/models/bill_model.dart
+import 'package:flutter/foundation.dart';
 import 'package:govvy/models/representative_model.dart';
 
 class BillModel {
@@ -39,7 +40,8 @@ class BillModel {
   });
 
   // Convert from RepresentativeBill format (for bridging between models)
-  factory BillModel.fromRepresentativeBill(RepresentativeBill bill, String state) {
+  factory BillModel.fromRepresentativeBill(
+      RepresentativeBill bill, String state) {
     // Extract bill type (federal, state, local) from source
     String billType = 'state';
     if (bill.source == 'Congress') {
@@ -49,9 +51,9 @@ class BillModel {
     }
 
     // Create a unique ID from bill properties for identifying the bill
-    final idHash = bill.congress.hashCode ^ 
-                  bill.billType.hashCode ^ 
-                  bill.billNumber.hashCode;
+    final idHash = bill.congress.hashCode ^
+        bill.billType.hashCode ^
+        bill.billNumber.hashCode;
 
     return BillModel(
       billId: idHash.abs(), // Use hash as ID
@@ -66,22 +68,78 @@ class BillModel {
   }
 
   // Factory method to create from LegiScan/CSV data
+
   factory BillModel.fromMap(Map<String, dynamic> map) {
     // Handle LegiScan search results which use different key names
-    final String title = map['title'] as String? ?? 'Untitled';
-    final String description = map['description'] as String? ?? '';
-    
+    String title;
+    if (map['title'] is String) {
+      title = map['title'] as String;
+    } else if (map['title'] is List) {
+      title = (map['title'] as List).join(' ');
+    } else {
+      title = 'Untitled';
+    }
+
+    // Handle description that could be a List or String
+    String description = '';
+    if (map['description'] != null) {
+      if (map['description'] is String) {
+        description = map['description'] as String;
+      } else if (map['description'] is List) {
+        description = (map['description'] as List).join(' ');
+      }
+    }
+
     // Handle either status_desc or last_action for status
-    final String status = map['status_desc'] != null 
-        ? map['status_desc'] as String
-        : map['last_action'] != null
-            ? map['last_action'] as String
-            : 'Unknown status';
-    
+    String status;
+    if (map['status_desc'] != null) {
+      if (map['status_desc'] is String) {
+        status = map['status_desc'] as String;
+      } else if (map['status_desc'] is List) {
+        status = (map['status_desc'] as List).join(' ');
+      } else {
+        status = 'Unknown status';
+      }
+    } else if (map['last_action'] != null) {
+      if (map['last_action'] is String) {
+        status = map['last_action'] as String;
+      } else if (map['last_action'] is List) {
+        status = (map['last_action'] as List).join(' ');
+      } else {
+        status = 'Unknown status';
+      }
+    } else {
+      status = 'Unknown status';
+    }
+
     // Handle various date formats and names
-    final String? statusDate = map['status_date'] as String?;
-    final String? lastActionDate = map['last_action_date'] as String?;
-    
+    String? statusDate;
+    if (map['status_date'] != null) {
+      if (map['status_date'] is String) {
+        statusDate = map['status_date'] as String;
+      } else if (map['status_date'] is List) {
+        statusDate = (map['status_date'] as List).join(' ');
+      }
+    }
+
+    String? lastActionDate;
+    if (map['last_action_date'] != null) {
+      if (map['last_action_date'] is String) {
+        lastActionDate = map['last_action_date'] as String;
+      } else if (map['last_action_date'] is List) {
+        lastActionDate = (map['last_action_date'] as List).join(' ');
+      }
+    }
+
+    String? lastAction;
+    if (map['last_action'] != null) {
+      if (map['last_action'] is String) {
+        lastAction = map['last_action'] as String;
+      } else if (map['last_action'] is List) {
+        lastAction = (map['last_action'] as List).join(' ');
+      }
+    }
+
     // Handle Bill ID being different types across APIs
     int billId;
     if (map['bill_id'] is int) {
@@ -92,19 +150,56 @@ class BillModel {
       // Generate a unique ID based on bill properties
       billId = '${map['state']}-${map['bill_number']}'.hashCode;
     }
-    
+
     // Handle missing bill_number
-    final String billNumber = map['bill_number'] as String? ?? 'Unknown';
-    
+    String billNumber;
+    if (map['bill_number'] != null) {
+      if (map['bill_number'] is String) {
+        billNumber = map['bill_number'] as String;
+      } else if (map['bill_number'] is List) {
+        billNumber = (map['bill_number'] as List).join(' ');
+      } else {
+        billNumber = 'Unknown';
+      }
+    } else {
+      billNumber = 'Unknown';
+    }
+
     // Handle URL field variations
-    final String url = map['url'] as String? ?? 
-                     map['text_url'] as String? ?? 
-                     map['research_url'] as String? ?? 
-                     '';
-    
+    String url = '';
+    if (map['url'] != null) {
+      if (map['url'] is String) {
+        url = map['url'] as String;
+      } else if (map['url'] is List) {
+        url = (map['url'] as List).join(' ');
+      }
+    } else if (map['text_url'] != null) {
+      if (map['text_url'] is String) {
+        url = map['text_url'] as String;
+      } else if (map['text_url'] is List) {
+        url = (map['text_url'] as List).join(' ');
+      }
+    } else if (map['research_url'] != null) {
+      if (map['research_url'] is String) {
+        url = map['research_url'] as String;
+      } else if (map['research_url'] is List) {
+        url = (map['research_url'] as List).join(' ');
+      }
+    }
+
     // Clean up escaped forward slashes in URLs
     final cleanedUrl = url.replaceAll(r'\/', '/');
-    
+
+    // Handle committee field
+    String? committee;
+    if (map['committee'] != null) {
+      if (map['committee'] is String) {
+        committee = map['committee'] as String;
+      } else if (map['committee'] is List) {
+        committee = (map['committee'] as List).join(' ');
+      }
+    }
+
     // Create model with safely extracted values
     return BillModel(
       billId: billId,
@@ -115,8 +210,8 @@ class BillModel {
       statusDate: statusDate,
       introducedDate: map['introduced_date'] as String?,
       lastActionDate: lastActionDate,
-      lastAction: map['last_action'] as String?,
-      committee: map['committee'] as String?,
+      lastAction: lastAction,
+      committee: committee,
       type: map['type'] ?? 'state', // Default to state if not specified
       state: map['state'] as String,
       url: cleanedUrl,
@@ -125,7 +220,6 @@ class BillModel {
       subjects: null, // To be populated separately
     );
   }
-
   // Convert to map for storage
   Map<String, dynamic> toMap() {
     return {
@@ -186,19 +280,19 @@ class BillModel {
 
   // Formatting helpers
   String get formattedBillNumber => billNumber;
-  
+
   String get formattedIntroducedDate {
     if (introducedDate == null) return 'Unknown';
     // TODO: Format date
     return introducedDate!;
   }
-  
+
   String get formattedStatusDate {
     if (statusDate == null) return 'Unknown';
     // TODO: Format date
     return statusDate!;
   }
-  
+
   String get statusColor {
     // Return appropriate color based on status
     if (status.toLowerCase().contains('introduced')) return 'blue';
@@ -240,16 +334,20 @@ class RepresentativeSponsor {
       party: map['party'] as String?,
       district: map['district'] as String?,
       state: map['state'] as String,
-      position: (map['position'] == 1 || map['position'] == '1') ? 'primary' : 'cosponsor',
+      position: (map['position'] == 1 || map['position'] == '1')
+          ? 'primary'
+          : 'cosponsor',
       imageUrl: map['imageUrl'] as String?,
       bioGuideId: map['bioguideId'] as String?,
     );
   }
 
   // Convert from Representative for bridging between models
-  factory RepresentativeSponsor.fromRepresentative(Representative rep, {bool isPrimary = true}) {
+  factory RepresentativeSponsor.fromRepresentative(Representative rep,
+      {bool isPrimary = true}) {
     return RepresentativeSponsor(
-      peopleId: rep.bioGuideId.hashCode, // Use hash of bioGuideId since we don't have people_id
+      peopleId: rep.bioGuideId
+          .hashCode, // Use hash of bioGuideId since we don't have people_id
       name: rep.name,
       role: _getRoleFromChamber(rep.chamber),
       party: rep.party,
@@ -280,7 +378,8 @@ class RepresentativeSponsor {
     final chamberlower = chamber.toLowerCase();
     if (chamberlower.contains('senate') || chamberlower == 'national_upper') {
       return 'Senator';
-    } else if (chamberlower.contains('house') || chamberlower == 'national_lower') {
+    } else if (chamberlower.contains('house') ||
+        chamberlower == 'national_lower') {
       return 'Representative';
     } else if (chamberlower.contains('mayor') || chamberlower == 'local_exec') {
       return 'Mayor';
@@ -343,12 +442,75 @@ class BillDocument {
   });
 
   factory BillDocument.fromMap(Map<String, dynamic> map) {
-    return BillDocument(
-      documentId: map['document_id'] as int,
-      type: map['document_type'] as String,
-      description: map['document_desc'] as String?,
-      url: map['url'] as String,
-    );
+    try {
+      // Handle null document_id by generating one from other fields
+      int docId;
+      if (map['document_id'] != null) {
+        // Try to get as int first
+        if (map['document_id'] is int) {
+          docId = map['document_id'] as int;
+        } else if (map['document_id'] is String) {
+          // Try to parse string to int
+          docId = int.tryParse(map['document_id'] as String) ??
+              (map['document_type'].toString() + map['url'].toString())
+                  .hashCode;
+        } else {
+          // Generate a unique ID based on other properties
+          docId = (map['document_type'].toString() + map['url'].toString())
+              .hashCode;
+        }
+      } else {
+        // Generate a unique ID based on other properties
+        docId = map.hashCode;
+      }
+
+      // Get document type with fallback
+      String docType;
+      if (map['document_type'] != null) {
+        docType = map['document_type'] as String;
+      } else if (map['type'] != null) {
+        docType = map['type'] as String;
+      } else {
+        docType = 'Unknown'; // Default
+      }
+
+      // Get description or use fallback
+      final description =
+          map['document_desc'] as String? ?? map['desc'] as String? ?? null;
+
+      // Get URL with fallbacks
+      String url;
+      if (map['url'] != null) {
+        url = map['url'] as String;
+      } else if (map['text_url'] != null) {
+        url = map['text_url'] as String;
+      } else {
+        url = ''; // Default to empty string
+      }
+
+      // Clean up escaped forward slashes in URL
+      url = url.replaceAll(r'\/', '/');
+
+      return BillDocument(
+        documentId: docId,
+        type: docType,
+        description: description,
+        url: url,
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error processing bill document: $e');
+        print('Document data: $map');
+      }
+
+      // Return a placeholder document rather than crashing
+      return BillDocument(
+        documentId: DateTime.now().millisecondsSinceEpoch,
+        type: 'Unknown',
+        description: 'Error loading document',
+        url: '',
+      );
+    }
   }
 
   Map<String, dynamic> toMap() {

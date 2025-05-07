@@ -68,18 +68,46 @@ class BillService {
   // Get all bills for a state
   Future<List<BillModel>> getBillsByState(String stateCode) async {
     try {
+      if (kDebugMode) {
+        print('BillService.getBillsByState called for state: $stateCode');
+      }
+
       // Check network connectivity
       if (!await _networkService.checkConnectivity()) {
+        if (kDebugMode) {
+          print('Network connectivity issue in BillService');
+        }
         throw Exception('No network connectivity');
       }
 
       // Check if we have cached data
       if (_stateCache.containsKey(stateCode)) {
+        if (kDebugMode) {
+          print('Using cached data for state: $stateCode');
+        }
         return _stateCache[stateCode]!;
+      }
+
+      // Check LegiScan API key
+      if (kDebugMode) {
+        print('LegiScan API key available in BillService: $hasLegiscanApiKey');
+        if (_legiscanApiKey != null) {
+          print(
+              'Legiscan API key value: ${_legiscanApiKey!.substring(0, 3)}...');
+        }
+      }
+
+      if (kDebugMode) {
+        print('About to call _fetchStateAndLocalBills for state: $stateCode');
       }
 
       // Fetch bills from LegiScan
       final billsList = await _fetchStateAndLocalBills(stateCode);
+
+      if (kDebugMode) {
+        print(
+            'Received ${billsList.length} bills from _fetchStateAndLocalBills');
+      }
 
       // Cache the results
       _stateCache[stateCode] = billsList;
@@ -90,7 +118,7 @@ class BillService {
       return billsList;
     } catch (e) {
       if (kDebugMode) {
-        print('Error getting bills for state $stateCode: $e');
+        print('Error in BillService.getBillsByState: $e');
       }
       // Return cached data if available, otherwise empty list
       return _stateCache[stateCode] ?? [];
@@ -255,44 +283,162 @@ class BillService {
 
   // Private methods for data fetching and processing
   Future<List<BillModel>> _fetchStateAndLocalBills(String stateCode) async {
+    if (kDebugMode) {
+      print('_fetchStateAndLocalBills called for state: $stateCode');
+    }
+
     final List<BillModel> bills = [];
 
     // Use LegiScan to get state bills
     if (hasLegiscanApiKey) {
-      final params = <String, String>{
-        'state': stateCode,
-      };
+      if (kDebugMode) {
+        print('Using LegiScan API for state: $stateCode');
+      }
 
-      final masterListData =
-          await _legiscanService.callApi('getMasterList', params);
-
-      if (masterListData != null && masterListData.containsKey('masterlist')) {
-        final masterList = masterListData['masterlist'];
-
-        if (masterList is Map) {
-          // Use the _processMasterList method to extract bills
-          final extractedBills =
-              _processMasterList(masterList as Map<String, dynamic>, stateCode);
-
-          // Add the extracted bills to our list
-          bills.addAll(extractedBills);
-
-          // Add debug logging
+      try {
+        // For FL and GA, use getSearch with a broad search instead of getMasterList
+        if (stateCode == 'FL' || stateCode == 'GA') {
           if (kDebugMode) {
-            print(
-                'Extracted ${extractedBills.length} bills from masterlist for $stateCode');
+            print('Using getSearch for $stateCode instead of getMasterList');
+          }
+
+          // Use a search query that will return recent bills
+          final searchParams = <String, String>{
+            'state': stateCode,
+            'query': '*', // Wildcard search
+            'year': '2025', // Current year
+          };
+
+          // Get recent bills using search
+          final searchResults =
+              await _legiscanService.callApi('getSearch', searchParams);
+
+          if (searchResults != null) {
+            if (kDebugMode) {
+              print('Search results received for $stateCode');
+              if (searchResults.containsKey('searchresult')) {
+                final keys =
+                    (searchResults['searchresult'] as Map).keys.toList();
+                print('Search result keys: $keys');
+                print(
+                    'Number of search results: ${keys.length - 1}'); // -1 for summary
+              } else {
+                print('No searchresult key found');
+                print('Response keys: ${searchResults.keys.join(', ')}');
+              }
+            }
+
+            // Process the search results to bills
+            bills.addAll(_processBillSearchResults(searchResults, stateCode));
+          } else {
+            if (kDebugMode) {
+              print('No search results returned for $stateCode');
+            }
+          }
+        } else {
+          // For other states, use the standard getMasterList approach
+          final params = <String, String>{
+            'state': stateCode,
+          };
+
+          final masterListData =
+              await _legiscanService.callApi('getMasterList', params);
+
+          if (masterListData != null &&
+              masterListData.containsKey('masterlist')) {
+            final masterList = masterListData['masterlist'];
+
+            if (masterList is Map) {
+              // Process the masterlist
+              final stateBills = _processMasterList(
+                  masterList as Map<String, dynamic>, stateCode);
+              bills.addAll(stateBills);
+
+              if (kDebugMode) {
+                print(
+                    'Processed ${stateBills.length} bills from masterlist for $stateCode');
+              }
+            } else {
+              if (kDebugMode) {
+                print('masterlist is not a Map: ${masterList.runtimeType}');
+              }
+            }
+          } else {
+            if (kDebugMode) {
+              if (masterListData == null) {
+                print('No response from getMasterList API call');
+              } else {
+                print(
+                    'Missing masterlist key in response. Keys: ${masterListData.keys.join(', ')}');
+              }
+            }
+
+            // Fallback to search if masterlist fails
+            if (kDebugMode) {
+              print('Falling back to search for $stateCode');
+            }
+
+            final searchParams = <String, String>{
+              'state': stateCode,
+              'query': '*', // Wildcard search
+            };
+
+            final searchResults =
+                await _legiscanService.callApi('getSearch', searchParams);
+
+            if (searchResults != null) {
+              bills.addAll(_processBillSearchResults(searchResults, stateCode));
+            }
           }
         }
-      } else {
+      } catch (e) {
         if (kDebugMode) {
-          print('No masterlist found in response for $stateCode');
-          print('Response keys: ${masterListData?.keys.join(', ')}');
+          print('Error fetching bills for $stateCode: $e');
         }
+      }
+    } else {
+      if (kDebugMode) {
+        print('LegiScan API key not available, skipping API call');
       }
     }
 
-    // Use CSV data for local bills (if available)
-    // TODO: Implement CSV bill filtering by state
+    // Also add CSV data if available
+    try {
+      if (kDebugMode) {
+        print('Checking for CSV bills for $stateCode');
+      }
+
+      // Use getSponsoredBills with a placeholder representative to get all bills for the state
+      // Since the CSVBillService doesn't have a getBillsByState method
+      final Representative placeholderRep = Representative(
+        name: 'State Placeholder',
+        bioGuideId: 'state-${stateCode.toLowerCase()}',
+        party: '',
+        chamber: '',
+        state: stateCode,
+        district: null,
+      );
+
+      final csvBills = await _csvBillService.getSponsoredBills(placeholderRep);
+      if (csvBills.isNotEmpty) {
+        if (kDebugMode) {
+          print('Adding ${csvBills.length} CSV bills for $stateCode');
+        }
+
+        // Convert RepresentativeBill to BillModel
+        for (final bill in csvBills) {
+          bills.add(BillModel.fromRepresentativeBill(bill, stateCode));
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading CSV bills: $e');
+      }
+    }
+
+    if (kDebugMode) {
+      print('Returning total of ${bills.length} bills for $stateCode');
+    }
 
     return bills;
   }
@@ -408,7 +554,7 @@ class BillService {
     }
   }
 
-// Updated method to correctly process the LegiScan search results format
+  // Updated method to correctly process the LegiScan search results format
   List<BillModel> _processBillSearchResults(
       Map<String, dynamic> searchResults, String stateCode) {
     final List<BillModel> bills = [];
@@ -533,7 +679,6 @@ class BillService {
     return bills;
   }
 
-  // Process detailed bill data
   BillModel _processBillDetails(
       Map<String, dynamic> billData, String stateCode) {
     if (!billData.containsKey('bill')) {
@@ -554,6 +699,29 @@ class BillService {
     // Add bill type
     billMap['type'] = 'state';
 
+    // Handle fields that might be Lists before creating the model
+    // This is to avoid the casting error
+    if (billMap.containsKey('description') && billMap['description'] is List) {
+      // If description is a List, convert it to a String
+      billMap['description'] = (billMap['description'] as List).join(' ');
+    }
+
+    // Check other potential fields that might be Lists
+    final fieldsToCheck = [
+      'title',
+      'status_desc',
+      'status_date',
+      'last_action'
+    ];
+    for (final field in fieldsToCheck) {
+      if (billMap.containsKey(field) && billMap[field] is List) {
+        if (kDebugMode) {
+          print('Converting field $field from List to String');
+        }
+        billMap[field] = (billMap[field] as List).join(' ');
+      }
+    }
+
     // Create bill model
     final billModel = BillModel.fromMap(billMap);
 
@@ -563,8 +731,27 @@ class BillService {
     if (bill.containsKey('sponsors') && bill['sponsors'] is List) {
       for (final sponsor in bill['sponsors']) {
         if (sponsor is Map) {
-          final sponsorData = Map<String, dynamic>.from(sponsor as Map);
-          sponsors.add(RepresentativeSponsor.fromMap(sponsorData));
+          try {
+            final sponsorData = Map<String, dynamic>.from(sponsor as Map);
+
+            // Ensure state is present in sponsor data
+            if (!sponsorData.containsKey('state')) {
+              sponsorData['state'] = stateCode;
+            }
+
+            // Handle List values in sponsor data
+            sponsorData.forEach((key, value) {
+              if (value is List) {
+                sponsorData[key] = value.join(' ');
+              }
+            });
+
+            sponsors.add(RepresentativeSponsor.fromMap(sponsorData));
+          } catch (e) {
+            if (kDebugMode) {
+              print('Error processing sponsor: $e');
+            }
+          }
         }
       }
     }
@@ -575,8 +762,35 @@ class BillService {
     if (bill.containsKey('history') && bill['history'] is List) {
       for (final action in bill['history']) {
         if (action is Map) {
-          final actionData = Map<String, dynamic>.from(action as Map);
-          history.add(BillHistory.fromMap(actionData));
+          try {
+            final actionData = Map<String, dynamic>.from(action as Map);
+
+            // Handle List values in action data
+            actionData.forEach((key, value) {
+              if (value is List) {
+                actionData[key] = value.join(' ');
+              }
+            });
+
+            // Make sure sequence is an int
+            if (actionData.containsKey('sequence') &&
+                actionData['sequence'] is! int) {
+              if (actionData['sequence'] is String) {
+                actionData['sequence'] =
+                    int.tryParse(actionData['sequence'] as String) ?? 0;
+              } else {
+                actionData['sequence'] = 0;
+              }
+            } else if (!actionData.containsKey('sequence')) {
+              actionData['sequence'] = 0;
+            }
+
+            history.add(BillHistory.fromMap(actionData));
+          } catch (e) {
+            if (kDebugMode) {
+              print('Error processing history action: $e');
+            }
+          }
         }
       }
     }
@@ -589,7 +803,12 @@ class BillService {
         if (subject is String) {
           subjects.add(subject);
         } else if (subject is Map && subject.containsKey('subject')) {
-          subjects.add(subject['subject'] as String);
+          var subjectValue = subject['subject'];
+          if (subjectValue is String) {
+            subjects.add(subjectValue);
+          } else if (subjectValue is List) {
+            subjects.add(subjectValue.join(' '));
+          }
         }
       }
     }

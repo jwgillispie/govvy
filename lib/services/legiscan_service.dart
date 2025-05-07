@@ -382,7 +382,34 @@ class LegiscanService {
         print('LegiScan API call: $redactedUrl');
       }
 
-      final response = await http.get(url).timeout(const Duration(seconds: 20));
+      // Increase timeout for potentially slow operations like getBill
+      final Duration timeout = operation == 'getBill' 
+          ? const Duration(seconds: 30) // Longer timeout for bill details
+          : const Duration(seconds: 20); // Standard timeout for other operations
+
+      // Add retry logic
+      int retryCount = 0;
+      const maxRetries = 2;
+      late http.Response response;
+      
+      while (retryCount <= maxRetries) {
+        try {
+          response = await http.get(url).timeout(timeout);
+          break; // Exit loop if request succeeds
+        } catch (timeoutError) {
+          retryCount++;
+          if (kDebugMode) {
+            print('API call attempt $retryCount timed out, ${retryCount <= maxRetries ? "retrying..." : "giving up."}');
+          }
+          
+          if (retryCount > maxRetries) {
+            throw timeoutError; // Re-throw the error after all retries fail
+          }
+          
+          // Wait a bit before retrying
+          await Future.delayed(Duration(seconds: 2 * retryCount));
+        }
+      }
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -391,10 +418,50 @@ class LegiscanService {
         if (kDebugMode) {
           print('API response status: ${data['status']}');
           if (data['status'] != 'OK') {
-            print(
-                'Response contains error: ${data['alert'] ?? "Unknown error"}');
-          } else {
+            print('Response contains error: ${data['alert'] ?? "Unknown error"}');
+          } else if (operation == 'getBill') {
+            // For getBill, print a sample of the response for debugging
             print(data);
+          }
+        }
+
+        // Special handling for FL and GA getMasterList operations
+        if (operation == 'getMasterList' && 
+            (params['state'] == 'FL' || params['state'] == 'GA') &&
+            data['status'] != 'OK') {
+          
+          if (kDebugMode) {
+            print('Special handling for ${params['state']} getMasterList');
+          }
+          
+          // Try a search instead for these states
+          final searchParams = {
+            'key': _apiKey!,
+            'op': 'getSearch',
+            'state': params['state'],
+            'query': '*',  // Wildcard search
+            'year': '2025', // Current year
+          };
+          
+          final searchUrl = Uri.parse(_baseUrl)
+              .replace(queryParameters: searchParams);
+          
+          if (kDebugMode) {
+            final redactedSearchUrl = searchUrl.toString()
+                .replaceAll(_apiKey!, '[REDACTED]');
+            print('Fallback search URL: $redactedSearchUrl');
+          }
+          
+          // Use a slightly longer timeout for fallback search
+          final searchResponse = await http.get(searchUrl)
+              .timeout(const Duration(seconds: 25));
+          
+          if (searchResponse.statusCode == 200) {
+            final searchData = json.decode(searchResponse.body);
+            if (kDebugMode) {
+              print('Fallback search status: ${searchData['status']}');
+            }
+            return searchData;
           }
         }
 
@@ -465,8 +532,8 @@ class LegiscanService {
       ),
     ];
   }
+  
   // Add this helper method to your LegiscanService class
-
   Future<List<RepresentativeBill>> getDirectBillsForPerson(
       String firstName, String lastName, String state) async {
     if (!hasApiKey) {
@@ -495,6 +562,10 @@ class LegiscanService {
           !(searchResults['results'] is Map) ||
           !searchResults['results'].containsKey('bills') ||
           !(searchResults['results']['bills'] is List)) {
+        // Try searchresult instead (the format varies in the API)
+        if (searchResults.containsKey('searchresult')) {
+          return _processBillsFromSearchresult(searchResults['searchresult'], state);
+        }
         return [];
       }
 
@@ -556,6 +627,60 @@ class LegiscanService {
       }
       return [];
     }
+  }
+
+  // Add helper method to process bills from searchresult format
+  List<RepresentativeBill> _processBillsFromSearchresult(
+      Map<String, dynamic> searchresult, String state) {
+    final List<RepresentativeBill> result = [];
+    
+    // Loop through the keys in the searchresult
+    searchresult.forEach((key, value) {
+      // Skip the "summary" key or any non-map entries
+      if (key == 'summary' || !(value is Map)) {
+        return;
+      }
+      
+      try {
+        // Convert the value to a properly typed Map
+        final Map<String, dynamic> billData = Map<String, dynamic>.from(value as Map);
+        
+        // Extract bill information
+        String billNumber = billData['bill_number']?.toString() ?? 'Unknown';
+        String title = billData['title']?.toString() ?? 'Untitled Bill';
+        String session = '';
+        String billType = '';
+        
+        // Parse bill number to extract type
+        final RegExp regex = RegExp(r'([A-Za-z]+)(\s*)(\d+)');
+        final match = regex.firstMatch(billNumber);
+        
+        if (match != null) {
+          billType = match.group(1) ?? '';
+          billNumber = match.group(3) ?? billNumber;
+        } else {
+          // Default type if we can't parse it
+          billType = 'Bill';
+        }
+        
+        // Create the bill object
+        result.add(RepresentativeBill(
+          congress: session,
+          billType: billType,
+          billNumber: billNumber,
+          title: title,
+          introducedDate: billData['last_action_date']?.toString() ?? '',
+          latestAction: billData['last_action']?.toString() ?? '',
+          source: 'LegiScan',
+        ));
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error processing bill from searchresult: $e');
+        }
+      }
+    });
+    
+    return result;
   }
 
   // Check network connectivity
