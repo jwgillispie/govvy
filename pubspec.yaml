@@ -22,6 +22,7 @@ dependencies:
   # Data handling
   http: ^1.1.0
   shared_preferences: ^2.2.0
+  archive: ^3.4.9
   # Location services
   geolocator: ^13.0.4
   geocoding: ^3.0.0
@@ -55,3 +56,29 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/data/
+    - assets/data/csvs/
+    # State-specific CSV directories
+    - assets/data/csvs/AK/2025-2026_34th_Legislature/csv/
+    - assets/data/csvs/AL/2025-2025_Regular_Session/csv/
+    - assets/data/csvs/AR/2025-2025_95th_General_Assembly/csv/
+    - assets/data/csvs/AZ/2025-2025_Fifty-seventh_Legislature_1st_Regular/csv/
+    - assets/data/csvs/CA/2025-2026_Regular_Session/csv/
+    - assets/data/csvs/CO/2025-2025_Regular_Session/csv/
+    - assets/data/csvs/CT/2025-2025_General_Assembly/csv/
+    - assets/data/csvs/FL/2025-2025_Regular_Session/csv/
+    - assets/data/csvs/GA/2025-2026_Regular_Session/csv/
+    - assets/data/csvs/HI/2025-2025_Regular_Session/csv/
+    - assets/data/csvs/IA/2025-2026_91st_General_Assembly/csv/
+    - assets/data/csvs/IL/2025-2026_104th_General_Assembly/csv/
+    - assets/data/csvs/IN/2025-2025_Regular_Session/csv/
+    - assets/data/csvs/KS/2025-2026_Regular_Session/csv/
+    - assets/data/csvs/KY/2025-2025_Regular_Session/csv/
+    # Explicitly include individual CSV files for Florida and Georgia
+    - assets/data/csvs/FL/2025-2025_Regular_Session/csv/bills.csv
+    - assets/data/csvs/FL/2025-2025_Regular_Session/csv/people.csv
+    - assets/data/csvs/FL/2025-2025_Regular_Session/csv/sponsors.csv
+    - assets/data/csvs/FL/2025-2025_Regular_Session/csv/history.csv
+    - assets/data/csvs/GA/2025-2026_Regular_Session/csv/bills.csv
+    - assets/data/csvs/GA/2025-2026_Regular_Session/csv/people.csv
+    - assets/data/csvs/GA/2025-2026_Regular_Session/csv/sponsors.csv
+    - assets/data/csvs/GA/2025-2026_Regular_Session/csv/history.csv

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:govvy/models/bill_model.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/services/bill_service.dart';
+import 'package:govvy/services/csv_bill_service.dart';
 import 'package:govvy/services/network_service.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -107,7 +108,66 @@ class BillProvider with ChangeNotifier {
       _lastStateCode = stateCode;
       notifyListeners();
       
-      _stateBills = await _billService.getBillsByState(stateCode);
+      // Special debug handling for FL and GA
+      if (stateCode == 'FL' || stateCode == 'GA') {
+        if (kDebugMode) {
+          print('Special handling enabled for $stateCode bills');
+          print('Forcing fresh load for $stateCode with special handling');
+        }
+        
+        // Clear bills cache by calling _billService.clearCache()
+        await _billService.clearCache();
+        
+        // Create our own direct CSV service instance for testing
+        final csvService = CSVBillService();
+        await csvService.initialize();
+        
+        // Attempt to load bills directly from CSV service
+        try {
+          final csvBills = await csvService.getBillsByState(stateCode);
+          
+          if (kDebugMode) {
+            print('Directly loaded ${csvBills.length} bills from CSV for $stateCode');
+          }
+          
+          if (csvBills.isNotEmpty) {
+            // Convert to BillModel format
+            final bills = csvBills.map((bill) => 
+                BillModel.fromRepresentativeBill(bill, stateCode)).toList();
+            
+            if (kDebugMode) {
+              print('Converted ${bills.length} CSV bills to BillModel format for $stateCode');
+              
+              if (bills.isNotEmpty) {
+                print('Sample bill from $stateCode:');
+                print('  Bill Number: ${bills.first.billNumber}');
+                print('  Title: ${bills.first.title}');
+                print('  Status: ${bills.first.status}');
+              }
+            }
+            
+            _stateBills = bills;
+          } else {
+            // Fallback to standard method if no CSV bills found
+            _stateBills = await _billService.getBillsByState(stateCode);
+          }
+        } catch (csvError) {
+          if (kDebugMode) {
+            print('Error loading CSV data directly: $csvError');
+            print('Falling back to standard bill loading method');
+          }
+          
+          // Fallback to standard method
+          _stateBills = await _billService.getBillsByState(stateCode);
+        }
+      } else {
+        // Standard path for other states
+        _stateBills = await _billService.getBillsByState(stateCode);
+      }
+      
+      if (_stateBills.isEmpty && (stateCode == 'FL' || stateCode == 'GA')) {
+        _errorMessage = 'No bills found for $stateCode. Possible CSV loading issue. Please try a different state.';
+      }
       
       _isLoading = false;
       notifyListeners();
@@ -231,11 +291,27 @@ class BillProvider with ChangeNotifier {
       fetchBillDocuments(billId);
     } catch (e) {
       _isLoadingDetails = false;
-      _errorMessageDetails = 'Error getting bill details: ${e.toString()}';
+      
+      // Handle specific known errors with more user-friendly messages
+      if (e.toString().contains('Unknown bill id')) {
+        _errorMessageDetails = 'This bill could not be found. It may have been removed or its ID may have changed.';
+      } else {
+        _errorMessageDetails = 'Error getting bill details: ${e.toString()}';
+      }
+      
       notifyListeners();
       
       if (kDebugMode) {
         print(_errorMessageDetails);
+        print('Error details: $e');
+        
+        // Try to find the bill in recent bills as a fallback
+        final foundInRecent = _recentBills.where((bill) => bill.billId == billId).toList();
+        if (foundInRecent.isNotEmpty) {
+          print('Found bill in recent bills, using cached data');
+          _selectedBill = foundInRecent.first;
+          notifyListeners();
+        }
       }
     }
   }
@@ -351,6 +427,23 @@ class BillProvider with ChangeNotifier {
     _selectedBill = null;
     _selectedBillDocuments = null;
     notifyListeners();
+  }
+  
+  // Set selected bill directly (for bill data passed directly to details screen)
+  void setSelectedBill(BillModel bill) {
+    _selectedBill = bill;
+    _errorMessageDetails = null;
+    _isLoadingDetails = false;
+    
+    // Add to recent bills
+    _addToRecentBills(bill);
+    
+    notifyListeners();
+    
+    // Also fetch documents in the background if we have a bill ID
+    if (bill.billId > 0) {
+      fetchBillDocuments(bill.billId);
+    }
   }
   
   // Clear all bills data

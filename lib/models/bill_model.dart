@@ -51,19 +51,59 @@ class BillModel {
     }
 
     // Create a unique ID from bill properties for identifying the bill
-    final idHash = bill.congress.hashCode ^
+    final idHash = (bill.congress.hashCode ^
         bill.billType.hashCode ^
-        bill.billNumber.hashCode;
+        bill.billNumber.hashCode ^
+        state.hashCode).abs();
+        
+    // Special handling for FL and GA with CSV data
+    if ((state == 'FL' || state == 'GA') && bill.source == 'CSV') {
+      if (kDebugMode) {
+        print('Converting bill from CSV for $state with number ${bill.billNumber} and title: ${bill.title}');
+      }
+    }
 
+    // Make sure the bill number is properly formatted
+    String formattedBillNumber = bill.billNumber;
+    if (bill.billType.isNotEmpty && !formattedBillNumber.contains(bill.billType)) {
+      formattedBillNumber = '${bill.billType} ${bill.billNumber}';
+    }
+    
+    // Extract description from extraData if available, otherwise use title
+    String? description = bill.description;
+    if (description == null && bill.title.length > 100) {
+      description = bill.title.substring(0, 100) + '...';
+    }
+    
+    // Get status from latestAction or statusDescription
+    String status = bill.latestAction ?? bill.statusDescription ?? 'Unknown status';
+    
+    // Get URL from extraData if available
+    String url = '';
+    if (bill.url != null && bill.url!.isNotEmpty) {
+      url = bill.url!;
+    } else if (bill.stateLink != null && bill.stateLink!.isNotEmpty) {
+      url = bill.stateLink!;
+    }
+    
+    // Create the bill model with enriched data
     return BillModel(
-      billId: idHash.abs(), // Use hash as ID
-      billNumber: '${bill.billType} ${bill.billNumber}',
+      billId: idHash, // Use hash as ID
+      billNumber: formattedBillNumber,
       title: bill.title,
-      status: bill.latestAction ?? 'Unknown status',
+      description: description,
+      status: status,
       statusDate: bill.introducedDate,
+      introducedDate: bill.introducedDate,
+      lastActionDate: bill.introducedDate, // Use introduced date as fallback
+      lastAction: bill.latestAction,
+      committee: bill.committee,
       type: billType,
       state: state,
-      url: '', // We don't have the URL in this conversion
+      url: url,
+      // If we have extra data, add subjects as a list
+      subjects: bill.extraData != null && bill.extraData!.containsKey('subjects') ? 
+                (bill.extraData!['subjects'] as List<dynamic>?)?.map((e) => e.toString()).toList() : null,
     );
   }
 

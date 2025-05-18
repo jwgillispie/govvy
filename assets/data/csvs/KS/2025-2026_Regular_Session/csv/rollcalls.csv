@@ -1,0 +1,670 @@
+bill_id,roll_call_id,date,chamber,description,yea,nay,nv,absent,total
+1905281,1523750,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 33 Nay: 7",33,7,0,0,40
+1907229,1493269,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1907229,1515691,2025-03-12,House,"House Final Action - Passed - Yea: 121 Nay: 1",121,1,0,3,125
+1910868,1520942,2025-03-19,House,"House Emergency Final Action - Not adopted by required 2/3 majority - Yea: 81 Nay: 43",81,43,0,1,125
+1911658,1478052,2025-01-31,House,"House Final Action - Passed - Yea: 116 Nay: 1",116,1,0,8,125
+1916487,1492692,2025-02-18,House,"House Committee of the Whole - Amendment by  Representative Wikle was rejected - Yea: 34 Nay: 82",34,82,0,9,125
+1916487,1492693,2025-02-18,House,"House Committee of the Whole - Amendment by  Representative Ousley was rejected - Yea: 40 Nay: 76",40,76,0,9,125
+1916487,1492997,2025-02-19,House,"House Final Action - Substitute passed as amended - Yea: 83 Nay: 36",83,36,0,6,125
+1916487,1519968,2025-03-18,Senate,"Senate Committee of the Whole - Amendment by Senator Pettey was rejected - Yea: 11 Nay: 29",11,29,0,0,40
+1916487,1519969,2025-03-18,Senate,"Senate Committee of the Whole - Amendment by Senator Corson was rejected - Yea: 10 Nay: 30",10,30,0,0,40
+1916487,1519970,2025-03-18,Senate,"Senate Committee of the Whole - Amendment by Senator Holscher was rejected - Yea: 9 Nay: 29",9,29,1,1,40
+1916487,1519971,2025-03-18,Senate,"Senate Committee of the Whole - Amendment by Senator Sykes was rejected - Yea: 12 Nay: 26",12,26,0,2,40
+1916487,1520565,2025-03-18,Senate,"Senate Emergency Final Action - Substitute passed as amended - Yea: 28 Nay: 12",28,12,0,0,40
+1916487,1545694,2025-04-11,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1916487,1546156,2025-04-11,House,"House Conference Committee Report was adopted - Yea: 121 Nay: 0",121,0,0,4,125
+1917650,1486563,2025-02-11,Senate,"Senate Emergency Final Action - Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1917650,1508551,2025-03-07,House,"House Emergency Final Action - Passed - Yea: 116 Nay: 5",116,5,0,4,125
+1917812,1482345,2025-02-05,Senate,"Senate Final Action - Passed - Yea: 29 Nay: 10",29,10,0,1,40
+1917812,1517375,2025-03-13,House,"House Emergency Final Action - Passed as amended - Yea: 86 Nay: 37",86,37,0,2,125
+1917812,1519103,2025-03-17,Senate,"Senate Concurred with amendments - Yea: 30 Nay: 10",30,10,0,0,40
+1917982,1476854,2025-01-29,Senate,"Senate Senator Thompson raised a question of germaneness. The amendment was ruled not germane. - Yea: 31 Nay: 9",31,9,0,0,40
+1917982,1476855,2025-01-29,Senate,"Senate Committee of the Whole - Amendment by  Senator Francisco was rejected - Yea: 9 Nay: 31",9,31,0,0,40
+1917982,1476856,2025-01-29,Senate,"Senate Emergency Final Action - Adopted as amended - Yea: 31 Nay: 9",31,9,0,0,40
+1917982,1523107,2025-03-20,House,"House Emergency Final Action - Adopted - Yea: 82 Nay: 35",82,35,0,8,125
+1918152,1486321,2025-02-11,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 33 Nay: 6",33,6,0,1,40
+1918152,1517379,2025-03-13,House,"House Emergency Final Action - Passed as amended - Yea: 86 Nay: 37",86,37,0,2,125
+1918152,1518515,2025-03-17,Senate,"Senate Concurred with amendments - Yea: 32 Nay: 8",32,8,0,0,40
+1918152,1543778,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 31 Nay: 9",31,9,0,0,40
+1918152,1543779,2025-04-10,House,"House Motion to override veto prevailed - Yea: 87 Nay: 37",87,37,0,1,125
+1918320,1482594,2025-02-05,Senate,"Senate Final Action - Passed - Yea: 29 Nay: 10",29,10,0,1,40
+1918320,1501229,2025-02-27,House,"House Committee of the Whole - Amendment by  Representative Miller was rejected - Yea: 35 Nay: 84",35,84,0,6,125
+1918320,1501230,2025-02-27,House,"House Committee of the Whole - Amendment by  Representative Meyer was rejected - Yea: 36 Nay: 83",36,83,0,6,125
+1918320,1501231,2025-02-27,House,"House Emergency Final Action - Passed as amended - Yea: 80 Nay: 39",80,39,0,6,125
+1918320,1507695,2025-03-06,Senate,"Senate Concurred with amendments in conference - Yea: 30 Nay: 10",30,10,0,0,40
+1918320,1525860,2025-03-25,Senate,"Senate Motion to override veto prevailed - Yea: 30 Nay: 10",30,10,0,0,40
+1918320,1526411,2025-03-25,House,"House Motion to override veto prevailed - Yea: 84 Nay: 41",84,41,0,0,125
+1919387,1483352,2025-02-06,Senate,"Senate Final Action - Adopted by required 2/3 majority - Yea: 28 Nay: 11",28,11,0,1,40
+1919494,1483548,2025-02-06,Senate,"Senate Consent Calendar Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1919494,1511587,2025-03-10,House,"House Final Action - Passed - Yea: 119 Nay: 0",119,0,0,6,125
+1919657,1475588,2025-01-28,Senate,"Senate Committee of the Whole - Amendment by  Senator Francisco was rejected - Yea: 11 Nay: 25",11,25,0,4,40
+1919657,1476538,2025-01-29,Senate,"Senate Final Action - Passed as amended - Yea: 37 Nay: 3",37,3,0,0,40
+1919876,1483586,2025-02-06,Senate,"Senate Consent Calendar Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1919876,1508462,2025-03-07,House,"House Final Action - Substitute passed as amended - Yea: 104 Nay: 18",104,18,0,3,125
+1919876,1527776,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 98 Nay: 24",98,24,0,3,125
+1919876,1528336,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 38 Nay: 1",38,1,1,0,40
+1923289,1493192,2025-02-19,House,"House Final Action - Passed - Yea: 106 Nay: 13",106,13,0,6,125
+1923289,1521472,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1923289,1527288,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1923289,1527779,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 97 Nay: 26",97,26,0,2,125
+1923355,1490089,2025-02-14,House,"House Emergency Final Action - Passed as amended - Yea: 107 Nay: 12",107,12,0,6,125
+1923416,1493035,2025-02-19,House,"House Final Action - Passed - Yea: 119 Nay: 0",119,0,0,6,125
+1923416,1521237,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 24 Nay: 16",24,16,0,0,40
+1923416,1527590,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 29 Nay: 11",29,11,0,0,40
+1923416,1527591,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 88 Nay: 35",88,35,0,2,125
+1923486,1473664,2025-01-23,House,"House Committee of the Whole - Amendment by  Representative Sawyer Clayton was rejected - Yea: 37 Nay: 85",37,85,0,3,125
+1923486,1473665,2025-01-23,House,"House Committee of the Whole - Amendment by  Representative Helgerson was rejected - Yea: 38 Nay: 85",38,85,0,2,125
+1923486,1473666,2025-01-23,House,"House Committee of the Whole - Amendment by  Representative Haskins was rejected - Yea: 35 Nay: 87",35,87,0,3,125
+1923486,1473667,2025-01-23,House,"House Committee of the Whole - Amendment by  Representative Winn was rejected - Yea: 36 Nay: 85",36,85,0,4,125
+1923486,1473802,2025-01-23,House,"House Committee of the Whole - Amendment by  Representative Poetter Parshall was rejected - Yea: 41 Nay: 82",41,82,0,2,125
+1923486,1473803,2025-01-23,House,"House Committee of the Whole - Amendment by  Representative Waggoner was rejected - Yea: 49 Nay: 73",49,73,0,3,125
+1923486,1473804,2025-01-23,House,"House Emergency Final Action - Adopted as amended - Yea: 87 Nay: 36",87,36,0,2,125
+1923550,1473663,2025-01-23,House,"House Emergency Final Action - Adopted - Yea: 104 Nay: 19",104,19,0,2,125
+1923550,1477546,2025-01-30,Senate,"Senate Emergency Final Action - Adopted as amended - Yea: 36 Nay: 2",36,2,0,2,40
+1923550,1479462,2025-02-04,House,"House Concurred with amendments - Yea: 118 Nay: 1",118,1,0,6,125
+1923683,1482278,2025-02-05,House,"House Committee of the Whole - Amendment by  Representative Oropeza was rejected - Yea: 31 Nay: 85",31,85,0,9,125
+1923683,1482279,2025-02-05,House,"House Committee of the Whole - Amendment by  Representative Oropeza was rejected - Yea: 31 Nay: 86",31,86,0,8,125
+1923683,1482280,2025-02-05,House,"House Committee of the Whole - Amendment by  Representative Oropeza was rejected - Yea: 29 Nay: 86",29,86,0,10,125
+1923683,1482281,2025-02-05,House,"House Committee of the Whole - Amendment by  Representative Haskins was rejected - Yea: 30 Nay: 85",30,85,0,10,125
+1923683,1483144,2025-02-06,House,"House Final Action - Passed as amended - Yea: 83 Nay: 34",83,34,0,8,125
+1923683,1521323,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 32 Nay: 8",32,8,0,0,40
+1923683,1522656,2025-03-20,House,"House Concurred with amendments - Yea: 83 Nay: 35",83,35,0,7,125
+1923879,1486109,2025-02-11,House,"House Committee of the Whole - Amendment by  Representative Wikle was rejected - Yea: 37 Nay: 84",37,84,0,4,125
+1923879,1486110,2025-02-11,House,"House Emergency Final Action - Passed as amended - Yea: 88 Nay: 35",88,35,0,2,125
+1923879,1517495,2025-03-12,Senate,"Senate Final Action - Passed - Yea: 31 Nay: 8",31,8,0,1,40
+1924144,1507240,2025-03-06,House,"House Final Action - Passed - Yea: 111 Nay: 11",111,11,0,3,125
+1924144,1523388,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 37 Nay: 3",37,3,0,0,40
+1924144,1528342,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1924144,1529682,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 65 Nay: 59",65,59,0,1,125
+1924205,1482206,2025-02-05,House,"House Final Action - Adopted as amended by required 2/3 Majority - Yea: 90 Nay: 28",90,28,0,7,125
+1924205,1526067,2025-03-25,Senate,"Senate Emergency Final Action - Adopted by required 2/3 majority - Yea: 37 Nay: 3",37,3,0,0,40
+1924396,1494215,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1924396,1518347,2025-03-17,House,"House Final Action - Passed as amended - Yea: 101 Nay: 21",101,21,0,3,125
+1924449,1476463,2025-01-29,Senate,"Senate Final Action - Passed as amended - Yea: 38 Nay: 2",38,2,0,0,40
+1924449,1523183,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 109 Nay: 9",109,9,0,7,125
+1924449,1528112,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 96 Nay: 26",96,26,0,3,125
+1924449,1529496,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1924503,1493069,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1924503,1508607,2025-03-07,House,"House Emergency Final Action - Passed as amended - Yea: 94 Nay: 27",94,27,0,4,125
+1924612,1493070,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1924612,1508644,2025-03-07,House,"House Emergency Final Action - Passed as amended - Yea: 100 Nay: 21",100,21,0,4,125
+1924662,1493433,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1924662,1515778,2025-03-12,House,"House Committee of the Whole - Amendment by Representative Proctor was adopted - Yea: 75 Nay: 43",75,43,0,7,125
+1924662,1516938,2025-03-13,House,"House Final Action - Passed as amended - Yea: 83 Nay: 39",83,39,0,3,125
+1924662,1526716,2025-03-25,Senate,"Senate Concurred with amendments in conference - Yea: 28 Nay: 10",28,10,0,2,40
+1924715,1493175,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1924715,1516904,2025-03-13,House,"House Emergency Final Action - Passed as amended - Yea: 107 Nay: 16",107,16,0,2,125
+1924772,1493252,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1924772,1518407,2025-03-17,House,"House Final Action - Passed as amended - Yea: 100 Nay: 22",100,22,0,3,125
+1924821,1493371,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1924821,1517357,2025-03-13,House,"House Emergency Final Action - Passed as amended - Yea: 106 Nay: 17",106,17,0,2,125
+1924821,1529545,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 76 Nay: 48",76,48,0,1,125
+1924821,1545537,2025-04-11,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1925039,1486521,2025-02-11,Senate,"Senate Emergency Final Action - Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1925039,1519470,2025-03-18,House,"House Emergency Final Action - Passed - Yea: 119 Nay: 2",119,2,0,4,125
+1925091,1486736,2025-02-11,Senate,"Senate Consent Calendar Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1925091,1518629,2025-03-17,House,"House Final Action - Passed as amended - Yea: 104 Nay: 18",104,18,0,3,125
+1925146,1501356,2025-02-27,Senate,"Senate Final Action - Substitute passed - Yea: 40 Nay: 0",40,0,0,0,40
+1925305,1493413,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1925305,1508563,2025-03-07,House,"House Emergency Final Action - Passed as amended - Yea: 101 Nay: 20",101,20,0,4,125
+1925305,1528804,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 90 Nay: 35",90,35,0,0,125
+1925305,1529409,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 37 Nay: 3",37,3,0,0,40
+1925414,1493023,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1925414,1522355,2025-03-19,House,"House Emergency Final Action - Passed - Yea: 121 Nay: 2",121,2,0,2,125
+1925468,1493350,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1925468,1521132,2025-03-19,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1925468,1529489,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 86 Nay: 38",86,38,0,1,125
+1925626,1483342,2025-02-06,Senate,"Senate Final Action - Passed - Yea: 31 Nay: 8",31,8,0,1,40
+1925626,1513331,2025-03-11,House,"House Final Action - Passed as amended - Yea: 82 Nay: 41",82,41,0,2,125
+1925626,1519742,2025-03-18,House,"House Conference Committee Report was adopted - Yea: 81 Nay: 41",81,41,0,3,125
+1925626,1520814,2025-03-19,Senate,"Senate Conference Committee Report was adopted - Yea: 31 Nay: 9",31,9,0,0,40
+1925626,1543365,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 31 Nay: 9",31,9,0,0,40
+1925626,1544106,2025-04-10,House,"House Motion to override veto prevailed - Yea: 85 Nay: 39",85,39,0,1,125
+1925680,1492332,2025-02-18,Senate,"Senate Committee of the Whole - Amendment by  Senator Schmidt was rejected - Yea: 9 Nay: 31",9,31,0,0,40
+1925680,1493194,2025-02-19,Senate,"Senate Final Action - Substitute passed - Yea: 28 Nay: 12",28,12,0,0,40
+1925680,1520984,2025-03-19,House,"House Emergency Final Action - Passed as amended - Yea: 88 Nay: 36",88,36,0,1,125
+1925680,1522343,2025-03-20,Senate,"Senate Concurred with amendments - Yea: 31 Nay: 9",31,9,0,0,40
+1925680,1543459,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 31 Nay: 9",31,9,0,0,40
+1925680,1544195,2025-04-10,House,"House Motion to override veto prevailed - Yea: 86 Nay: 38",86,38,0,1,125
+1926903,1501456,2025-02-27,Senate,"Senate Final Action - Adopted - Yea: 29 Nay: 11",29,11,0,0,40
+1926992,1523384,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 28 Nay: 12",28,12,0,0,40
+1927085,1484066,2025-02-07,House,"House Emergency Final Action - Passed as amended - Yea: 111 Nay: 0",111,0,0,14,125
+1927085,1516996,2025-03-12,Senate,"Senate Final Action - Passed as amended - Yea: 37 Nay: 2",37,2,0,1,40
+1927411,1494873,2025-02-20,House,"House Final Action - Passed - Yea: 89 Nay: 32",89,32,0,4,125
+1927411,1521322,2025-03-19,Senate,"Senate Emergency Final Action - Passed - Yea: 31 Nay: 9",31,9,0,0,40
+1927411,1543277,2025-04-10,House,"House Motion to override veto prevailed - Yea: 87 Nay: 38",87,38,0,0,125
+1927411,1543909,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 32 Nay: 8",32,8,0,0,40
+1927642,1491777,2025-02-18,House,"House Final Action - Passed as amended - Yea: 117 Nay: 2",117,2,0,6,125
+1927642,1521790,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1927642,1524931,2025-03-24,House,"House Concurred with amendments in conference - Yea: 121 Nay: 0",121,0,0,4,125
+1928332,1494658,2025-02-20,House,"House Final Action - Passed as amended - Yea: 117 Nay: 4",117,4,0,4,125
+1928332,1520340,2025-03-18,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1928332,1526250,2025-03-25,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1928332,1526852,2025-03-25,House,"House Conference Committee Report was adopted - Yea: 120 Nay: 2",120,2,0,3,125
+1931177,1479719,2025-02-04,House,"House Final Action - Passed - Yea: 115 Nay: 4",115,4,0,6,125
+1931177,1521268,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 37 Nay: 3",37,3,0,0,40
+1931177,1525992,2025-03-25,House,"House Concurred with amendments - Yea: 119 Nay: 6",119,6,0,0,125
+1931190,1494159,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 21 Nay: 19",21,19,0,0,40
+1931209,1489950,2025-02-14,House,"House Final Action - Passed - Yea: 118 Nay: 0",118,0,0,7,125
+1931209,1521185,2025-03-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1931228,1494373,2025-02-19,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 39 Nay: 1",39,1,0,0,40
+1931228,1523373,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 87 Nay: 31",87,31,0,7,125
+1931228,1527813,2025-03-26,Senate,"Senate Concurred with amendments in conference - Yea: 40 Nay: 0",40,0,0,0,40
+1931245,1484022,2025-02-07,House,"House Final Action - Passed - Yea: 105 Nay: 9",105,9,0,11,125
+1931245,1519612,2025-03-18,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1931297,1493009,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 37 Nay: 3",37,3,0,0,40
+1931297,1523271,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 77 Nay: 41",77,41,0,7,125
+1931297,1527653,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 102 Nay: 21",102,21,0,2,125
+1931297,1528234,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 39 Nay: 1",39,1,0,0,40
+1931314,1493301,2025-02-19,Senate,"Senate Final Action - Substitute passed - Yea: 32 Nay: 8",32,8,0,0,40
+1931314,1507258,2025-03-06,House,"House Final Action - Passed as amended - Yea: 86 Nay: 36",86,36,0,3,125
+1931314,1527823,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 117 Nay: 5",117,5,0,3,125
+1931314,1528718,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1931363,1493638,2025-02-19,Senate,"Senate Emergency Final Action - Passed - Yea: 34 Nay: 6",34,6,0,0,40
+1931403,1493210,2025-02-19,House,"House Final Action - Passed - Yea: 119 Nay: 0",119,0,0,6,125
+1931403,1523860,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1931403,1528424,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1931403,1528991,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 125 Nay: 0",125,0,0,0,125
+1931421,1480518,2025-02-05,House,"House Final Action - Passed - Yea: 105 Nay: 12",105,12,0,8,125
+1931421,1520747,2025-03-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1931454,1473318,2025-01-22,Senate,"Senate Emergency Final Action - Adopted as amended - Yea: 39 Nay: 0",39,0,0,1,40
+1931491,1493942,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 38 Nay: 2",38,2,0,0,40
+1931491,1518716,2025-03-17,House,"House Final Action - Passed as amended - Yea: 102 Nay: 20",102,20,0,3,125
+1931491,1529271,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 124 Nay: 1",124,1,0,0,125
+1931491,1529272,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 39 Nay: 1",39,1,0,0,40
+1931506,1483989,2025-02-07,House,"House Emergency Final Action - Passed as amended - Yea: 97 Nay: 14",97,14,0,14,125
+1931506,1517329,2025-03-13,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 0",39,0,0,1,40
+1931520,1484087,2025-02-07,House,"House Emergency Final Action - Passed as amended - Yea: 103 Nay: 8",103,8,0,14,125
+1931520,1517525,2025-03-13,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 0",39,0,0,1,40
+1931559,1483945,2025-02-07,House,"House Final Action - Passed as amended - Yea: 114 Nay: 0",114,0,0,11,125
+1931559,1521849,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1931559,1528418,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1931559,1528974,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 120 Nay: 5",120,5,0,0,125
+1931575,1493238,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 33 Nay: 7",33,7,0,0,40
+1931612,1483995,2025-02-07,House,"House Final Action - Passed - Yea: 104 Nay: 10",104,10,0,11,125
+1931612,1517285,2025-03-13,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 0",39,0,0,1,40
+1931612,1544597,2025-04-10,Senate,"Senate Conference Committee Report was adopted - Yea: 30 Nay: 10",30,10,0,0,40
+1931612,1545479,2025-04-11,House,"House Conference Committee Report was adopted - Yea: 99 Nay: 23",99,23,0,3,125
+1931629,1483924,2025-02-07,House,"House Final Action - Passed as amended - Yea: 114 Nay: 0",114,0,0,11,125
+1931629,1519624,2025-03-18,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1931663,1493098,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1931681,1490131,2025-02-14,House,"House Final Action - Passed - Yea: 116 Nay: 2",116,2,0,7,125
+1931681,1521943,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1931681,1525978,2025-03-25,House,"House Concurred with amendments in conference - Yea: 123 Nay: 2",123,2,0,0,125
+1931694,1494669,2025-02-20,House,"House Final Action - Passed as amended - Yea: 121 Nay: 0",121,0,0,4,125
+1931701,1493004,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 39 Nay: 1",39,1,0,0,40
+1931701,1519850,2025-03-17,House,"House Final Action - Passed as amended - Yea: 119 Nay: 3",119,3,0,3,125
+1931701,1527862,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 122 Nay: 0",122,0,0,3,125
+1931701,1528770,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1934760,1493179,2025-02-19,House,"House Final Action - Passed as amended - Yea: 85 Nay: 34",85,34,0,6,125
+1934760,1516997,2025-03-12,Senate,"Senate Final Action - Passed as amended - Yea: 30 Nay: 9",30,9,0,1,40
+1934760,1527683,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 31 Nay: 9",31,9,0,0,40
+1934760,1529155,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 87 Nay: 38",87,38,0,0,125
+1934760,1543283,2025-04-10,House,"House Motion to override veto prevailed - Yea: 87 Nay: 38",87,38,0,0,125
+1934760,1543866,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 31 Nay: 9",31,9,0,0,40
+1934816,1493783,2025-02-19,House,"House Committee of the Whole - Motion to rerefer to committee failed - Yea: 34 Nay: 86",34,86,0,5,125
+1934816,1503120,2025-03-03,House,"House Committee of the Whole - Amendment by  Representative Haskins was rejected - Yea: 35 Nay: 84",35,84,0,6,125
+1934816,1503121,2025-03-03,House,"House Committee of the Whole - Amendment by  Representative Poetter Parshall was rejected - Yea: 40 Nay: 78",40,78,0,7,125
+1934816,1504339,2025-03-04,House,"House Final Action - Passed as amended - Yea: 77 Nay: 46",77,46,0,2,125
+1934816,1526659,2025-03-25,Senate,"Senate Emergency Final Action - Substitute passed as amended - Yea: 21 Nay: 17",21,17,0,2,40
+1934816,1529016,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 26 Nay: 14",26,14,0,0,40
+1934816,1529499,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 72 Nay: 52",72,52,0,1,125
+1934990,1490180,2025-02-14,House,"House Final Action - Passed as amended - Yea: 104 Nay: 14",104,14,0,7,125
+1934990,1520049,2025-03-18,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1934990,1525049,2025-03-24,House,"House Concurred with amendments - Yea: 110 Nay: 12",110,12,0,3,125
+1935048,1495647,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 108 Nay: 15",108,15,0,2,125
+1935048,1523145,2025-03-20,Senate,"Senate Committee of the Whole - Amendment by Senator Holscher was rejected - Yea: 9 Nay: 29",9,29,0,2,40
+1935048,1523785,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 34 Nay: 6",34,6,0,0,40
+1935048,1524878,2025-03-24,House,"House Concurred with amendments - Yea: 105 Nay: 17",105,17,0,3,125
+1935102,1501139,2025-02-27,House,"House Emergency Final Action - Passed - Yea: 118 Nay: 1",118,1,0,6,125
+1935102,1523278,2025-03-20,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 34 Nay: 6",34,6,0,0,40
+1935102,1528230,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 34 Nay: 6",34,6,0,0,40
+1935102,1529141,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 88 Nay: 37",88,37,0,0,125
+1935213,1495447,2025-02-20,House,"House Emergency Final Action - Substitute passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1935213,1523869,2025-03-20,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 36 Nay: 4",36,4,0,0,40
+1935213,1526725,2025-03-25,House,"House Concurred with amendments in conference - Yea: 75 Nay: 47",75,47,0,3,125
+1935891,1493108,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1935891,1519483,2025-03-18,House,"House Emergency Final Action - Passed - Yea: 119 Nay: 2",119,2,0,4,125
+1936007,1476471,2025-01-29,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 32 Nay: 8",32,8,0,0,40
+1936007,1477100,2025-01-30,House,"House Committee of the Whole - Amendment by  Representative Carr was rejected - Yea: 31 Nay: 85",31,85,0,9,125
+1936007,1477503,2025-01-30,House,"House Committee of the Whole - Amendment by  Representative Meyer was rejected - Yea: 31 Nay: 84",31,84,0,10,125
+1936007,1477504,2025-01-30,House,"House Committee of the Whole - Amendment by  Representative Meyer was rejected - Yea: 31 Nay: 85",31,85,0,9,125
+1936007,1477505,2025-01-30,House,"House Committee of the Whole - Amendment by  Representative Hoye was rejected - Yea: 29 Nay: 83",29,83,0,13,125
+1936007,1477506,2025-01-30,House,"House Committee of the Whole - Amendment by  Representative McDonald was rejected - Yea: 29 Nay: 84",29,84,0,12,125
+1936007,1477507,2025-01-30,House,"House Committee of the Whole - Amendment by  Representative Oropeza was rejected - Yea: 27 Nay: 80",27,80,0,18,125
+1936007,1477508,2025-01-30,House,"House Committee of the Whole - Amendment by  Representative Ruiz, S. was rejected - Yea: 30 Nay: 86",30,86,0,9,125
+1936007,1478079,2025-01-31,House,"House Final Action - Passed - Yea: 83 Nay: 35",83,35,0,7,125
+1936007,1491885,2025-02-18,Senate,"Senate Motion to override veto prevailed - Yea: 31 Nay: 9",31,9,0,0,40
+1936007,1491886,2025-02-18,House,"House Motion to override veto prevailed - Yea: 84 Nay: 35",84,35,0,6,125
+1937188,1494704,2025-02-20,House,"House Final Action - Passed - Yea: 116 Nay: 5",116,5,0,4,125
+1937349,1490281,2025-02-14,House,"House Emergency Final Action - Passed as amended - Yea: 119 Nay: 0",119,0,0,6,125
+1937349,1521313,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1937349,1527531,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1937349,1528152,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 121 Nay: 1",121,1,0,3,125
+1937372,1486384,2025-02-11,House,"House Emergency Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1937372,1519625,2025-03-18,Senate,"Senate Consent Calendar Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1937398,1493031,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1937398,1521236,2025-03-19,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1937398,1528202,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 122 Nay: 0",122,0,0,3,125
+1937398,1528561,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 39 Nay: 1",39,1,0,0,40
+1937521,1494638,2025-02-20,House,"House Final Action - Passed - Yea: 121 Nay: 0",121,0,0,4,125
+1937521,1522065,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 38 Nay: 2",38,2,0,0,40
+1937540,1493016,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1937567,1494661,2025-02-20,House,"House Final Action - Passed as amended - Yea: 82 Nay: 39",82,39,0,4,125
+1937567,1521538,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 30 Nay: 10",30,10,0,0,40
+1937567,1527278,2025-03-26,House,"House Concurred with amendments in conference - Yea: 83 Nay: 40",83,40,0,2,125
+1937663,1492988,2025-02-19,House,"House Final Action - Passed as amended - Yea: 90 Nay: 29",90,29,0,6,125
+1937685,1492555,2025-02-18,Senate,"Senate Committee of the Whole - Amendment by  Senator Schmidt was rejected - Yea: 5 Nay: 30",5,30,3,2,40
+1937685,1493361,2025-02-19,Senate,"Senate Final Action - Substitute passed - Yea: 36 Nay: 4",36,4,0,0,40
+1937685,1521107,2025-03-19,House,"House Emergency Final Action - Passed - Yea: 118 Nay: 5",118,5,0,2,125
+1937731,1520860,2025-03-19,Senate,"Senate Final Action - Passed as amended - Yea: 23 Nay: 17",23,17,0,0,40
+1937756,1493043,2025-02-19,House,"House Final Action - Passed as amended - Yea: 119 Nay: 0",119,0,0,6,125
+1937756,1520115,2025-03-18,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1937756,1526683,2025-03-25,Senate,"Senate Conference Committee Report was adopted - Yea: 38 Nay: 0",38,0,0,2,40
+1937756,1527456,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 123 Nay: 0",123,0,0,2,125
+1937853,1489973,2025-02-14,House,"House Emergency Final Action - Passed - Yea: 119 Nay: 0",119,0,0,6,125
+1937853,1520819,2025-03-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1937943,1493177,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 26 Nay: 14",26,14,0,0,40
+1937976,1490306,2025-02-14,House,"House Emergency Final Action - Passed as amended - Yea: 119 Nay: 0",119,0,0,6,125
+1939638,1487064,2025-02-11,House,"House Emergency Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1939638,1516998,2025-03-12,Senate,"Senate Consent Calendar Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1941867,1500106,2025-02-26,House,"House Final Action - Passed - Yea: 111 Nay: 6",111,6,0,8,125
+1942362,1493711,2025-02-19,Senate,"Senate Committee of the Whole - Amendment by  Senator Schmidt was rejected - Yea: 3 Nay: 31",3,31,6,0,40
+1942362,1493712,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 26 Nay: 14",26,14,0,0,40
+1942435,1495761,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 86 Nay: 37",86,37,0,2,125
+1942435,1521598,2025-03-19,Senate,"Senate Emergency Final Action - Passed - Yea: 29 Nay: 11",29,11,0,0,40
+1942513,1493477,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 38 Nay: 2",38,2,0,0,40
+1942513,1519708,2025-03-17,House,"House Final Action - Passed as amended - Yea: 86 Nay: 36",86,36,0,3,125
+1942513,1520810,2025-03-19,Senate,"Senate Concurred with amendments - Yea: 38 Nay: 2",38,2,0,0,40
+1942627,1491748,2025-02-18,Senate,"Senate Committee of the Whole - Amendment by  Senator Sykes was rejected - Yea: 11 Nay: 28",11,28,0,1,40
+1942627,1491749,2025-02-18,Senate,"Senate Committee of the Whole - Amendment by  Senator Holscher was rejected - Yea: 8 Nay: 29",8,29,1,2,40
+1942627,1493198,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 29 Nay: 11",29,11,0,0,40
+1942627,1521838,2025-03-19,House,"House Emergency Final Action - Passed - Yea: 65 Nay: 58",65,58,0,2,125
+1942627,1543624,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 29 Nay: 11",29,11,0,0,40
+1942670,1495804,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 111 Nay: 12",111,12,0,2,125
+1942746,1486328,2025-02-11,Senate,"Senate Emergency Final Action - Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1942746,1517319,2025-03-13,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1942783,1493026,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1942783,1521336,2025-03-19,House,"House Emergency Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1942823,1493048,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 31 Nay: 9",31,9,0,0,40
+1942823,1515805,2025-03-12,House,"House Final Action - Passed as amended - Yea: 122 Nay: 0",122,0,0,3,125
+1942823,1546064,2025-04-11,House,"House Conference Committee Report was adopted - Yea: 74 Nay: 48",74,48,0,3,125
+1943854,1501355,2025-02-27,House,"House Final Action - Passed as amended - Yea: 99 Nay: 19",99,19,0,7,125
+1943854,1521917,2025-03-19,Senate,"Senate Final Action - Passed as amended - Yea: 36 Nay: 2",36,2,2,0,40
+1943854,1525835,2025-03-25,House,"House Concurred with amendments in conference - Yea: 109 Nay: 16",109,16,0,0,125
+1943893,1496107,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1943893,1521846,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1943893,1528365,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1943893,1529774,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 124 Nay: 0",124,0,0,1,125
+1944006,1493060,2025-02-19,House,"House Final Action - Passed - Yea: 117 Nay: 2",117,2,0,6,125
+1944006,1522037,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1944006,1527536,2025-03-26,House,"House Concurred with amendments in conference - Yea: 123 Nay: 0",123,0,0,2,125
+1944046,1491711,2025-02-18,House,"House Final Action - Passed - Yea: 119 Nay: 0",119,0,0,6,125
+1944046,1521910,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1944046,1523211,2025-03-20,House,"House Concurred with amendments - Yea: 118 Nay: 0",118,0,0,7,125
+1944062,1523391,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 108 Nay: 10",108,10,0,7,125
+1944084,1493259,2025-02-19,House,"House Final Action - Passed - Yea: 119 Nay: 0",119,0,0,6,125
+1944084,1521244,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1944105,1493051,2025-02-19,House,"House Final Action - Passed as amended - Yea: 99 Nay: 20",99,20,0,6,125
+1944124,1493134,2025-02-19,House,"House Final Action - Passed - Yea: 118 Nay: 1",118,1,0,6,125
+1944124,1521396,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1944124,1528688,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1944124,1529673,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 102 Nay: 22",102,22,0,1,125
+1944141,1492350,2025-02-18,House,"House Final Action - Passed as amended - Yea: 119 Nay: 0",119,0,0,6,125
+1944141,1517000,2025-03-12,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 0",39,0,0,1,40
+1944157,1490405,2025-02-14,House,"House Emergency Final Action - Passed as amended - Yea: 94 Nay: 25",94,25,0,6,125
+1944157,1517544,2025-03-13,Senate,"Senate Final Action - Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1944193,1490412,2025-02-14,House,"House Final Action - Passed as amended - Yea: 118 Nay: 0",118,0,0,7,125
+1944193,1521574,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1944193,1524966,2025-03-24,House,"House Concurred with amendments - Yea: 121 Nay: 0",121,0,0,4,125
+1944220,1512589,2025-03-11,House,"House Final Action - Passed as amended - Yea: 115 Nay: 8",115,8,0,2,125
+1944258,1495086,2025-02-20,House,"House Final Action - Passed as amended - Yea: 85 Nay: 36",85,36,0,4,125
+1944291,1491832,2025-02-18,House,"House Final Action - Passed - Yea: 118 Nay: 1",118,1,0,6,125
+1944291,1516999,2025-03-12,Senate,"Senate Consent Calendar Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1944347,1494557,2025-02-20,House,"House Final Action - Passed as amended - Yea: 121 Nay: 0",121,0,0,4,125
+1944347,1520841,2025-03-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1944370,1495240,2025-02-20,House,"House Emergency Final Action - Adopted as amended by Required 2/3 Majority - Yea: 86 Nay: 37",86,37,0,2,125
+1944423,1490460,2025-02-14,House,"House Final Action - Passed - Yea: 78 Nay: 40",78,40,0,7,125
+1944423,1523815,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 29 Nay: 9",29,9,2,0,40
+1944423,1524944,2025-03-24,House,"House Concurred with amendments - Yea: 78 Nay: 44",78,44,0,3,125
+1944446,1495053,2025-02-20,House,"House Final Action - Passed as amended - Yea: 121 Nay: 0",121,0,0,4,125
+1944446,1523410,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1944519,1494646,2025-02-20,House,"House Final Action - Passed as amended - Yea: 106 Nay: 15",106,15,0,4,125
+1944538,1498624,2025-02-25,House,"House Final Action - Passed - Yea: 112 Nay: 2",112,2,0,11,125
+1944538,1523353,2025-03-20,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 40 Nay: 0",40,0,0,0,40
+1944538,1545660,2025-04-11,Senate,"Senate Conference Committee Report was adopted - Yea: 39 Nay: 1",39,1,0,0,40
+1944538,1545661,2025-04-11,House,"House Conference Committee Report was adopted - Yea: 122 Nay: 0",122,0,0,3,125
+1944571,1492050,2025-02-18,Senate,"Senate Committee of the Whole - Amendment by  Senator Sykes was rejected - Yea: 9 Nay: 31",9,31,0,0,40
+1944571,1492051,2025-02-18,Senate,"Senate Committee of the Whole - Amendment by  Senator Sykes was rejected - Yea: 9 Nay: 31",9,31,0,0,40
+1944571,1492052,2025-02-18,Senate,"Senate Motion to strike the enacting clause. Motion failed. - Yea: 9 Nay: 31",9,31,0,0,40
+1944571,1493038,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 24 Nay: 16",24,16,0,0,40
+1944641,1493086,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1944641,1515756,2025-03-12,House,"House Final Action - Passed - Yea: 121 Nay: 1",121,1,0,3,125
+1944756,1493975,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 38 Nay: 2",38,2,0,0,40
+1944756,1521746,2025-03-19,House,"House Emergency Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1944794,1494290,2025-02-19,Senate,"Senate Consent Calendar Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1944794,1507378,2025-03-06,House,"House Final Action - Passed as amended - Yea: 120 Nay: 2",120,2,0,3,125
+1944831,1493138,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 30 Nay: 10",30,10,0,0,40
+1946109,1517091,2025-03-13,House,"House Emergency Final Action - Substitute passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1946109,1523387,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1946109,1525308,2025-03-24,House,"House Concurred with amendments - Yea: 122 Nay: 0",122,0,0,3,125
+1946153,1513824,2025-03-11,House,"House Final Action - Substitute passed - Yea: 119 Nay: 4",119,4,0,2,125
+1946153,1523652,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1946153,1524827,2025-03-24,House,"House Concurred with amendments - Yea: 117 Nay: 5",117,5,0,3,125
+1946197,1492978,2025-02-19,House,"House Final Action - Passed - Yea: 108 Nay: 11",108,11,0,6,125
+1946197,1517001,2025-03-12,Senate,"Senate Final Action - Passed as amended - Yea: 30 Nay: 9",30,9,0,1,40
+1946197,1529229,2025-03-27,House,"House Concurred with amendments in conference - Yea: 84 Nay: 40",84,40,0,1,125
+1946218,1491709,2025-02-18,House,"House Final Action - Substitute passed - Yea: 118 Nay: 1",118,1,0,6,125
+1946218,1517777,2025-03-13,Senate,"Senate Final Action - Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1946459,1493130,2025-02-19,House,"House Final Action - Passed as amended - Yea: 85 Nay: 34",85,34,0,6,125
+1946459,1523401,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1946546,1493534,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 39 Nay: 1",39,1,0,0,40
+1946546,1516923,2025-03-13,House,"House Final Action - Passed as amended - Yea: 105 Nay: 17",105,17,0,3,125
+1946546,1546008,2025-04-11,House,"House Conference Committee Report was adopted - Yea: 85 Nay: 37",85,37,0,3,125
+1946546,1546009,2025-04-11,Senate,"Senate Conference Committee Report was adopted - Yea: 26 Nay: 8",26,8,0,6,40
+1947155,1493807,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 31 Nay: 9",31,9,0,0,40
+1947155,1513581,2025-03-11,House,"House Final Action - Passed as amended - Yea: 87 Nay: 36",87,36,0,2,125
+1947155,1518437,2025-03-17,House,"House Conference Committee Report was adopted - Yea: 84 Nay: 36",84,36,0,5,125
+1947155,1519076,2025-03-17,Senate,"Senate Conference Committee Report was adopted - Yea: 31 Nay: 9",31,9,0,0,40
+1947210,1494130,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1947210,1521227,2025-03-19,House,"House Emergency Final Action - Passed - Yea: 116 Nay: 7",116,7,0,2,125
+1947267,1494104,2025-02-19,Senate,"Senate Consent Calendar Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1947267,1522411,2025-03-19,House,"House Emergency Final Action - Passed - Yea: 119 Nay: 4",119,4,0,2,125
+1948401,1494586,2025-02-20,House,"House Final Action - Passed - Yea: 121 Nay: 0",121,0,0,4,125
+1948401,1517002,2025-03-12,Senate,"Senate Consent Calendar Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1948435,1494581,2025-02-20,House,"House Final Action - Passed - Yea: 94 Nay: 28",94,28,0,3,125
+1948533,1494929,2025-02-20,House,"House Final Action - Passed as amended - Yea: 109 Nay: 12",109,12,0,4,125
+1948533,1523843,2025-03-20,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 40 Nay: 0",40,0,0,0,40
+1948533,1528435,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1948533,1529529,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 116 Nay: 8",116,8,0,1,125
+1948632,1494942,2025-02-20,House,"House Final Action - Passed as amended - Yea: 119 Nay: 3",119,3,0,3,125
+1948632,1521884,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1948632,1528910,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 30 Nay: 10",30,10,0,0,40
+1948707,1494607,2025-02-20,House,"House Final Action - Passed as amended - Yea: 121 Nay: 0",121,0,0,4,125
+1948707,1523382,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1948707,1527829,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1948707,1527830,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 122 Nay: 0",122,0,0,3,125
+1948731,1493082,2025-02-19,House,"House Final Action - Passed as amended - Yea: 102 Nay: 17",102,17,0,6,125
+1948731,1520301,2025-03-18,Senate,"Senate Final Action - Passed as amended - Yea: 37 Nay: 3",37,3,0,0,40
+1948731,1526064,2025-03-25,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1948731,1526758,2025-03-25,House,"House Conference Committee Report was adopted - Yea: 115 Nay: 7",115,7,0,3,125
+1948805,1492968,2025-02-19,House,"House Final Action - Passed as amended - Yea: 118 Nay: 1",118,1,0,6,125
+1948805,1519930,2025-03-18,Senate,"Senate Consent Calendar Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1948840,1494922,2025-02-20,House,"House Final Action - Passed - Yea: 97 Nay: 24",97,24,0,4,125
+1948840,1523332,2025-03-20,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 37 Nay: 3",37,3,0,0,40
+1948840,1529041,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 36 Nay: 4",36,4,0,0,40
+1948874,1491799,2025-02-18,House,"House Final Action - Passed - Yea: 118 Nay: 1",118,1,0,6,125
+1948874,1521271,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1948874,1529128,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 30 Nay: 10",30,10,0,0,40
+1948874,1529576,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 92 Nay: 32",92,32,0,1,125
+1948942,1492223,2025-02-18,House,"House Final Action - Passed - Yea: 91 Nay: 28",91,28,0,6,125
+1949165,1486501,2025-02-11,Senate,"Senate Consent Calendar Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1949165,1521383,2025-03-19,House,"House Emergency Final Action - Passed as amended - Yea: 120 Nay: 3",120,3,0,2,125
+1949165,1529255,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 89 Nay: 36",89,36,0,0,125
+1949165,1529684,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 24 Nay: 16",24,16,0,0,40
+1949165,1543920,2025-04-10,Senate,"Senate Motion to override line item veto prevailed; Line item veto all line items overridden - Yea: 30 Nay: 10",30,10,0,0,40
+1949165,1544758,2025-04-10,House,"House Motion to override line item veto failed; Line item veto Secs. a portion of 46(a), 46(c), 47, 63(x), 72(b), 73(f), a portion of 76(a), a portion of 76(b),a portion of 83(a), a portion of 89(a), 89(aa), a portion of 92(a), 118(h), 118(i), a portion o",82,42,0,1,125
+1949165,1545580,2025-04-11,House,"House Motion to override selected line item veto prevailed; Line item vetoes, a portion of 46(a), 46(c), 47, 63(x), 72(b), 73(f), a portion of 76(a), a portion of 76(b),a portion of 83(a), a portion of 89(a), 89(aa), a portion of 92(a), 118(h), 118(i), a ",88,34,0,3,125
+1949181,1493282,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1949403,1494100,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 32 Nay: 8",32,8,0,0,40
+1949403,1519384,2025-03-18,House,"House Final Action - Passed as amended - Yea: 83 Nay: 39",83,39,0,3,125
+1949403,1527908,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 84 Nay: 38",84,38,0,3,125
+1949403,1528373,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 32 Nay: 8",32,8,0,0,40
+1949431,1494300,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1949431,1517021,2025-03-13,House,"House Final Action - Passed as amended - Yea: 101 Nay: 21",101,21,0,3,125
+1949477,1493128,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1949477,1515981,2025-03-12,House,"House Final Action - Substitute passed - Yea: 119 Nay: 3",119,3,0,3,125
+1949477,1528633,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 123 Nay: 1",123,1,0,1,125
+1949477,1529215,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1949514,1493105,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 39 Nay: 1",39,1,0,0,40
+1949514,1523778,2025-03-20,House,"House Emergency Final Action - Passed - Yea: 111 Nay: 7",111,7,0,7,125
+1949552,1486496,2025-02-11,Senate,"Senate Consent Calendar Passed - Yea: 39 Nay: 0",39,0,0,1,40
+1949552,1521133,2025-03-19,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1949552,1528047,2025-03-26,Senate,"Senate Concurred with amendments in conference - Yea: 40 Nay: 0",40,0,0,0,40
+1949895,1493067,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1949958,1494294,2025-02-19,Senate,"Senate Emergency Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1949958,1518328,2025-03-17,House,"House Final Action - Passed as amended - Yea: 122 Nay: 0",122,0,0,3,125
+1949958,1527137,2025-03-25,House,"House Conference Committee Report was adopted - Yea: 122 Nay: 0",122,0,0,3,125
+1949958,1527463,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1950097,1501584,2025-02-27,Senate,"Senate Final Action - Passed - Yea: 39 Nay: 1",39,1,0,0,40
+1950097,1522860,2025-03-20,House,"House Committee of the Whole - Amendment by Representative Featherston was rejected - Yea: 32 Nay: 69",32,69,0,24,125
+1950097,1523393,2025-03-20,House,"House Emergency Final Action - Passed - Yea: 90 Nay: 28",90,28,0,7,125
+1950268,1492517,2025-02-18,House,"House Final Action - Passed as amended - Yea: 112 Nay: 6",112,6,1,6,125
+1950268,1521141,2025-03-19,Senate,"Senate Final Action - Passed - Yea: 39 Nay: 1",39,1,0,0,40
+1950299,1496081,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1950299,1523935,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1950526,1493166,2025-02-19,House,"House Final Action - Passed - Yea: 110 Nay: 9",110,9,0,6,125
+1950526,1520474,2025-03-18,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1950526,1526946,2025-03-25,Senate,"Senate Conference Committee Report was adopted - Yea: 39 Nay: 1",39,1,0,0,40
+1950526,1526947,2025-03-25,House,"House Conference Committee Report was adopted - Yea: 110 Nay: 12",110,12,0,3,125
+1950597,1496026,2025-02-20,House,"House Emergency Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1950597,1523931,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1950597,1524970,2025-03-24,House,"House Concurred with amendments - Yea: 122 Nay: 0",122,0,0,3,125
+1951593,1489975,2025-02-14,House,"House Emergency Final Action - Passed as amended - Yea: 74 Nay: 45",74,45,0,6,125
+1951593,1523817,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 32 Nay: 8",32,8,0,0,40
+1951593,1525003,2025-03-24,House,"House Concurred with amendments - Yea: 78 Nay: 44",78,44,0,3,125
+1951816,1494548,2025-02-20,House,"House Final Action - Passed as amended - Yea: 122 Nay: 0",122,0,0,3,125
+1951816,1523493,2025-03-20,Senate,"Senate Emergency Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1951841,1492435,2025-02-18,House,"House Final Action - Passed - Yea: 119 Nay: 0",119,0,0,6,125
+1951841,1522216,2025-03-19,Senate,"Senate Emergency Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1951872,1495464,2025-02-20,House,"House Emergency Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1951872,1523875,2025-03-20,Senate,"Senate Emergency Final Action - Passed - Yea: 38 Nay: 2",38,2,0,0,40
+1951929,1494575,2025-02-20,House,"House Final Action - Passed as amended - Yea: 122 Nay: 0",122,0,0,3,125
+1952079,1519425,2025-03-18,House,"House Emergency Final Action - Passed - Yea: 97 Nay: 24",97,24,0,4,125
+1952166,1493185,2025-02-19,House,"House Final Action - Passed - Yea: 111 Nay: 8",111,8,0,6,125
+1952224,1513478,2025-03-11,House,"House Committee of the Whole - Amendment by Representative McDonald was rejected - Yea: 43 Nay: 76",43,76,0,6,125
+1952224,1513479,2025-03-11,House,"House Committee of the Whole - Amendment by Representative Oropeza was rejected - Yea: 33 Nay: 82",33,82,0,10,125
+1952224,1513480,2025-03-11,House,"House Committee of the Whole - Amendment by Representative Oropeza was rejected - Yea: 32 Nay: 85",32,85,0,8,125
+1952224,1515676,2025-03-12,House,"House Final Action - Passed as amended - Yea: 85 Nay: 37",85,37,0,3,125
+1952224,1523735,2025-03-20,Senate,"Senate Emergency Final Action - Passed - Yea: 30 Nay: 10",30,10,0,0,40
+1952224,1543783,2025-04-10,House,"House Motion to override veto prevailed - Yea: 87 Nay: 38",87,38,0,0,125
+1952224,1543784,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 30 Nay: 10",30,10,0,0,40
+1952277,1492385,2025-02-18,Senate,"Senate Committee of the Whole - Amendment by  Senator Schmidt was rejected - Yea: 1 Nay: 37",1,37,2,0,40
+1952277,1494284,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 31 Nay: 9",31,9,0,0,40
+1952277,1521191,2025-03-19,House,"House Emergency Final Action - Passed as amended - Yea: 88 Nay: 35",88,35,0,2,125
+1952293,1493978,2025-02-19,Senate,"Senate Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1952293,1521777,2025-03-19,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1952293,1529297,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 120 Nay: 4",120,4,0,1,125
+1952293,1544208,2025-04-10,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1952309,1491834,2025-02-18,Senate,"Senate Committee of the Whole - Amendment by  Senator Pettey was rejected - Yea: 12 Nay: 28",12,28,0,0,40
+1952309,1493389,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 30 Nay: 10",30,10,0,0,40
+1952619,1528756,2025-03-27,Senate,"Senate Citing Rule 11(b), motion to withdraw from committee failed. - Yea: 9 Nay: 30",9,30,0,1,40
+1952726,1522884,2025-03-20,Senate,"Senate Consent Calendar Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1952742,1493102,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1952742,1518687,2025-03-17,House,"House Final Action - Passed - Yea: 90 Nay: 32",90,32,0,3,125
+1953989,1499799,2025-02-26,House,"House Final Action - Passed as amended - Yea: 117 Nay: 0",117,0,0,8,125
+1953989,1522047,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1953989,1544605,2025-04-10,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1953989,1545491,2025-04-11,House,"House Conference Committee Report was adopted - Yea: 118 Nay: 4",118,4,0,3,125
+1954005,1492982,2025-02-19,House,"House Final Action - Passed - Yea: 118 Nay: 1",118,1,0,6,125
+1954005,1507822,2025-03-06,Senate,"Senate Consent Calendar Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1954048,1495723,2025-02-20,House,"House Emergency Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1954048,1527308,2025-03-26,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 28 Nay: 12",28,12,0,0,40
+1954048,1529288,2025-03-27,House,"House Concurred with amendments - Yea: 73 Nay: 52",73,52,0,0,125
+1954112,1495413,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 84 Nay: 39",84,39,0,2,125
+1954162,1494803,2025-02-20,House,"House Final Action - Passed - Yea: 122 Nay: 0",122,0,0,3,125
+1954162,1521962,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1954162,1528154,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1954162,1529531,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 123 Nay: 1",123,1,0,1,125
+1954230,1495782,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1954230,1520214,2025-03-18,Senate,"Senate Consent Calendar Passed - Yea: 39 Nay: 1",39,1,0,0,40
+1954465,1494552,2025-02-20,House,"House Final Action - Passed - Yea: 112 Nay: 10",112,10,0,3,125
+1954465,1521364,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1954465,1527626,2025-03-26,House,"House Concurred with amendments in conference - Yea: 102 Nay: 21",102,21,0,2,125
+1954515,1494917,2025-02-20,House,"House Final Action - Passed - Yea: 122 Nay: 0",122,0,0,3,125
+1954515,1521852,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1954515,1526545,2025-03-25,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1954515,1526546,2025-03-25,House,"House Conference Committee Report was adopted - Yea: 122 Nay: 0",122,0,0,3,125
+1954537,1495310,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1954537,1519837,2025-03-18,Senate,"Senate Consent Calendar Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1954705,1495930,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 89 Nay: 34",89,34,0,2,125
+1954705,1521433,2025-03-19,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 29 Nay: 11",29,11,0,0,40
+1954705,1528160,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 31 Nay: 9",31,9,0,0,40
+1954705,1529070,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 90 Nay: 35",90,35,0,0,125
+1954705,1543581,2025-04-10,House,"House Motion to override veto prevailed - Yea: 87 Nay: 38",87,38,0,0,125
+1954705,1544404,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 31 Nay: 9",31,9,0,0,40
+1954753,1494768,2025-02-20,House,"House Final Action - Passed as amended - Yea: 80 Nay: 42",80,42,0,3,125
+1954796,1521187,2025-03-19,House,"House Emergency Final Action - Passed - Yea: 122 Nay: 1",122,1,0,2,125
+1954842,1494870,2025-02-20,House,"House Final Action - Passed as amended - Yea: 120 Nay: 2",120,2,0,3,125
+1954842,1523922,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1954842,1528307,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1954842,1529349,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 116 Nay: 8",116,8,0,1,125
+1955060,1494295,2025-02-19,Senate,"Senate Emergency Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1955060,1523224,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 100 Nay: 18",100,18,0,7,125
+1955060,1529527,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 124 Nay: 0",124,0,0,1,125
+1955060,1543812,2025-04-10,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1955135,1493929,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1955135,1515989,2025-03-12,House,"House Final Action - Passed - Yea: 121 Nay: 1",121,1,0,3,125
+1955413,1523837,2025-03-20,Senate,"Senate Emergency Final Action - Passed - Yea: 32 Nay: 8",32,8,0,0,40
+1955486,1493270,2025-02-19,Senate,"Senate Final Action - Substitute passed - Yea: 40 Nay: 0",40,0,0,0,40
+1955486,1515705,2025-03-12,House,"House Final Action - Passed as amended - Yea: 122 Nay: 0",122,0,0,3,125
+1955486,1526585,2025-03-25,Senate,"Senate Concurred with amendments in conference - Yea: 40 Nay: 0",40,0,0,0,40
+1955533,1529054,2025-03-27,Senate,"Senate Citing Rule 11(b), motion to withdraw from committee failed. - Yea: 10 Nay: 29",10,29,0,1,40
+1955570,1507780,2025-03-06,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1955570,1518532,2025-03-17,House,"House Final Action - Passed - Yea: 122 Nay: 0",122,0,0,3,125
+1956612,1494931,2025-02-20,House,"House Final Action - Passed as amended - Yea: 122 Nay: 0",122,0,0,3,125
+1956667,1495764,2025-02-20,House,"House Final Action - Passed - Yea: 118 Nay: 4",118,4,0,3,125
+1956667,1522018,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1956667,1545546,2025-04-11,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1956667,1546046,2025-04-11,House,"House Conference Committee Report was adopted - Yea: 117 Nay: 5",117,5,0,3,125
+1956687,1501206,2025-02-27,House,"House Final Action - Passed as amended - Yea: 90 Nay: 28",90,28,0,7,125
+1956687,1522058,2025-03-19,Senate,"Senate Emergency Final Action - Passed - Yea: 31 Nay: 9",31,9,0,0,40
+1956687,1543250,2025-04-10,House,"House Motion to override veto prevailed - Yea: 88 Nay: 37",88,37,0,0,125
+1956687,1543730,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 30 Nay: 10",30,10,0,0,40
+1956730,1492991,2025-02-19,House,"House Final Action - Passed - Yea: 119 Nay: 0",119,0,0,6,125
+1956730,1521651,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1956730,1529662,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1956730,1529663,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 124 Nay: 0",124,0,0,1,125
+1956747,1495544,2025-02-20,House,"House Emergency Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1956791,1495388,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 97 Nay: 26",97,26,0,2,125
+1956791,1523740,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 28 Nay: 12",28,12,0,0,40
+1956791,1525875,2025-03-25,House,"House Concurred with amendments - Yea: 88 Nay: 37",88,37,0,0,125
+1956809,1494926,2025-02-20,House,"House Final Action - Passed as amended - Yea: 122 Nay: 0",122,0,0,3,125
+1956809,1522231,2025-03-19,Senate,"Senate Emergency Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1956907,1495445,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 120 Nay: 3",120,3,0,2,125
+1956907,1521579,2025-03-19,Senate,"Senate Emergency Final Action - Passed - Yea: 32 Nay: 8",32,8,0,0,40
+1956907,1543521,2025-04-10,House,"House Motion to override veto prevailed - Yea: 88 Nay: 37",88,37,0,0,125
+1956907,1544327,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 30 Nay: 10",30,10,0,0,40
+1957048,1521210,2025-03-19,House,"House Committee of the Whole - Ruling of the chair was sustained - Yea: 86 Nay: 36",86,36,0,3,125
+1957048,1521211,2025-03-19,House,"House Emergency Final Action - Substitute passed - Yea: 116 Nay: 8",116,8,0,1,125
+1957084,1495809,2025-02-20,House,"House Final Action - Passed - Yea: 121 Nay: 1",121,1,0,3,125
+1957107,1523298,2025-03-20,House,"House Emergency Final Action - Substitute passed - Yea: 103 Nay: 15",103,15,0,7,125
+1957226,1494903,2025-02-20,House,"House Final Action - Passed - Yea: 116 Nay: 6",116,6,0,3,125
+1957226,1522057,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1957226,1546048,2025-04-11,Senate,"Senate Conference Committee Report was adopted - Yea: 33 Nay: 7",33,7,0,0,40
+1957226,1546049,2025-04-11,House,"House Conference Committee Report was adopted - Yea: 98 Nay: 23",98,23,0,4,125
+1957502,1493099,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 27 Nay: 13",27,13,0,0,40
+1957502,1520026,2025-03-18,House,"House Emergency Final Action - Passed as amended - Yea: 75 Nay: 45",75,45,1,4,125
+1957502,1528136,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 68 Nay: 53",68,53,1,3,125
+1957502,1528438,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 28 Nay: 12",28,12,0,0,40
+1957644,1528900,2025-03-27,Senate,"Senate Citing Rule 11(b), motion to withdraw from committee failed. - Yea: 9 Nay: 30",9,30,0,1,40
+1957764,1529000,2025-03-27,Senate,"Senate Citing Rule 11(b), motion to withdraw from committee failed. - Yea: 9 Nay: 30",9,30,0,1,40
+1957916,1494345,2025-02-19,Senate,"Senate Emergency Final Action - Substitute passed as amended - Yea: 32 Nay: 8",32,8,0,0,40
+1957946,1523840,2025-03-20,Senate,"Senate Emergency Final Action - Not passed - Yea: 17 Nay: 23",17,23,0,0,40
+1957977,1517111,2025-03-13,Senate,"Senate Final Action - Passed - Yea: 38 Nay: 1",38,1,0,1,40
+1958038,1493498,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 31 Nay: 9",31,9,0,0,40
+1958128,1494263,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1958128,1523358,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 118 Nay: 0",118,0,0,7,125
+1958128,1529651,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 124 Nay: 0",124,0,0,1,125
+1958128,1543902,2025-04-10,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1959235,1494890,2025-02-20,House,"House Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1959235,1521077,2025-03-19,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1959326,1508475,2025-03-07,House,"House Final Action - Passed as amended - Yea: 95 Nay: 27",95,27,0,3,125
+1959326,1523394,2025-03-20,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 37 Nay: 3",37,3,0,0,40
+1959326,1529280,2025-03-27,House,"House Concurred with amendments in conference - Yea: 87 Nay: 38",87,38,0,0,125
+1959620,1493843,2025-02-19,House,"House Committee of the Whole - Amendment by  Representative Ruiz, S. was rejected - Yea: 36 Nay: 84",36,84,0,5,125
+1959620,1495038,2025-02-20,House,"House Final Action - Passed as amended - Yea: 86 Nay: 37",86,37,0,2,125
+1959620,1523396,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 31 Nay: 9",31,9,0,0,40
+1959620,1525229,2025-03-24,House,"House Concurred with amendments - Yea: 84 Nay: 38",84,38,0,3,125
+1959620,1543820,2025-04-10,House,"House Motion to override veto prevailed - Yea: 87 Nay: 38",87,38,0,0,125
+1959620,1543821,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 31 Nay: 9",31,9,0,0,40
+1959717,1523172,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 84 Nay: 34",84,34,0,7,125
+1960365,1523801,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 31 Nay: 9",31,9,0,0,40
+1960456,1494434,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 31 Nay: 9",31,9,0,0,40
+1960456,1523209,2025-03-20,House,"House Committee of the Whole - Amendment by Representative Alcala was rejected - Yea: 47 Nay: 65",47,65,0,13,125
+1960456,1523210,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 102 Nay: 16",102,16,0,7,125
+1960456,1527577,2025-03-26,Senate,"Senate Concurred with amendments in conference - Yea: 31 Nay: 9",31,9,0,0,40
+1960486,1521388,2025-03-19,Senate,"Senate Emergency Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1960699,1507984,2025-03-06,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1960699,1523928,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 118 Nay: 0",118,0,0,7,125
+1960699,1529746,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 121 Nay: 3",121,3,0,1,125
+1960699,1544726,2025-04-10,Senate,"Senate Conference Committee Report was adopted - Yea: 38 Nay: 2",38,2,0,0,40
+1960852,1494209,2025-02-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 37 Nay: 3",37,3,0,0,40
+1960941,1493696,2025-02-19,Senate,"Senate Emergency Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1960941,1523272,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 101 Nay: 17",101,17,0,7,125
+1960941,1526791,2025-03-25,Senate,"Senate Concurred with amendments - Yea: 38 Nay: 0",38,0,0,2,40
+1961940,1494621,2025-02-20,House,"House Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1961940,1523846,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1961940,1545553,2025-04-11,Senate,"Senate Conference Committee Report was adopted - Yea: 39 Nay: 1",39,1,0,0,40
+1961940,1546063,2025-04-11,House,"House Conference Committee Report was adopted - Yea: 98 Nay: 24",98,24,0,3,125
+1961986,1495796,2025-02-20,House,"House Final Action - Passed as amended - Yea: 122 Nay: 1",122,1,0,2,125
+1962000,1495259,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 122 Nay: 1",122,1,0,2,125
+1962000,1517003,2025-03-12,Senate,"Senate Final Action - Passed as amended - Yea: 39 Nay: 0",39,0,0,1,40
+1962000,1529726,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1962053,1495034,2025-02-20,House,"House Final Action - Passed as amended - Yea: 74 Nay: 49",74,49,0,2,125
+1962095,1494678,2025-02-20,House,"House Final Action - Passed as amended - Yea: 122 Nay: 1",122,1,0,2,125
+1962128,1494582,2025-02-20,House,"House Final Action - Passed as amended - Yea: 113 Nay: 10",113,10,0,2,125
+1962128,1523883,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1962128,1529195,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1962128,1529646,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 123 Nay: 1",123,1,0,1,125
+1962221,1517256,2025-03-13,House,"House Emergency Final Action - Passed as amended - Yea: 120 Nay: 3",120,3,0,2,125
+1962235,1494659,2025-02-20,House,"House Final Action - Passed as amended - Yea: 112 Nay: 11",112,11,0,2,125
+1962235,1520022,2025-03-18,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1962235,1528934,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1962235,1529753,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 120 Nay: 4",120,4,0,1,125
+1962296,1523196,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 109 Nay: 9",109,9,0,7,125
+1962315,1517052,2025-03-13,House,"House Final Action - Passed as amended - Yea: 106 Nay: 16",106,16,0,3,125
+1962327,1494589,2025-02-20,House,"House Final Action - Passed - Yea: 123 Nay: 0",123,0,0,2,125
+1962327,1521628,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 39 Nay: 1",39,1,0,0,40
+1962327,1529676,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1962327,1529677,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 124 Nay: 0",124,0,0,1,125
+1962357,1495207,2025-02-20,House,"House Final Action - Passed as amended - Yea: 121 Nay: 2",121,2,0,2,125
+1962357,1521542,2025-03-19,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1962390,1495958,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 121 Nay: 2",121,2,0,2,125
+1962390,1521903,2025-03-19,Senate,"Senate Emergency Final Action - Passed - Yea: 38 Nay: 2",38,2,0,0,40
+1962450,1505712,2025-03-05,House,"House Final Action - Passed - Yea: 118 Nay: 0",118,0,0,7,125
+1962465,1495638,2025-02-20,House,"House Emergency Final Action - Passed as amended - Yea: 89 Nay: 34",89,34,0,2,125
+1962465,1521345,2025-03-19,Senate,"Senate Emergency Final Action - Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1962625,1494908,2025-02-20,House,"House Final Action - Passed - Yea: 117 Nay: 6",117,6,0,2,125
+1962625,1520394,2025-03-18,Senate,"Senate Final Action - Passed as amended - Yea: 40 Nay: 0",40,0,0,0,40
+1962642,1494592,2025-02-20,House,"House Final Action - Passed as amended - Yea: 94 Nay: 29",94,29,0,2,125
+1962687,1508768,2025-03-07,House,"House Emergency Final Action - Adopted as amended by Required 2/3 Majority - Yea: 117 Nay: 4",117,4,0,4,125
+1962687,1523765,2025-03-20,Senate,"Senate Emergency Final Action - Substitute adopted - Yea: 30 Nay: 10",30,10,0,0,40
+1962687,1528011,2025-03-26,Senate,"Senate Motion to not adopt Conference Committee Report passed - Yea: 26 Nay: 14",26,14,0,0,40
+1962687,1528840,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 27 Nay: 13",27,13,0,0,40
+1962687,1528891,2025-03-27,House,"House Conference Committee Report not adopted - Yea: 37 Nay: 88",37,88,0,0,125
+1962730,1507336,2025-03-06,Senate,"Senate Final Action - Adopted as amended by required 2/3 Majority - Yea: 27 Nay: 13",27,13,0,0,40
+1962730,1520983,2025-03-19,House,"House Emergency Final Action - Adopted by required 2/3 majority - Yea: 84 Nay: 40",84,40,0,1,125
+1962762,1493542,2025-02-19,Senate,"Senate Committee of the Whole - Amendment by  Senator Holscher was rejected - Yea: 9 Nay: 31",9,31,0,0,40
+1962762,1494485,2025-02-19,Senate,"Senate Emergency Final Action - Passed - Yea: 36 Nay: 4",36,4,0,0,40
+1962762,1521343,2025-03-19,House,"House Emergency Final Action - Passed as amended - Yea: 97 Nay: 26",97,26,0,2,125
+1962762,1528214,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 119 Nay: 3",119,3,0,3,125
+1962762,1528575,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 40 Nay: 0",40,0,0,0,40
+1965079,1507574,2025-03-06,House,"House Final Action - Passed as amended - Yea: 114 Nay: 8",114,8,0,3,125
+1965378,1506001,2025-03-05,House,"House Final Action - Passed as amended - Yea: 118 Nay: 0",118,0,0,7,125
+1965412,1523395,2025-03-20,House,"House Emergency Final Action - Passed as amended - Yea: 118 Nay: 0",118,0,0,7,125
+1965461,1493320,2025-02-19,Senate,"Senate Final Action - Passed as amended - Yea: 36 Nay: 4",36,4,0,0,40
+1965505,1523385,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 30 Nay: 10",30,10,0,0,40
+1969070,1508733,2025-03-07,House,"House Final Action - Passed as amended - Yea: 115 Nay: 7",115,7,0,3,125
+1969070,1523927,2025-03-20,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 29 Nay: 11",29,11,0,0,40
+1969070,1528458,2025-03-26,Senate,"Senate Conference Committee Report was adopted - Yea: 31 Nay: 9",31,9,0,0,40
+1969070,1529569,2025-03-27,House,"House Conference Committee Report was adopted - Yea: 84 Nay: 40",84,40,0,1,125
+1969070,1543322,2025-04-10,House,"House Motion to override veto prevailed - Yea: 84 Nay: 41",84,41,0,0,125
+1969070,1544048,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 31 Nay: 9",31,9,0,0,40
+1969274,1507820,2025-03-06,Senate,"Senate Consent Calendar Passed - Yea: 40 Nay: 0",40,0,0,0,40
+1969274,1521483,2025-03-19,House,"House Emergency Final Action - Passed as amended - Yea: 123 Nay: 0",123,0,0,2,125
+1969274,1527750,2025-03-26,House,"House Conference Committee Report was adopted - Yea: 84 Nay: 38",84,38,0,3,125
+1969274,1529659,2025-03-27,Senate,"Senate Conference Committee Report was adopted - Yea: 30 Nay: 10",30,10,0,0,40
+1969274,1543332,2025-04-10,Senate,"Senate Motion to override veto prevailed - Yea: 30 Nay: 10",30,10,0,0,40
+1969274,1544084,2025-04-10,House,"House Motion to override veto prevailed - Yea: 87 Nay: 37",87,37,0,1,125
+1985034,1517853,2025-03-14,House,"House Final Action - Passed - Yea: 105 Nay: 11",105,11,0,9,125
+1987183,1523346,2025-03-20,Senate,"Senate Emergency Final Action - Substitute passed - Yea: 40 Nay: 0",40,0,0,0,40
+1987467,1508575,2025-03-07,House,"House Emergency Final Action - Passed as amended - Yea: 115 Nay: 6",115,6,0,4,125
+1989757,1523769,2025-03-20,Senate,"Senate Emergency Final Action - Passed as amended - Yea: 34 Nay: 6",34,6,0,0,40
+1991994,1512746,2025-03-11,House,"House Final Action - Passed - Yea: 110 Nay: 13",110,13,0,2,125
+1993628,1519493,2025-03-17,House,"House Final Action - Passed - Yea: 98 Nay: 24",98,24,0,3,125
+2005453,1523377,2025-03-20,House,"House Emergency Final Action - Adopted - Yea: 116 Nay: 2",116,2,0,7,125
+2006595,1523235,2025-03-20,House,"House Emergency Final Action - Adopted - Yea: 101 Nay: 15",101,15,0,9,125
+2013367,1546291,2025-04-11,Senate,"Senate Emergency Final Action - Adopted - Yea: 39 Nay: 1",39,1,0,0,40
+2013605,1527267,2025-03-26,House,"House Final Action - Adopted - Yea: 107 Nay: 16",107,16,0,2,125

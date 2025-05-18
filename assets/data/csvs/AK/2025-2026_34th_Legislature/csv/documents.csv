@@ -1,0 +1,642 @@
+bill_id,document_id,document_type,document_size,document_mime,document_desc,url,state_link
+1912447,3049428,text,490912,application/pdf,Introduced,https://legiscan.com/AK/text/HB1/id/3049428,https://www.akleg.gov/PDF/34/Bills/HB0001A.PDF
+1912462,3049443,text,580519,application/pdf,Introduced,https://legiscan.com/AK/text/HB2/id/3049443,https://www.akleg.gov/PDF/34/Bills/HB0002A.PDF
+1912507,3049488,text,523076,application/pdf,Introduced,https://legiscan.com/AK/text/HB3/id/3049488,https://www.akleg.gov/PDF/34/Bills/HB0003A.PDF
+1912489,3049470,text,492412,application/pdf,Introduced,https://legiscan.com/AK/text/HB4/id/3049470,https://www.akleg.gov/PDF/34/Bills/HB0004A.PDF
+1912458,3049439,text,470726,application/pdf,Introduced,https://legiscan.com/AK/text/HB5/id/3049439,https://www.akleg.gov/PDF/34/Bills/HB0005A.PDF
+1912450,3049431,text,474203,application/pdf,Introduced,https://legiscan.com/AK/text/HB6/id/3049431,https://www.akleg.gov/PDF/34/Bills/HB0006A.PDF
+1912457,3049438,text,542435,application/pdf,Introduced,https://legiscan.com/AK/text/HB7/id/3049438,https://www.akleg.gov/PDF/34/Bills/HB0007A.PDF
+1912465,3049446,text,461053,application/pdf,Introduced,https://legiscan.com/AK/text/HB8/id/3049446,https://www.akleg.gov/PDF/34/Bills/HB0008A.PDF
+1912435,3049416,text,471369,application/pdf,Introduced,https://legiscan.com/AK/text/HB9/id/3049416,https://www.akleg.gov/PDF/34/Bills/HB0009A.PDF
+1912444,3049425,text,477051,application/pdf,Introduced,https://legiscan.com/AK/text/HB10/id/3049425,https://www.akleg.gov/PDF/34/Bills/HB0010A.PDF
+1912444,3229342,text,74141,application/pdf,Introduced,https://legiscan.com/AK/text/HB10/id/3229342,https://www.akleg.gov/PDF/34/F/HB0010-1-2-022125-UA-Y.PDF
+1912444,3232029,text,482326,application/pdf,Introduced,https://legiscan.com/AK/text/HB10/id/3232029,https://www.akleg.gov/PDF/34/Bills/HB0010B.PDF
+1912451,3049432,text,482344,application/pdf,Introduced,https://legiscan.com/AK/text/HB11/id/3049432,https://www.akleg.gov/PDF/34/Bills/HB0011A.PDF
+1912509,3049490,text,466652,application/pdf,Introduced,https://legiscan.com/AK/text/HB12/id/3049490,https://www.akleg.gov/PDF/34/Bills/HB0012A.PDF
+1912464,3049445,text,472845,application/pdf,Introduced,https://legiscan.com/AK/text/HB13/id/3049445,https://www.akleg.gov/PDF/34/Bills/HB0013A.PDF
+1912464,3161553,text,473632,application/pdf,Introduced,https://legiscan.com/AK/text/HB13/id/3161553,https://www.akleg.gov/PDF/34/Bills/HB0013B.PDF
+1912464,3222192,text,474435,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB13/id/3222192,https://www.akleg.gov/PDF/34/Bills/HB0013C.PDF
+1912506,3049487,text,487135,application/pdf,Introduced,https://legiscan.com/AK/text/HB14/id/3049487,https://www.akleg.gov/PDF/34/Bills/HB0014A.PDF
+1912455,3049436,text,473532,application/pdf,Introduced,https://legiscan.com/AK/text/HB15/id/3049436,https://www.akleg.gov/PDF/34/Bills/HB0015A.PDF
+1912500,3049481,text,483408,application/pdf,Introduced,https://legiscan.com/AK/text/HB16/id/3049481,https://www.akleg.gov/PDF/34/Bills/HB0016A.PDF
+1912500,3210453,text,504917,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB16/id/3210453,https://www.akleg.gov/PDF/34/Bills/HB0016B.PDF
+1912460,3049441,text,466067,application/pdf,Introduced,https://legiscan.com/AK/text/HB17/id/3049441,https://www.akleg.gov/PDF/34/Bills/HB0017A.PDF
+1912441,3049422,text,504847,application/pdf,Introduced,https://legiscan.com/AK/text/HB18/id/3049422,https://www.akleg.gov/PDF/34/Bills/HB0018A.PDF
+1912505,3049486,text,633211,application/pdf,Introduced,https://legiscan.com/AK/text/HB19/id/3049486,https://www.akleg.gov/PDF/34/Bills/HB0019A.PDF
+1912483,3049464,text,465750,application/pdf,Introduced,https://legiscan.com/AK/text/HB20/id/3049464,https://www.akleg.gov/PDF/34/Bills/HB0020A.PDF
+1912434,3049415,text,467185,application/pdf,Introduced,https://legiscan.com/AK/text/HB21/id/3049415,https://www.akleg.gov/PDF/34/Bills/HB0021A.PDF
+1912434,3135752,text,469692,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB21/id/3135752,https://www.akleg.gov/PDF/34/Bills/HB0021B.PDF
+1912474,3049455,text,488591,application/pdf,Introduced,https://legiscan.com/AK/text/HB22/id/3049455,https://www.akleg.gov/PDF/34/Bills/HB0022A.PDF
+1912487,3049468,text,468436,application/pdf,Introduced,https://legiscan.com/AK/text/HB23/id/3049468,https://www.akleg.gov/PDF/34/Bills/HB0023A.PDF
+1912487,3149468,text,485081,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB23/id/3149468,https://www.akleg.gov/PDF/34/Bills/HB0023B.PDF
+1912511,3049492,text,489484,application/pdf,Introduced,https://legiscan.com/AK/text/HB24/id/3049492,https://www.akleg.gov/PDF/34/Bills/HB0024A.PDF
+1912470,3049451,text,471541,application/pdf,Introduced,https://legiscan.com/AK/text/HB25/id/3049451,https://www.akleg.gov/PDF/34/Bills/HB0025A.PDF
+1912470,3178057,text,476578,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB25/id/3178057,https://www.akleg.gov/PDF/34/Bills/HB0025B.PDF
+1912443,3049424,text,477902,application/pdf,Introduced,https://legiscan.com/AK/text/HB26/id/3049424,https://www.akleg.gov/PDF/34/Bills/HB0026A.PDF
+1912481,3049462,text,469230,application/pdf,Introduced,https://legiscan.com/AK/text/HB27/id/3049462,https://www.akleg.gov/PDF/34/Bills/HB0027A.PDF
+1912481,3176459,text,470771,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB27/id/3176459,https://www.akleg.gov/PDF/34/Bills/HB0027B.PDF
+1912486,3049467,text,478178,application/pdf,Introduced,https://legiscan.com/AK/text/HB28/id/3049467,https://www.akleg.gov/PDF/34/Bills/HB0028A.PDF
+1912456,3049437,text,514965,application/pdf,Introduced,https://legiscan.com/AK/text/HB29/id/3049437,https://www.akleg.gov/PDF/34/Bills/HB0029A.PDF
+1912456,3226605,text,513835,application/pdf,Introduced,https://legiscan.com/AK/text/HB29/id/3226605,https://www.akleg.gov/PDF/34/Bills/HB0029B.PDF
+1912499,3049480,text,482602,application/pdf,Introduced,https://legiscan.com/AK/text/HB30/id/3049480,https://www.akleg.gov/PDF/34/Bills/HB0030A.PDF
+1912499,3170965,text,483630,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB30/id/3170965,https://www.akleg.gov/PDF/34/Bills/HB0030B.PDF
+1912499,3184636,text,485164,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB30/id/3184636,https://www.akleg.gov/PDF/34/Bills/HB0030C.PDF
+1912467,3049448,text,476693,application/pdf,Introduced,https://legiscan.com/AK/text/HB31/id/3049448,https://www.akleg.gov/PDF/34/Bills/HB0031A.PDF
+1912478,3049459,text,532777,application/pdf,Introduced,https://legiscan.com/AK/text/HB32/id/3049459,https://www.akleg.gov/PDF/34/Bills/HB0032A.PDF
+1912495,3049476,text,477147,application/pdf,Introduced,https://legiscan.com/AK/text/HB33/id/3049476,https://www.akleg.gov/PDF/34/Bills/HB0033A.PDF
+1912448,3049429,text,488346,application/pdf,Introduced,https://legiscan.com/AK/text/HB34/id/3049429,https://www.akleg.gov/PDF/34/Bills/HB0034A.PDF
+1912448,3151140,text,489122,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB34/id/3151140,https://www.akleg.gov/PDF/34/Bills/HB0034B.PDF
+1912490,3049471,text,483390,application/pdf,Introduced,https://legiscan.com/AK/text/HB35/id/3049471,https://www.akleg.gov/PDF/34/Bills/HB0035A.PDF
+1912490,3175280,text,481865,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB35/id/3175280,https://www.akleg.gov/PDF/34/Bills/HB0035B.PDF
+1912490,3207925,text,482029,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB35/id/3207925,https://www.akleg.gov/PDF/34/Bills/HB0035C.PDF
+1912488,3049469,text,490602,application/pdf,Introduced,https://legiscan.com/AK/text/HB36/id/3049469,https://www.akleg.gov/PDF/34/Bills/HB0036A.PDF
+1912440,3049421,text,479891,application/pdf,Introduced,https://legiscan.com/AK/text/HB37/id/3049421,https://www.akleg.gov/PDF/34/Bills/HB0037A.PDF
+1927699,3065026,text,471795,application/pdf,Introduced,https://legiscan.com/AK/text/HB38/id/3065026,https://www.akleg.gov/PDF/34/Bills/HB0038A.PDF
+1927699,3156301,text,473549,application/pdf,Introduced,https://legiscan.com/AK/text/HB38/id/3156301,https://www.akleg.gov/PDF/34/Bills/HB0038B.PDF
+1927240,3064579,text,475932,application/pdf,Introduced,https://legiscan.com/AK/text/HB39/id/3064579,https://www.akleg.gov/PDF/34/Bills/HB0039A.PDF
+1927240,3231366,text,478026,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB39/id/3231366,https://www.akleg.gov/PDF/34/Bills/HB0039B.PDF
+1927987,3065311,text,478538,application/pdf,Introduced,https://legiscan.com/AK/text/HB40/id/3065311,https://www.akleg.gov/PDF/34/Bills/HB0040A.PDF
+1927930,3065253,text,468959,application/pdf,Introduced,https://legiscan.com/AK/text/HB41/id/3065253,https://www.akleg.gov/PDF/34/Bills/HB0041A.PDF
+1927466,3064798,text,486369,application/pdf,Introduced,https://legiscan.com/AK/text/HB42/id/3064798,https://www.akleg.gov/PDF/34/Bills/HB0042A.PDF
+1927755,3065082,text,535863,application/pdf,Introduced,https://legiscan.com/AK/text/HB43/id/3065082,https://www.akleg.gov/PDF/34/Bills/HB0043A.PDF
+1927584,3064911,text,475800,application/pdf,Introduced,https://legiscan.com/AK/text/HB44/id/3064911,https://www.akleg.gov/PDF/34/Bills/HB0044A.PDF
+1928160,3065480,text,473296,application/pdf,Introduced,https://legiscan.com/AK/text/HB45/id/3065480,https://www.akleg.gov/PDF/34/Bills/HB0045A.PDF
+1927353,3064689,text,493747,application/pdf,Introduced,https://legiscan.com/AK/text/HB46/id/3064689,https://www.akleg.gov/PDF/34/Bills/HB0046A.PDF
+1928274,3065593,text,551736,application/pdf,Introduced,https://legiscan.com/AK/text/HB47/id/3065593,https://www.akleg.gov/PDF/34/Bills/HB0047A.PDF
+1928274,3225818,text,552397,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB47/id/3225818,https://www.akleg.gov/PDF/34/Bills/HB0047B.PDF
+1935319,3072556,text,468519,application/pdf,Introduced,https://legiscan.com/AK/text/HB48/id/3072556,https://www.akleg.gov/PDF/34/Bills/HB0048A.PDF
+1935288,3072528,text,569349,application/pdf,Introduced,https://legiscan.com/AK/text/HB49/id/3072528,https://www.akleg.gov/PDF/34/Bills/HB0049A.PDF
+1935288,3130375,text,570359,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB49/id/3130375,https://www.akleg.gov/PDF/34/Bills/HB0049B.PDF
+1934721,3072033,text,466777,application/pdf,Introduced,https://legiscan.com/AK/text/HB50/id/3072033,https://www.akleg.gov/PDF/34/Bills/HB0050A.PDF
+1935069,3072334,text,482587,application/pdf,Introduced,https://legiscan.com/AK/text/HB51/id/3072334,https://www.akleg.gov/PDF/34/Bills/HB0051A.PDF
+1935025,3072296,text,476876,application/pdf,Introduced,https://legiscan.com/AK/text/HB52/id/3072296,https://www.akleg.gov/PDF/34/Bills/HB0052A.PDF
+1935025,3226145,text,480142,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB52/id/3226145,https://www.akleg.gov/PDF/34/Bills/HB0052B.PDF
+1935103,3072366,text,782396,application/pdf,Introduced,https://legiscan.com/AK/text/HB53/id/3072366,https://www.akleg.gov/PDF/34/Bills/HB0053A.PDF
+1935103,3210379,text,820847,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB53/id/3210379,https://www.akleg.gov/PDF/34/Bills/HB0053B.PDF
+1935103,3210380,text,26631,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB53/id/3210380,https://www.akleg.gov/PDF/34/A/HB0053-H001.PDF
+1934911,3072199,text,546965,application/pdf,Introduced,https://legiscan.com/AK/text/HB54/id/3072199,https://www.akleg.gov/PDF/34/Bills/HB0054A.PDF
+1934649,3071971,text,511374,application/pdf,Introduced,https://legiscan.com/AK/text/HB55/id/3071971,https://www.akleg.gov/PDF/34/Bills/HB0055A.PDF
+1934649,3210342,text,512437,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB55/id/3210342,https://www.akleg.gov/PDF/34/Bills/HB0055B.PDF
+1934649,3229732,text,512878,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB55/id/3229732,https://www.akleg.gov/PDF/34/Bills/HB0055D.PDF
+1934649,3231877,text,513121,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB55/id/3231877,https://www.akleg.gov/PDF/34/Bills/HB0055E.PDF
+1935214,3072462,text,472848,application/pdf,Introduced,https://legiscan.com/AK/text/HB56/id/3072462,https://www.akleg.gov/PDF/34/Bills/HB0056A.PDF
+1935214,3199802,text,533324,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB56/id/3199802,https://www.akleg.gov/PDF/34/Bills/HB0056B.PDF
+1935214,3201299,text,530037,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB56/id/3201299,https://www.akleg.gov/PDF/34/Bills/HB0056C.PDF
+1934839,3072134,text,470388,application/pdf,Introduced,https://legiscan.com/AK/text/HB57/id/3072134,https://www.akleg.gov/PDF/34/Bills/HB0057A.PDF
+1934839,3112039,text,472936,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB57/id/3112039,https://www.akleg.gov/PDF/34/Bills/HB0057B.PDF
+1934839,3175799,text,474716,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB57/id/3175799,https://www.akleg.gov/PDF/34/Bills/HB0057C.PDF
+1934839,3210416,text,144706,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB57/id/3210416,https://www.akleg.gov/PDF/34/F/HB0057-1-2-021025-EED-N.PDF
+1934839,3218186,text,471843,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB57/id/3218186,https://www.akleg.gov/PDF/34/Bills/HB0057D.PDF
+1934839,3222193,text,498478,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB57/id/3222193,https://www.akleg.gov/PDF/34/Bills/HB0057E.PDF
+1934839,3223425,text,521958,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB57/id/3223425,https://www.akleg.gov/PDF/34/Bills/HB0057F.PDF
+1934839,3225696,text,523654,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB57/id/3225696,https://www.akleg.gov/PDF/34/Bills/HB0057G.PDF
+1934839,3226108,text,648075,application/pdf,Enrolled,https://legiscan.com/AK/text/HB57/id/3226108,https://www.akleg.gov/PDF/34/Bills/HB0057Z.PDF
+1934573,3071907,text,516400,application/pdf,Introduced,https://legiscan.com/AK/text/HB58/id/3071907,https://www.akleg.gov/PDF/34/Bills/HB0058A.PDF
+1935176,3072427,text,492988,application/pdf,Introduced,https://legiscan.com/AK/text/HB59/id/3072427,https://www.akleg.gov/PDF/34/Bills/HB0059A.PDF
+1935176,3228087,text,493587,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB59/id/3228087,https://www.akleg.gov/PDF/34/Bills/HB0059B.PDF
+1934876,3072164,text,472794,application/pdf,Introduced,https://legiscan.com/AK/text/HB60/id/3072164,https://www.akleg.gov/PDF/34/Bills/HB0060A.PDF
+1934609,3071937,text,480880,application/pdf,Introduced,https://legiscan.com/AK/text/HB61/id/3071937,https://www.akleg.gov/PDF/34/Bills/HB0061A.PDF
+1935141,3072399,text,495958,application/pdf,Introduced,https://legiscan.com/AK/text/HB62/id/3072399,https://www.akleg.gov/PDF/34/Bills/HB0062A.PDF
+1934992,3072270,text,534326,application/pdf,Introduced,https://legiscan.com/AK/text/HB63/id/3072270,https://www.akleg.gov/PDF/34/Bills/HB0063A.PDF
+1940616,3078236,text,484955,application/pdf,Introduced,https://legiscan.com/AK/text/HB64/id/3078236,https://www.akleg.gov/PDF/34/Bills/HB0064A.PDF
+1940572,3078189,text,473880,application/pdf,Introduced,https://legiscan.com/AK/text/HB65/id/3078189,https://www.akleg.gov/PDF/34/Bills/HB0065A.PDF
+1940572,3149465,text,600525,application/pdf,Enrolled,https://legiscan.com/AK/text/HB65/id/3149465,https://www.akleg.gov/PDF/34/Bills/HB0065Z.PDF
+1940311,3077918,text,480966,application/pdf,Introduced,https://legiscan.com/AK/text/HB66/id/3077918,https://www.akleg.gov/PDF/34/Bills/HB0066A.PDF
+1940223,3077832,text,473964,application/pdf,Introduced,https://legiscan.com/AK/text/HB67/id/3077832,https://www.akleg.gov/PDF/34/Bills/HB0067A.PDF
+1939960,3077568,text,495283,application/pdf,Introduced,https://legiscan.com/AK/text/HB68/id/3077568,https://www.akleg.gov/PDF/34/Bills/HB0068A.PDF
+1941060,3078701,text,471306,application/pdf,Introduced,https://legiscan.com/AK/text/HB69/id/3078701,https://www.akleg.gov/PDF/34/Bills/HB0069A.PDF
+1941060,3161104,text,514936,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB69/id/3161104,https://www.akleg.gov/PDF/34/Bills/HB0069B.PDF
+1941060,3163907,text,699252,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB69/id/3163907,https://www.akleg.gov/PDF/34/F/HB0069-1-2-022125-EED-N.PDF
+1941060,3170974,text,551657,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB69/id/3170974,https://www.akleg.gov/PDF/34/Bills/HB0069C.PDF
+1941060,3202549,text,556508,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB69/id/3202549,https://www.akleg.gov/PDF/34/Bills/HB0069D.PDF
+1941060,3208335,text,466225,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB69/id/3208335,https://www.akleg.gov/PDF/34/Bills/HB0069E.PDF
+1941060,3210458,text,590750,application/pdf,Enrolled,https://legiscan.com/AK/text/HB69/id/3210458,https://www.akleg.gov/PDF/34/Bills/HB0069Z.PDF
+1942388,3083474,text,498061,application/pdf,Introduced,https://legiscan.com/AK/text/HB70/id/3083474,https://www.akleg.gov/PDF/34/Bills/HB0070A.PDF
+1942333,3083424,text,483043,application/pdf,Introduced,https://legiscan.com/AK/text/HB71/id/3083424,https://www.akleg.gov/PDF/34/Bills/HB0071A.PDF
+1942730,3083787,text,530122,application/pdf,Introduced,https://legiscan.com/AK/text/HB72/id/3083787,https://www.akleg.gov/PDF/34/Bills/HB0072A.PDF
+1942660,3083722,text,480526,application/pdf,Introduced,https://legiscan.com/AK/text/HB73/id/3083722,https://www.akleg.gov/PDF/34/Bills/HB0073A.PDF
+1942660,3233906,text,479902,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB73/id/3233906,https://www.akleg.gov/PDF/34/Bills/HB0073B.PDF
+1946160,3088598,text,477308,application/pdf,Introduced,https://legiscan.com/AK/text/HB74/id/3088598,https://www.akleg.gov/PDF/34/Bills/HB0074A.PDF
+1950600,3093900,text,502566,application/pdf,Introduced,https://legiscan.com/AK/text/HB75/id/3093900,https://www.akleg.gov/PDF/34/Bills/HB0075A.PDF
+1950600,3149469,text,505484,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB75/id/3149469,https://www.akleg.gov/PDF/34/Bills/HB0075B.PDF
+1950795,3094088,text,561266,application/pdf,Introduced,https://legiscan.com/AK/text/HB76/id/3094088,https://www.akleg.gov/PDF/34/Bills/HB0076A.PDF
+1950834,3094127,text,481520,application/pdf,Introduced,https://legiscan.com/AK/text/HB77/id/3094127,https://www.akleg.gov/PDF/34/Bills/HB0077A.PDF
+1950746,3094041,text,718826,application/pdf,Introduced,https://legiscan.com/AK/text/HB78/id/3094041,https://www.akleg.gov/PDF/34/Bills/HB0078A.PDF
+1950746,3233735,text,723451,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB78/id/3233735,https://www.akleg.gov/PDF/34/Bills/HB0078B.PDF
+1950746,3234201,text,146462,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB78/id/3234201,https://www.akleg.gov/PDF/34/F/HB0078-1-2-050925-ADM-Y.PDF
+1950508,3093816,text,465421,application/pdf,Introduced,https://legiscan.com/AK/text/HB79/id/3093816,https://www.akleg.gov/PDF/34/Bills/HB0079A.PDF
+1950416,3093725,text,506046,application/pdf,Introduced,https://legiscan.com/AK/text/HB80/id/3093725,https://www.akleg.gov/PDF/34/Bills/HB0080A.PDF
+1952252,3096091,text,475556,application/pdf,Introduced,https://legiscan.com/AK/text/HB81/id/3096091,https://www.akleg.gov/PDF/34/Bills/HB0081A.PDF
+1963624,3110639,text,462688,application/pdf,Introduced,https://legiscan.com/AK/text/HB82/id/3110639,https://www.akleg.gov/PDF/34/Bills/HB0082A.PDF
+1963698,3110708,text,469733,application/pdf,Introduced,https://legiscan.com/AK/text/HB83/id/3110708,https://www.akleg.gov/PDF/34/Bills/HB0083A.PDF
+1963885,3110882,text,486668,application/pdf,Introduced,https://legiscan.com/AK/text/HB84/id/3110882,https://www.akleg.gov/PDF/34/Bills/HB0084A.PDF
+1963661,3110673,text,517460,application/pdf,Introduced,https://legiscan.com/AK/text/HB85/id/3110673,https://www.akleg.gov/PDF/34/Bills/HB0085A.PDF
+1963847,3110847,text,489858,application/pdf,Introduced,https://legiscan.com/AK/text/HB86/id/3110847,https://www.akleg.gov/PDF/34/Bills/HB0086A.PDF
+1964031,3111017,text,466035,application/pdf,Introduced,https://legiscan.com/AK/text/HB87/id/3111017,https://www.akleg.gov/PDF/34/Bills/HB0087A.PDF
+1963923,3110916,text,477223,application/pdf,Introduced,https://legiscan.com/AK/text/HB88/id/3110916,https://www.akleg.gov/PDF/34/Bills/HB0088A.PDF
+1963810,3110812,text,513810,application/pdf,Introduced,https://legiscan.com/AK/text/HB89/id/3110812,https://www.akleg.gov/PDF/34/Bills/HB0089A.PDF
+1963589,3110607,text,476118,application/pdf,Introduced,https://legiscan.com/AK/text/HB90/id/3110607,https://www.akleg.gov/PDF/34/Bills/HB0090A.PDF
+1964096,3111080,text,504082,application/pdf,Introduced,https://legiscan.com/AK/text/HB91/id/3111080,https://www.akleg.gov/PDF/34/Bills/HB0091A.PDF
+1964096,3172003,text,504694,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB91/id/3172003,https://www.akleg.gov/PDF/34/Bills/HB0091B.PDF
+1963994,3110983,text,472595,application/pdf,Introduced,https://legiscan.com/AK/text/HB92/id/3110983,https://www.akleg.gov/PDF/34/Bills/HB0092A.PDF
+1964066,3111049,text,474567,application/pdf,Introduced,https://legiscan.com/AK/text/HB93/id/3111049,https://www.akleg.gov/PDF/34/Bills/HB0093A.PDF
+1967314,3115933,text,494788,application/pdf,Introduced,https://legiscan.com/AK/text/HB94/id/3115933,https://www.akleg.gov/PDF/34/Bills/HB0094A.PDF
+1967062,3115700,text,550916,application/pdf,Introduced,https://legiscan.com/AK/text/HB95/id/3115700,https://www.akleg.gov/PDF/34/Bills/HB0095A.PDF
+1967556,3116162,text,503656,application/pdf,Introduced,https://legiscan.com/AK/text/HB96/id/3116162,https://www.akleg.gov/PDF/34/Bills/HB0096A.PDF
+1967556,3207439,text,503669,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB96/id/3207439,https://www.akleg.gov/PDF/34/Bills/HB0096B.PDF
+1967556,3222178,text,499416,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB96/id/3222178,https://www.akleg.gov/PDF/34/Bills/HB0096C.PDF
+1967018,3115658,text,528609,application/pdf,Introduced,https://legiscan.com/AK/text/HB97/id/3115658,https://www.akleg.gov/PDF/34/Bills/HB0097A.PDF
+1967018,3228089,text,525649,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB97/id/3228089,https://www.akleg.gov/PDF/34/Bills/HB0097B.PDF
+1967274,3115894,text,475201,application/pdf,Introduced,https://legiscan.com/AK/text/HB98/id/3115894,https://www.akleg.gov/PDF/34/Bills/HB0098A.PDF
+1967482,3116092,text,731577,application/pdf,Introduced,https://legiscan.com/AK/text/HB99/id/3116092,https://www.akleg.gov/PDF/34/Bills/HB0099A.PDF
+1967482,3185164,text,734617,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB99/id/3185164,https://www.akleg.gov/PDF/34/Bills/HB0099B.PDF
+1967399,3116014,text,470493,application/pdf,Introduced,https://legiscan.com/AK/text/HB100/id/3116014,https://www.akleg.gov/PDF/34/Bills/HB0100A.PDF
+1967440,3116054,text,572861,application/pdf,Introduced,https://legiscan.com/AK/text/HB101/id/3116054,https://www.akleg.gov/PDF/34/Bills/HB0101A.PDF
+1967440,3161522,text,576203,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB101/id/3161522,https://www.akleg.gov/PDF/34/Bills/HB0101B.PDF
+1967440,3223436,text,578688,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB101/id/3223436,https://www.akleg.gov/PDF/34/Bills/HB0101C.PDF
+1971494,3121784,text,467143,application/pdf,Introduced,https://legiscan.com/AK/text/HB102/id/3121784,https://www.akleg.gov/PDF/34/Bills/HB0102A.PDF
+1971108,3121424,text,476716,application/pdf,Introduced,https://legiscan.com/AK/text/HB103/id/3121424,https://www.akleg.gov/PDF/34/Bills/HB0103A.PDF
+1971397,3121695,text,484907,application/pdf,Introduced,https://legiscan.com/AK/text/HB104/id/3121695,https://www.akleg.gov/PDF/34/Bills/HB0104A.PDF
+1971397,3219206,text,485237,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB104/id/3219206,https://www.akleg.gov/PDF/34/Bills/HB0104B.PDF
+1971350,3121651,text,482233,application/pdf,Introduced,https://legiscan.com/AK/text/HB105/id/3121651,https://www.akleg.gov/PDF/34/Bills/HB0105A.PDF
+1971018,3121340,text,477097,application/pdf,Introduced,https://legiscan.com/AK/text/HB106/id/3121340,https://www.akleg.gov/PDF/34/Bills/HB0106A.PDF
+1971156,3121468,text,480588,application/pdf,Introduced,https://legiscan.com/AK/text/HB107/id/3121468,https://www.akleg.gov/PDF/34/Bills/HB0107A.PDF
+1972087,3126082,text,502645,application/pdf,Introduced,https://legiscan.com/AK/text/HB108/id/3126082,https://www.akleg.gov/PDF/34/Bills/HB0108A.PDF
+1975594,3130710,text,531822,application/pdf,Introduced,https://legiscan.com/AK/text/HB109/id/3130710,https://www.akleg.gov/PDF/34/Bills/HB0109A.PDF
+1979531,3136037,text,632618,application/pdf,Introduced,https://legiscan.com/AK/text/HB110/id/3136037,https://www.akleg.gov/PDF/34/Bills/HB0110A.PDF
+1979378,3135901,text,512330,application/pdf,Introduced,https://legiscan.com/AK/text/HB111/id/3135901,https://www.akleg.gov/PDF/34/Bills/HB0111A.PDF
+1979234,3135774,text,469185,application/pdf,Introduced,https://legiscan.com/AK/text/HB112/id/3135774,https://www.akleg.gov/PDF/34/Bills/HB0112A.PDF
+1981709,3138838,text,475068,application/pdf,Introduced,https://legiscan.com/AK/text/HB113/id/3138838,https://www.akleg.gov/PDF/34/Bills/HB0113A.PDF
+1981709,3161835,text,508678,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB113/id/3161835,https://www.akleg.gov/PDF/34/Bills/HB0113B.PDF
+1984921,3143042,text,495667,application/pdf,Introduced,https://legiscan.com/AK/text/HB114/id/3143042,https://www.akleg.gov/PDF/34/Bills/HB0114A.PDF
+1984484,3142635,text,470233,application/pdf,Introduced,https://legiscan.com/AK/text/HB115/id/3142635,https://www.akleg.gov/PDF/34/Bills/HB0115A.PDF
+1985139,3143247,text,479878,application/pdf,Introduced,https://legiscan.com/AK/text/HB116/id/3143247,https://www.akleg.gov/PDF/34/Bills/HB0116A.PDF
+1985494,3143588,text,470028,application/pdf,Introduced,https://legiscan.com/AK/text/HB117/id/3143588,https://www.akleg.gov/PDF/34/Bills/HB0117A.PDF
+1985494,3203987,text,477229,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB117/id/3203987,https://www.akleg.gov/PDF/34/Bills/HB0117B.PDF
+1984774,3142903,text,486808,application/pdf,Introduced,https://legiscan.com/AK/text/HB118/id/3142903,https://www.akleg.gov/PDF/34/Bills/HB0118A.PDF
+1984774,3199077,text,487047,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB118/id/3199077,https://www.akleg.gov/PDF/34/Bills/HB0118B.PDF
+1985066,3143176,text,476705,application/pdf,Introduced,https://legiscan.com/AK/text/HB119/id/3143176,https://www.akleg.gov/PDF/34/Bills/HB0119A.PDF
+1985066,3231605,text,479462,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB119/id/3231605,https://www.akleg.gov/PDF/34/Bills/HB0119B.PDF
+1984631,3142772,text,486485,application/pdf,Introduced,https://legiscan.com/AK/text/HB120/id/3142772,https://www.akleg.gov/PDF/34/Bills/HB0120A.PDF
+1989325,3149475,text,491713,application/pdf,Introduced,https://legiscan.com/AK/text/HB121/id/3149475,https://www.akleg.gov/PDF/34/Bills/HB0121A.PDF
+1989325,3233768,text,512009,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB121/id/3233768,https://www.akleg.gov/PDF/34/Bills/HB0121B.PDF
+1989324,3149474,text,521620,application/pdf,Introduced,https://legiscan.com/AK/text/HB122/id/3149474,https://www.akleg.gov/PDF/34/Bills/HB0122A.PDF
+1992632,3154797,text,481592,application/pdf,Introduced,https://legiscan.com/AK/text/HB123/id/3154797,https://www.akleg.gov/PDF/34/Bills/HB0123A.PDF
+1992632,3233772,text,481863,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB123/id/3233772,https://www.akleg.gov/PDF/34/Bills/HB0123B.PDF
+1992223,3154387,text,505716,application/pdf,Introduced,https://legiscan.com/AK/text/HB124/id/3154387,https://www.akleg.gov/PDF/34/Bills/HB0124A.PDF
+1992048,3154220,text,476919,application/pdf,Introduced,https://legiscan.com/AK/text/HB125/id/3154220,https://www.akleg.gov/PDF/34/Bills/HB0125A.PDF
+1992048,3207062,text,473859,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB125/id/3207062,https://www.akleg.gov/PDF/34/Bills/HB0125B.PDF
+1992048,3231912,text,477123,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB125/id/3231912,https://www.akleg.gov/PDF/34/Bills/HB0125C.PDF
+1992169,3154334,text,468985,application/pdf,Introduced,https://legiscan.com/AK/text/HB126/id/3154334,https://www.akleg.gov/PDF/34/Bills/HB0126A.PDF
+1992169,3228268,text,473145,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB126/id/3228268,https://www.akleg.gov/PDF/34/Bills/HB0126B.PDF
+1992684,3154848,text,482795,application/pdf,Introduced,https://legiscan.com/AK/text/HB127/id/3154848,https://www.akleg.gov/PDF/34/Bills/HB0127A.PDF
+1996599,3161460,text,479462,application/pdf,Introduced,https://legiscan.com/AK/text/HB128/id/3161460,https://www.akleg.gov/PDF/34/Bills/HB0128A.PDF
+1996435,3161323,text,484775,application/pdf,Introduced,https://legiscan.com/AK/text/HB129/id/3161323,https://www.akleg.gov/PDF/34/Bills/HB0129A.PDF
+1996435,3193160,text,492149,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB129/id/3193160,https://www.akleg.gov/PDF/34/Bills/HB0129B.PDF
+1996517,3161390,text,488093,application/pdf,Introduced,https://legiscan.com/AK/text/HB130/id/3161390,https://www.akleg.gov/PDF/34/Bills/HB0130A.PDF
+1996265,3161181,text,646920,application/pdf,Introduced,https://legiscan.com/AK/text/HB131/id/3161181,https://www.akleg.gov/PDF/34/Bills/HB0131A.PDF
+2000264,3165909,text,498335,application/pdf,Introduced,https://legiscan.com/AK/text/HB132/id/3165909,https://www.akleg.gov/PDF/34/Bills/HB0132A.PDF
+2000264,3193490,text,499028,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB132/id/3193490,https://www.akleg.gov/PDF/34/Bills/HB0132B.PDF
+2005035,3171439,text,485620,application/pdf,Introduced,https://legiscan.com/AK/text/HB133/id/3171439,https://www.akleg.gov/PDF/34/Bills/HB0133A.PDF
+2005035,3226386,text,485779,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB133/id/3226386,https://www.akleg.gov/PDF/34/Bills/HB0133B.PDF
+2007862,3175515,text,485411,application/pdf,Introduced,https://legiscan.com/AK/text/HB134/id/3175515,https://www.akleg.gov/PDF/34/Bills/HB0134A.PDF
+2008141,3175738,text,471496,application/pdf,Introduced,https://legiscan.com/AK/text/HB135/id/3175738,https://www.akleg.gov/PDF/34/Bills/HB0135A.PDF
+2007591,3175312,text,471049,application/pdf,Introduced,https://legiscan.com/AK/text/HB136/id/3175312,https://www.akleg.gov/PDF/34/Bills/HB0136A.PDF
+2007591,3233620,text,472878,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB136/id/3233620,https://www.akleg.gov/PDF/34/Bills/HB0136B.PDF
+2009303,3177859,text,495320,application/pdf,Introduced,https://legiscan.com/AK/text/HB137/id/3177859,https://www.akleg.gov/PDF/34/Bills/HB0137A.PDF
+2008948,3177560,text,481870,application/pdf,Introduced,https://legiscan.com/AK/text/HB138/id/3177560,https://www.akleg.gov/PDF/34/Bills/HB0138A.PDF
+2009036,3177634,text,465810,application/pdf,Introduced,https://legiscan.com/AK/text/HB139/id/3177634,https://www.akleg.gov/PDF/34/Bills/HB0139A.PDF
+2009216,3177786,text,569673,application/pdf,Introduced,https://legiscan.com/AK/text/HB140/id/3177786,https://www.akleg.gov/PDF/34/Bills/HB0140A.PDF
+2012537,3184830,text,471533,application/pdf,Introduced,https://legiscan.com/AK/text/HB141/id/3184830,https://www.akleg.gov/PDF/34/Bills/HB0141A.PDF
+2012580,3184871,text,478597,application/pdf,Introduced,https://legiscan.com/AK/text/HB142/id/3184871,https://www.akleg.gov/PDF/34/Bills/HB0142A.PDF
+2012601,3184891,text,489864,application/pdf,Introduced,https://legiscan.com/AK/text/HB143/id/3184891,https://www.akleg.gov/PDF/34/Bills/HB0143A.PDF
+2012449,3184743,text,514864,application/pdf,Introduced,https://legiscan.com/AK/text/HB144/id/3184743,https://www.akleg.gov/PDF/34/Bills/HB0144A.PDF
+2012449,3207073,text,514950,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB144/id/3207073,https://www.akleg.gov/PDF/34/Bills/HB0144B.PDF
+2012516,3184810,text,524091,application/pdf,Introduced,https://legiscan.com/AK/text/HB145/id/3184810,https://www.akleg.gov/PDF/34/Bills/HB0145A.PDF
+2012429,3184725,text,488572,application/pdf,Introduced,https://legiscan.com/AK/text/HB146/id/3184725,https://www.akleg.gov/PDF/34/Bills/HB0146A.PDF
+2012407,3184702,text,495412,application/pdf,Introduced,https://legiscan.com/AK/text/HB147/id/3184702,https://www.akleg.gov/PDF/34/Bills/HB0147A.PDF
+2012619,3184911,text,622616,application/pdf,Introduced,https://legiscan.com/AK/text/HB148/id/3184911,https://www.akleg.gov/PDF/34/Bills/HB0148A.PDF
+2012495,3184786,text,553380,application/pdf,Introduced,https://legiscan.com/AK/text/HB149/id/3184786,https://www.akleg.gov/PDF/34/Bills/HB0149A.PDF
+2012386,3184680,text,477714,application/pdf,Introduced,https://legiscan.com/AK/text/HB150/id/3184680,https://www.akleg.gov/PDF/34/Bills/HB0150A.PDF
+2013603,3186263,text,473823,application/pdf,Introduced,https://legiscan.com/AK/text/HB151/id/3186263,https://www.akleg.gov/PDF/34/Bills/HB0151A.PDF
+2013603,3222339,text,475106,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB151/id/3222339,https://www.akleg.gov/PDF/34/Bills/HB0151B.PDF
+2013554,3186231,text,595022,application/pdf,Introduced,https://legiscan.com/AK/text/HB152/id/3186231,https://www.akleg.gov/PDF/34/Bills/HB0152A.PDF
+2013340,3186076,text,508711,application/pdf,Introduced,https://legiscan.com/AK/text/HB153/id/3186076,https://www.akleg.gov/PDF/34/Bills/HB0153A.PDF
+2013502,3186196,text,466846,application/pdf,Introduced,https://legiscan.com/AK/text/HB154/id/3186196,https://www.akleg.gov/PDF/34/Bills/HB0154A.PDF
+2015016,3189896,text,502573,application/pdf,Introduced,https://legiscan.com/AK/text/HB155/id/3189896,https://www.akleg.gov/PDF/34/Bills/HB0155A.PDF
+2015496,3190731,text,478992,application/pdf,Introduced,https://legiscan.com/AK/text/HB156/id/3190731,https://www.akleg.gov/PDF/34/Bills/HB0156A.PDF
+2015069,3189946,text,478177,application/pdf,Introduced,https://legiscan.com/AK/text/HB157/id/3189946,https://www.akleg.gov/PDF/34/Bills/HB0157A.PDF
+2015215,3190086,text,529992,application/pdf,Introduced,https://legiscan.com/AK/text/HB158/id/3190086,https://www.akleg.gov/PDF/34/Bills/HB0158A.PDF
+2015098,3189973,text,504343,application/pdf,Introduced,https://legiscan.com/AK/text/HB159/id/3189973,https://www.akleg.gov/PDF/34/Bills/HB0159A.PDF
+2016439,3193303,text,469597,application/pdf,Introduced,https://legiscan.com/AK/text/HB160/id/3193303,https://www.akleg.gov/PDF/34/Bills/HB0160A.PDF
+2016342,3193210,text,494710,application/pdf,Introduced,https://legiscan.com/AK/text/HB161/id/3193210,https://www.akleg.gov/PDF/34/Bills/HB0161A.PDF
+2016496,3193358,text,493072,application/pdf,Introduced,https://legiscan.com/AK/text/HB162/id/3193358,https://www.akleg.gov/PDF/34/Bills/HB0162A.PDF
+2016322,3193191,text,506431,application/pdf,Introduced,https://legiscan.com/AK/text/HB163/id/3193191,https://www.akleg.gov/PDF/34/Bills/HB0163A.PDF
+2016548,3193409,text,480615,application/pdf,Introduced,https://legiscan.com/AK/text/HB164/id/3193409,https://www.akleg.gov/PDF/34/Bills/HB0164A.PDF
+2017506,3195080,text,471824,application/pdf,Introduced,https://legiscan.com/AK/text/HB165/id/3195080,https://www.akleg.gov/PDF/34/Bills/HB0165A.PDF
+2019045,3198838,text,472939,application/pdf,Introduced,https://legiscan.com/AK/text/HB166/id/3198838,https://www.akleg.gov/PDF/34/Bills/HB0166A.PDF
+2019185,3198977,text,465632,application/pdf,Introduced,https://legiscan.com/AK/text/HB167/id/3198977,https://www.akleg.gov/PDF/34/Bills/HB0167A.PDF
+2019017,3198811,text,480190,application/pdf,Introduced,https://legiscan.com/AK/text/HB168/id/3198811,https://www.akleg.gov/PDF/34/Bills/HB0168A.PDF
+2019380,3199368,text,474895,application/pdf,Introduced,https://legiscan.com/AK/text/HB169/id/3199368,https://www.akleg.gov/PDF/34/Bills/HB0169A.PDF
+2019157,3198948,text,466764,application/pdf,Introduced,https://legiscan.com/AK/text/HB170/id/3198948,https://www.akleg.gov/PDF/34/Bills/HB0170A.PDF
+2018936,3198732,text,482377,application/pdf,Introduced,https://legiscan.com/AK/text/HB171/id/3198732,https://www.akleg.gov/PDF/34/Bills/HB0171A.PDF
+2020022,3200796,text,469256,application/pdf,Introduced,https://legiscan.com/AK/text/HB172/id/3200796,https://www.akleg.gov/PDF/34/Bills/HB0172A.PDF
+2021195,3203861,text,588852,application/pdf,Introduced,https://legiscan.com/AK/text/HB173/id/3203861,https://www.akleg.gov/PDF/34/Bills/HB0173A.PDF
+2021195,3231477,text,591048,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB173/id/3231477,https://www.akleg.gov/PDF/34/Bills/HB0173B.PDF
+2021075,3203741,text,473898,application/pdf,Introduced,https://legiscan.com/AK/text/HB174/id/3203741,https://www.akleg.gov/PDF/34/Bills/HB0174A.PDF
+2022110,3206772,text,477194,application/pdf,Introduced,https://legiscan.com/AK/text/HB175/id/3206772,https://www.akleg.gov/PDF/34/Bills/HB0175A.PDF
+2022193,3206860,text,472357,application/pdf,Introduced,https://legiscan.com/AK/text/HB176/id/3206860,https://www.akleg.gov/PDF/34/Bills/HB0176A.PDF
+2022267,3206933,text,469728,application/pdf,Introduced,https://legiscan.com/AK/text/HB177/id/3206933,https://www.akleg.gov/PDF/34/Bills/HB0177A.PDF
+2022176,3206843,text,482174,application/pdf,Introduced,https://legiscan.com/AK/text/HB178/id/3206843,https://www.akleg.gov/PDF/34/Bills/HB0178A.PDF
+2022176,3233626,text,475909,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB178/id/3233626,https://www.akleg.gov/PDF/34/Bills/HB0178B.PDF
+2022154,3206820,text,513746,application/pdf,Introduced,https://legiscan.com/AK/text/HB179/id/3206820,https://www.akleg.gov/PDF/34/Bills/HB0179A.PDF
+2022258,3206923,text,509285,application/pdf,Introduced,https://legiscan.com/AK/text/HB180/id/3206923,https://www.akleg.gov/PDF/34/Bills/HB0180A.PDF
+2022213,3206879,text,470072,application/pdf,Introduced,https://legiscan.com/AK/text/HB181/id/3206879,https://www.akleg.gov/PDF/34/Bills/HB0181A.PDF
+2023539,3210273,text,475649,application/pdf,Introduced,https://legiscan.com/AK/text/HB182/id/3210273,https://www.akleg.gov/PDF/34/Bills/HB0182A.PDF
+2023529,3210264,text,480734,application/pdf,Introduced,https://legiscan.com/AK/text/HB183/id/3210264,https://www.akleg.gov/PDF/34/Bills/HB0183A.PDF
+2023548,3210281,text,497136,application/pdf,Introduced,https://legiscan.com/AK/text/HB184/id/3210281,https://www.akleg.gov/PDF/34/Bills/HB0184A.PDF
+2023532,3210267,text,477671,application/pdf,Introduced,https://legiscan.com/AK/text/HB185/id/3210267,https://www.akleg.gov/PDF/34/Bills/HB0185A.PDF
+2023545,3210279,text,476708,application/pdf,Introduced,https://legiscan.com/AK/text/HB186/id/3210279,https://www.akleg.gov/PDF/34/Bills/HB0186A.PDF
+2023545,3229360,text,477210,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB186/id/3229360,https://www.akleg.gov/PDF/34/Bills/HB0186B.PDF
+2023534,3210269,text,474511,application/pdf,Introduced,https://legiscan.com/AK/text/HB187/id/3210269,https://www.akleg.gov/PDF/34/Bills/HB0187A.PDF
+2023537,3210272,text,493706,application/pdf,Introduced,https://legiscan.com/AK/text/HB188/id/3210272,https://www.akleg.gov/PDF/34/Bills/HB0188A.PDF
+2023698,3211010,text,476642,application/pdf,Introduced,https://legiscan.com/AK/text/HB189/id/3211010,https://www.akleg.gov/PDF/34/Bills/HB0189A.PDF
+2023712,3211024,text,654336,application/pdf,Introduced,https://legiscan.com/AK/text/HB190/id/3211024,https://www.akleg.gov/PDF/34/Bills/HB0190A.PDF
+2023741,3211053,text,488410,application/pdf,Introduced,https://legiscan.com/AK/text/HB191/id/3211053,https://www.akleg.gov/PDF/34/Bills/HB0191A.PDF
+2023673,3210986,text,516933,application/pdf,Introduced,https://legiscan.com/AK/text/HB192/id/3210986,https://www.akleg.gov/PDF/34/Bills/HB0192A.PDF
+2024019,3212200,text,545206,application/pdf,Introduced,https://legiscan.com/AK/text/HB193/id/3212200,https://www.akleg.gov/PDF/34/Bills/HB0193A.PDF
+2024019,3232012,text,560707,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB193/id/3232012,https://www.akleg.gov/PDF/34/Bills/HB0193B.PDF
+2023994,3212175,text,472769,application/pdf,Introduced,https://legiscan.com/AK/text/HB194/id/3212175,https://www.akleg.gov/PDF/34/Bills/HB0194A.PDF
+2024114,3212287,text,493660,application/pdf,Introduced,https://legiscan.com/AK/text/HB195/id/3212287,https://www.akleg.gov/PDF/34/Bills/HB0195A.PDF
+2024132,3212303,text,487899,application/pdf,Introduced,https://legiscan.com/AK/text/HB196/id/3212303,https://www.akleg.gov/PDF/34/Bills/HB0196A.PDF
+2024351,3213611,text,499614,application/pdf,Introduced,https://legiscan.com/AK/text/HB197/id/3213611,https://www.akleg.gov/PDF/34/Bills/HB0197A.PDF
+2024562,3213819,text,474759,application/pdf,Introduced,https://legiscan.com/AK/text/HB198/id/3213819,https://www.akleg.gov/PDF/34/Bills/HB0198A.PDF
+2024417,3213677,text,480586,application/pdf,Introduced,https://legiscan.com/AK/text/HB199/id/3213677,https://www.akleg.gov/PDF/34/Bills/HB0199A.PDF
+2024417,3231652,text,481820,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HB199/id/3231652,https://www.akleg.gov/PDF/34/Bills/HB0199B.PDF
+2024487,3213747,text,508015,application/pdf,Introduced,https://legiscan.com/AK/text/HB200/id/3213747,https://www.akleg.gov/PDF/34/Bills/HB0200A.PDF
+2025654,3217929,text,493214,application/pdf,Introduced,https://legiscan.com/AK/text/HB201/id/3217929,https://www.akleg.gov/PDF/34/Bills/HB0201A.PDF
+2025524,3217810,text,465289,application/pdf,Introduced,https://legiscan.com/AK/text/HB202/id/3217810,https://www.akleg.gov/PDF/34/Bills/HB0202A.PDF
+2025538,3217824,text,473730,application/pdf,Introduced,https://legiscan.com/AK/text/HB203/id/3217824,https://www.akleg.gov/PDF/34/Bills/HB0203A.PDF
+2025596,3217880,text,514149,application/pdf,Introduced,https://legiscan.com/AK/text/HB204/id/3217880,https://www.akleg.gov/PDF/34/Bills/HB0204A.PDF
+2025560,3217845,text,515918,application/pdf,Introduced,https://legiscan.com/AK/text/HB205/id/3217845,https://www.akleg.gov/PDF/34/Bills/HB0205A.PDF
+2025577,3217861,text,474532,application/pdf,Introduced,https://legiscan.com/AK/text/HB206/id/3217861,https://www.akleg.gov/PDF/34/Bills/HB0206A.PDF
+2026699,3222117,text,471228,application/pdf,Introduced,https://legiscan.com/AK/text/HB207/id/3222117,https://www.akleg.gov/PDF/34/Bills/HB0207A.PDF
+2026914,3223330,text,456932,application/pdf,Introduced,https://legiscan.com/AK/text/HB208/id/3223330,https://www.akleg.gov/PDF/34/Bills/HB0208A.PDF
+2026954,3223370,text,497265,application/pdf,Introduced,https://legiscan.com/AK/text/HB209/id/3223370,https://www.akleg.gov/PDF/34/Bills/HB0209A.PDF
+2027657,3225851,text,470651,application/pdf,Introduced,https://legiscan.com/AK/text/HB210/id/3225851,https://www.akleg.gov/PDF/34/Bills/HB0210A.PDF
+2027596,3225787,text,479142,application/pdf,Introduced,https://legiscan.com/AK/text/HB211/id/3225787,https://www.akleg.gov/PDF/34/Bills/HB0211A.PDF
+2027638,3225831,text,468938,application/pdf,Introduced,https://legiscan.com/AK/text/HB212/id/3225831,https://www.akleg.gov/PDF/34/Bills/HB0212A.PDF
+2027618,3225811,text,473344,application/pdf,Introduced,https://legiscan.com/AK/text/HB213/id/3225811,https://www.akleg.gov/PDF/34/Bills/HB0213A.PDF
+2027649,3225844,text,463756,application/pdf,Introduced,https://legiscan.com/AK/text/HB214/id/3225844,https://www.akleg.gov/PDF/34/Bills/HB0214A.PDF
+2027629,3225823,text,503975,application/pdf,Introduced,https://legiscan.com/AK/text/HB215/id/3225823,https://www.akleg.gov/PDF/34/Bills/HB0215A.PDF
+2028323,3228044,text,480538,application/pdf,Introduced,https://legiscan.com/AK/text/HB216/id/3228044,https://www.akleg.gov/PDF/34/Bills/HB0216A.PDF
+2028252,3227976,text,476714,application/pdf,Introduced,https://legiscan.com/AK/text/HB217/id/3227976,https://www.akleg.gov/PDF/34/Bills/HB0217A.PDF
+2028276,3227998,text,608327,application/pdf,Introduced,https://legiscan.com/AK/text/HB218/id/3227998,https://www.akleg.gov/PDF/34/Bills/HB0218A.PDF
+2029355,3231398,text,475470,application/pdf,Introduced,https://legiscan.com/AK/text/HB219/id/3231398,https://www.akleg.gov/PDF/34/Bills/HB0219A.PDF
+2029396,3231437,text,479377,application/pdf,Introduced,https://legiscan.com/AK/text/HB220/id/3231437,https://www.akleg.gov/PDF/34/Bills/HB0220A.PDF
+2029419,3231463,text,467105,application/pdf,Introduced,https://legiscan.com/AK/text/HB221/id/3231463,https://www.akleg.gov/PDF/34/Bills/HB0221A.PDF
+2029361,3231404,text,514267,application/pdf,Introduced,https://legiscan.com/AK/text/HB222/id/3231404,https://www.akleg.gov/PDF/34/Bills/HB0222A.PDF
+2029423,3231468,text,470948,application/pdf,Introduced,https://legiscan.com/AK/text/HB223/id/3231468,https://www.akleg.gov/PDF/34/Bills/HB0223A.PDF
+2030165,3234144,text,477501,application/pdf,Introduced,https://legiscan.com/AK/text/HB224/id/3234144,https://www.akleg.gov/PDF/34/Bills/HB0224A.PDF
+2030164,3234143,text,484055,application/pdf,Introduced,https://legiscan.com/AK/text/HB225/id/3234143,https://www.akleg.gov/PDF/34/Bills/HB0225A.PDF
+1931942,3069558,text,465971,application/pdf,Introduced,https://legiscan.com/AK/text/HR1/id/3069558,https://www.akleg.gov/PDF/34/Bills/HR0001A.PDF
+1931942,3076536,text,579745,application/pdf,Enrolled,https://legiscan.com/AK/text/HR1/id/3076536,https://www.akleg.gov/PDF/34/Bills/HR0001Z.PDF
+1932865,3070456,text,468567,application/pdf,Introduced,https://legiscan.com/AK/text/HR2/id/3070456,https://www.akleg.gov/PDF/34/Bills/HR0002A.PDF
+1932865,3076544,text,584078,application/pdf,Enrolled,https://legiscan.com/AK/text/HR2/id/3076544,https://www.akleg.gov/PDF/34/Bills/HR0002Z.PDF
+1932407,3070009,text,464763,application/pdf,Introduced,https://legiscan.com/AK/text/HR3/id/3070009,https://www.akleg.gov/PDF/34/Bills/HR0003A.PDF
+1932407,3077002,text,578197,application/pdf,Enrolled,https://legiscan.com/AK/text/HR3/id/3077002,https://www.akleg.gov/PDF/34/Bills/HR0003Z.PDF
+1932175,3069784,text,467342,application/pdf,Introduced,https://legiscan.com/AK/text/HR4/id/3069784,https://www.akleg.gov/PDF/34/Bills/HR0004A.PDF
+1932175,3076543,text,580906,application/pdf,Enrolled,https://legiscan.com/AK/text/HR4/id/3076543,https://www.akleg.gov/PDF/34/Bills/HR0004Z.PDF
+2018991,3198785,text,477932,application/pdf,Introduced,https://legiscan.com/AK/text/HR5/id/3198785,https://www.akleg.gov/PDF/34/Bills/HR0005A.PDF
+1950463,3093773,text,484319,application/pdf,Introduced,https://legiscan.com/AK/text/HCR1/id/3093773,https://www.akleg.gov/PDF/34/Bills/HCR001A.PDF
+1971303,3121606,text,474289,application/pdf,Introduced,https://legiscan.com/AK/text/HCR2/id/3121606,https://www.akleg.gov/PDF/34/Bills/HCR002A.PDF
+1984991,3143108,text,476046,application/pdf,Introduced,https://legiscan.com/AK/text/HCR3/id/3143108,https://www.akleg.gov/PDF/34/Bills/HCR003A.PDF
+1984991,3210303,text,476222,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HCR3/id/3210303,https://www.akleg.gov/PDF/34/Bills/HCR003B.PDF
+2013182,3185965,text,471333,application/pdf,Introduced,https://legiscan.com/AK/text/HCR4/id/3185965,https://www.akleg.gov/PDF/34/Bills/HCR004A.PDF
+2016473,3193335,text,472865,application/pdf,Introduced,https://legiscan.com/AK/text/HCR5/id/3193335,https://www.akleg.gov/PDF/34/Bills/HCR005A.PDF
+2016473,3222289,text,474250,application/pdf,Introduced,https://legiscan.com/AK/text/HCR5/id/3222289,https://www.akleg.gov/PDF/34/Bills/HCR005B.PDF
+2027607,3225801,text,475610,application/pdf,Introduced,https://legiscan.com/AK/text/HCR6/id/3225801,https://www.akleg.gov/PDF/34/Bills/HCR006A.PDF
+2027607,3231356,text,476886,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HCR6/id/3231356,https://www.akleg.gov/PDF/34/Bills/HCR006B.PDF
+2030166,3234145,text,465772,application/pdf,Introduced,https://legiscan.com/AK/text/HCR7/id/3234145,https://www.akleg.gov/PDF/34/Bills/HCR007A.PDF
+1934761,3072069,text,481453,application/pdf,Introduced,https://legiscan.com/AK/text/HJR1/id/3072069,https://www.akleg.gov/PDF/34/Bills/HJR001A.PDF
+1935252,3072497,text,477473,application/pdf,Introduced,https://legiscan.com/AK/text/HJR2/id/3072497,https://www.akleg.gov/PDF/34/Bills/HJR002A.PDF
+1934953,3072237,text,473661,application/pdf,Introduced,https://legiscan.com/AK/text/HJR3/id/3072237,https://www.akleg.gov/PDF/34/Bills/HJR003A.PDF
+1934686,3072004,text,473740,application/pdf,Introduced,https://legiscan.com/AK/text/HJR4/id/3072004,https://www.akleg.gov/PDF/34/Bills/HJR004A.PDF
+1934686,3084797,text,477462,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR4/id/3084797,https://www.akleg.gov/PDF/34/Bills/HJR004B.PDF
+1934686,3115610,text,593685,application/pdf,Enrolled,https://legiscan.com/AK/text/HJR4/id/3115610,https://www.akleg.gov/PDF/34/Bills/HJR004Z.PDF
+1934799,3072101,text,478201,application/pdf,Introduced,https://legiscan.com/AK/text/HJR5/id/3072101,https://www.akleg.gov/PDF/34/Bills/HJR005A.PDF
+1934799,3233969,text,481370,application/pdf,Introduced,https://legiscan.com/AK/text/HJR5/id/3233969,https://www.akleg.gov/PDF/34/Bills/HJR005B.PDF
+1946322,3088756,text,477333,application/pdf,Introduced,https://legiscan.com/AK/text/HJR6/id/3088756,https://www.akleg.gov/PDF/34/Bills/HJR006A.PDF
+1946322,3177921,text,477596,application/pdf,Introduced,https://legiscan.com/AK/text/HJR6/id/3177921,https://www.akleg.gov/PDF/34/Bills/HJR006B.PDF
+1950698,3093996,text,498788,application/pdf,Introduced,https://legiscan.com/AK/text/HJR7/id/3093996,https://www.akleg.gov/PDF/34/Bills/HJR007A.PDF
+1952021,3095874,text,478607,application/pdf,Introduced,https://legiscan.com/AK/text/HJR8/id/3095874,https://www.akleg.gov/PDF/34/Bills/HJR008A.PDF
+1952021,3155600,text,480168,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR8/id/3155600,https://www.akleg.gov/PDF/34/Bills/HJR008B.PDF
+1967357,3115976,text,475082,application/pdf,Introduced,https://legiscan.com/AK/text/HJR9/id/3115976,https://www.akleg.gov/PDF/34/Bills/HJR009A.PDF
+1967357,3193906,text,476324,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR9/id/3193906,https://www.akleg.gov/PDF/34/Bills/HJR009B.PDF
+1979678,3136165,text,476422,application/pdf,Introduced,https://legiscan.com/AK/text/HJR10/id/3136165,https://www.akleg.gov/PDF/34/Bills/HJR010A.PDF
+1984700,3142836,text,484467,application/pdf,Introduced,https://legiscan.com/AK/text/HJR11/id/3142836,https://www.akleg.gov/PDF/34/Bills/HJR011A.PDF
+1984700,3177544,text,486488,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR11/id/3177544,https://www.akleg.gov/PDF/34/Bills/HJR011B.PDF
+1984700,3186585,text,491195,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR11/id/3186585,https://www.akleg.gov/PDF/34/Bills/HJR011C.PDF
+1984700,3228943,text,492893,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR11/id/3228943,https://www.akleg.gov/PDF/34/Bills/HJR011D.PDF
+1989327,3149477,text,472579,application/pdf,Introduced,https://legiscan.com/AK/text/HJR12/id/3149477,https://www.akleg.gov/PDF/34/Bills/HJR012A.PDF
+2012471,3184765,text,485281,application/pdf,Introduced,https://legiscan.com/AK/text/HJR13/id/3184765,https://www.akleg.gov/PDF/34/Bills/HJR013A.PDF
+2012471,3225743,text,486656,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR13/id/3225743,https://www.akleg.gov/PDF/34/Bills/HJR013B.PDF
+2012560,3184853,text,485399,application/pdf,Introduced,https://legiscan.com/AK/text/HJR14/id/3184853,https://www.akleg.gov/PDF/34/Bills/HJR014A.PDF
+2012560,3222426,text,486335,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR14/id/3222426,https://www.akleg.gov/PDF/34/Bills/HJR014B.PDF
+2013235,3186003,text,486117,application/pdf,Introduced,https://legiscan.com/AK/text/HJR15/id/3186003,https://www.akleg.gov/PDF/34/Bills/HJR015A.PDF
+2013235,3207037,text,485889,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR15/id/3207037,https://www.akleg.gov/PDF/34/Bills/HJR015B.PDF
+2013235,3233921,text,488558,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR15/id/3233921,https://www.akleg.gov/PDF/34/Bills/HJR015C.PDF
+2021041,3203707,text,479954,application/pdf,Introduced,https://legiscan.com/AK/text/HJR16/id/3203707,https://www.akleg.gov/PDF/34/Bills/HJR016A.PDF
+2022145,3206810,text,480312,application/pdf,Introduced,https://legiscan.com/AK/text/HJR17/id/3206810,https://www.akleg.gov/PDF/34/Bills/HJR017A.PDF
+2022276,3206942,text,482019,application/pdf,Introduced,https://legiscan.com/AK/text/HJR18/id/3206942,https://www.akleg.gov/PDF/34/Bills/HJR018A.PDF
+2022276,3228286,text,482027,application/pdf,"Comm Sub",https://legiscan.com/AK/text/HJR18/id/3228286,https://www.akleg.gov/PDF/34/Bills/HJR018B.PDF
+2023542,3210276,text,474320,application/pdf,Introduced,https://legiscan.com/AK/text/HJR19/id/3210276,https://www.akleg.gov/PDF/34/Bills/HJR019A.PDF
+2023726,3211038,text,479064,application/pdf,Introduced,https://legiscan.com/AK/text/HJR20/id/3211038,https://www.akleg.gov/PDF/34/Bills/HJR020A.PDF
+2025618,3217899,text,481310,application/pdf,Introduced,https://legiscan.com/AK/text/HJR21/id/3217899,https://www.akleg.gov/PDF/34/Bills/HJR021A.PDF
+2025636,3217915,text,478203,application/pdf,Introduced,https://legiscan.com/AK/text/HJR22/id/3217915,https://www.akleg.gov/PDF/34/Bills/HJR022A.PDF
+2026930,3223347,text,469809,application/pdf,Introduced,https://legiscan.com/AK/text/HJR23/id/3223347,https://www.akleg.gov/PDF/34/Bills/HJR023A.PDF
+2028437,3228765,text,474161,application/pdf,Introduced,https://legiscan.com/AK/text/HJR24/id/3228765,https://www.akleg.gov/PDF/34/Bills/HJR024A.PDF
+2029343,3231387,text,485220,application/pdf,Introduced,https://legiscan.com/AK/text/HJR25/id/3231387,https://www.akleg.gov/PDF/34/Bills/HJR025A.PDF
+2029373,3231415,text,479063,application/pdf,Introduced,https://legiscan.com/AK/text/HJR26/id/3231415,https://www.akleg.gov/PDF/34/Bills/HJR026A.PDF
+1912513,3049494,text,467093,application/pdf,Introduced,https://legiscan.com/AK/text/SB1/id/3049494,https://www.akleg.gov/PDF/34/Bills/SB0001A.PDF
+1912439,3049420,text,501088,application/pdf,Introduced,https://legiscan.com/AK/text/SB2/id/3049420,https://www.akleg.gov/PDF/34/Bills/SB0002A.PDF
+1912473,3049454,text,486193,application/pdf,Introduced,https://legiscan.com/AK/text/SB3/id/3049454,https://www.akleg.gov/PDF/34/Bills/SB0003A.PDF
+1912502,3049483,text,499312,application/pdf,Introduced,https://legiscan.com/AK/text/SB4/id/3049483,https://www.akleg.gov/PDF/34/Bills/SB0004A.PDF
+1912502,3210176,text,489065,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB4/id/3210176,https://www.akleg.gov/PDF/34/Bills/SB0004B.PDF
+1912454,3049435,text,513921,application/pdf,Introduced,https://legiscan.com/AK/text/SB5/id/3049435,https://www.akleg.gov/PDF/34/Bills/SB0005A.PDF
+1912496,3049477,text,466190,application/pdf,Introduced,https://legiscan.com/AK/text/SB6/id/3049477,https://www.akleg.gov/PDF/34/Bills/SB0006A.PDF
+1912496,3175866,text,469365,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB6/id/3175866,https://www.akleg.gov/PDF/34/Bills/SB0006B.PDF
+1912508,3049489,text,465242,application/pdf,Introduced,https://legiscan.com/AK/text/SB7/id/3049489,https://www.akleg.gov/PDF/34/Bills/SB0007A.PDF
+1912438,3049419,text,475766,application/pdf,Introduced,https://legiscan.com/AK/text/SB8/id/3049419,https://www.akleg.gov/PDF/34/Bills/SB0008A.PDF
+1912438,3231639,text,476592,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB8/id/3231639,https://www.akleg.gov/PDF/34/Bills/SB0008B.PDF
+1912501,3049482,text,482866,application/pdf,Introduced,https://legiscan.com/AK/text/SB9/id/3049482,https://www.akleg.gov/PDF/34/Bills/SB0009A.PDF
+1912501,3176454,text,486309,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB9/id/3176454,https://www.akleg.gov/PDF/34/Bills/SB0009B.PDF
+1912472,3049453,text,516707,application/pdf,Introduced,https://legiscan.com/AK/text/SB10/id/3049453,https://www.akleg.gov/PDF/34/Bills/SB0010A.PDF
+1912504,3049485,text,518268,application/pdf,Introduced,https://legiscan.com/AK/text/SB11/id/3049485,https://www.akleg.gov/PDF/34/Bills/SB0011A.PDF
+1912485,3049466,text,504885,application/pdf,Introduced,https://legiscan.com/AK/text/SB12/id/3049466,https://www.akleg.gov/PDF/34/Bills/SB0012A.PDF
+1912485,3175265,text,495263,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB12/id/3175265,https://www.akleg.gov/PDF/34/Bills/SB0012B.PDF
+1912493,3049474,text,465598,application/pdf,Introduced,https://legiscan.com/AK/text/SB13/id/3049474,https://www.akleg.gov/PDF/34/Bills/SB0013A.PDF
+1912493,3208341,text,470068,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB13/id/3208341,https://www.akleg.gov/PDF/34/Bills/SB0013B.PDF
+1912475,3049456,text,496371,application/pdf,Introduced,https://legiscan.com/AK/text/SB14/id/3049456,https://www.akleg.gov/PDF/34/Bills/SB0014A.PDF
+1912436,3049417,text,495671,application/pdf,Introduced,https://legiscan.com/AK/text/SB15/id/3049417,https://www.akleg.gov/PDF/34/Bills/SB0015A.PDF
+1912436,3130788,text,500620,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB15/id/3130788,https://www.akleg.gov/PDF/34/Bills/SB0015B.PDF
+1912436,3205554,text,625712,application/pdf,Enrolled,https://legiscan.com/AK/text/SB15/id/3205554,https://www.akleg.gov/PDF/34/Bills/SB0015Z.PDF
+1912497,3049478,text,471644,application/pdf,Introduced,https://legiscan.com/AK/text/SB16/id/3049478,https://www.akleg.gov/PDF/34/Bills/SB0016A.PDF
+1912452,3049433,text,475164,application/pdf,Introduced,https://legiscan.com/AK/text/SB17/id/3049433,https://www.akleg.gov/PDF/34/Bills/SB0017A.PDF
+1912494,3049475,text,470230,application/pdf,Introduced,https://legiscan.com/AK/text/SB18/id/3049475,https://www.akleg.gov/PDF/34/Bills/SB0018A.PDF
+1912471,3049452,text,483619,application/pdf,Introduced,https://legiscan.com/AK/text/SB19/id/3049452,https://www.akleg.gov/PDF/34/Bills/SB0019A.PDF
+1912442,3049423,text,472097,application/pdf,Introduced,https://legiscan.com/AK/text/SB20/id/3049423,https://www.akleg.gov/PDF/34/Bills/SB0020A.PDF
+1912459,3049440,text,520239,application/pdf,Introduced,https://legiscan.com/AK/text/SB21/id/3049440,https://www.akleg.gov/PDF/34/Bills/SB0021A.PDF
+1912459,3207789,text,514302,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB21/id/3207789,https://www.akleg.gov/PDF/34/Bills/SB0021B.PDF
+1912437,3049418,text,475984,application/pdf,Introduced,https://legiscan.com/AK/text/SB22/id/3049418,https://www.akleg.gov/PDF/34/Bills/SB0022A.PDF
+1912482,3049463,text,479593,application/pdf,Introduced,https://legiscan.com/AK/text/SB23/id/3049463,https://www.akleg.gov/PDF/34/Bills/SB0023A.PDF
+1912461,3049442,text,569175,application/pdf,Introduced,https://legiscan.com/AK/text/SB24/id/3049442,https://www.akleg.gov/PDF/34/Bills/SB0024A.PDF
+1912461,3175259,text,570248,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB24/id/3175259,https://www.akleg.gov/PDF/34/Bills/SB0024B.PDF
+1912461,3234016,text,569874,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB24/id/3234016,https://www.akleg.gov/PDF/34/Bills/SB0024C.PDF
+1912480,3049461,text,482800,application/pdf,Introduced,https://legiscan.com/AK/text/SB25/id/3049461,https://www.akleg.gov/PDF/34/Bills/SB0025A.PDF
+1912446,3049427,text,474365,application/pdf,Introduced,https://legiscan.com/AK/text/SB26/id/3049427,https://www.akleg.gov/PDF/34/Bills/SB0026A.PDF
+1912445,3049426,text,559274,application/pdf,Introduced,https://legiscan.com/AK/text/SB27/id/3049426,https://www.akleg.gov/PDF/34/Bills/SB0027A.PDF
+1912512,3049493,text,716599,application/pdf,Introduced,https://legiscan.com/AK/text/SB28/id/3049493,https://www.akleg.gov/PDF/34/Bills/SB0028A.PDF
+1912466,3049447,text,486758,application/pdf,Introduced,https://legiscan.com/AK/text/SB29/id/3049447,https://www.akleg.gov/PDF/34/Bills/SB0029A.PDF
+1912498,3049479,text,472223,application/pdf,Introduced,https://legiscan.com/AK/text/SB30/id/3049479,https://www.akleg.gov/PDF/34/Bills/SB0030A.PDF
+1912498,3132095,text,473213,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB30/id/3132095,https://www.akleg.gov/PDF/34/Bills/SB0030B.PDF
+1912503,3049484,text,484306,application/pdf,Introduced,https://legiscan.com/AK/text/SB31/id/3049484,https://www.akleg.gov/PDF/34/Bills/SB0031A.PDF
+1912503,3131628,text,484566,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB31/id/3131628,https://www.akleg.gov/PDF/34/Bills/SB0031B.PDF
+1912510,3049491,text,465725,application/pdf,Introduced,https://legiscan.com/AK/text/SB32/id/3049491,https://www.akleg.gov/PDF/34/Bills/SB0032A.PDF
+1912476,3049457,text,481163,application/pdf,Introduced,https://legiscan.com/AK/text/SB33/id/3049457,https://www.akleg.gov/PDF/34/Bills/SB0033A.PDF
+1912514,3049495,text,453170,application/pdf,Introduced,https://legiscan.com/AK/text/SB34/id/3049495,https://www.akleg.gov/PDF/34/Bills/SB0034A.PDF
+1912468,3049449,text,488811,application/pdf,Introduced,https://legiscan.com/AK/text/SB35/id/3049449,https://www.akleg.gov/PDF/34/Bills/SB0035A.PDF
+1912479,3049460,text,482708,application/pdf,Introduced,https://legiscan.com/AK/text/SB36/id/3049460,https://www.akleg.gov/PDF/34/Bills/SB0036A.PDF
+1912469,3049450,text,554635,application/pdf,Introduced,https://legiscan.com/AK/text/SB37/id/3049450,https://www.akleg.gov/PDF/34/Bills/SB0037A.PDF
+1912449,3049430,text,503872,application/pdf,Introduced,https://legiscan.com/AK/text/SB38/id/3049430,https://www.akleg.gov/PDF/34/Bills/SB0038A.PDF
+1912477,3049458,text,496323,application/pdf,Introduced,https://legiscan.com/AK/text/SB39/id/3049458,https://www.akleg.gov/PDF/34/Bills/SB0039A.PDF
+1912477,3143672,text,498867,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB39/id/3143672,https://www.akleg.gov/PDF/34/Bills/SB0039B.PDF
+1912477,3210186,text,499555,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB39/id/3210186,https://www.akleg.gov/PDF/34/Bills/SB0039C.PDF
+1928103,3065423,text,466096,application/pdf,Introduced,https://legiscan.com/AK/text/SB40/id/3065423,https://www.akleg.gov/PDF/34/Bills/SB0040A.PDF
+1927815,3065142,text,482127,application/pdf,Introduced,https://legiscan.com/AK/text/SB41/id/3065142,https://www.akleg.gov/PDF/34/Bills/SB0041A.PDF
+1927873,3065199,text,504066,application/pdf,Introduced,https://legiscan.com/AK/text/SB42/id/3065199,https://www.akleg.gov/PDF/34/Bills/SB0042A.PDF
+1928218,3065537,text,466178,application/pdf,Introduced,https://legiscan.com/AK/text/SB43/id/3065537,https://www.akleg.gov/PDF/34/Bills/SB0043A.PDF
+1928218,3206164,text,590424,application/pdf,Enrolled,https://legiscan.com/AK/text/SB43/id/3206164,https://www.akleg.gov/PDF/34/Bills/SB0043Z.PDF
+1928044,3065366,text,476403,application/pdf,Introduced,https://legiscan.com/AK/text/SB44/id/3065366,https://www.akleg.gov/PDF/34/Bills/SB0044A.PDF
+1928044,3109869,text,477511,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB44/id/3109869,https://www.akleg.gov/PDF/34/Bills/SB0044B.PDF
+1927409,3064743,text,482009,application/pdf,Introduced,https://legiscan.com/AK/text/SB45/id/3064743,https://www.akleg.gov/PDF/34/Bills/SB0045A.PDF
+1927186,3064528,text,503253,application/pdf,Introduced,https://legiscan.com/AK/text/SB46/id/3064528,https://www.akleg.gov/PDF/34/Bills/SB0046A.PDF
+1927186,3149466,text,510815,application/pdf,Introduced,https://legiscan.com/AK/text/SB46/id/3149466,https://www.akleg.gov/PDF/34/Bills/SB0046B.PDF
+1927296,3064633,text,477548,application/pdf,Introduced,https://legiscan.com/AK/text/SB47/id/3064633,https://www.akleg.gov/PDF/34/Bills/SB0047A.PDF
+1927296,3149467,text,479398,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB47/id/3149467,https://www.akleg.gov/PDF/34/Bills/SB0047B.PDF
+1927527,3064856,text,511791,application/pdf,Introduced,https://legiscan.com/AK/text/SB49/id/3064856,https://www.akleg.gov/PDF/34/Bills/SB0049A.PDF
+1927527,3210910,text,514385,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB49/id/3210910,https://www.akleg.gov/PDF/34/Bills/SB0049B.PDF
+1927640,3064968,text,466075,application/pdf,Introduced,https://legiscan.com/AK/text/SB50/id/3064968,https://www.akleg.gov/PDF/34/Bills/SB0050A.PDF
+1927640,3115596,text,465545,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB50/id/3115596,https://www.akleg.gov/PDF/34/Bills/SB0050B.PDF
+1927640,3161081,text,465808,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB50/id/3161081,https://www.akleg.gov/PDF/34/Bills/SB0050C.PDF
+1940399,3078011,text,498318,application/pdf,Introduced,https://legiscan.com/AK/text/SB51/id/3078011,https://www.akleg.gov/PDF/34/Bills/SB0051A.PDF
+1940752,3078385,text,498649,application/pdf,Introduced,https://legiscan.com/AK/text/SB52/id/3078385,https://www.akleg.gov/PDF/34/Bills/SB0052A.PDF
+1941193,3078833,text,523445,application/pdf,Introduced,https://legiscan.com/AK/text/SB53/id/3078833,https://www.akleg.gov/PDF/34/Bills/SB0053A.PDF
+1940795,3078435,text,549828,application/pdf,Introduced,https://legiscan.com/AK/text/SB54/id/3078435,https://www.akleg.gov/PDF/34/Bills/SB0054A.PDF
+1940795,3138865,text,551398,application/pdf,Introduced,https://legiscan.com/AK/text/SB54/id/3138865,https://www.akleg.gov/PDF/34/Bills/SB0054B.PDF
+1940795,3175253,text,568636,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB54/id/3175253,https://www.akleg.gov/PDF/34/Bills/SB0054C.PDF
+1940795,3211224,text,578161,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB54/id/3211224,https://www.akleg.gov/PDF/34/Bills/SB0054D.PDF
+1939921,3077528,text,475757,application/pdf,Introduced,https://legiscan.com/AK/text/SB55/id/3077528,https://www.akleg.gov/PDF/34/Bills/SB0055A.PDF
+1939921,3191251,text,482206,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB55/id/3191251,https://www.akleg.gov/PDF/34/Bills/SB0055B.PDF
+1940532,3078147,text,783078,application/pdf,Introduced,https://legiscan.com/AK/text/SB56/id/3078147,https://www.akleg.gov/PDF/34/Bills/SB0056A.PDF
+1940927,3078570,text,547092,application/pdf,Introduced,https://legiscan.com/AK/text/SB57/id/3078570,https://www.akleg.gov/PDF/34/Bills/SB0057A.PDF
+1940927,3211168,text,622643,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB57/id/3211168,https://www.akleg.gov/PDF/34/Bills/SB0057B.PDF
+1940927,3234136,text,640590,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB57/id/3234136,https://www.akleg.gov/PDF/34/Bills/SB0057C.PDF
+1940840,3078479,text,511488,application/pdf,Introduced,https://legiscan.com/AK/text/SB58/id/3078479,https://www.akleg.gov/PDF/34/Bills/SB0058A.PDF
+1940975,3078616,text,472829,application/pdf,Introduced,https://legiscan.com/AK/text/SB59/id/3078616,https://www.akleg.gov/PDF/34/Bills/SB0059A.PDF
+1941105,3078746,text,466029,application/pdf,Introduced,https://legiscan.com/AK/text/SB60/id/3078746,https://www.akleg.gov/PDF/34/Bills/SB0060A.PDF
+1940003,3077610,text,571325,application/pdf,Introduced,https://legiscan.com/AK/text/SB61/id/3077610,https://www.akleg.gov/PDF/34/Bills/SB0061A.PDF
+1940003,3143647,text,572079,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB61/id/3143647,https://www.akleg.gov/PDF/34/Bills/SB0061B.PDF
+1940089,3077696,text,480799,application/pdf,Introduced,https://legiscan.com/AK/text/SB62/id/3077696,https://www.akleg.gov/PDF/34/Bills/SB0062A.PDF
+1940089,3130863,text,479828,application/pdf,Introduced,https://legiscan.com/AK/text/SB62/id/3130863,https://www.akleg.gov/PDF/34/Bills/SB0062B.PDF
+1940134,3077740,text,474155,application/pdf,Introduced,https://legiscan.com/AK/text/SB63/id/3077740,https://www.akleg.gov/PDF/34/Bills/SB0063A.PDF
+1940708,3078339,text,602652,application/pdf,Introduced,https://legiscan.com/AK/text/SB64/id/3078339,https://www.akleg.gov/PDF/34/Bills/SB0064A.PDF
+1940708,3193169,text,633129,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB64/id/3193169,https://www.akleg.gov/PDF/34/Bills/SB0064B.PDF
+1940708,3233746,text,633190,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB64/id/3233746,https://www.akleg.gov/PDF/34/Bills/SB0064C.PDF
+1941236,3078878,text,465073,application/pdf,Introduced,https://legiscan.com/AK/text/SB65/id/3078878,https://www.akleg.gov/PDF/34/Bills/SB0065A.PDF
+1941016,3078656,text,492878,application/pdf,Introduced,https://legiscan.com/AK/text/SB66/id/3078656,https://www.akleg.gov/PDF/34/Bills/SB0066A.PDF
+1941149,3078791,text,472558,application/pdf,Introduced,https://legiscan.com/AK/text/SB67/id/3078791,https://www.akleg.gov/PDF/34/Bills/SB0067A.PDF
+1940264,3077873,text,481262,application/pdf,Introduced,https://legiscan.com/AK/text/SB68/id/3077873,https://www.akleg.gov/PDF/34/Bills/SB0068A.PDF
+1940444,3078055,text,496183,application/pdf,Introduced,https://legiscan.com/AK/text/SB69/id/3078055,https://www.akleg.gov/PDF/34/Bills/SB0069A.PDF
+1940179,3077785,text,534312,application/pdf,Introduced,https://legiscan.com/AK/text/SB70/id/3077785,https://www.akleg.gov/PDF/34/Bills/SB0070A.PDF
+1940046,3077653,text,480907,application/pdf,Introduced,https://legiscan.com/AK/text/SB71/id/3077653,https://www.akleg.gov/PDF/34/Bills/SB0071A.PDF
+1941279,3078921,text,473713,application/pdf,Introduced,https://legiscan.com/AK/text/SB72/id/3078921,https://www.akleg.gov/PDF/34/Bills/SB0072A.PDF
+1940355,3077965,text,493456,application/pdf,Introduced,https://legiscan.com/AK/text/SB73/id/3077965,https://www.akleg.gov/PDF/34/Bills/SB0073A.PDF
+1942594,3083663,text,483036,application/pdf,Introduced,https://legiscan.com/AK/text/SB74/id/3083663,https://www.akleg.gov/PDF/34/Bills/SB0074A.PDF
+1942525,3083599,text,530071,application/pdf,Introduced,https://legiscan.com/AK/text/SB75/id/3083599,https://www.akleg.gov/PDF/34/Bills/SB0075A.PDF
+1942798,3083849,text,480535,application/pdf,Introduced,https://legiscan.com/AK/text/SB76/id/3083849,https://www.akleg.gov/PDF/34/Bills/SB0076A.PDF
+1942455,3083533,text,501158,application/pdf,Introduced,https://legiscan.com/AK/text/SB77/id/3083533,https://www.akleg.gov/PDF/34/Bills/SB0077A.PDF
+1945999,3088449,text,478419,application/pdf,Introduced,https://legiscan.com/AK/text/SB78/id/3088449,https://www.akleg.gov/PDF/34/Bills/SB0078A.PDF
+1950369,3093683,text,475028,application/pdf,Introduced,https://legiscan.com/AK/text/SB79/id/3093683,https://www.akleg.gov/PDF/34/Bills/SB0079A.PDF
+1950277,3093604,text,474054,application/pdf,Introduced,https://legiscan.com/AK/text/SB80/id/3093604,https://www.akleg.gov/PDF/34/Bills/SB0080A.PDF
+1950277,3170741,text,475033,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB80/id/3170741,https://www.akleg.gov/PDF/34/Bills/SB0080B.PDF
+1950554,3093856,text,468899,application/pdf,Introduced,https://legiscan.com/AK/text/SB81/id/3093856,https://www.akleg.gov/PDF/34/Bills/SB0081A.PDF
+1950651,3093953,text,561272,application/pdf,Introduced,https://legiscan.com/AK/text/SB82/id/3093953,https://www.akleg.gov/PDF/34/Bills/SB0082A.PDF
+1950320,3093641,text,487370,application/pdf,Introduced,https://legiscan.com/AK/text/SB83/id/3093641,https://www.akleg.gov/PDF/34/Bills/SB0083A.PDF
+1956768,3101713,text,517546,application/pdf,Introduced,https://legiscan.com/AK/text/SB84/id/3101713,https://www.akleg.gov/PDF/34/Bills/SB0084A.PDF
+1956592,3101537,text,489865,application/pdf,Introduced,https://legiscan.com/AK/text/SB85/id/3101537,https://www.akleg.gov/PDF/34/Bills/SB0085A.PDF
+1957305,3102245,text,731565,application/pdf,Introduced,https://legiscan.com/AK/text/SB86/id/3102245,https://www.akleg.gov/PDF/34/Bills/SB0086A.PDF
+1957305,3211184,text,734287,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB86/id/3211184,https://www.akleg.gov/PDF/34/Bills/SB0086B.PDF
+1956948,3101893,text,466381,application/pdf,Introduced,https://legiscan.com/AK/text/SB87/id/3101893,https://www.akleg.gov/PDF/34/Bills/SB0087A.PDF
+1956948,3153017,text,588832,application/pdf,Enrolled,https://legiscan.com/AK/text/SB87/id/3153017,https://www.akleg.gov/PDF/34/Bills/SB0087Z.PDF
+1957124,3102066,text,502701,application/pdf,Introduced,https://legiscan.com/AK/text/SB88/id/3102066,https://www.akleg.gov/PDF/34/Bills/SB0088A.PDF
+1957124,3207776,text,503446,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB88/id/3207776,https://www.akleg.gov/PDF/34/Bills/SB0088B.PDF
+1961833,3108101,text,525503,application/pdf,Introduced,https://legiscan.com/AK/text/SB89/id/3108101,https://www.akleg.gov/PDF/34/Bills/SB0089A.PDF
+1963957,3110949,text,490790,application/pdf,Introduced,https://legiscan.com/AK/text/SB90/id/3110949,https://www.akleg.gov/PDF/34/Bills/SB0090A.PDF
+1963740,3110747,text,576543,application/pdf,Introduced,https://legiscan.com/AK/text/SB91/id/3110747,https://www.akleg.gov/PDF/34/Bills/SB0091A.PDF
+1963772,3110778,text,491235,application/pdf,Introduced,https://legiscan.com/AK/text/SB92/id/3110778,https://www.akleg.gov/PDF/34/Bills/SB0092A.PDF
+1963772,3202560,text,485555,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB92/id/3202560,https://www.akleg.gov/PDF/34/Bills/SB0092B.PDF
+1963772,3233765,text,486080,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB92/id/3233765,https://www.akleg.gov/PDF/34/Bills/SB0092C.PDF
+1967228,3115850,text,480747,application/pdf,Introduced,https://legiscan.com/AK/text/SB93/id/3115850,https://www.akleg.gov/PDF/34/Bills/SB0093A.PDF
+1967522,3116130,text,527926,application/pdf,Introduced,https://legiscan.com/AK/text/SB95/id/3116130,https://www.akleg.gov/PDF/34/Bills/SB0095A.PDF
+1967180,3115804,text,486866,application/pdf,Introduced,https://legiscan.com/AK/text/SB96/id/3115804,https://www.akleg.gov/PDF/34/Bills/SB0096A.PDF
+1967100,3115734,text,497474,application/pdf,Introduced,https://legiscan.com/AK/text/SB97/id/3115734,https://www.akleg.gov/PDF/34/Bills/SB0097A.PDF
+1967145,3115774,text,469293,application/pdf,Introduced,https://legiscan.com/AK/text/SB98/id/3115774,https://www.akleg.gov/PDF/34/Bills/SB0098A.PDF
+1971062,3121381,text,484679,application/pdf,Introduced,https://legiscan.com/AK/text/SB99/id/3121381,https://www.akleg.gov/PDF/34/Bills/SB0099A.PDF
+1971446,3121740,text,477345,application/pdf,Introduced,https://legiscan.com/AK/text/SB100/id/3121740,https://www.akleg.gov/PDF/34/Bills/SB0100A.PDF
+1971205,3121513,text,492969,application/pdf,Introduced,https://legiscan.com/AK/text/SB101/id/3121513,https://www.akleg.gov/PDF/34/Bills/SB0101A.PDF
+1975302,3130448,text,466693,application/pdf,Introduced,https://legiscan.com/AK/text/SB102/id/3130448,https://www.akleg.gov/PDF/34/Bills/SB0102A.PDF
+1975420,3130552,text,469622,application/pdf,Introduced,https://legiscan.com/AK/text/SB103/id/3130552,https://www.akleg.gov/PDF/34/Bills/SB0103A.PDF
+1975645,3130757,text,505327,application/pdf,Introduced,https://legiscan.com/AK/text/SB104/id/3130757,https://www.akleg.gov/PDF/34/Bills/SB0104A.PDF
+1975537,3130656,text,531787,application/pdf,Introduced,https://legiscan.com/AK/text/SB105/id/3130656,https://www.akleg.gov/PDF/34/Bills/SB0105A.PDF
+1975360,3130499,text,518573,application/pdf,Introduced,https://legiscan.com/AK/text/SB107/id/3130499,https://www.akleg.gov/PDF/34/Bills/SB0107A.PDF
+1981324,3138465,text,512312,application/pdf,Introduced,https://legiscan.com/AK/text/SB108/id/3138465,https://www.akleg.gov/PDF/34/Bills/SB0108A.PDF
+1981519,3138652,text,487722,application/pdf,Introduced,https://legiscan.com/AK/text/SB109/id/3138652,https://www.akleg.gov/PDF/34/Bills/SB0109A.PDF
+1985285,3143388,text,472601,application/pdf,Introduced,https://legiscan.com/AK/text/SB110/id/3143388,https://www.akleg.gov/PDF/34/Bills/SB0110A.PDF
+1984848,3142972,text,492721,application/pdf,Introduced,https://legiscan.com/AK/text/SB111/id/3142972,https://www.akleg.gov/PDF/34/Bills/SB0111A.PDF
+1984848,3207043,text,496412,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB111/id/3207043,https://www.akleg.gov/PDF/34/Bills/SB0111B.PDF
+1985355,3143458,text,484089,application/pdf,Introduced,https://legiscan.com/AK/text/SB112/id/3143458,https://www.akleg.gov/PDF/34/Bills/SB0112A.PDF
+1984559,3142707,text,597326,application/pdf,Introduced,https://legiscan.com/AK/text/SB113/id/3142707,https://www.akleg.gov/PDF/34/Bills/SB0113A.PDF
+1989322,3149472,text,475054,application/pdf,Introduced,https://legiscan.com/AK/text/SB114/id/3149472,https://www.akleg.gov/PDF/34/Bills/SB0114A.PDF
+1989321,3149471,text,479715,application/pdf,Introduced,https://legiscan.com/AK/text/SB115/id/3149471,https://www.akleg.gov/PDF/34/Bills/SB0115A.PDF
+1992281,3154446,text,483518,application/pdf,Introduced,https://legiscan.com/AK/text/SB116/id/3154446,https://www.akleg.gov/PDF/34/Bills/SB0116A.PDF
+1992107,3154278,text,483822,application/pdf,Introduced,https://legiscan.com/AK/text/SB117/id/3154278,https://www.akleg.gov/PDF/34/Bills/SB0117A.PDF
+1992344,3154507,text,477432,application/pdf,Introduced,https://legiscan.com/AK/text/SB118/id/3154507,https://www.akleg.gov/PDF/34/Bills/SB0118A.PDF
+1992397,3154562,text,469372,application/pdf,Introduced,https://legiscan.com/AK/text/SB119/id/3154562,https://www.akleg.gov/PDF/34/Bills/SB0119A.PDF
+1992516,3154681,text,497792,application/pdf,Introduced,https://legiscan.com/AK/text/SB120/id/3154681,https://www.akleg.gov/PDF/34/Bills/SB0120A.PDF
+1992516,3215995,text,498573,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB120/id/3215995,https://www.akleg.gov/PDF/34/Bills/SB0120B.PDF
+1992457,3154623,text,477321,application/pdf,Introduced,https://legiscan.com/AK/text/SB121/id/3154623,https://www.akleg.gov/PDF/34/Bills/SB0121A.PDF
+1992457,3195247,text,479893,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB121/id/3195247,https://www.akleg.gov/PDF/34/Bills/SB0121B.PDF
+1992573,3154738,text,483990,application/pdf,Introduced,https://legiscan.com/AK/text/SB122/id/3154738,https://www.akleg.gov/PDF/34/Bills/SB0122A.PDF
+1992573,3204466,text,485316,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB122/id/3204466,https://www.akleg.gov/PDF/34/Bills/SB0122B.PDF
+1993500,3156500,text,534975,application/pdf,Introduced,https://legiscan.com/AK/text/SB123/id/3156500,https://www.akleg.gov/PDF/34/Bills/SB0123A.PDF
+1996350,3161253,text,646998,application/pdf,Introduced,https://legiscan.com/AK/text/SB124/id/3161253,https://www.akleg.gov/PDF/34/Bills/SB0124A.PDF
+2005136,3171535,text,480602,application/pdf,Introduced,https://legiscan.com/AK/text/SB125/id/3171535,https://www.akleg.gov/PDF/34/Bills/SB0125A.PDF
+2004705,3171121,text,468642,application/pdf,Introduced,https://legiscan.com/AK/text/SB126/id/3171121,https://www.akleg.gov/PDF/34/Bills/SB0126A.PDF
+2004816,3171228,text,470717,application/pdf,Introduced,https://legiscan.com/AK/text/SB127/id/3171228,https://www.akleg.gov/PDF/34/Bills/SB0127A.PDF
+2005245,3171633,text,569612,application/pdf,Introduced,https://legiscan.com/AK/text/SB128/id/3171633,https://www.akleg.gov/PDF/34/Bills/SB0128A.PDF
+2004922,3171329,text,485737,application/pdf,Introduced,https://legiscan.com/AK/text/SB129/id/3171329,https://www.akleg.gov/PDF/34/Bills/SB0129A.PDF
+2005354,3171739,text,484485,application/pdf,Introduced,https://legiscan.com/AK/text/SB130/id/3171739,https://www.akleg.gov/PDF/34/Bills/SB0130A.PDF
+2005354,3212127,text,484815,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB130/id/3212127,https://www.akleg.gov/PDF/34/Bills/SB0130B.PDF
+2007723,3175407,text,471101,application/pdf,Introduced,https://legiscan.com/AK/text/SB131/id/3175407,https://www.akleg.gov/PDF/34/Bills/SB0131A.PDF
+2007723,3231552,text,473417,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB131/id/3231552,https://www.akleg.gov/PDF/34/Bills/SB0131B.PDF
+2008002,3175626,text,622316,application/pdf,Introduced,https://legiscan.com/AK/text/SB132/id/3175626,https://www.akleg.gov/PDF/34/Bills/SB0132A.PDF
+2008002,3203907,text,624971,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB132/id/3203907,https://www.akleg.gov/PDF/34/Bills/SB0132B.PDF
+2009125,3177709,text,514790,application/pdf,Introduced,https://legiscan.com/AK/text/SB133/id/3177709,https://www.akleg.gov/PDF/34/Bills/SB0133A.PDF
+2009125,3202436,text,515054,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB133/id/3202436,https://www.akleg.gov/PDF/34/Bills/SB0133B.PDF
+2009932,3179551,text,552815,application/pdf,Introduced,https://legiscan.com/AK/text/SB134/id/3179551,https://www.akleg.gov/PDF/34/Bills/SB0134A.PDF
+2010130,3179752,text,505667,application/pdf,Introduced,https://legiscan.com/AK/text/SB135/id/3179752,https://www.akleg.gov/PDF/34/Bills/SB0135A.PDF
+2010130,3212315,text,508621,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB135/id/3212315,https://www.akleg.gov/PDF/34/Bills/SB0135B.PDF
+2010940,3181330,text,489156,application/pdf,Introduced,https://legiscan.com/AK/text/SB136/id/3181330,https://www.akleg.gov/PDF/34/Bills/SB0136A.PDF
+2010986,3181373,text,474211,application/pdf,Introduced,https://legiscan.com/AK/text/SB137/id/3181373,https://www.akleg.gov/PDF/34/Bills/SB0137A.PDF
+2010986,3228147,text,474724,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB137/id/3228147,https://www.akleg.gov/PDF/34/Bills/SB0137B.PDF
+2011027,3181412,text,481565,application/pdf,Introduced,https://legiscan.com/AK/text/SB138/id/3181412,https://www.akleg.gov/PDF/34/Bills/SB0138A.PDF
+2011027,3209881,text,481325,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB138/id/3209881,https://www.akleg.gov/PDF/34/Bills/SB0138B.PDF
+2011106,3181488,text,507981,application/pdf,Introduced,https://legiscan.com/AK/text/SB139/id/3181488,https://www.akleg.gov/PDF/34/Bills/SB0139A.PDF
+2011106,3199027,text,501434,application/pdf,Introduced,https://legiscan.com/AK/text/SB139/id/3199027,https://www.akleg.gov/PDF/34/Bills/SB0139B.PDF
+2013450,3186159,text,471062,application/pdf,Introduced,https://legiscan.com/AK/text/SB140/id/3186159,https://www.akleg.gov/PDF/34/Bills/SB0140A.PDF
+2013290,3186041,text,474150,application/pdf,Introduced,https://legiscan.com/AK/text/SB141/id/3186041,https://www.akleg.gov/PDF/34/Bills/SB0141A.PDF
+2013394,3186114,text,488148,application/pdf,Introduced,https://legiscan.com/AK/text/SB142/id/3186114,https://www.akleg.gov/PDF/34/Bills/SB0142A.PDF
+2014995,3189876,text,468323,application/pdf,Introduced,https://legiscan.com/AK/text/SB143/id/3189876,https://www.akleg.gov/PDF/34/Bills/SB0143A.PDF
+2014995,3231826,text,468691,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB143/id/3231826,https://www.akleg.gov/PDF/34/Bills/SB0143B.PDF
+2015130,3190004,text,470391,application/pdf,Introduced,https://legiscan.com/AK/text/SB144/id/3190004,https://www.akleg.gov/PDF/34/Bills/SB0144A.PDF
+2015189,3190062,text,529817,application/pdf,Introduced,https://legiscan.com/AK/text/SB145/id/3190062,https://www.akleg.gov/PDF/34/Bills/SB0145A.PDF
+2015041,3189918,text,473473,application/pdf,Introduced,https://legiscan.com/AK/text/SB146/id/3189918,https://www.akleg.gov/PDF/34/Bills/SB0146A.PDF
+2015159,3190031,text,493105,application/pdf,Introduced,https://legiscan.com/AK/text/SB147/id/3190031,https://www.akleg.gov/PDF/34/Bills/SB0147A.PDF
+2016522,3193383,text,475997,application/pdf,Introduced,https://legiscan.com/AK/text/SB148/id/3193383,https://www.akleg.gov/PDF/34/Bills/SB0148A.PDF
+2016393,3193258,text,509136,application/pdf,Introduced,https://legiscan.com/AK/text/SB149/id/3193258,https://www.akleg.gov/PDF/34/Bills/SB0149A.PDF
+2016368,3193235,text,479932,application/pdf,Introduced,https://legiscan.com/AK/text/SB150/id/3193235,https://www.akleg.gov/PDF/34/Bills/SB0150A.PDF
+2016413,3193278,text,471527,application/pdf,Introduced,https://legiscan.com/AK/text/SB151/id/3193278,https://www.akleg.gov/PDF/34/Bills/SB0151A.PDF
+2017284,3194865,text,463806,application/pdf,Introduced,https://legiscan.com/AK/text/SB152/id/3194865,https://www.akleg.gov/PDF/34/Bills/SB0152A.PDF
+2018908,3198704,text,474029,application/pdf,Introduced,https://legiscan.com/AK/text/SB153/id/3198704,https://www.akleg.gov/PDF/34/Bills/SB0153A.PDF
+2019211,3199002,text,502841,application/pdf,Introduced,https://legiscan.com/AK/text/SB154/id/3199002,https://www.akleg.gov/PDF/34/Bills/SB0154A.PDF
+2019211,3218837,text,497724,application/pdf,Introduced,https://legiscan.com/AK/text/SB154/id/3218837,https://www.akleg.gov/PDF/34/Bills/SB0154B.PDF
+2018963,3198757,text,466838,application/pdf,Introduced,https://legiscan.com/AK/text/SB155/id/3198757,https://www.akleg.gov/PDF/34/Bills/SB0155A.PDF
+2019073,3198865,text,480078,application/pdf,Introduced,https://legiscan.com/AK/text/SB156/id/3198865,https://www.akleg.gov/PDF/34/Bills/SB0156A.PDF
+2019073,3224146,text,482056,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB156/id/3224146,https://www.akleg.gov/PDF/34/Bills/SB0156B.PDF
+2020764,3202433,text,471881,application/pdf,Introduced,https://legiscan.com/AK/text/SB157/id/3202433,https://www.akleg.gov/PDF/34/Bills/SB0157A.PDF
+2021115,3203782,text,478263,application/pdf,Introduced,https://legiscan.com/AK/text/SB158/id/3203782,https://www.akleg.gov/PDF/34/Bills/SB0158A.PDF
+2021153,3203820,text,469475,application/pdf,Introduced,https://legiscan.com/AK/text/SB159/id/3203820,https://www.akleg.gov/PDF/34/Bills/SB0159A.PDF
+2022202,3206868,text,475684,application/pdf,Introduced,https://legiscan.com/AK/text/SB160/id/3206868,https://www.akleg.gov/PDF/34/Bills/SB0160A.PDF
+2022247,3206913,text,473034,application/pdf,Introduced,https://legiscan.com/AK/text/SB161/id/3206913,https://www.akleg.gov/PDF/34/Bills/SB0161A.PDF
+2022165,3206832,text,490325,application/pdf,Introduced,https://legiscan.com/AK/text/SB162/id/3206832,https://www.akleg.gov/PDF/34/Bills/SB0162A.PDF
+2022121,3206783,text,465815,application/pdf,Introduced,https://legiscan.com/AK/text/SB163/id/3206783,https://www.akleg.gov/PDF/34/Bills/SB0163A.PDF
+2022224,3206890,text,480337,application/pdf,Introduced,https://legiscan.com/AK/text/SB164/id/3206890,https://www.akleg.gov/PDF/34/Bills/SB0164A.PDF
+2022233,3206899,text,509145,application/pdf,Introduced,https://legiscan.com/AK/text/SB165/id/3206899,https://www.akleg.gov/PDF/34/Bills/SB0165A.PDF
+2022131,3206793,text,513732,application/pdf,Introduced,https://legiscan.com/AK/text/SB166/id/3206793,https://www.akleg.gov/PDF/34/Bills/SB0166A.PDF
+2022742,3208447,text,476076,application/pdf,Introduced,https://legiscan.com/AK/text/SB167/id/3208447,https://www.akleg.gov/PDF/34/Bills/SB0167A.PDF
+2022742,3228258,text,477408,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SB167/id/3228258,https://www.akleg.gov/PDF/34/Bills/SB0167B.PDF
+2023521,3210134,text,478006,application/pdf,Introduced,https://legiscan.com/AK/text/SB168/id/3210134,https://www.akleg.gov/PDF/34/Bills/SB0168A.PDF
+2023451,3210070,text,492893,application/pdf,Introduced,https://legiscan.com/AK/text/SB169/id/3210070,https://www.akleg.gov/PDF/34/Bills/SB0169A.PDF
+2023370,3209996,text,583739,application/pdf,Introduced,https://legiscan.com/AK/text/SB170/id/3209996,https://www.akleg.gov/PDF/34/Bills/SB0170A.PDF
+2023686,3210998,text,654294,application/pdf,Introduced,https://legiscan.com/AK/text/SB171/id/3210998,https://www.akleg.gov/PDF/34/Bills/SB0171A.PDF
+2023750,3211062,text,587352,application/pdf,Introduced,https://legiscan.com/AK/text/SB172/id/3211062,https://www.akleg.gov/PDF/34/Bills/SB0172A.PDF
+2023630,3210944,text,479167,application/pdf,Introduced,https://legiscan.com/AK/text/SB173/id/3210944,https://www.akleg.gov/PDF/34/Bills/SB0173A.PDF
+2023646,3210959,text,487297,application/pdf,Introduced,https://legiscan.com/AK/text/SB174/id/3210959,https://www.akleg.gov/PDF/34/Bills/SB0174A.PDF
+2024040,3212218,text,468076,application/pdf,Introduced,https://legiscan.com/AK/text/SB175/id/3212218,https://www.akleg.gov/PDF/34/Bills/SB0175A.PDF
+2024066,3212243,text,472935,application/pdf,Introduced,https://legiscan.com/AK/text/SB176/id/3212243,https://www.akleg.gov/PDF/34/Bills/SB0176A.PDF
+2025808,3218330,text,507975,application/pdf,Introduced,https://legiscan.com/AK/text/SB177/id/3218330,https://www.akleg.gov/PDF/34/Bills/SB0177A.PDF
+2025837,3218361,text,501547,application/pdf,Introduced,https://legiscan.com/AK/text/SB178/id/3218361,https://www.akleg.gov/PDF/34/Bills/SB0178A.PDF
+2025779,3218298,text,510147,application/pdf,Introduced,https://legiscan.com/AK/text/SB179/id/3218298,https://www.akleg.gov/PDF/34/Bills/SB0179A.PDF
+2025717,3218232,text,457268,application/pdf,Introduced,https://legiscan.com/AK/text/SB180/id/3218232,https://www.akleg.gov/PDF/34/Bills/SB0180A.PDF
+2025746,3218263,text,474970,application/pdf,Introduced,https://legiscan.com/AK/text/SB181/id/3218263,https://www.akleg.gov/PDF/34/Bills/SB0181A.PDF
+2025862,3218393,text,514154,application/pdf,Introduced,https://legiscan.com/AK/text/SB182/id/3218393,https://www.akleg.gov/PDF/34/Bills/SB0182A.PDF
+2026124,3219414,text,497994,application/pdf,Introduced,https://legiscan.com/AK/text/SB183/id/3219414,https://www.akleg.gov/PDF/34/Bills/SB0183A.PDF
+2026672,3222091,text,497025,application/pdf,Introduced,https://legiscan.com/AK/text/SB184/id/3222091,https://www.akleg.gov/PDF/34/Bills/SB0184A.PDF
+2026723,3222139,text,495039,application/pdf,Introduced,https://legiscan.com/AK/text/SB185/id/3222139,https://www.akleg.gov/PDF/34/Bills/SB0185A.PDF
+2026712,3222128,text,474057,application/pdf,Introduced,https://legiscan.com/AK/text/SB186/id/3222128,https://www.akleg.gov/PDF/34/Bills/SB0186A.PDF
+2026732,3222147,text,468167,application/pdf,Introduced,https://legiscan.com/AK/text/SB187/id/3222147,https://www.akleg.gov/PDF/34/Bills/SB0187A.PDF
+2028301,3228023,text,608465,application/pdf,Introduced,https://legiscan.com/AK/text/SB188/id/3228023,https://www.akleg.gov/PDF/34/Bills/SB0188A.PDF
+2028230,3227957,text,493452,application/pdf,Introduced,https://legiscan.com/AK/text/SB189/id/3227957,https://www.akleg.gov/PDF/34/Bills/SB0189A.PDF
+2029406,3231449,text,1199358,application/pdf,Introduced,https://legiscan.com/AK/text/SB190/id/3231449,https://www.akleg.gov/PDF/34/Bills/SB0190A.PDF
+2030066,3233650,text,480006,application/pdf,Introduced,https://legiscan.com/AK/text/SB191/id/3233650,https://www.akleg.gov/PDF/34/Bills/SB0191A.PDF
+1933087,3070675,text,468063,application/pdf,Introduced,https://legiscan.com/AK/text/SR1/id/3070675,https://www.akleg.gov/PDF/34/Bills/SR0001A.PDF
+1933087,3073749,text,582705,application/pdf,Enrolled,https://legiscan.com/AK/text/SR1/id/3073749,https://www.akleg.gov/PDF/34/Bills/SR0001Z.PDF
+1932635,3070231,text,467808,application/pdf,Introduced,https://legiscan.com/AK/text/SR2/id/3070231,https://www.akleg.gov/PDF/34/Bills/SR0002A.PDF
+1932635,3074207,text,582228,application/pdf,Enrolled,https://legiscan.com/AK/text/SR2/id/3074207,https://www.akleg.gov/PDF/34/Bills/SR0002Z.PDF
+2030100,3233686,text,475062,application/pdf,Introduced,https://legiscan.com/AK/text/SR3/id/3233686,https://www.akleg.gov/PDF/34/Bills/SR0003A.PDF
+1940884,3078525,text,482090,application/pdf,Introduced,https://legiscan.com/AK/text/SCR1/id/3078525,https://www.akleg.gov/PDF/34/Bills/SCR001A.PDF
+1940884,3207620,text,482139,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SCR1/id/3207620,https://www.akleg.gov/PDF/34/Bills/SCR001B.PDF
+2005454,3171837,text,477737,application/pdf,Introduced,https://legiscan.com/AK/text/SCR2/id/3171837,https://www.akleg.gov/PDF/34/Bills/SCR002A.PDF
+2022650,3208371,text,470792,application/pdf,Introduced,https://legiscan.com/AK/text/SCR3/id/3208371,https://www.akleg.gov/PDF/34/Bills/SCR003A.PDF
+2022650,3216261,text,470782,application/pdf,Introduced,https://legiscan.com/AK/text/SCR3/id/3216261,https://www.akleg.gov/PDF/34/Bills/SCR003B.PDF
+2024092,3212266,text,477441,application/pdf,Introduced,https://legiscan.com/AK/text/SCR4/id/3212266,https://www.akleg.gov/PDF/34/Bills/SCR004A.PDF
+2026684,3222102,text,466154,application/pdf,Introduced,https://legiscan.com/AK/text/SCR5/id/3222102,https://www.akleg.gov/PDF/34/Bills/SCR005A.PDF
+2026684,3228340,text,561158,application/pdf,Enrolled,https://legiscan.com/AK/text/SCR5/id/3228340,https://www.akleg.gov/PDF/34/Bills/SCR005Z.PDF
+1912492,3049473,text,467031,application/pdf,Introduced,https://legiscan.com/AK/text/SJR1/id/3049473,https://www.akleg.gov/PDF/34/Bills/SJR001A.PDF
+1912463,3049444,text,472847,application/pdf,Introduced,https://legiscan.com/AK/text/SJR2/id/3049444,https://www.akleg.gov/PDF/34/Bills/SJR002A.PDF
+1912453,3049434,text,473720,application/pdf,Introduced,https://legiscan.com/AK/text/SJR3/id/3049434,https://www.akleg.gov/PDF/34/Bills/SJR003A.PDF
+1912484,3049465,text,481854,application/pdf,Introduced,https://legiscan.com/AK/text/SJR4/id/3049465,https://www.akleg.gov/PDF/34/Bills/SJR004A.PDF
+1912491,3049472,text,482242,application/pdf,Introduced,https://legiscan.com/AK/text/SJR5/id/3049472,https://www.akleg.gov/PDF/34/Bills/SJR005A.PDF
+1940667,3078293,text,497517,application/pdf,Introduced,https://legiscan.com/AK/text/SJR6/id/3078293,https://www.akleg.gov/PDF/34/Bills/SJR006A.PDF
+1940667,3185916,text,498653,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SJR6/id/3185916,https://www.akleg.gov/PDF/34/Bills/SJR006B.PDF
+1940487,3078098,text,473620,application/pdf,Introduced,https://legiscan.com/AK/text/SJR7/id/3078098,https://www.akleg.gov/PDF/34/Bills/SJR007A.PDF
+1971253,3121558,text,477258,application/pdf,Introduced,https://legiscan.com/AK/text/SJR8/id/3121558,https://www.akleg.gov/PDF/34/Bills/SJR008A.PDF
+1975480,3130605,text,487506,application/pdf,Introduced,https://legiscan.com/AK/text/SJR9/id/3130605,https://www.akleg.gov/PDF/34/Bills/SJR009A.PDF
+1977773,3133572,text,485157,application/pdf,Introduced,https://legiscan.com/AK/text/SJR10/id/3133572,https://www.akleg.gov/PDF/34/Bills/SJR010A.PDF
+1977773,3223416,text,4786,application/pdf,Introduced,https://legiscan.com/AK/text/SJR10/id/3223416,https://www.akleg.gov/PDF/34/F/SJR010-1-1-030525-LEG-N.PDF
+1977773,3226405,text,487563,application/pdf,Introduced,https://legiscan.com/AK/text/SJR10/id/3226405,https://www.akleg.gov/PDF/34/Bills/SJR010B.PDF
+1985429,3143526,text,481884,application/pdf,Introduced,https://legiscan.com/AK/text/SJR11/id/3143526,https://www.akleg.gov/PDF/34/Bills/SJR011A.PDF
+1985212,3143318,text,483621,application/pdf,Introduced,https://legiscan.com/AK/text/SJR12/id/3143318,https://www.akleg.gov/PDF/34/Bills/SJR012A.PDF
+1985212,3190275,text,484207,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SJR12/id/3190275,https://www.akleg.gov/PDF/34/Bills/SJR012B.PDF
+1989326,3149476,text,472788,application/pdf,Introduced,https://legiscan.com/AK/text/SJR13/id/3149476,https://www.akleg.gov/PDF/34/Bills/SJR013A.PDF
+1993761,3156728,text,476598,application/pdf,Introduced,https://legiscan.com/AK/text/SJR14/id/3156728,https://www.akleg.gov/PDF/34/Bills/SJR014A.PDF
+2011071,3181454,text,476919,application/pdf,Introduced,https://legiscan.com/AK/text/SJR15/id/3181454,https://www.akleg.gov/PDF/34/Bills/SJR015A.PDF
+2011071,3204567,text,477925,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SJR15/id/3204567,https://www.akleg.gov/PDF/34/Bills/SJR015B.PDF
+2019101,3198892,text,480146,application/pdf,Introduced,https://legiscan.com/AK/text/SJR16/id/3198892,https://www.akleg.gov/PDF/34/Bills/SJR016A.PDF
+2019127,3198918,text,469835,application/pdf,Introduced,https://legiscan.com/AK/text/SJR17/id/3198918,https://www.akleg.gov/PDF/34/Bills/SJR017A.PDF
+2019233,3199024,text,486719,application/pdf,Introduced,https://legiscan.com/AK/text/SJR18/id/3199024,https://www.akleg.gov/PDF/34/Bills/SJR018A.PDF
+2022838,3208521,text,490183,application/pdf,Introduced,https://legiscan.com/AK/text/SJR19/id/3208521,https://www.akleg.gov/PDF/34/Bills/SJR019A.PDF
+2022838,3222225,text,490887,application/pdf,"Comm Sub",https://legiscan.com/AK/text/SJR19/id/3222225,https://www.akleg.gov/PDF/34/Bills/SJR019B.PDF
+2023660,3210972,text,476979,application/pdf,Introduced,https://legiscan.com/AK/text/SJR20/id/3210972,https://www.akleg.gov/PDF/34/Bills/SJR020A.PDF
+2029384,3231426,text,484782,application/pdf,Introduced,https://legiscan.com/AK/text/SJR21/id/3231426,https://www.akleg.gov/PDF/34/Bills/SJR021A.PDF

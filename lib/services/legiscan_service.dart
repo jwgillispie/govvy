@@ -1,15 +1,73 @@
 // lib/services/legiscan_service.dart
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:govvy/services/network_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:archive/archive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// Model class to represent a dataset in the LegiScan API
+class LegiScanDataset {
+  final int datasetId;
+  final String state;
+  final String session;
+  final String accessTime;
+  final String lastUpdate;
+  final int size;
+  final bool fetched;
+  final String? localPath;
+
+  LegiScanDataset({
+    required this.datasetId,
+    required this.state,
+    required this.session,
+    required this.accessTime,
+    required this.lastUpdate,
+    required this.size,
+    this.fetched = false,
+    this.localPath,
+  });
+
+  factory LegiScanDataset.fromMap(Map<String, dynamic> map) {
+    return LegiScanDataset(
+      datasetId: map['dataset_id'] as int,
+      state: map['state'] as String,
+      session: map['session_id'].toString(),
+      accessTime: map['access_time'] as String,
+      lastUpdate: map['update_date'] as String,
+      size: map['size'] as int,
+      fetched: map['fetched'] as bool? ?? false,
+      localPath: map['local_path'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'dataset_id': datasetId,
+      'state': state,
+      'session_id': session,
+      'access_time': accessTime,
+      'update_date': lastUpdate,
+      'size': size,
+      'fetched': fetched,
+      'local_path': localPath,
+    };
+  }
+}
 
 class LegiscanService {
   final String _baseUrl = 'https://api.legiscan.com/';
   final NetworkService _networkService = NetworkService();
-
+  
+  // Cache constants
+  static const String _datasetsLastUpdatedKey = 'datasets_last_updated';
+  static const String _datasetsMetadataKey = 'datasets_metadata';
+  static const Duration _datasetsCacheMaxAge = Duration(days: 7);
+  
   // Get API key from Remote Config
   String? get _apiKey => RemoteConfigService().getLegiscanApiKey;
 
@@ -481,6 +539,12 @@ class LegiscanService {
             if (operation == 'getSearch' || operation == 'getSessionList') {
               return data; // Return the data anyway for these operations
             }
+            
+            // For getBill operations, still return the error response so we can check the specific error
+            if (operation == 'getBill') {
+              return data; // Return error data for proper handling
+            }
+            
             return null;
           }
         } else {
@@ -686,5 +750,484 @@ class LegiscanService {
   // Check network connectivity
   Future<bool> checkNetworkConnectivity() async {
     return await _networkService.checkConnectivity();
+  }
+  
+  // DATASET HANDLING METHODS
+  
+  /// Gets the list of available datasets from LegiScan API
+  /// Returns a map of state codes to datasets
+  Future<Map<String, LegiScanDataset>> getDatasetList({String state = 'ALL'}) async {
+    if (!hasApiKey) {
+      if (kDebugMode) {
+        print('No LegiScan API key available for fetching datasets');
+      }
+      return {};
+    }
+    
+    try {
+      if (kDebugMode) {
+        print('Fetching dataset list for state: $state');
+      }
+      
+      // Check network connectivity
+      if (!await _networkService.checkConnectivity()) {
+        throw Exception('No network connectivity');
+      }
+      
+      // Call the LegiScan API getDatasetList endpoint
+      final params = <String, String>{
+        'state': state,
+      };
+      
+      final response = await callApi('getDatasetList', params);
+      
+      if (response == null) {
+        if (kDebugMode) {
+          print('No response from getDatasetList API call');
+        }
+        return {};
+      }
+      
+      // Process the response
+      if (!response.containsKey('datasetlist')) {
+        if (kDebugMode) {
+          print('Missing datasetlist key in API response');
+          print('Response keys: ${response.keys.join(', ')}');
+        }
+        return {};
+      }
+      
+      final datasetList = response['datasetlist'] as Map<String, dynamic>;
+      final Map<String, LegiScanDataset> datasets = {};
+      
+      // Process each dataset in the response
+      datasetList.forEach((key, value) {
+        // Skip 'state' key (metadata)
+        if (key == 'state') return;
+        
+        try {
+          final datasetData = Map<String, dynamic>.from(value as Map);
+          
+          // Convert proper types for dataset fields
+          if (datasetData['dataset_id'] is String) {
+            datasetData['dataset_id'] = int.parse(datasetData['dataset_id'] as String);
+          }
+          
+          if (datasetData['size'] is String) {
+            datasetData['size'] = int.parse(datasetData['size'] as String);
+          }
+          
+          // Create a dataset object and add to map
+          final dataset = LegiScanDataset.fromMap(datasetData);
+          datasets[dataset.state] = dataset;
+          
+          if (kDebugMode) {
+            print('Processed dataset for state: ${dataset.state}, ID: ${dataset.datasetId}');
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('Error processing dataset: $e');
+          }
+        }
+      });
+      
+      // Save the datasets metadata to cache
+      await _saveDatasetMetadata(datasets);
+      
+      return datasets;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching dataset list: $e');
+      }
+      
+      // Try to load from cache if API call fails
+      return _loadDatasetMetadata();
+    }
+  }
+  
+  /// Downloads a specific dataset by ID and extracts it to the app's documents directory
+  /// Returns the path to the extracted dataset directory
+  Future<String?> getDataset(int datasetId) async {
+    if (!hasApiKey) {
+      if (kDebugMode) {
+        print('No LegiScan API key available for downloading dataset');
+      }
+      return null;
+    }
+    
+    try {
+      if (kDebugMode) {
+        print('Downloading dataset with ID: $datasetId');
+      }
+      
+      // Check network connectivity
+      if (!await _networkService.checkConnectivity()) {
+        throw Exception('No network connectivity');
+      }
+      
+      // Call the LegiScan API getDataset endpoint
+      final params = <String, String>{
+        'id': datasetId.toString(),
+      };
+      
+      // Get app's documents directory for storing the dataset
+      final appDocDir = await getApplicationDocumentsDirectory();
+      final datasetsDir = Directory('${appDocDir.path}/legiscan_datasets');
+      
+      // Create the directory if it doesn't exist
+      if (!await datasetsDir.exists()) {
+        await datasetsDir.create(recursive: true);
+      }
+      
+      // Set up the download path
+      final zipFilePath = '${datasetsDir.path}/dataset_$datasetId.zip';
+      final extractPath = '${datasetsDir.path}/dataset_$datasetId';
+      
+      // Extract path directory
+      final extractDir = Directory(extractPath);
+      if (await extractDir.exists()) {
+        // Clean up old dataset files if they exist
+        await extractDir.delete(recursive: true);
+      }
+      await extractDir.create(recursive: true);
+      
+      if (kDebugMode) {
+        print('Will save dataset to: $zipFilePath');
+        print('Will extract to: $extractPath');
+      }
+      
+      // Build URL for direct download
+      final Map<String, String> queryParams = {
+        'key': _apiKey!,
+        'op': 'getDataset',
+        'id': datasetId.toString(),
+      };
+      
+      final url = Uri.parse(_baseUrl).replace(queryParameters: queryParams);
+      
+      if (kDebugMode) {
+        final redactedUrl = url.toString().replaceAll(_apiKey!, '[REDACTED]');
+        print('LegiScan Dataset download URL: $redactedUrl');
+      }
+      
+      // Setup a timeout for the download
+      final Duration timeout = const Duration(minutes: 5);
+      
+      // Download the dataset file
+      final response = await http.get(url).timeout(timeout);
+      
+      if (response.statusCode == 200) {
+        if (kDebugMode) {
+          print('Dataset downloaded successfully, size: ${response.bodyBytes.length} bytes');
+        }
+        
+        // Save the zip file
+        final file = File(zipFilePath);
+        await file.writeAsBytes(response.bodyBytes);
+        
+        // Extract the zip file
+        if (kDebugMode) {
+          print('Extracting dataset...');
+        }
+        
+        try {
+          // Read the zip file
+          final bytes = await file.readAsBytes();
+          
+          // Decode the zip file
+          final archive = ZipDecoder().decodeBytes(bytes);
+          
+          // Extract each file
+          for (final file in archive) {
+            final fileName = file.name;
+            if (file.isFile) {
+              final data = file.content as List<int>;
+              final outFile = File('$extractPath/$fileName');
+              
+              // Create directories for the file if needed
+              await outFile.parent.create(recursive: true);
+              
+              // Write the file
+              await outFile.writeAsBytes(data);
+              
+              if (kDebugMode && fileName.endsWith('.json')) {
+                print('Extracted file: $fileName');
+              }
+            }
+          }
+          
+          if (kDebugMode) {
+            print('Dataset extraction complete');
+          }
+          
+          // Update the dataset metadata to show this dataset has been fetched
+          await _updateDatasetStatus(datasetId, extractPath);
+          
+          // Delete the zip file to save space
+          await file.delete();
+          
+          return extractPath;
+        } catch (extractError) {
+          if (kDebugMode) {
+            print('Error extracting dataset: $extractError');
+          }
+          return null;
+        }
+      } else {
+        if (kDebugMode) {
+          print('Error downloading dataset: ${response.statusCode} - ${response.body}');
+        }
+        return null;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error getting dataset: $e');
+      }
+      return null;
+    }
+  }
+  
+  /// Gets new datasets for the specified states that have been updated since
+  /// the last check based on the update_date field
+  Future<List<LegiScanDataset>> getNewDatasets({List<String>? states}) async {
+    // If no states specified, use all states
+    final targetStates = states ?? ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 
+      'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 
+      'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 
+      'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC'];
+    
+    try {
+      // Get the current list of datasets
+      final allDatasets = await getDatasetList();
+      
+      // Load cached dataset metadata
+      final cachedDatasets = await _loadDatasetMetadata();
+      
+      // Filter datasets that are new or updated
+      final List<LegiScanDataset> newDatasets = [];
+      
+      for (final state in targetStates) {
+        // Check if we have a dataset for this state
+        if (allDatasets.containsKey(state)) {
+          final currentDataset = allDatasets[state]!;
+          
+          // Check if we've seen this dataset before
+          if (cachedDatasets.containsKey(state)) {
+            final cachedDataset = cachedDatasets[state]!;
+            
+            // Compare last_update timestamps to see if there's a newer version
+            // Parse dates for comparison - LegiScan uses YYYY-MM-DD HH:MM:SS format
+            final currentUpdateTime = DateTime.parse(currentDataset.lastUpdate.replaceAll(' ', 'T'));
+            final cachedUpdateTime = DateTime.parse(cachedDataset.lastUpdate.replaceAll(' ', 'T'));
+            
+            if (currentUpdateTime.isAfter(cachedUpdateTime)) {
+              if (kDebugMode) {
+                print('Found updated dataset for $state: ${currentDataset.datasetId}');
+                print('Current update time: $currentUpdateTime, Cached: $cachedUpdateTime');
+              }
+              newDatasets.add(currentDataset);
+            } else if (kDebugMode) {
+              print('Dataset for $state is up to date');
+            }
+          } else {
+            // This is a new state we haven't seen before
+            if (kDebugMode) {
+              print('Found new dataset for $state: ${currentDataset.datasetId}');
+            }
+            newDatasets.add(currentDataset);
+          }
+        } else if (kDebugMode) {
+          print('No dataset available for state: $state');
+        }
+      }
+      
+      return newDatasets;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error checking for new datasets: $e');
+      }
+      return [];
+    }
+  }
+  
+  /// Processes a downloaded dataset and adds its bills to the database
+  /// Returns the number of bills processed
+  Future<int> processDataset(String datasetPath) async {
+    try {
+      if (kDebugMode) {
+        print('Processing dataset at: $datasetPath');
+      }
+      
+      // Check if the directory exists
+      final dir = Directory(datasetPath);
+      if (!await dir.exists()) {
+        throw Exception('Dataset directory not found: $datasetPath');
+      }
+      
+      // Look for the index.json file, which contains metadata about the dataset
+      final indexFile = File('$datasetPath/index.json');
+      if (!await indexFile.exists()) {
+        throw Exception('Dataset index file not found');
+      }
+      
+      // Read and parse the index
+      final indexData = json.decode(await indexFile.readAsString());
+      
+      // Extract state code from the dataset
+      final String state = indexData['state'] ?? 'Unknown';
+      
+      if (kDebugMode) {
+        print('Dataset state: $state');
+        print('Dataset metadata: ${indexData.keys}');
+      }
+      
+      // Process bill data from the dataset
+      int billsProcessed = 0;
+      
+      // Look for the bills.json file
+      final billsFile = File('$datasetPath/bills.json');
+      if (await billsFile.exists()) {
+        // Read and parse bills
+        final billsData = json.decode(await billsFile.readAsString());
+        
+        if (billsData is Map) {
+          // Count how many bills we have
+          final billCount = billsData.keys.where((key) => key != 'state').length;
+          
+          if (kDebugMode) {
+            print('Found $billCount bills in dataset');
+          }
+          
+          billsProcessed = billCount;
+        }
+      }
+      
+      return billsProcessed;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error processing dataset: $e');
+      }
+      return 0;
+    }
+  }
+  
+  // DATASET CACHING METHODS
+  
+  /// Saves dataset metadata to shared preferences
+  Future<void> _saveDatasetMetadata(Map<String, LegiScanDataset> datasets) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      
+      // Prepare data for storage
+      final Map<String, dynamic> datasetData = {};
+      
+      for (final entry in datasets.entries) {
+        datasetData[entry.key] = entry.value.toMap();
+      }
+      
+      // Save metadata
+      await prefs.setString(_datasetsMetadataKey, json.encode(datasetData));
+      
+      // Update last checked timestamp
+      await prefs.setInt(_datasetsLastUpdatedKey, DateTime.now().millisecondsSinceEpoch);
+      
+      if (kDebugMode) {
+        print('Saved metadata for ${datasets.length} datasets');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error saving dataset metadata: $e');
+      }
+    }
+  }
+  
+  /// Loads dataset metadata from shared preferences
+  Future<Map<String, LegiScanDataset>> _loadDatasetMetadata() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      
+      // Check if cache is valid
+      final lastUpdated = prefs.getInt(_datasetsLastUpdatedKey) ?? 0;
+      final now = DateTime.now().millisecondsSinceEpoch;
+      
+      if (now - lastUpdated > _datasetsCacheMaxAge.inMilliseconds) {
+        if (kDebugMode) {
+          print('Dataset cache is too old, returning empty map');
+        }
+        return {};
+      }
+      
+      // Load metadata
+      final datasetData = prefs.getString(_datasetsMetadataKey);
+      
+      if (datasetData == null) {
+        return {};
+      }
+      
+      final Map<String, dynamic> metadata = json.decode(datasetData);
+      final Map<String, LegiScanDataset> datasets = {};
+      
+      // Convert to dataset objects
+      for (final entry in metadata.entries) {
+        final stateCode = entry.key;
+        final datasetMap = Map<String, dynamic>.from(entry.value);
+        
+        datasets[stateCode] = LegiScanDataset.fromMap(datasetMap);
+      }
+      
+      if (kDebugMode) {
+        print('Loaded metadata for ${datasets.length} datasets from cache');
+      }
+      
+      return datasets;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading dataset metadata: $e');
+      }
+      return {};
+    }
+  }
+  
+  /// Updates the status of a dataset to indicate it has been fetched
+  Future<void> _updateDatasetStatus(int datasetId, String localPath) async {
+    try {
+      // Load current metadata
+      final datasets = await _loadDatasetMetadata();
+      
+      // Find the dataset by ID
+      String? targetState;
+      for (final entry in datasets.entries) {
+        if (entry.value.datasetId == datasetId) {
+          targetState = entry.key;
+          break;
+        }
+      }
+      
+      if (targetState != null) {
+        // Update the dataset
+        final updatedDataset = LegiScanDataset(
+          datasetId: datasetId,
+          state: datasets[targetState]!.state,
+          session: datasets[targetState]!.session,
+          accessTime: datasets[targetState]!.accessTime,
+          lastUpdate: datasets[targetState]!.lastUpdate,
+          size: datasets[targetState]!.size,
+          fetched: true,
+          localPath: localPath,
+        );
+        
+        // Save the updated dataset
+        datasets[targetState] = updatedDataset;
+        await _saveDatasetMetadata(datasets);
+        
+        if (kDebugMode) {
+          print('Updated status for dataset $datasetId (state: $targetState)');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error updating dataset status: $e');
+      }
+    }
   }
 }

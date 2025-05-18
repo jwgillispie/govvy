@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:govvy/screens/home/home_screen_wrapper.dart';
 import 'package:govvy/widgets/welcome/signup_success_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
@@ -63,11 +64,14 @@ Future<void> _signUp() async {
     // Normalize phone number to E.164 format for Firebase
     String normalizedPhone = normalizePhoneNumber(_phoneController.text);
     
+    // Mark that the user has used the app (to skip landing page next time)
+    await authService.setUserHasUsedApp();
+    
     await authService.registerWithEmailAndPassword(
       email: _emailController.text.trim(),
       password: _passwordController.text,
       name: _nameController.text.trim(),
-      address: _addressController.text.trim(),
+      address: "Not provided", // Default address since we removed the field
       phone: normalizedPhone,
     );
     
@@ -80,9 +84,21 @@ Future<void> _signUp() async {
           name: _nameController.text.trim().split(' ').first, // Use first name
           onDismiss: () {
             Navigator.of(context).pop();
+            // Navigate directly to home screen
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const HomeScreenWrapper(),
+              ),
+            );
           },
           onContinue: () {
             Navigator.of(context).pop();
+            // Navigate directly to home screen
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const HomeScreenWrapper(),
+              ),
+            );
             if (widget.onSignUpSuccess != null) {
               widget.onSignUpSuccess!();
             }
@@ -257,28 +273,6 @@ Future<void> _signUp() async {
               }
               if (value.length < 6) {
                 return 'Password must be at least 6 characters';
-              }
-              return null;
-            },
-          ),
-          const SizedBox(height: 8),
-          TextFormField(
-            controller: _addressController,
-            decoration: InputDecoration(
-              labelText: 'Address',
-              filled: true,
-              fillColor: Colors.grey.shade100,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: BorderSide.none,
-              ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              prefixIcon: const Icon(Icons.location_on_outlined, size: 18),
-              isDense: true,
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter your address';
               }
               return null;
             },

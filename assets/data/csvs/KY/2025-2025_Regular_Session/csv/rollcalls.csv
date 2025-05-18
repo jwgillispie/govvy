@@ -1,0 +1,702 @@
+bill_id,roll_call_id,date,chamber,description,yea,nay,nv,absent,total
+1904311,1488272,2025-02-12,House,"House: Third Reading RCS# 17",92,5,0,3,100
+1904346,1500773,2025-02-26,House,"House: Third Reading RCS# 89",95,0,0,5,100
+1904357,1501758,2025-02-27,Senate,"Senate: Third Reading W/scs1 sfa1 RSN# 3402",35,2,0,1,38
+1904357,1518190,2025-03-14,House,"House: Third Reading RCS# 278",85,2,0,13,100
+1904357,1518191,2025-03-14,Senate,"Senate: Third Reading RSN# 3578",36,0,0,2,38
+1904360,1501875,2025-02-27,House,"House: Third Reading RCS# 110",94,0,0,6,100
+1904372,1500519,2025-02-26,House,"House: Adopt HFA 1 RCS# 80",11,62,0,27,100
+1904372,1500520,2025-02-26,House,"House: Third Reading RCS# 81",68,29,0,3,100
+1904377,1496569,2025-02-21,House,"House: Third Reading RCS# 55",88,4,0,8,100
+1904377,1516632,2025-03-12,Senate,"Senate: Third Reading RSN# 3490",37,0,0,1,38
+1904400,1499407,2025-02-25,Senate,"Senate: Third Reading RSN# 3385",31,6,0,1,38
+1904400,1517834,2025-03-13,House,"House: Adopt HCS 1 RCS# 257",67,20,0,13,100
+1904400,1517835,2025-03-13,House,"House: Suspend the Rules RCS# 258",19,25,0,56,100
+1904400,1517836,2025-03-13,House,"House: Suspend the Rules RCS# 259",17,35,0,48,100
+1904400,1517837,2025-03-13,House,"House: Third Reading RCS# 260",72,19,0,9,100
+1904400,1518174,2025-03-14,Senate,"Senate: Third Reading RSN# 3554",26,10,0,2,38
+1904400,1529631,2025-03-27,Senate,"Senate: Third Reading RSN# 3584",29,8,0,1,38
+1904400,1529632,2025-03-27,House,"House: Third Reading RCS# 337",74,17,0,9,100
+1904414,1484124,2025-02-07,Senate,"Senate: Third Reading W/scs1 sfa1 RSN# 3343",37,0,1,0,38
+1904420,1471229,2025-01-08,House,"House: Adopt  RCS# 4",20,75,0,5,100
+1904427,1495852,2025-02-20,Senate,"Senate: Third Reading W/scs1 RSN# 3375",34,0,0,4,38
+1904427,1517700,2025-03-13,House,"House: Third Reading RCS# 239",95,0,0,5,100
+1904427,1517701,2025-03-13,Senate,"Senate: Third Reading RSN# 3514",30,5,1,2,38
+1904427,1517702,2025-03-13,Senate,"Senate: Third Reading RSN# 3515",38,0,0,0,38
+1904427,1529611,2025-03-27,Senate,"Senate: Third Reading RSN# 3586",32,6,0,0,38
+1904427,1529612,2025-03-27,House,"House: Third Reading RCS# 341",81,10,0,9,100
+1904430,1492830,2025-02-18,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3364",36,0,0,2,38
+1904430,1515397,2025-03-11,House,"House: Third Reading RCS# 201",92,1,0,7,100
+1904441,1492829,2025-02-18,Senate,"Senate: Third Reading RSN# 3363",37,0,0,1,38
+1904441,1515377,2025-03-11,House,"House: Third Reading RCS# 211",91,2,0,7,100
+1904455,1492807,2025-02-18,House,"House: Third Reading RCS# 24",93,0,0,7,100
+1904455,1515331,2025-03-11,Senate,"Senate: Third Reading RSN# 3465",35,0,0,3,38
+1904469,1505094,2025-03-04,House,"House: Third Reading RCS# 142",98,1,0,1,100
+1904469,1518201,2025-03-14,Senate,"Senate: Third Reading W/scs1 RSN# 3561",37,0,0,1,38
+1904469,1530446,2025-03-28,House,"House: Third Reading RCS# 355",96,1,0,3,100
+1904493,1471227,2025-01-09,House,"House: Adopt HFA 8 RCS# 6",20,77,0,3,100
+1904493,1471228,2025-01-09,House,"House: Third Reading RCS# 7",90,7,0,3,100
+1904493,1480280,2025-02-04,Senate,"Senate: Third Reading RSN# 3337",34,3,0,1,38
+1904511,1508043,2025-03-06,House,"House: Third Reading RCS# 167",82,9,0,9,100
+1904511,1517832,2025-03-13,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3506",29,0,5,4,38
+1904511,1517833,2025-03-13,House,"House: Third Reading RCS# 244",74,17,0,9,100
+1904511,1529607,2025-03-27,House,"House: Third Reading RCS# 326",77,20,0,3,100
+1904511,1529608,2025-03-27,Senate,"Senate: Third Reading RSN# 3665",31,7,0,0,38
+1904524,1488271,2025-02-12,House,"House: Third Reading RCS# 16",85,12,0,3,100
+1904524,1515347,2025-03-11,Senate,"Senate: Third Reading W/scs1 RSN# 3467",29,6,0,3,38
+1904524,1518169,2025-03-14,House,"House: Third Reading RCS# 292",77,12,0,11,100
+1904528,1496544,2025-02-21,House,"House: Third Reading RCS# 54",89,1,0,10,100
+1904528,1530497,2025-03-28,Senate,"Senate: Third Reading RSN# 3679",38,0,0,0,38
+1904533,1484093,2025-02-07,Senate,"Senate: Third Reading W/scs1 RSN# 3344",38,0,0,0,38
+1904533,1517652,2025-03-13,House,"House: Third Reading RCS# 246",84,8,0,8,100
+1904533,1518215,2025-03-14,Senate,"Senate: Third Reading RSN# 3556",35,0,0,3,38
+1904537,1492757,2025-02-18,House,"House: Third Reading RCS# 26",92,0,0,8,100
+1904537,1516625,2025-03-12,Senate,"Senate: Third Reading W/scs1 sfa1 RSN# 3486",38,0,0,0,38
+1904537,1518226,2025-03-14,House,"House: Third Reading RCS# 266",91,0,0,9,100
+1904539,1496563,2025-02-21,House,"House: Third Reading RCS# 62",90,1,0,9,100
+1904539,1516630,2025-03-12,Senate,"Senate: Third Reading RSN# 3483",37,0,0,1,38
+1904541,1508777,2025-03-07,House,"House: Third Reading RCS# 197",91,0,0,9,100
+1904544,1484127,2025-02-07,Senate,"Senate: Third Reading RSN# 3342",34,0,3,1,38
+1904561,1492854,2025-02-18,Senate,"Senate: Third Reading W/scs1 sfa2 RSN# 3365",36,0,0,2,38
+1904569,1506648,2025-03-05,Senate,"Senate: Third Reading W/scs1 RSN# 3428",37,0,0,1,38
+1904569,1517659,2025-03-13,House,"House: Third Reading RCS# 247",83,13,0,4,100
+1904573,1516695,2025-03-12,House,"House: Third Reading RCS# 230",68,23,0,9,100
+1904584,1489478,2025-02-13,Senate,"Senate: Third Reading RSN# 3357",33,4,0,1,38
+1904608,1483304,2025-02-06,Senate,"Senate: Third Reading W/sfa1 RSN# 3340",38,0,0,0,38
+1904608,1492822,2025-02-18,House,"House: Third Reading RCS# 27",92,1,0,7,100
+1904610,1499469,2025-02-25,House,"House: Third Reading RCS# 74",96,0,0,4,100
+1904617,1496048,2025-02-20,House,"House: Third Reading RCS# 49",93,0,0,7,100
+1904635,1500697,2025-02-26,House,"House: Third Reading RCS# 98",87,4,0,9,100
+1904652,1496404,2025-02-21,House,"House: Third Reading RCS# 63",90,1,0,9,100
+1904662,1502563,2025-02-28,Senate,"Senate: Third Reading W/scs1 RSN# 3406",34,0,0,4,38
+1904662,1518162,2025-03-14,House,"House: Third Reading RCS# 289",87,0,0,13,100
+1904662,1518163,2025-03-14,Senate,"Senate: Third Reading RSN# 3577",36,0,0,2,38
+1904685,1502520,2025-02-28,House,"House: Third Reading RCS# 128",92,0,0,8,100
+1904696,1484116,2025-02-07,Senate,"Senate: Third Reading W/scs1 RSN# 3345",37,0,1,0,38
+1904698,1471129,2025-01-07,House,"House: Adopt  RCS# 2",77,20,0,3,100
+1904704,1515226,2025-03-11,House,"House: Suspend the Rules RCS# 215",66,0,0,34,100
+1904704,1515227,2025-03-11,House,"House: Third Reading RCS# 216",63,18,0,19,100
+1904711,1496447,2025-02-21,House,"House: Third Reading RCS# 57",90,2,0,8,100
+1904711,1517664,2025-03-13,Senate,"Senate: Third Reading W/scs1 sfa1 scta1 RSN# 3508",37,0,0,1,38
+1904711,1530571,2025-03-28,House,"House: Third Reading RCS# 358",94,0,0,6,100
+1904766,1489464,2025-02-13,Senate,"Senate: Third Reading W/sfa1 RSN# 3355",37,0,0,1,38
+1904766,1515335,2025-03-11,House,"House: Third Reading RCS# 206",97,0,0,3,100
+1904775,1500959,2025-02-26,House,"House: Third Reading RCS# 88",94,1,0,5,100
+1904775,1517668,2025-03-13,Senate,"Senate: Third Reading RSN# 3527",37,0,0,1,38
+1904784,1494016,2025-02-19,House,"House: Third Reading RCS# 33",92,0,0,8,100
+1904784,1516618,2025-03-12,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3484",38,0,0,0,38
+1904784,1518213,2025-03-14,House,"House: Third Reading RCS# 269",92,0,0,8,100
+1908024,1500559,2025-02-26,Senate,"Senate: Third Reading W/scs1 RSN# 3394",29,7,0,2,38
+1908026,1500682,2025-02-26,Senate,"Senate: Third Reading W/scs1 sfa3 RSN# 3392",32,1,2,3,38
+1908027,1494266,2025-02-19,House,"House: Third Reading RCS# 41",91,0,0,9,100
+1908027,1516629,2025-03-12,Senate,"Senate: Third Reading RSN# 3497",38,0,0,0,38
+1908031,1486823,2025-02-11,Senate,"Senate: Third Reading RSN# 3348",34,3,0,1,38
+1908036,1487734,2025-02-12,Senate,"Senate: Third Reading RSN# 3353",37,0,0,1,38
+1908036,1518216,2025-03-14,House,"House: Third Reading RCS# 276",59,28,2,11,100
+1908038,1508096,2025-03-06,House,"House: Adopt  RCS# 171",98,0,0,2,100
+1908038,1529817,2025-03-27,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3593",38,0,0,0,38
+1908038,1530450,2025-03-28,House,"House: Third Reading RCS# 345",100,0,0,0,100
+1908039,1499501,2025-02-25,House,"House: Third Reading RCS# 66",95,0,0,5,100
+1908039,1516620,2025-03-12,Senate,"Senate: Third Reading RSN# 3492",35,0,0,3,38
+1908045,1508218,2025-03-06,House,"House: Third Reading RCS# 178",96,0,0,4,100
+1908045,1530751,2025-03-28,Senate,"Senate: Third Reading RSN# 3682",38,0,0,0,38
+1908047,1489579,2025-02-13,House,"House: Third Reading RCS# 19",86,13,0,1,100
+1908047,1515339,2025-03-11,Senate,"Senate: Third Reading W/scs1 RSN# 3462",36,1,0,1,38
+1908047,1517698,2025-03-13,House,"House: Third Reading RCS# 233",90,5,0,5,100
+1908070,1500584,2025-02-26,House,"House: Third Reading RCS# 78",94,0,0,6,100
+1908070,1517740,2025-03-13,Senate,"Senate: Third Reading RSN# 3526",35,0,0,3,38
+1908078,1506877,2025-03-05,Senate,"Senate: Third Reading RSN# 3429",38,0,0,0,38
+1908080,1500751,2025-02-26,House,"House: Third Reading RCS# 96",82,10,0,8,100
+1908080,1516624,2025-03-12,Senate,"Senate: Third Reading W/sfa2 sfa3 sfta4 RSN# 3485",38,0,0,0,38
+1908080,1517667,2025-03-13,House,"House: Third Reading RCS# 235",85,7,0,8,100
+1908080,1529582,2025-03-27,House,"House: Third Reading RCS# 327",80,17,0,3,100
+1908080,1529583,2025-03-27,Senate,"Senate: Third Reading RSN# 3666",32,6,0,0,38
+1908084,1493834,2025-02-19,House,"House: Third Reading RCS# 32",73,16,0,11,100
+1908084,1516636,2025-03-12,Senate,"Senate: Third Reading RSN# 3491",31,6,0,1,38
+1909529,1495505,2025-02-20,House,"House: Third Reading RCS# 48",92,0,0,8,100
+1909529,1515352,2025-03-11,Senate,"Senate: Third Reading RSN# 3466",36,0,0,2,38
+1909550,1490171,2025-02-14,House,"House: Third Reading RCS# 21",93,0,0,7,100
+1909550,1508760,2025-03-07,Senate,"Senate: Third Reading RSN# 3450",32,0,0,6,38
+1909590,1492806,2025-02-18,House,"House: Third Reading RCS# 28",93,0,0,7,100
+1909590,1517696,2025-03-13,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3528",36,0,0,2,38
+1909590,1518164,2025-03-14,House,"House: Third Reading RCS# 284",89,0,0,11,100
+1909674,1487793,2025-02-12,Senate,"Senate: Third Reading W/scs1 sfta1 RSN# 3351",38,0,0,0,38
+1909674,1515329,2025-03-11,House,"House: Third Reading RCS# 214",97,0,0,3,100
+1909674,1517658,2025-03-13,Senate,"Senate: Third Reading RSN# 3517",37,0,0,1,38
+1909693,1494153,2025-02-19,House,"House: Third Reading RCS# 42",91,0,0,9,100
+1909693,1516613,2025-03-12,Senate,"Senate: Third Reading RSN# 3493",38,0,0,0,38
+1909699,1502553,2025-02-28,Senate,"Senate: Third Reading RSN# 3407",21,11,1,5,38
+1909746,1501848,2025-02-27,House,"House: Third Reading RCS# 107",97,0,0,3,100
+1909746,1515333,2025-03-11,Senate,"Senate: Third Reading W/scs1 RSN# 3468",37,0,0,1,38
+1909746,1517694,2025-03-13,House,"House: Third Reading RCS# 249",93,0,0,7,100
+1909761,1495801,2025-02-20,Senate,"Senate: Third Reading RSN# 3376",32,3,0,3,38
+1909771,1492676,2025-02-18,Senate,"Senate: Third Reading W/scs1 RSN# 3366",36,0,0,2,38
+1909771,1518212,2025-03-14,House,"House: Third Reading RCS# 282",88,0,0,12,100
+1909799,1508113,2025-03-06,House,"House: Third Reading RCS# 180",97,0,0,3,100
+1909799,1530462,2025-03-28,Senate,"Senate: Third Reading RSN# 3678",38,0,0,0,38
+1909812,1499094,2025-02-25,House,"House: Third Reading RCS# 75",90,5,0,5,100
+1909812,1517681,2025-03-13,Senate,"Senate: Third Reading W/scs1 RSN# 3529",32,5,0,1,38
+1909812,1530582,2025-03-28,House,"House: Third Reading RCS# 346",95,0,0,5,100
+1909825,1496379,2025-02-21,House,"House: Third Reading RCS# 61",88,1,0,11,100
+1909825,1515353,2025-03-11,Senate,"Senate: Third Reading W/scs1 RSN# 3463",37,0,0,1,38
+1909825,1530553,2025-03-28,House,"House: Third Reading RCS# 350",100,0,0,0,100
+1909834,1496665,2025-02-21,House,"House: Third Reading RCS# 60",92,0,0,8,100
+1909853,1507926,2025-03-06,Senate,"Senate: Third Reading W/scs1 sfa1 RSN# 3438",38,0,0,0,38
+1909853,1518199,2025-03-14,House,"House: Third Reading RCS# 281",90,0,0,10,100
+1909853,1518200,2025-03-14,Senate,"Senate: Third Reading RSN# 3572",37,0,0,1,38
+1909870,1505066,2025-03-04,Senate,"Senate: Third Reading W/scs1 RSN# 3418",34,4,0,0,38
+1909870,1517637,2025-03-13,House,"House: Third Reading RCS# 243",93,2,0,5,100
+1909870,1517638,2025-03-13,Senate,"Senate: Third Reading RSN# 3516",38,0,0,0,38
+1910718,1487202,2025-02-11,Senate,"Senate: Third Reading RSN# 3349",37,0,0,1,38
+1910718,1530747,2025-03-28,House,"House: Third Reading RCS# 348",100,0,0,0,100
+1910953,1496342,2025-02-21,House,"House: Third Reading RCS# 58",88,1,0,11,100
+1910953,1516633,2025-03-12,Senate,"Senate: Third Reading RSN# 3495",38,0,0,0,38
+1911049,1515279,2025-03-11,House,"House: Third Reading RCS# 208",98,0,0,2,100
+1911049,1518198,2025-03-14,Senate,"Senate: Third Reading RSN# 3562",35,0,0,3,38
+1911097,1487776,2025-02-12,Senate,"Senate: Third Reading W/sfa1 RSN# 3352",38,0,0,0,38
+1911097,1508772,2025-03-07,House,"House: Third Reading RCS# 195",94,0,0,6,100
+1911290,1508053,2025-03-06,House,"House: Third Reading RCS# 177",93,0,0,7,100
+1911290,1530464,2025-03-28,Senate,"Senate: Third Reading RSN# 3680",37,0,0,1,38
+1911618,1495633,2025-02-20,House,"House: Third Reading RCS# 44",76,16,0,8,100
+1911618,1516638,2025-03-12,Senate,"Senate: Third Reading RSN# 3487",30,7,0,1,38
+1911666,1492934,2025-02-18,House,"House: Third Reading RCS# 30",74,19,0,7,100
+1911715,1500616,2025-02-26,House,"House: Third Reading RCS# 105",76,17,0,7,100
+1911715,1516814,2025-03-12,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3477",30,5,0,2,37
+1911715,1518159,2025-03-14,Senate,"Senate: Third Reading RSN# 3545",30,6,0,2,38
+1911715,1529618,2025-03-27,House,"House: Third Reading RCS# 315",80,19,0,1,100
+1955048,1490078,2025-02-14,Senate,"Senate: Third Reading RSN# 3360",30,5,0,3,38
+1955048,1516643,2025-03-12,House,"House: Third Reading RCS# 222",69,26,0,5,100
+1955048,1517693,2025-03-13,Senate,"Senate: Third Reading RSN# 3518",31,7,0,0,38
+1955048,1529605,2025-03-27,Senate,"Senate: Third Reading RSN# 3588",29,8,0,1,38
+1955048,1529606,2025-03-27,House,"House: Third Reading RCS# 339",66,23,0,11,100
+1955054,1500883,2025-02-26,House,"House: Third Reading RCS# 104",93,0,0,7,100
+1955066,1508114,2025-03-06,House,"House: Third Reading RCS# 173",97,0,0,3,100
+1955073,1489544,2025-02-13,Senate,"Senate: Third Reading RSN# 3356",33,4,0,1,38
+1955076,1500717,2025-02-26,House,"House: Third Reading RCS# 101",91,0,0,9,100
+1955086,1499552,2025-02-25,House,"House: Third Reading RCS# 73",97,0,0,3,100
+1955086,1515349,2025-03-11,Senate,"Senate: Third Reading RSN# 3464",34,0,0,4,38
+1955121,1495458,2025-02-20,House,"House: Third Reading RCS# 47",93,0,0,7,100
+1955128,1502378,2025-02-28,House,"House: Third Reading RCS# 129",90,0,0,10,100
+1955141,1496590,2025-02-21,House,"House: Third Reading RCS# 59",82,7,0,11,100
+1955141,1508149,2025-03-06,Senate,"Senate: Third Reading W/scs2 scta1 RSN# 3445",23,14,0,1,38
+1955141,1517647,2025-03-13,Senate,"Senate: Third Reading RSN# 3543",31,6,0,1,38
+1955141,1518165,2025-03-14,House,"House: Third Reading RCS# 267",91,0,0,9,100
+1955164,1506484,2025-03-05,Senate,"Senate: Third Reading W/scs1 RSN# 3430",38,0,0,0,38
+1955175,1492771,2025-02-18,House,"House: Third Reading RCS# 25",93,0,0,7,100
+1955175,1508755,2025-03-07,Senate,"Senate: Third Reading RSN# 3452",32,0,0,6,38
+1955175,1529812,2025-03-27,House,"House: Third Reading RCS# 313",79,15,0,6,100
+1955175,1529813,2025-03-27,Senate,"Senate: Third Reading RSN# 3601",32,6,0,0,38
+1955191,1490453,2025-02-14,House,"House: Third Reading RCS# 22",93,0,0,7,100
+1955191,1516614,2025-03-12,Senate,"Senate: Third Reading RSN# 3498",37,0,0,1,38
+1955221,1508799,2025-03-07,House,"House: Third Reading RCS# 198",88,0,0,12,100
+1955236,1499155,2025-02-25,Senate,"Senate: Third Reading RSN# 3386",37,0,0,1,38
+1955236,1516610,2025-03-12,House,"House: Third Reading RCS# 227",92,4,0,4,100
+1955236,1516611,2025-03-12,Senate,"Senate: Third Reading RSN# 3504",26,6,0,6,38
+1955236,1529596,2025-03-27,Senate,"Senate: Third Reading RSN# 3585",32,6,0,0,38
+1955236,1529597,2025-03-27,House,"House: Third Reading RCS# 331",72,15,0,13,100
+1955236,1529598,2025-03-27,House,"House: Veto Override RCS# 333",68,12,0,20,100
+1955236,1529599,2025-03-27,House,"House: Third Reading RCS# 334",75,18,0,7,100
+1955241,1500957,2025-02-26,House,"House: Third Reading RCS# 103",91,0,0,9,100
+1955243,1496030,2025-02-20,House,"House: Third Reading RCS# 46",92,0,0,8,100
+1955243,1515348,2025-03-11,Senate,"Senate: Third Reading RSN# 3471",37,0,0,1,38
+1955254,1495463,2025-02-20,Senate,"Senate: Third Reading W/sfa1 RSN# 3377",25,10,0,3,38
+1955275,1490304,2025-02-14,Senate,"Senate: Third Reading RSN# 3359",34,0,0,4,38
+1955275,1516645,2025-03-12,House,"House: Third Reading RCS# 229",93,0,0,7,100
+1955318,1494048,2025-02-19,House,"House: Third Reading RCS# 39",90,0,0,10,100
+1955318,1508757,2025-03-07,Senate,"Senate: Third Reading RSN# 3453",33,0,0,5,38
+1955320,1496319,2025-02-21,House,"House: Third Reading RCS# 64",91,0,0,9,100
+1955320,1530693,2025-03-28,Senate,"Senate: Third Reading W/sfa2 scta1 RSN# 3672",38,0,0,0,38
+1955347,1501799,2025-02-27,House,"House: Third Reading RCS# 120",96,1,0,3,100
+1955347,1517686,2025-03-13,Senate,"Senate: Third Reading RSN# 3531",37,0,0,1,38
+1955396,1500770,2025-02-26,House,"House: Third Reading RCS# 90",95,0,0,5,100
+1955408,1492856,2025-02-18,House,"House: Third Reading RCS# 29",93,0,0,7,100
+1955408,1515344,2025-03-11,Senate,"Senate: Third Reading RSN# 3469",37,0,0,1,38
+1955438,1506584,2025-03-05,House,"House: Third Reading RCS# 150",97,0,0,3,100
+1955438,1517685,2025-03-13,Senate,"Senate: Third Reading W/scs1 sfa1 scta1 RSN# 3509",37,0,0,1,38
+1955438,1518185,2025-03-14,Senate,"Senate: Third Reading RSN# 3581",35,0,0,3,38
+1955451,1499113,2025-02-25,Senate,"Senate: Third Reading RSN# 3389",37,0,0,1,38
+1955455,1493847,2025-02-19,House,"House: Veto Override RCS# 36",17,73,0,10,100
+1955455,1493848,2025-02-19,House,"House: Adopt  RCS# 37",79,13,0,8,100
+1955455,1517690,2025-03-13,Senate,"Senate: Third Reading RSN# 3537",32,6,0,0,38
+1955462,1494283,2025-02-19,House,"House: Third Reading RCS# 35",91,0,0,9,100
+1955462,1508756,2025-03-07,Senate,"Senate: Third Reading RSN# 3455",33,0,0,5,38
+1955464,1494366,2025-02-19,Senate,"Senate: Third Reading RSN# 3370",37,0,0,1,38
+1955464,1515340,2025-03-11,House,"House: Third Reading RCS# 200",98,0,0,2,100
+1955464,1516622,2025-03-12,Senate,"Senate: Third Reading RSN# 3499",38,0,0,0,38
+1955483,1500580,2025-02-26,House,"House: Third Reading RCS# 95",95,0,0,5,100
+1955483,1517687,2025-03-13,Senate,"Senate: Third Reading W/scs1 RSN# 3530",37,0,0,1,38
+1955483,1518176,2025-03-14,House,"House: Third Reading RCS# 291",90,0,0,10,100
+1955483,1529615,2025-03-27,House,"House: Third Reading RCS# 314",93,3,0,4,100
+1955483,1529616,2025-03-27,Senate,"Senate: Third Reading RSN# 3602",36,2,0,0,38
+1955487,1495886,2025-02-20,House,"House: Third Reading RCS# 45",92,0,0,8,100
+1955487,1515332,2025-03-11,Senate,"Senate: Third Reading W/scs1 sfa1 scta1 RSN# 3472",36,0,0,2,38
+1955487,1530551,2025-03-28,House,"House: Third Reading RCS# 353",92,4,0,4,100
+1955503,1496000,2025-02-20,House,"House: Third Reading RCS# 50",92,0,0,8,100
+1955503,1506774,2025-03-05,Senate,"Senate: Third Reading RSN# 3436",36,0,0,2,38
+1955512,1499539,2025-02-25,House,"House: Third Reading RCS# 70",94,0,0,6,100
+1955517,1492918,2025-02-18,Senate,"Senate: Third Reading W/scs1 RSN# 3367",36,0,0,2,38
+1955517,1517641,2025-03-13,House,"House: Third Reading RCS# 238",92,0,0,8,100
+1955517,1517642,2025-03-13,Senate,"Senate: Third Reading RSN# 3520",38,0,0,0,38
+1955520,1508215,2025-03-06,House,"House: Adopt HFA 1 RCS# 165",22,67,0,11,100
+1955520,1508216,2025-03-06,House,"House: Third Reading RCS# 166",78,20,0,2,100
+1955522,1492904,2025-02-18,Senate,"Senate: Third Reading RSN# 3368",28,6,0,4,38
+1955522,1515379,2025-03-11,House,"House: Third Reading RCS# 205",80,19,0,1,100
+1955522,1516644,2025-03-12,Senate,"Senate: Third Reading RSN# 3500",32,6,0,0,38
+1955522,1529580,2025-03-27,Senate,"Senate: Third Reading RSN# 3587",32,6,0,0,38
+1955522,1529581,2025-03-27,House,"House: Third Reading RCS# 336",74,18,0,8,100
+1955529,1499641,2025-02-25,Senate,"Senate: Third Reading W/scs1 RSN# 3387",37,0,0,1,38
+1955536,1494443,2025-02-19,House,"House: Third Reading RCS# 38",91,0,0,9,100
+1955536,1516616,2025-03-12,Senate,"Senate: Third Reading RSN# 3494",38,0,0,0,38
+1955556,1494477,2025-02-19,House,"House: Third Reading RCS# 34",91,0,0,9,100
+1955556,1508765,2025-03-07,Senate,"Senate: Third Reading RSN# 3454",32,0,0,6,38
+1955561,1496696,2025-02-21,Senate,"Senate: Third Reading W/scs1 RSN# 3380",35,1,0,2,38
+1955561,1515626,2025-03-11,House,"House: Third Reading RCS# 203",98,1,0,1,100
+1955569,1496571,2025-02-21,Senate,"Senate: Third Reading RSN# 3383",36,0,0,2,38
+1957575,1505200,2025-03-04,House,"House: Third Reading RCS# 136",98,0,0,2,100
+1957575,1518202,2025-03-14,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3566",37,0,0,1,38
+1957575,1518203,2025-03-14,House,"House: Third Reading RCS# 302",91,0,0,9,100
+1957587,1502294,2025-02-28,House,"House: Third Reading RCS# 127",93,0,0,7,100
+1957587,1518188,2025-03-14,Senate,"Senate: Third Reading W/scs1 sfa3 RSN# 3548",34,2,0,2,38
+1957587,1518189,2025-03-14,House,"House: Third Reading RCS# 293",89,1,0,10,100
+1957632,1486673,2025-02-11,House,"House: Third Reading RCS# 14",93,0,0,7,100
+1957632,1516639,2025-03-12,Senate,"Senate: Third Reading RSN# 3488",38,0,0,0,38
+1957666,1494109,2025-02-19,Senate,"Senate: Third Reading RSN# 3373",37,0,0,1,38
+1957666,1516641,2025-03-12,House,"House: Third Reading RCS# 228",97,0,0,3,100
+1957666,1517703,2025-03-13,Senate,"Senate: Third Reading RSN# 3521",37,0,0,1,38
+1957678,1516776,2025-03-12,House,"House: Third Reading RCS# 224",85,6,0,9,100
+1957700,1496565,2025-02-21,Senate,"Senate: Third Reading RSN# 3381",36,0,0,2,38
+1957700,1530443,2025-03-28,House,"House: Third Reading RCS# 347",98,0,0,2,100
+1957827,1487199,2025-02-11,Senate,"Senate: Third Reading RSN# 3347",38,0,0,0,38
+1957839,1494118,2025-02-19,Senate,"Senate: Third Reading RSN# 3371",37,0,0,1,38
+1957839,1517683,2025-03-13,House,"House: Third Reading RCS# 254",86,0,0,14,100
+1958115,1505005,2025-03-04,House,"House: Third Reading RCS# 134",98,0,0,2,100
+1958115,1518183,2025-03-14,Senate,"Senate: Third Reading W/scs1 RSN# 3567",36,0,0,2,38
+1958115,1518184,2025-03-14,House,"House: Third Reading RCS# 301",89,0,0,11,100
+1958196,1508221,2025-03-06,House,"House: Third Reading RCS# 169",98,0,0,2,100
+1958240,1500667,2025-02-26,House,"House: Third Reading RCS# 92",83,12,0,5,100
+1958240,1517656,2025-03-13,Senate,"Senate: Third Reading W/scs1 RSN# 3532",33,5,0,0,38
+1958240,1518161,2025-03-14,House,"House: Third Reading RCS# 294",86,0,0,14,100
+1958240,1529594,2025-03-27,House,"House: Third Reading RCS# 312",78,19,0,3,100
+1958240,1529595,2025-03-27,Senate,"Senate: Third Reading RSN# 3603",32,6,0,0,38
+1958262,1500956,2025-02-26,House,"House: Third Reading RCS# 93",62,30,1,7,100
+1958285,1508018,2025-03-06,House,"House: Third Reading RCS# 185",81,3,0,16,100
+1960322,1499213,2025-02-25,House,"House: Third Reading RCS# 69",96,1,0,3,100
+1960322,1508759,2025-03-07,Senate,"Senate: Third Reading RSN# 3451",33,0,0,5,38
+1960362,1508782,2025-03-07,House,"House: Third Reading RCS# 189",68,26,0,6,100
+1960362,1517650,2025-03-13,Senate,"Senate: Third Reading RSN# 3511",30,7,0,1,38
+1960362,1529592,2025-03-27,House,"House: Third Reading RCS# 329",69,28,0,3,100
+1960362,1529593,2025-03-27,Senate,"Senate: Third Reading RSN# 3667",31,7,0,0,38
+1960448,1499142,2025-02-25,House,"House: Third Reading RCS# 67",95,0,0,5,100
+1960448,1515334,2025-03-11,Senate,"Senate: Third Reading W/sfa1 RSN# 3470",37,0,0,1,38
+1960448,1517673,2025-03-13,House,"House: Third Reading RCS# 234",96,0,0,4,100
+1960477,1507946,2025-03-06,House,"House: Third Reading RCS# 181",90,4,0,6,100
+1960546,1505039,2025-03-04,House,"House: Adopt  RCS# 139",85,12,0,3,100
+1960546,1530636,2025-03-28,Senate,"Senate: Third Reading RSN# 3676",38,0,0,0,38
+1960577,1506872,2025-03-05,House,"House: Third Reading RCS# 153",96,0,0,4,100
+1960577,1518167,2025-03-14,Senate,"Senate: Third Reading W/scs1 RSN# 3568",36,0,0,2,38
+1960577,1518168,2025-03-14,House,"House: Adopt SCS 1 RCS# 303",37,41,0,22,100
+1960577,1529819,2025-03-27,Senate,"Senate: Third Reading RSN# 3592",35,0,0,3,38
+1960617,1500848,2025-02-26,House,"House: Adopt HFA 2 RCS# 83",47,48,0,5,100
+1960617,1500849,2025-02-26,House,"House: Adopt HFA 3 RCS# 84",21,49,0,30,100
+1960617,1500850,2025-02-26,House,"House: Veto Override RCS# 85",19,59,0,22,100
+1960617,1500851,2025-02-26,House,"House: Table  RCS# 86",20,60,0,20,100
+1960617,1500852,2025-02-26,House,"House: Third Reading RCS# 87",62,33,0,5,100
+1960617,1517675,2025-03-13,Senate,"Senate: Third Reading W/scs1 RSN# 3512",28,9,0,1,38
+1960617,1517676,2025-03-13,House,"House: Third Reading RCS# 261",70,20,0,10,100
+1960617,1529622,2025-03-27,House,"House: Third Reading RCS# 318",78,22,0,0,100
+1960617,1529623,2025-03-27,Senate,"Senate: Third Reading RSN# 3604",29,9,0,0,38
+1960649,1500991,2025-02-26,House,"House: Third Reading RCS# 102",95,0,0,5,100
+1960718,1505192,2025-03-04,House,"House: Third Reading RCS# 146",88,7,0,5,100
+1960732,1492901,2025-02-18,Senate,"Senate: Third Reading RSN# 3362",31,6,0,1,38
+1960732,1518146,2025-03-14,House,"House: Veto Override RCS# 308",71,17,0,12,100
+1960732,1518147,2025-03-14,House,"House: Third Reading RCS# 309",73,12,0,15,100
+1960759,1494148,2025-02-19,Senate,"Senate: Third Reading RSN# 3372",37,0,0,1,38
+1960777,1506535,2025-03-05,House,"House: Third Reading RCS# 158",92,1,0,7,100
+1960801,1500853,2025-02-26,House,"House: Third Reading RCS# 100",93,0,0,7,100
+1960801,1518160,2025-03-14,Senate,"Senate: Third Reading W/sfa1 scta2 RSN# 3549",31,6,0,1,38
+1960859,1494396,2025-02-19,House,"House: Adopt  RCS# 40",90,0,0,10,100
+1960859,1508762,2025-03-07,Senate,"Senate: Third Reading RSN# 3456",33,0,0,5,38
+1961983,1505525,2025-03-04,House,"House: Third Reading RCS# 141",99,0,0,1,100
+1962287,1505277,2025-03-04,Senate,"Senate: Third Reading RSN# 3419",38,0,0,0,38
+1962338,1507998,2025-03-06,House,"House: Third Reading RCS# 182",98,0,0,2,100
+1962695,1500901,2025-02-26,Senate,"Senate: Third Reading W/scs1 sfa5 sfta3 RSN# 3395",33,3,0,2,38
+1962695,1516811,2025-03-12,House,"House: Third Reading RCS# 225",82,11,0,7,100
+1962695,1517666,2025-03-13,Senate,"Senate: Third Reading RSN# 3519",32,6,0,0,38
+1965440,1506924,2025-03-05,House,"House: Third Reading RCS# 161",98,0,0,2,100
+1965440,1530748,2025-03-28,Senate,"Senate: Third Reading RSN# 3675",37,0,0,1,38
+1965449,1506453,2025-03-05,House,"House: Third Reading RCS# 160",98,0,0,2,100
+1965449,1529820,2025-03-27,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3596",38,0,0,0,38
+1965449,1530453,2025-03-28,House,"House: Third Reading RCS# 343",100,0,0,0,100
+1965456,1505315,2025-03-04,Senate,"Senate: Third Reading W/scs1 RSN# 3420",38,0,0,0,38
+1965456,1517714,2025-03-13,House,"House: Third Reading RCS# 242",95,0,0,5,100
+1965464,1501658,2025-02-27,Senate,"Senate: Third Reading RSN# 3400",36,0,0,2,38
+1965464,1518218,2025-03-14,House,"House: Adopt HFA 1 RCS# 279",26,32,0,42,100
+1965464,1518219,2025-03-14,House,"House: Third Reading RCS# 280",87,1,0,12,100
+1965464,1518220,2025-03-14,House,"House: Veto Override RCS# 283",81,0,0,19,100
+1965464,1518221,2025-03-14,Senate,"Senate: Third Reading RSN# 3576",36,0,1,1,38
+1965525,1506854,2025-03-05,House,"House: Third Reading RCS# 154",98,0,0,2,100
+1965525,1517671,2025-03-13,Senate,"Senate: Third Reading RSN# 3536",38,0,0,0,38
+1965553,1496650,2025-02-21,Senate,"Senate: Third Reading RSN# 3379",35,0,0,3,38
+1965553,1517692,2025-03-13,House,"House: Third Reading RCS# 240",94,0,0,6,100
+1965563,1500605,2025-02-26,House,"House: Third Reading RCS# 79",78,17,0,5,100
+1965563,1517644,2025-03-13,Senate,"Senate: Third Reading RSN# 3542",30,7,0,1,38
+1965563,1529584,2025-03-27,House,"House: Third Reading RCS# 319",80,20,0,0,100
+1965563,1529585,2025-03-27,Senate,"Senate: Third Reading RSN# 3616",29,9,0,0,38
+1965571,1508190,2025-03-06,Senate,"Senate: Third Reading RSN# 3439",37,0,0,1,38
+1965571,1518211,2025-03-14,House,"House: Third Reading RCS# 287",89,0,0,11,100
+1965578,1496071,2025-02-20,House,"House: Third Reading RCS# 51",93,0,0,7,100
+1965597,1502574,2025-02-28,Senate,"Senate: Third Reading RSN# 3408",34,0,0,4,38
+1965605,1496597,2025-02-21,House,"House: Third Reading RCS# 53",91,0,0,9,100
+1965632,1499598,2025-02-25,Senate,"Senate: Third Reading W/scs1 RSN# 3388",34,3,0,1,38
+1965632,1518193,2025-03-14,House,"House: Third Reading RCS# 273",76,12,0,12,100
+1965632,1518194,2025-03-14,Senate,"Senate: Third Reading RSN# 3573",32,5,0,1,38
+1965643,1505057,2025-03-04,House,"House: Third Reading RCS# 143",71,23,0,6,100
+1965687,1500887,2025-02-26,House,"House: Third Reading RCS# 94",91,0,0,9,100
+1965687,1517655,2025-03-13,Senate,"Senate: Third Reading RSN# 3535",37,1,0,0,38
+1965736,1508743,2025-03-07,Senate,"Senate: Third Reading RSN# 3448",26,6,0,6,38
+1967591,1500955,2025-02-26,House,"House: Third Reading RCS# 91",96,0,0,4,100
+1967618,1502761,2025-02-28,House,"House: Third Reading RCS# 131",87,6,0,7,100
+1967618,1518192,2025-03-14,Senate,"Senate: Third Reading W/scs1 sfa1 scta1 RSN# 3550",37,0,0,1,38
+1967618,1530752,2025-03-28,House,"House: Third Reading RCS# 344",87,10,0,3,100
+1967635,1502081,2025-02-27,House,"House: Third Reading RCS# 109",96,0,0,4,100
+1967635,1530696,2025-03-28,Senate,"Senate: Third Reading RSN# 3683",33,5,0,0,38
+1967691,1505596,2025-03-04,House,"House: Third Reading RCS# 140",94,0,0,6,100
+1967716,1506798,2025-03-05,House,"House: Third Reading RCS# 151",96,1,0,3,100
+1967716,1518172,2025-03-14,Senate,"Senate: Third Reading RSN# 3551",36,0,0,2,38
+1967785,1499139,2025-02-25,House,"House: Third Reading RCS# 71",96,0,0,4,100
+1967785,1516621,2025-03-12,Senate,"Senate: Third Reading RSN# 3496",38,0,0,0,38
+1967797,1506715,2025-03-05,House,"House: Adopt HFA 1 RCS# 155",19,71,0,10,100
+1967797,1506716,2025-03-05,House,"House: Adopt HFA 6 RCS# 156",18,73,0,9,100
+1967797,1506717,2025-03-05,House,"House: Third Reading RCS# 157",81,18,0,1,100
+1967797,1516615,2025-03-12,Senate,"Senate: Third Reading W/sfta 19 RSN# 3503",32,6,0,0,38
+1967797,1516804,2025-03-12,Senate,"Senate: Adopt SFA 5 RSN# 3501",7,31,0,0,38
+1967797,1516805,2025-03-12,Senate,"Senate: Adopt SFA 8 RSN# 3502",6,32,0,0,38
+1967797,1517633,2025-03-13,House,"House: Third Reading RCS# 237",79,17,0,4,100
+1967797,1529818,2025-03-27,House,"House: Third Reading RCS# 330",79,19,0,2,100
+1967816,1500623,2025-02-26,Senate,"Senate: Third Reading W/scs1 sfa1 RSN# 3396",35,0,0,3,38
+1967816,1530592,2025-03-28,House,"House: Third Reading RCS# 364",75,6,0,19,100
+1967844,1506555,2025-03-05,House,"House: Third Reading RCS# 159",85,10,0,5,100
+1967850,1499474,2025-02-25,House,"House: Third Reading RCS# 72",78,17,0,5,100
+1967850,1518195,2025-03-14,Senate,"Senate: Third Reading W/scs1 RSN# 3552",36,0,0,2,38
+1967850,1518196,2025-03-14,House,"House: Third Reading RCS# 295",71,17,0,12,100
+1967856,1508270,2025-03-06,House,"House: Third Reading RCS# 186",98,0,0,2,100
+1967862,1505419,2025-03-04,Senate,"Senate: Third Reading W/scs1 sfa1 scta1 RSN# 3421",38,0,0,0,38
+1967862,1517710,2025-03-13,House,"House: Third Reading RCS# 248",90,0,0,10,100
+1967862,1518209,2025-03-14,Senate,"Senate: Third Reading RSN# 3557",34,1,0,3,38
+1967874,1516664,2025-03-12,House,"House: Third Reading RCS# 223",96,0,0,4,100
+1967926,1506463,2025-03-05,Senate,"Senate: Third Reading W/sfa1 RSN# 3431",38,0,0,0,38
+1967972,1501818,2025-02-27,Senate,"Senate: Third Reading W/scs1 RSN# 3398",34,0,0,4,38
+1967972,1518217,2025-03-14,House,"House: Third Reading RCS# 285",79,6,0,15,100
+1967988,1507841,2025-03-06,House,"House: Third Reading RCS# 176",89,6,0,5,100
+1967997,1499461,2025-02-25,House,"House: Third Reading RCS# 68",97,0,0,3,100
+1967997,1515328,2025-03-11,Senate,"Senate: Third Reading W/scs1 RSN# 3473",37,0,0,1,38
+1967997,1530555,2025-03-28,House,"House: Third Reading RCS# 362",100,0,0,0,100
+1968006,1500540,2025-02-26,House,"House: Third Reading RCS# 99",95,0,0,5,100
+1968006,1530543,2025-03-28,Senate,"Senate: Third Reading RSN# 3681",38,0,0,0,38
+1968026,1508748,2025-03-07,House,"House: Third Reading RCS# 193",93,0,0,7,100
+1970086,1515553,2025-03-11,House,"House: Third Reading RCS# 210",96,0,0,4,100
+1970100,1506527,2025-03-05,Senate,"Senate: Third Reading W/scs1 sfa1 RSN# 3433",37,0,0,0,37
+1970107,1506968,2025-03-05,House,"House: Third Reading RCS# 162",97,0,0,3,100
+1970107,1530737,2025-03-28,Senate,"Senate: Third Reading W/sfa2 sfta1 RSN# 3674",38,0,0,0,38
+1970107,1530738,2025-03-28,House,"House: Third Reading RCS# 359",83,16,0,1,100
+1970119,1505169,2025-03-04,House,"House: Third Reading RCS# 135",78,21,0,1,100
+1970119,1518204,2025-03-14,Senate,"Senate: Third Reading RSN# 3569",25,12,0,1,38
+1970156,1506889,2025-03-05,House,"House: Suspend the Rules RCS# 148",88,0,0,12,100
+1970156,1506890,2025-03-05,House,"House: Third Reading RCS# 149",77,18,0,5,100
+1970156,1517649,2025-03-13,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3524",28,6,0,4,38
+1970156,1518150,2025-03-14,House,"House: Veto Override RCS# 304",70,18,0,12,100
+1970156,1518151,2025-03-14,House,"House: Third Reading RCS# 305",67,19,0,14,100
+1970156,1529619,2025-03-27,House,"House: Third Reading RCS# 311",78,20,0,2,100
+1970156,1529620,2025-03-27,Senate,"Senate: Third Reading RSN# 3598",31,6,0,1,38
+1970162,1506682,2025-03-05,House,"House: Third Reading RCS# 152",96,0,0,4,100
+1970162,1517657,2025-03-13,Senate,"Senate: Third Reading RSN# 3538",37,0,0,1,38
+1970170,1507899,2025-03-06,Senate,"Senate: Third Reading W/scs1 sfa1 RSN# 3441",31,7,0,0,38
+1970170,1517711,2025-03-13,House,"House: Third Reading RCS# 253",91,0,0,9,100
+1970170,1518214,2025-03-14,Senate,"Senate: Third Reading RSN# 3558",33,2,0,3,38
+1970172,1507847,2025-03-06,House,"House: Third Reading RCS# 187",96,0,0,4,100
+1970172,1530647,2025-03-28,Senate,"Senate: Third Reading RSN# 3684",38,0,0,0,38
+1970221,1500919,2025-02-26,Senate,"Senate: Third Reading RSN# 3393",35,0,0,3,38
+1970221,1518210,2025-03-14,House,"House: Third Reading RCS# 268",87,0,0,13,100
+1970232,1515576,2025-03-11,House,"House: Third Reading RCS# 217",95,0,0,5,100
+1970275,1501810,2025-02-27,House,"House: Third Reading RCS# 121",88,6,0,6,100
+1970275,1529814,2025-03-27,Senate,"Senate: Third Reading W/scs1 RSN# 3594",38,0,0,0,38
+1970275,1530458,2025-03-28,House,"House: Third Reading RCS# 352",88,10,0,2,100
+1970293,1502439,2025-02-28,Senate,"Senate: Third Reading RSN# 3409",29,4,0,5,38
+1971025,1505000,2025-03-04,Senate,"Senate: Third Reading W/scs1 RSN# 3422",32,6,0,0,38
+1971025,1518222,2025-03-14,House,"House: Third Reading RCS# 265",83,6,0,11,100
+1971025,1529601,2025-03-27,Senate,"Senate: Third Reading RSN# 3589",31,7,0,0,38
+1971025,1529602,2025-03-27,House,"House: Third Reading RCS# 332",72,17,0,11,100
+1971077,1501931,2025-02-27,House,"House: Third Reading RCS# 122",96,1,0,3,100
+1971077,1515346,2025-03-11,Senate,"Senate: Third Reading RSN# 3474",37,0,0,1,38
+1971136,1502051,2025-02-27,House,"House: Third Reading RCS# 112",85,11,0,4,100
+1971136,1516606,2025-03-12,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3479",37,0,0,1,38
+1971136,1518170,2025-03-14,Senate,"Senate: Third Reading RSN# 3560",34,0,0,4,38
+1971136,1518171,2025-03-14,House,"House: Third Reading RCS# 298",74,6,0,20,100
+1971136,1529639,2025-03-27,House,"House: Third Reading RCS# 325",77,16,0,7,100
+1971136,1529640,2025-03-27,Senate,"Senate: Third Reading RSN# 3618",32,6,0,0,38
+1971194,1515192,2025-03-11,Senate,"Senate: Third Reading RSN# 3461",26,11,0,1,38
+1971235,1502803,2025-02-28,House,"House: Third Reading RCS# 126",91,0,0,9,100
+1971235,1529811,2025-03-27,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3595",36,2,0,0,38
+1971235,1530732,2025-03-28,House,"House: Third Reading RCS# 349",98,0,0,2,100
+1971256,1500523,2025-02-26,House,"House: Third Reading RCS# 77",96,0,0,4,100
+1971256,1518148,2025-03-14,Senate,"Senate: Third Reading W/scs1 sfa1 sfa2 scta1 RSN# 3546",35,0,0,3,38
+1971256,1518149,2025-03-14,House,"House: Third Reading RCS# 297",82,9,0,9,100
+1971256,1529625,2025-03-27,House,"House: Third Reading RCS# 322",85,10,0,5,100
+1971256,1529626,2025-03-27,Senate,"Senate: Third Reading RSN# 3617",33,4,0,1,38
+1971293,1502540,2025-02-28,House,"House: Third Reading RCS# 130",75,19,0,6,100
+1971293,1517669,2025-03-13,Senate,"Senate: Third Reading RSN# 3510",29,6,0,3,38
+1971293,1529575,2025-03-27,House,"House: Third Reading RCS# 317",80,20,0,0,100
+1971314,1496626,2025-02-21,Senate,"Senate: Third Reading RSN# 3382",36,0,0,2,38
+1971314,1517697,2025-03-13,House,"House: Third Reading RCS# 245",97,0,0,3,100
+1971314,1518186,2025-03-14,Senate,"Senate: Third Reading RSN# 3555",36,0,0,2,38
+1971320,1501754,2025-02-27,House,"House: Third Reading RCS# 111",94,1,0,5,100
+1971347,1502381,2025-02-28,Senate,"Senate: Third Reading RSN# 3411",33,0,0,5,38
+1971347,1517707,2025-03-13,House,"House: Third Reading RCS# 241",95,0,0,5,100
+1971347,1517708,2025-03-13,Senate,"Senate: Third Reading RSN# 3522",36,0,0,2,38
+1971361,1514740,2025-03-11,House,"House: Third Reading RCS# 202",99,0,0,1,100
+1971361,1517660,2025-03-13,Senate,"Senate: Third Reading W/scs1 RSN# 3533",38,0,0,0,38
+1971361,1530722,2025-03-28,House,"House: Third Reading RCS# 351",100,0,0,0,100
+1971382,1501827,2025-02-27,Senate,"Senate: Third Reading W/scs1 RSN# 3399",37,0,0,1,38
+1971430,1507858,2025-03-06,Senate,"Senate: Third Reading W/sfa1 RSN# 3442",37,0,0,1,38
+1971430,1530661,2025-03-28,House,"House: Third Reading RCS# 356",100,0,0,0,100
+1971430,1530662,2025-03-28,Senate,"Senate: Third Reading RSN# 3685",38,0,0,0,38
+1971465,1502395,2025-02-28,Senate,"Senate: Third Reading RSN# 3410",32,0,0,6,38
+1971479,1499566,2025-02-25,Senate,"Senate: Third Reading W/sfa1 RSN# 3390",37,0,0,1,38
+1971479,1517705,2025-03-13,House,"House: Third Reading RCS# 252",91,0,0,9,100
+1971527,1496596,2025-02-21,House,"House: Third Reading RCS# 56",73,18,0,9,100
+1971527,1516617,2025-03-12,Senate,"Senate: Third Reading W/scs1 RSN# 3489",31,7,0,0,38
+1971527,1517661,2025-03-13,House,"House: Third Reading RCS# 262",75,11,0,14,100
+1971527,1529613,2025-03-27,House,"House: Third Reading RCS# 320",72,22,0,6,100
+1971527,1529614,2025-03-27,Senate,"Senate: Third Reading RSN# 3661",30,6,0,2,38
+1974139,1508770,2025-03-07,House,"House: Third Reading RCS# 191",70,21,0,9,100
+1974139,1530504,2025-03-28,Senate,"Senate: Third Reading W/scs1 sfa2 sfta2 RSN# 3673",29,7,0,2,38
+1974139,1530505,2025-03-28,House,"House: Third Reading RCS# 365",76,20,0,4,100
+1974145,1506588,2025-03-05,Senate,"Senate: Third Reading W/scs1 sfa1 RSN# 3432",32,6,0,0,38
+1974165,1502036,2025-02-27,House,"House: Third Reading RCS# 113",96,0,0,4,100
+1974165,1517677,2025-03-13,Senate,"Senate: Third Reading RSN# 3539",35,0,0,3,38
+1974186,1508138,2025-03-06,Senate,"Senate: Third Reading RSN# 3440",38,0,0,0,38
+1974186,1517706,2025-03-13,House,"House: Third Reading RCS# 251",86,0,0,14,100
+1974188,1506432,2025-03-05,Senate,"Senate: Third Reading W/sfa1 sfa2 RSN# 3435",31,7,0,0,38
+1974188,1530423,2025-03-28,House,"House: Third Reading RCS# 357",90,9,0,1,100
+1974188,1530424,2025-03-28,Senate,"Senate: Third Reading RSN# 3730",38,0,0,0,38
+1974195,1508764,2025-03-07,House,"House: Third Reading RCS# 190",81,13,0,6,100
+1974195,1518175,2025-03-14,Senate,"Senate: Third Reading W/scs1 RSN# 3570",35,0,1,2,38
+1974195,1530633,2025-03-28,House,"House: Third Reading RCS# 354",77,17,0,6,100
+1974214,1506730,2025-03-05,Senate,"Senate: Third Reading RSN# 3426",38,0,0,0,38
+1974214,1518208,2025-03-14,House,"House: Third Reading RCS# 300",88,2,0,10,100
+1974230,1501574,2025-02-27,House,"House: Adopt  RCS# 118",93,0,0,7,100
+1974230,1516607,2025-03-12,Senate,"Senate: Third Reading RSN# 3481",37,0,0,1,38
+1974242,1502076,2025-02-27,House,"House: Third Reading RCS# 123",95,0,0,5,100
+1974242,1516810,2025-03-12,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3478",36,0,1,1,38
+1974242,1530716,2025-03-28,Senate,"Senate: Third Reading RSN# 3670",37,0,0,1,38
+1974242,1530717,2025-03-28,House,"House: Third Reading RCS# 361",82,17,0,1,100
+1974244,1505089,2025-03-04,Senate,"Senate: Third Reading RSN# 3416",38,0,0,0,38
+1974244,1515327,2025-03-11,House,"House: Third Reading RCS# 207",97,0,0,3,100
+1974251,1505492,2025-03-04,Senate,"Senate: Third Reading RSN# 3423",38,0,0,0,38
+1974251,1518223,2025-03-14,House,"House: Adopt HFA 3 RCS# 274",20,46,0,34,100
+1974251,1518224,2025-03-14,House,"House: Third Reading RCS# 275",73,16,0,11,100
+1974251,1518225,2025-03-14,Senate,"Senate: Third Reading RSN# 3574",31,6,0,1,38
+1974251,1529629,2025-03-27,Senate,"Senate: Third Reading RSN# 3590",31,7,0,0,38
+1974251,1529630,2025-03-27,House,"House: Third Reading RCS# 338",78,16,0,6,100
+1974252,1508248,2025-03-06,House,"House: Third Reading RCS# 170",97,0,0,3,100
+1974265,1502547,2025-02-28,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3412",33,0,0,5,38
+1974265,1517717,2025-03-13,House,"House: Third Reading RCS# 255",87,0,0,13,100
+1974265,1529815,2025-03-27,Senate,"Senate: Third Reading RSN# 3591",32,6,0,0,38
+1974265,1529816,2025-03-27,House,"House: Third Reading RCS# 335",77,15,0,8,100
+1974269,1502762,2025-02-28,Senate,"Senate: Third Reading W/scs1 RSN# 3404",34,0,0,4,38
+1974269,1518153,2025-03-14,House,"House: Suspend the Rules RCS# 270",62,7,0,31,100
+1974269,1518154,2025-03-14,House,"House: Adopt HFA 3 RCS# 271",65,19,0,16,100
+1974269,1518155,2025-03-14,House,"House: Third Reading RCS# 272",69,19,0,12,100
+1974269,1518156,2025-03-14,Senate,"Senate: Third Reading RSN# 3571",30,7,0,1,38
+1974269,1529609,2025-03-27,Senate,"Senate: Third Reading RSN# 3583",31,6,0,1,38
+1974269,1529610,2025-03-27,House,"House: Third Reading RCS# 340",72,19,0,9,100
+1974275,1508739,2025-03-07,Senate,"Senate: Third Reading RSN# 3449",34,0,0,4,38
+1974284,1502572,2025-02-28,Senate,"Senate: Third Reading RSN# 3413",30,3,0,5,38
+1974284,1517688,2025-03-13,House,"House: Third Reading RCS# 236",86,10,0,4,100
+1974284,1518741,2025-03-13,Senate,"Senate: Third Reading RSN# 3513",33,4,0,1,38
+1974306,1502064,2025-02-27,House,"House: Adopt  RCS# 117",89,3,0,8,100
+1974306,1515355,2025-03-11,Senate,"Senate: Third Reading W/scs1 RSN# 3460",37,0,0,1,38
+1974306,1530178,2025-03-27,Senate,"Senate: Third Reading RSN# 3597",37,0,0,1,38
+1974314,1506649,2025-03-05,Senate,"Senate: Third Reading W/sfa1 RSN# 3425",38,0,0,0,38
+1974316,1508112,2025-03-06,House,"House: Third Reading RCS# 168",80,13,0,7,100
+1974316,1530576,2025-03-28,Senate,"Senate: Third Reading W/scs1 RSN# 3677",34,3,0,1,38
+1974316,1530577,2025-03-28,House,"House: Third Reading RCS# 363",76,14,0,10,100
+1974320,1508839,2025-03-07,House,"House: Third Reading RCS# 194",85,9,0,6,100
+1974330,1505187,2025-03-04,Senate,"Senate: Third Reading W/scs1 RSN# 3415",38,0,0,0,38
+1974330,1518187,2025-03-14,House,"House: Third Reading RCS# 277",77,8,0,15,100
+1974330,1518710,2025-03-14,Senate,"Senate: Third Reading RSN# 3575",37,0,0,1,38
+1974341,1516768,2025-03-12,House,"House: Third Reading RCS# 220",97,0,0,3,100
+1974363,1507967,2025-03-06,Senate,"Senate: Third Reading W/scs1 sfa1 RSN# 3444",38,0,0,0,38
+1974369,1502001,2025-02-27,House,"House: Adopt  RCS# 115",87,6,0,7,100
+1974369,1516634,2025-03-12,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3480",37,0,0,1,38
+1974369,1518177,2025-03-14,House,"House: Third Reading RCS# 264",79,7,0,14,100
+1974369,1529603,2025-03-27,House,"House: Third Reading RCS# 324",80,20,0,0,100
+1974369,1529604,2025-03-27,Senate,"Senate: Third Reading RSN# 3660",29,4,0,5,38
+1974378,1502438,2025-02-28,Senate,"Senate: Third Reading W/scs1 RSN# 3405",33,0,0,5,38
+1974380,1501613,2025-02-27,Senate,"Senate: Third Reading W/sfa1 RSN# 3401",35,0,0,2,37
+1974380,1516640,2025-03-12,House,"House: Third Reading RCS# 231",93,0,0,7,100
+1974380,1518157,2025-03-14,Senate,"Senate: Third Reading RSN# 3579",37,0,0,1,38
+1974380,1518158,2025-03-14,House,"House: Third Reading RCS# 290",88,0,1,11,100
+1974383,1508917,2025-03-07,Senate,"Senate: Third Reading RSN# 3457",33,0,0,5,38
+1974385,1515449,2025-03-11,House,"House: Adopt  RCS# 204",99,0,0,1,100
+1974389,1507838,2025-03-06,House,"House: Third Reading RCS# 179",92,0,0,8,100
+1974390,1501929,2025-02-27,House,"House: Adopt  RCS# 114",88,6,0,6,100
+1974390,1515342,2025-03-11,Senate,"Senate: Third Reading W/scs1 RSN# 3459",37,0,0,1,38
+1974390,1518152,2025-03-14,House,"House: Third Reading RCS# 286",87,1,0,12,100
+1974390,1529590,2025-03-27,House,"House: Third Reading RCS# 323",82,18,0,0,100
+1974390,1529591,2025-03-27,Senate,"Senate: Third Reading RSN# 3662",29,7,0,2,38
+1974396,1506766,2025-03-05,Senate,"Senate: Third Reading RSN# 3427",36,0,0,2,38
+1974396,1517678,2025-03-13,House,"House: Third Reading RCS# 250",95,0,0,5,100
+1974396,1518207,2025-03-14,Senate,"Senate: Third Reading RSN# 3559",36,0,0,2,38
+1974399,1505510,2025-03-04,Senate,"Senate: Third Reading W/scs1 RSN# 3417",31,7,0,0,38
+1974415,1501873,2025-02-27,House,"House: Third Reading RCS# 108",95,0,0,5,100
+1974415,1517648,2025-03-13,Senate,"Senate: Third Reading W/scs1 RSN# 3534",37,0,0,1,38
+1974415,1518173,2025-03-14,House,"House: Third Reading RCS# 299",91,0,0,9,100
+1974417,1507921,2025-03-06,Senate,"Senate: Third Reading RSN# 3443",37,0,0,1,38
+1974427,1506436,2025-03-05,Senate,"Senate: Third Reading RSN# 3434",33,1,1,3,38
+1974433,1500528,2025-02-26,House,"House: Third Reading RCS# 97",94,0,0,6,100
+1974436,1508805,2025-03-07,House,"House: Adopt  RCS# 196",92,0,0,8,100
+1974439,1505411,2025-03-04,House,"House: Third Reading RCS# 144",96,2,0,2,100
+1974439,1518197,2025-03-14,Senate,"Senate: Third Reading W/scs1 scta1 RSN# 3564",37,0,0,1,38
+1974439,1530434,2025-03-28,Senate,"Senate: Third Reading RSN# 3671",32,3,2,1,38
+1974439,1530435,2025-03-28,House,"House: Third Reading RCS# 360",84,13,0,3,100
+1974441,1508266,2025-03-06,House,"House: Suspend the Rules RCS# 174",19,49,0,32,100
+1974441,1508267,2025-03-06,House,"House: Third Reading RCS# 175",85,7,0,8,100
+1974441,1518181,2025-03-14,Senate,"Senate: Third Reading RSN# 3553",37,0,0,1,38
+1974441,1529627,2025-03-27,House,"House: Third Reading RCS# 321",84,15,0,1,100
+1974441,1529628,2025-03-27,Senate,"Senate: Third Reading RSN# 3663",30,6,0,2,38
+1974563,1508766,2025-03-07,Senate,"Senate: Third Reading RSN# 3447",29,6,0,3,38
+1974563,1516642,2025-03-12,House,"House: Third Reading RCS# 226",77,17,0,6,100
+1974563,1517715,2025-03-13,Senate,"Senate: Third Reading RSN# 3523",22,13,1,2,38
+1974569,1508926,2025-03-07,House,"House: Adopt  RCS# 192",87,0,0,13,100
+1974569,1518182,2025-03-14,Senate,"Senate: Third Reading RSN# 3547",34,0,0,4,38
+1975731,1515547,2025-03-11,House,"House: Third Reading RCS# 218",86,9,0,5,100
+1975735,1507936,2025-03-06,House,"House: Third Reading RCS# 184",99,0,0,1,100
+1975752,1508081,2025-03-06,House,"House: Third Reading RCS# 172",95,0,0,5,100
+1975799,1505290,2025-03-04,House,"House: Third Reading RCS# 138",80,19,0,1,100
+1975799,1518178,2025-03-14,Senate,"Senate: Third Reading W/scs2 RSN# 3580",29,7,0,2,38
+1975799,1518179,2025-03-14,House,"House: Veto Override RCS# 306",72,19,0,9,100
+1975799,1518180,2025-03-14,House,"House: Third Reading RCS# 307",72,19,0,9,100
+1975799,1529588,2025-03-27,House,"House: Third Reading RCS# 316",80,20,0,0,100
+1975799,1529589,2025-03-27,Senate,"Senate: Third Reading RSN# 3605",29,7,0,2,38
+1975861,1505410,2025-03-04,House,"House: Third Reading RCS# 133",98,0,0,2,100
+1975877,1508128,2025-03-06,House,"House: Third Reading RCS# 183",93,0,0,7,100
+1975877,1517680,2025-03-13,Senate,"Senate: Third Reading RSN# 3541",36,0,0,2,38
+1975936,1502065,2025-02-27,House,"House: Adopt  RCS# 116",96,0,0,4,100
+1975936,1515330,2025-03-11,Senate,"Senate: Third Reading RSN# 3475",37,0,0,1,38
+1975940,1502041,2025-02-27,House,"House: Adopt  RCS# 119",90,0,0,10,100
+1975940,1518166,2025-03-14,Senate,"Senate: Third Reading RSN# 3565",34,3,0,1,38
+1975946,1500958,2025-02-26,House,"House: Third Reading RCS# 82",77,18,0,5,100
+1975946,1516608,2025-03-12,Senate,"Senate: Third Reading W/sfa1 RSN# 3482",28,9,0,1,38
+1975946,1517695,2025-03-13,House,"House: Third Reading RCS# 256",67,20,0,13,100
+1975946,1529633,2025-03-27,House,"House: Third Reading RCS# 328",67,27,0,6,100
+1975946,1529634,2025-03-27,Senate,"Senate: Third Reading RSN# 3668",29,8,0,1,38
+1975961,1514828,2025-03-11,House,"House: Third Reading RCS# 209",95,0,0,5,100
+1976081,1502335,2025-02-28,House,"House: Third Reading RCS# 125",91,0,0,9,100
+1976081,1517670,2025-03-13,Senate,"Senate: Third Reading RSN# 3540",37,0,0,1,38
+1976138,1516766,2025-03-12,House,"House: Third Reading RCS# 221",97,0,0,3,100
+1976159,1507937,2025-03-06,House,"House: Third Reading RCS# 164",77,18,0,5,100
+1976162,1505393,2025-03-04,House,"House: Third Reading RCS# 137",99,0,0,1,100
+1976162,1517643,2025-03-13,Senate,"Senate: Third Reading W/scs1 sfa1 scta1 RSN# 3507",38,0,0,0,38
+1976173,1518140,2025-03-14,House,"House: Third Reading RCS# 288",89,0,0,11,100
+1976199,1514926,2025-03-11,House,"House: Lay on the Clerks Desk RCS# 212",19,61,0,20,100
+1976199,1514927,2025-03-11,House,"House: Third Reading RCS# 213",67,18,0,15,100
+1976199,1518205,2025-03-14,Senate,"Senate: Third Reading W/scs1 sfa4 RSN# 3563",32,5,0,1,38
+1976199,1518206,2025-03-14,House,"House: Third Reading RCS# 296",61,23,0,16,100
+1976209,1505511,2025-03-04,House,"House: Third Reading RCS# 145",93,5,0,2,100
+1976209,1517691,2025-03-13,Senate,"Senate: Third Reading RSN# 3525",37,0,0,1,38
+1991443,1529791,2025-03-27,Senate,"Senate: Third Reading RSN# 3628",38,0,0,0,38
+1991446,1529823,2025-03-27,Senate,"Senate: Third Reading RSN# 3622",38,0,0,0,38
+1991449,1529768,2025-03-27,Senate,"Senate: Third Reading RSN# 3614",38,0,0,0,38
+1991451,1529797,2025-03-27,Senate,"Senate: Third Reading RSN# 3611",38,0,0,0,38
+1991457,1529809,2025-03-27,Senate,"Senate: Third Reading RSN# 3633",38,0,0,0,38
+1991459,1529800,2025-03-27,Senate,"Senate: Third Reading RSN# 3626",38,0,0,0,38
+1991462,1529792,2025-03-27,Senate,"Senate: Third Reading RSN# 3615",38,0,0,0,38
+1991465,1529788,2025-03-27,Senate,"Senate: Third Reading RSN# 3632",38,0,0,0,38
+1991468,1529793,2025-03-27,Senate,"Senate: Third Reading RSN# 3627",38,0,0,0,38
+1991471,1529799,2025-03-27,Senate,"Senate: Third Reading RSN# 3625",38,0,0,0,38
+1991474,1529837,2025-03-27,Senate,"Senate: Third Reading RSN# 3606",38,0,0,0,38
+1991478,1529500,2025-03-27,Senate,"Senate: Third Reading RSN# 3621",38,0,0,0,38
+1991487,1529802,2025-03-27,Senate,"Senate: Third Reading RSN# 3629",38,0,0,0,38
+1991490,1529742,2025-03-27,Senate,"Senate: Third Reading RSN# 3623",38,0,0,0,38
+1991493,1530612,2025-03-28,Senate,"Senate: Third Reading RSN# 3686",38,0,0,0,38
+1991496,1529795,2025-03-27,Senate,"Senate: Third Reading RSN# 3610",38,0,0,0,38
+1991499,1529719,2025-03-27,Senate,"Senate: Third Reading RSN# 3620",38,0,0,0,38
+1991502,1529829,2025-03-27,Senate,"Senate: Third Reading RSN# 3607",38,0,0,0,38
+1991502,1529830,2025-03-27,Senate,"Senate: Third Reading RSN# 3608",38,0,0,0,38
+1991505,1529789,2025-03-27,Senate,"Senate: Third Reading RSN# 3630",38,0,0,0,38
+1991508,1529708,2025-03-27,Senate,"Senate: Third Reading RSN# 3619",38,0,0,0,38
+1991511,1529578,2025-03-27,Senate,"Senate: Third Reading RSN# 3613",38,0,0,0,38
+1991521,1529786,2025-03-27,Senate,"Senate: Third Reading RSN# 3631",38,0,0,0,38
+1991524,1530049,2025-03-27,Senate,"Senate: Third Reading RSN# 3635",38,0,0,0,38
+1991526,1529739,2025-03-27,Senate,"Senate: Third Reading RSN# 3609",38,0,0,0,38
+1991529,1529790,2025-03-27,Senate,"Senate: Third Reading RSN# 3636",38,0,0,0,38
+1991534,1529780,2025-03-27,Senate,"Senate: Third Reading RSN# 3634",38,0,0,0,38
+1991539,1529822,2025-03-27,Senate,"Senate: Third Reading RSN# 3624",38,0,0,0,38
+1991542,1529785,2025-03-27,Senate,"Senate: Third Reading RSN# 3612",38,0,0,0,38
+1994194,1530139,2025-03-27,Senate,"Senate: Third Reading RSN# 3643",38,0,0,0,38
+1994232,1529825,2025-03-27,Senate,"Senate: Third Reading RSN# 3644",38,0,0,0,38
+1994241,1529782,2025-03-27,Senate,"Senate: Third Reading RSN# 3637",38,0,0,0,38
+1994251,1530191,2025-03-27,Senate,"Senate: Third Reading RSN# 3640",38,0,0,0,38
+1994269,1529824,2025-03-27,Senate,"Senate: Third Reading RSN# 3641",38,0,0,0,38
+1994279,1530429,2025-03-27,Senate,"Senate: Third Reading RSN# 3638",38,0,0,0,38
+1994298,1530422,2025-03-27,Senate,"Senate: Third Reading RSN# 3639",38,0,0,0,38
+1994317,1530017,2025-03-27,Senate,"Senate: Third Reading RSN# 3642",38,0,0,0,38
+2000328,1530060,2025-03-27,Senate,"Senate: Third Reading RSN# 3645",38,0,0,0,38
+2005485,1530697,2025-03-28,Senate,"Senate: Third Reading RSN# 3705",38,0,0,0,38
+2005487,1530284,2025-03-28,Senate,"Senate: Third Reading RSN# 3699",38,0,0,0,38
+2005488,1530345,2025-03-28,Senate,"Senate: Third Reading RSN# 3687",37,1,0,0,38
+2005489,1530683,2025-03-28,Senate,"Senate: Third Reading RSN# 3710",38,0,0,0,38
+2005490,1530698,2025-03-28,Senate,"Senate: Third Reading RSN# 3704",38,0,0,0,38
+2005491,1530678,2025-03-28,Senate,"Senate: Third Reading RSN# 3700",38,0,0,0,38
+2005492,1530241,2025-03-28,Senate,"Senate: Third Reading RSN# 3725",38,0,0,0,38
+2005493,1530198,2025-03-28,Senate,"Senate: Third Reading RSN# 3707",38,0,0,0,38
+2005494,1530038,2025-03-27,Senate,"Senate: Third Reading RSN# 3656",38,0,0,0,38
+2005495,1530242,2025-03-28,Senate,"Senate: Third Reading RSN# 3723",38,0,0,0,38
+2005496,1530271,2025-03-28,Senate,"Senate: Third Reading RSN# 3703",38,0,0,0,38
+2005497,1530665,2025-03-28,Senate,"Senate: Third Reading RSN# 3717",38,0,0,0,38
+2005498,1530709,2025-03-28,Senate,"Senate: Third Reading RSN# 3690",38,0,0,0,38
+2005499,1530691,2025-03-28,Senate,"Senate: Third Reading RSN# 3708",38,0,0,0,38
+2005500,1530293,2025-03-27,Senate,"Senate: Third Reading RSN# 3658",38,0,0,0,38
+2005501,1530687,2025-03-28,Senate,"Senate: Third Reading RSN# 3719",38,0,0,0,38
+2005502,1530668,2025-03-28,Senate,"Senate: Third Reading RSN# 3715",38,0,0,0,38
+2005504,1529954,2025-03-27,Senate,"Senate: Third Reading RSN# 3659",38,0,0,0,38
+2005505,1529660,2025-03-27,Senate,"Senate: Third Reading RSN# 3647",38,0,0,0,38
+2005506,1530664,2025-03-28,Senate,"Senate: Third Reading RSN# 3697",38,0,0,0,38
+2005507,1530251,2025-03-28,Senate,"Senate: Third Reading RSN# 3709",38,0,0,0,38
+2005508,1530675,2025-03-28,Senate,"Senate: Third Reading RSN# 3688",38,0,0,0,38
+2005509,1530204,2025-03-27,Senate,"Senate: Third Reading RSN# 3651",38,0,0,0,38
+2005510,1530658,2025-03-28,Senate,"Senate: Third Reading RSN# 3718",38,0,0,0,38
+2005511,1530473,2025-03-28,Senate,"Senate: Third Reading RSN# 3701",38,0,0,0,38
+2005512,1530685,2025-03-28,Senate,"Senate: Third Reading RSN# 3702",38,0,0,0,38
+2005513,1530199,2025-03-28,Senate,"Senate: Third Reading RSN# 3722",38,0,0,0,38
+2005514,1530629,2025-03-28,Senate,"Senate: Third Reading RSN# 3726",38,0,0,0,38
+2005515,1529924,2025-03-27,Senate,"Senate: Third Reading RSN# 3648",38,0,0,0,38
+2005516,1530116,2025-03-27,Senate,"Senate: Third Reading RSN# 3654",38,0,0,0,38
+2005517,1530625,2025-03-28,Senate,"Senate: Third Reading RSN# 3689",38,0,0,0,38
+2005521,1530208,2025-03-27,Senate,"Senate: Third Reading RSN# 3650",38,0,0,0,38
+2005522,1530674,2025-03-28,Senate,"Senate: Third Reading RSN# 3716",38,0,0,0,38
+2005523,1530274,2025-03-27,Senate,"Senate: Third Reading RSN# 3655",38,0,0,0,38
+2005524,1530234,2025-03-28,Senate,"Senate: Third Reading RSN# 3724",38,0,0,0,38
+2005526,1529950,2025-03-27,Senate,"Senate: Third Reading RSN# 3652",38,0,0,0,38
+2005527,1530667,2025-03-28,Senate,"Senate: Third Reading RSN# 3720",38,0,0,0,38
+2005528,1530068,2025-03-27,Senate,"Senate: Third Reading RSN# 3657",38,0,0,0,38
+2005529,1530081,2025-03-27,Senate,"Senate: Third Reading RSN# 3646",38,0,0,0,38
+2005530,1530679,2025-03-28,Senate,"Senate: Third Reading RSN# 3721",38,0,0,0,38
+2005531,1530689,2025-03-28,Senate,"Senate: Third Reading RSN# 3693",38,0,0,0,38
+2005533,1530019,2025-03-27,Senate,"Senate: Third Reading RSN# 3653",38,0,0,0,38
+2005534,1530220,2025-03-27,Senate,"Senate: Third Reading RSN# 3649",38,0,0,0,38
+2005535,1530695,2025-03-28,Senate,"Senate: Third Reading RSN# 3712",38,0,0,0,38
+2005537,1530690,2025-03-28,Senate,"Senate: Third Reading RSN# 3696",38,0,0,0,38
+2005538,1530680,2025-03-28,Senate,"Senate: Third Reading RSN# 3711",38,0,0,0,38
+2005540,1530620,2025-03-28,Senate,"Senate: Third Reading RSN# 3691",38,0,0,0,38
+2005541,1530672,2025-03-28,Senate,"Senate: Third Reading RSN# 3695",38,0,0,0,38
+2005542,1530639,2025-03-28,Senate,"Senate: Third Reading RSN# 3706",38,0,0,0,38
+2005543,1530613,2025-03-28,Senate,"Senate: Third Reading RSN# 3713",38,0,0,0,38
+2005544,1530660,2025-03-28,Senate,"Senate: Third Reading RSN# 3692",38,0,0,0,38
+2005545,1530624,2025-03-28,Senate,"Senate: Third Reading RSN# 3698",38,0,0,0,38
+2005546,1530688,2025-03-28,Senate,"Senate: Third Reading RSN# 3694",38,0,0,0,38
+2005547,1530618,2025-03-28,Senate,"Senate: Third Reading RSN# 3714",38,0,0,0,38
+2016199,1530669,2025-03-28,Senate,"Senate: Third Reading RSN# 3727",38,0,0,0,38
+2016217,1530353,2025-03-28,Senate,"Senate: Third Reading RSN# 3729",38,0,0,0,38
+2016224,1530312,2025-03-28,Senate,"Senate: Third Reading RSN# 3728",38,0,0,0,38

@@ -1,5 +1,6 @@
 // lib/services/bill_service.dart
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,7 @@ import 'package:govvy/services/remote_service_config.dart';
 import 'package:govvy/services/csv_bill_service.dart';
 import 'package:govvy/services/legiscan_service.dart';
 import 'package:csv/csv.dart';
+import 'package:path_provider/path_provider.dart';
 
 class BillService {
   // Singleton pattern
@@ -30,7 +32,9 @@ class BillService {
   // Cache constants
   static const String _billsCacheKey = 'bills_cache';
   static const String _billsLastUpdatedKey = 'bills_last_updated';
+  static const String _lastDatasetCheckKey = 'last_dataset_check';
   static const Duration _cacheMaxAge = Duration(hours: 24);
+  static const Duration _datasetCheckInterval = Duration(days: 7);
 
   // In-memory cache
   final Map<String, List<BillModel>> _stateCache = {};
@@ -54,6 +58,9 @@ class BillService {
 
       // Load cached bills from persistent storage
       await _loadBillsFromCache();
+      
+      // Check if we should update datasets
+      await _checkForDatasetUpdates();
 
       if (kDebugMode) {
         print('Bill Service initialized successfully');
@@ -61,6 +68,108 @@ class BillService {
     } catch (e) {
       if (kDebugMode) {
         print('Error initializing Bill Service: $e');
+      }
+    }
+  }
+  
+  /// Checks if we need to fetch new datasets and processes them if needed
+  Future<void> _checkForDatasetUpdates() async {
+    try {
+      if (!hasLegiscanApiKey) {
+        if (kDebugMode) {
+          print('No LegiScan API key available for dataset updates');
+        }
+        return;
+      }
+      
+      // Check if we need to run the dataset update
+      final prefs = await SharedPreferences.getInstance();
+      final lastCheck = prefs.getInt(_lastDatasetCheckKey) ?? 0;
+      final now = DateTime.now().millisecondsSinceEpoch;
+      
+      // If it's been less than a week since our last check, skip
+      if (now - lastCheck < _datasetCheckInterval.inMilliseconds) {
+        if (kDebugMode) {
+          final daysSinceLastCheck = (now - lastCheck) ~/ (1000 * 60 * 60 * 24);
+          print('Last dataset check was $daysSinceLastCheck days ago, skipping update');
+        }
+        return;
+      }
+      
+      if (kDebugMode) {
+        print('Checking for dataset updates...');
+      }
+      
+      // Update the last check timestamp first (in case of failure, we still wait before trying again)
+      await prefs.setInt(_lastDatasetCheckKey, now);
+      
+      // Get new datasets that need to be fetched
+      final newDatasets = await _legiscanService.getNewDatasets();
+      
+      if (newDatasets.isEmpty) {
+        if (kDebugMode) {
+          print('No new datasets available');
+        }
+        return;
+      }
+      
+      if (kDebugMode) {
+        print('Found ${newDatasets.length} new/updated datasets');
+        for (final dataset in newDatasets) {
+          print('  - ${dataset.state}: Dataset ID ${dataset.datasetId}, Last updated ${dataset.lastUpdate}');
+        }
+      }
+      
+      // Fetch and process datasets (limited to 5 to avoid excessive API usage)
+      final datasetCount = newDatasets.length > 5 ? 5 : newDatasets.length;
+      final processedDatasets = <String>[];
+      
+      for (int i = 0; i < datasetCount; i++) {
+        final dataset = newDatasets[i];
+        
+        if (kDebugMode) {
+          print('Fetching dataset for ${dataset.state}...');
+        }
+        
+        // Download the dataset
+        final datasetPath = await _legiscanService.getDataset(dataset.datasetId);
+        
+        if (datasetPath == null) {
+          if (kDebugMode) {
+            print('Failed to download dataset for ${dataset.state}');
+          }
+          continue;
+        }
+        
+        // Process the dataset
+        if (kDebugMode) {
+          print('Processing dataset for ${dataset.state}...');
+        }
+        
+        final billCount = await _legiscanService.processDataset(datasetPath);
+        
+        if (kDebugMode) {
+          print('Processed $billCount bills from ${dataset.state} dataset');
+        }
+        
+        // Clear cached data for this state to force refresh
+        _stateCache.remove(dataset.state);
+        
+        // Add to list of processed states
+        processedDatasets.add(dataset.state);
+      }
+      
+      if (processedDatasets.isNotEmpty) {
+        if (kDebugMode) {
+          print('Successfully processed datasets for: ${processedDatasets.join(', ')}');
+        }
+        
+        // Update persistent cache with latest data
+        await _saveBillsToCache();
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error checking for dataset updates: $e');
       }
     }
   }
@@ -176,21 +285,79 @@ class BillService {
       // This logic would be better in a provider, but we're including it here for reference
       // Normally would inject the RepresentativeProvider
 
-      // Use LegiScan to get bills by representative
-      if (hasLegiscanApiKey) {
-        final legiscanBills =
-            await _legiscanService.getSponsoredBills(rep.bioGuideId.hashCode);
+      // First, check if we have state-specific CSV data for this representative
+      if (_csvBillService.availableStates.contains(rep.state)) {
+        try {
+          if (kDebugMode) {
+            print('Using state-specific CSV data for representative: ${rep.name} in state ${rep.state}');
+          }
+          
+          // Get sponsored bills from the state-specific CSV
+          final csvBills = await _csvBillService.getSponsoredBills(rep);
+          
+          if (csvBills.isNotEmpty) {
+            if (kDebugMode) {
+              print('Adding ${csvBills.length} state-specific CSV bills for representative ${rep.name}');
+            }
+            
+            // Convert RepresentativeBill to BillModel
+            for (final bill in csvBills) {
+              bills.add(BillModel.fromRepresentativeBill(bill, rep.state));
+            }
+          } else {
+            if (kDebugMode) {
+              print('No state-specific CSV bills found for representative ${rep.name}');
+            }
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('Error loading state-specific CSV bills for representative ${rep.name}: $e');
+          }
+        }
+      } else {
+        // If no state-specific data, try app-wide CSV data
+        if (kDebugMode) {
+          print('Using app-wide CSV data for representative: ${rep.name}');
+        }
+        
+        // Use CSV service to get local bills from app-wide data
+        final csvBills = await _csvBillService.getSponsoredBills(rep);
 
-        for (final bill in legiscanBills) {
-          bills.add(BillModel.fromRepresentativeBill(bill, rep.state));
+        if (csvBills.isNotEmpty) {
+          if (kDebugMode) {
+            print('Adding ${csvBills.length} app-wide CSV bills for representative ${rep.name}');
+          }
+          
+          for (final bill in csvBills) {
+            bills.add(BillModel.fromRepresentativeBill(bill, rep.state));
+          }
         }
       }
 
-      // Use CSV service to get local bills
-      final csvBills = await _csvBillService.getSponsoredBills(rep);
+      // Also try LegiScan as a supplementary source
+      if (hasLegiscanApiKey) {
+        try {
+          if (kDebugMode) {
+            print('Using LegiScan API for representative: ${rep.name}');
+          }
+          
+          final legiscanBills =
+              await _legiscanService.getSponsoredBills(rep.bioGuideId.hashCode);
 
-      for (final bill in csvBills) {
-        bills.add(BillModel.fromRepresentativeBill(bill, rep.state));
+          if (legiscanBills.isNotEmpty) {
+            if (kDebugMode) {
+              print('Adding ${legiscanBills.length} LegiScan bills for representative ${rep.name}');
+            }
+            
+            for (final bill in legiscanBills) {
+              bills.add(BillModel.fromRepresentativeBill(bill, rep.state));
+            }
+          }
+        } catch (e) {
+          if (kDebugMode) {
+            print('Error loading LegiScan bills for representative ${rep.name}: $e');
+          }
+        }
       }
 
       return bills;
@@ -205,9 +372,97 @@ class BillService {
   // Get detailed information about a specific bill
   Future<BillModel?> getBillDetails(int billId, String stateCode) async {
     try {
+      if (kDebugMode) {
+        print('Getting bill details for billId: $billId, stateCode: $stateCode');
+      }
+      
       // Check if we have it in the cache
       if (_billDetailsCache.containsKey(billId)) {
+        if (kDebugMode) {
+          print('Found bill details in cache for billId: $billId');
+        }
         return _billDetailsCache[billId];
+      }
+
+      // Special handling for FL and GA bills
+      if (stateCode == 'FL' || stateCode == 'GA') {
+        if (kDebugMode) {
+          print('Special handling for $stateCode bill details, billId: $billId');
+        }
+        
+        // Try to find this bill in the state bills list first
+        if (_stateCache.containsKey(stateCode)) {
+          final stateBills = _stateCache[stateCode]!;
+          final matchingBill = stateBills.firstWhere(
+            (bill) => bill.billId == billId,
+            orElse: () => BillModel(
+              billId: -1, // Invalid ID to indicate not found
+              billNumber: 'Unknown',
+              title: 'Unknown',
+              status: 'Unknown',
+              type: 'state',
+              state: stateCode,
+              url: '',
+            ),
+          );
+          
+          if (matchingBill.billId != -1) {
+            if (kDebugMode) {
+              print('Found matching bill in state cache: ${matchingBill.billNumber}');
+            }
+            
+            // Cache the details
+            _billDetailsCache[billId] = matchingBill;
+            
+            return matchingBill;
+          } else {
+            if (kDebugMode) {
+              print('Bill not found in state cache, trying CSV service directly');
+            }
+          }
+        }
+        
+        // Try to find this bill in CSV data directly
+        try {
+          // Look for the bill in CSV data with the billId
+          if (kDebugMode) {
+            print('Looking for bill in CSV data with billId: $billId');
+          }
+          
+          // Get all bills for this state
+          final csvBills = await _csvBillService.getBillsByState(stateCode);
+          
+          // Find the matching bill by ID
+          for (final csvBill in csvBills) {
+            // Generate the same ID hash used in BillModel.fromRepresentativeBill
+            final idHash = (csvBill.congress.hashCode ^ 
+                csvBill.billType.hashCode ^ 
+                csvBill.billNumber.hashCode ^ 
+                stateCode.hashCode).abs();
+                
+            if (idHash == billId) {
+              if (kDebugMode) {
+                print('Found matching bill in CSV data: ${csvBill.billNumber}');
+              }
+              
+              // Convert to BillModel
+              final billModel = BillModel.fromRepresentativeBill(csvBill, stateCode);
+              
+              // Cache the details
+              _billDetailsCache[billId] = billModel;
+              
+              return billModel;
+            }
+          }
+          
+          if (kDebugMode) {
+            print('Bill not found in CSV data with billId: $billId');
+          }
+        } catch (csvError) {
+          if (kDebugMode) {
+            print('Error searching CSV data for bill: $csvError');
+          }
+        }
       }
 
       // Check network connectivity
@@ -224,21 +479,56 @@ class BillService {
         final billData = await _legiscanService.callApi('getBill', params);
 
         if (billData == null || !billData.containsKey('bill')) {
+          if (kDebugMode) {
+            print('No bill data returned from LegiScan API for billId: $billId');
+            if (billData != null && billData.containsKey('alert') && 
+                billData['alert'] is Map && billData['alert'].containsKey('message')) {
+              print('API error message: ${billData['alert']['message']}');
+              
+              // If the specific error is "Unknown bill id", try to find the bill in other sources
+              if (billData['alert']['message'] == 'Unknown bill id') {
+                print('Attempting to find this bill through alternative sources...');
+                
+                // Check for this bill in state cache with a different ID format
+                if (_stateCache.containsKey(stateCode)) {
+                  // Try matching by bill number instead of ID
+                  for (final cachedBill in _stateCache[stateCode]!) {
+                    // If we find a bill with similar attributes, return it
+                    if (cachedBill.billId != billId &&
+                        (cachedBill.billNumber.contains(billId.toString()) || 
+                         billId.toString().contains(cachedBill.billNumber))) {
+                      print('Found potential match in state cache: ${cachedBill.billNumber}');
+                      _billDetailsCache[billId] = cachedBill;
+                      return cachedBill;
+                    }
+                  }
+                }
+              }
+            }
+          }
           return null;
         }
 
         // Process bill details
         final billDetails = _processBillDetails(billData, stateCode);
+        if (kDebugMode) {
+          print('Processed bill details from LegiScan: ${billDetails.billNumber}');
+        }
 
         // Cache the details
         _billDetailsCache[billId] = billDetails;
 
         return billDetails;
+      } else {
+        if (kDebugMode) {
+          print('No LegiScan API key available for bill details lookup');
+        }
       }
 
-      // Fallback to checking CSV data
-      // TODO: Implement CSV bill details lookup by ID
-
+      // If we get here, we haven't found the bill
+      if (kDebugMode) {
+        print('Bill details not found for billId: $billId, stateCode: $stateCode');
+      }
       return null;
     } catch (e) {
       if (kDebugMode) {
@@ -247,6 +537,7 @@ class BillService {
       return null;
     }
   }
+  
 
   // Get bill documents
   Future<List<BillDocument>> getBillDocuments(int billId) async {
@@ -289,7 +580,45 @@ class BillService {
 
     final List<BillModel> bills = [];
 
-    // Use LegiScan to get state bills
+    // First, check if this state has state-specific CSV data
+    if (_csvBillService.availableStates.contains(stateCode)) {
+      try {
+        if (kDebugMode) {
+          print('Using state-specific CSV data for state: $stateCode');
+        }
+        
+        // Get bills from the state-specific CSV
+        final csvBills = await _csvBillService.getBillsByState(stateCode);
+        
+        if (csvBills.isNotEmpty) {
+          if (kDebugMode) {
+            print('Adding ${csvBills.length} state-specific CSV bills for $stateCode');
+          }
+          
+          // Convert RepresentativeBill to BillModel
+          for (final bill in csvBills) {
+            bills.add(BillModel.fromRepresentativeBill(bill, stateCode));
+          }
+        } else {
+          if (kDebugMode) {
+            print('No state-specific CSV bills found for $stateCode');
+          }
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error loading state-specific CSV bills: $e');
+          print('Exception details: ${e.toString()}');
+          print('Falling back to other data sources');
+        }
+      }
+    } else {
+      if (kDebugMode) {
+        print('State $stateCode is not in available states: ${_csvBillService.availableStates.join(', ')}');
+        print('Available states: ${_csvBillService.availableStates}');
+      }
+    }
+
+    // Try LegiScan API as a backup or additional source
     if (hasLegiscanApiKey) {
       if (kDebugMode) {
         print('Using LegiScan API for state: $stateCode');
@@ -393,7 +722,7 @@ class BillService {
         }
       } catch (e) {
         if (kDebugMode) {
-          print('Error fetching bills for $stateCode: $e');
+          print('Error fetching bills from LegiScan for $stateCode: $e');
         }
       }
     } else {
@@ -402,37 +731,39 @@ class BillService {
       }
     }
 
-    // Also add CSV data if available
-    try {
-      if (kDebugMode) {
-        print('Checking for CSV bills for $stateCode');
-      }
-
-      // Use getSponsoredBills with a placeholder representative to get all bills for the state
-      // Since the CSVBillService doesn't have a getBillsByState method
-      final Representative placeholderRep = Representative(
-        name: 'State Placeholder',
-        bioGuideId: 'state-${stateCode.toLowerCase()}',
-        party: '',
-        chamber: '',
-        state: stateCode,
-        district: null,
-      );
-
-      final csvBills = await _csvBillService.getSponsoredBills(placeholderRep);
-      if (csvBills.isNotEmpty) {
+    // Also add general CSV data if available and if we don't already have state-specific data
+    if (!_csvBillService.availableStates.contains(stateCode)) {
+      try {
         if (kDebugMode) {
-          print('Adding ${csvBills.length} CSV bills for $stateCode');
+          print('Checking for app-wide CSV bills for $stateCode');
         }
 
-        // Convert RepresentativeBill to BillModel
-        for (final bill in csvBills) {
-          bills.add(BillModel.fromRepresentativeBill(bill, stateCode));
+        // Use getSponsoredBills with a placeholder representative to get all bills for the state
+        // Since the CSVBillService doesn't have a getBillsByState method
+        final Representative placeholderRep = Representative(
+          name: 'State Placeholder',
+          bioGuideId: 'state-${stateCode.toLowerCase()}',
+          party: '',
+          chamber: '',
+          state: stateCode,
+          district: null,
+        );
+
+        final csvBills = await _csvBillService.getSponsoredBills(placeholderRep);
+        if (csvBills.isNotEmpty) {
+          if (kDebugMode) {
+            print('Adding ${csvBills.length} app-wide CSV bills for $stateCode');
+          }
+
+          // Convert RepresentativeBill to BillModel
+          for (final bill in csvBills) {
+            bills.add(BillModel.fromRepresentativeBill(bill, stateCode));
+          }
         }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error loading CSV bills: $e');
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error loading app-wide CSV bills: $e');
+        }
       }
     }
 
@@ -977,6 +1308,117 @@ class BillService {
       if (kDebugMode) {
         print('Error clearing bills cache: $e');
       }
+    }
+  }
+  
+  /// Manually triggers dataset updates for specified states
+  /// If no states are provided, it will check all states for updates
+  /// Returns a map of state codes to success/failure status
+  Future<Map<String, bool>> updateDatasets({List<String>? stateCodes}) async {
+    try {
+      if (!hasLegiscanApiKey) {
+        if (kDebugMode) {
+          print('No LegiScan API key available for manual dataset updates');
+        }
+        return {};
+      }
+      
+      if (kDebugMode) {
+        print('Manually updating datasets for ${stateCodes != null ? stateCodes.join(', ') : 'all states'}');
+      }
+      
+      // Get new datasets that need to be fetched
+      final newDatasets = await _legiscanService.getNewDatasets(states: stateCodes);
+      
+      if (newDatasets.isEmpty) {
+        if (kDebugMode) {
+          print('No new datasets available for the specified states');
+        }
+        return {};
+      }
+      
+      if (kDebugMode) {
+        print('Found ${newDatasets.length} new/updated datasets');
+      }
+      
+      // Process results map
+      final Map<String, bool> results = {};
+      
+      // Fetch and process each dataset
+      for (final dataset in newDatasets) {
+        if (kDebugMode) {
+          print('Fetching dataset for ${dataset.state}...');
+        }
+        
+        try {
+          // Download the dataset
+          final datasetPath = await _legiscanService.getDataset(dataset.datasetId);
+          
+          if (datasetPath == null) {
+            if (kDebugMode) {
+              print('Failed to download dataset for ${dataset.state}');
+            }
+            results[dataset.state] = false;
+            continue;
+          }
+          
+          // Process the dataset
+          if (kDebugMode) {
+            print('Processing dataset for ${dataset.state}...');
+          }
+          
+          final billCount = await _legiscanService.processDataset(datasetPath);
+          
+          if (kDebugMode) {
+            print('Processed $billCount bills from ${dataset.state} dataset');
+          }
+          
+          // Clear cached data for this state to force refresh
+          _stateCache.remove(dataset.state);
+          
+          // Mark successful update
+          results[dataset.state] = true;
+          
+        } catch (e) {
+          if (kDebugMode) {
+            print('Error updating dataset for ${dataset.state}: $e');
+          }
+          results[dataset.state] = false;
+        }
+      }
+      
+      // Update persistent cache with latest data
+      await _saveBillsToCache();
+      
+      // Reset last check time to now
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt(_lastDatasetCheckKey, DateTime.now().millisecondsSinceEpoch);
+      
+      return results;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error in manual dataset update: $e');
+      }
+      return {};
+    }
+  }
+  
+  /// Gets the last date when datasets were checked for updates
+  Future<DateTime?> getLastDatasetCheckDate() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final lastCheck = prefs.getInt(_lastDatasetCheckKey);
+      
+      if (lastCheck == null) {
+        return null;
+      }
+      
+      return DateTime.fromMillisecondsSinceEpoch(lastCheck);
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error getting last dataset check date: $e');
+      }
+      return null;
     }
   }
 }

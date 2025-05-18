@@ -41,20 +41,53 @@ class ProfileScreen extends StatelessWidget {
                     }
                     
                     final userData = snapshot.data;
+                    final user = authService.currentUser;
+                    
+                    // Format account creation date if available
+                    String accountCreatedDate = 'Unknown';
+                    if (userData?.createdAt != null) {
+                      accountCreatedDate = '${userData!.createdAt!.month}/${userData.createdAt!.day}/${userData.createdAt!.year}';
+                    } else if (user?.metadata.creationTime != null) {
+                      accountCreatedDate = '${user!.metadata.creationTime!.month}/${user.metadata.creationTime!.day}/${user.metadata.creationTime!.year}';
+                    }
                     
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                              child: Icon(
-                                Icons.person,
-                                size: 30,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
+                            Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 40,
+                                  backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 40,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: const Icon(
+                                      Icons.check,
+                                      size: 12,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(width: 16),
                             Expanded(
@@ -62,16 +95,36 @@ class ProfileScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    userData?.name ?? 'User',
+                                    userData?.name ?? user?.displayName ?? 'User',
                                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    userData?.email ?? 'No email',
+                                    userData?.email ?? user?.email ?? 'No email',
                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       color: Colors.grey.shade700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  // Account type badge
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Active Account',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Theme.of(context).colorScheme.primary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -87,9 +140,17 @@ class ProfileScreen extends StatelessWidget {
                         // User's address
                         if (userData?.address != null && userData!.address.isNotEmpty)
                           ListTile(
-                            leading: Icon(
-                              Icons.location_on,
-                              color: Theme.of(context).colorScheme.primary,
+                            leading: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.orange.shade100,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.location_on,
+                                color: Colors.orange.shade800,
+                                size: 20,
+                              ),
                             ),
                             title: const Text('Your Address'),
                             subtitle: Text(userData.address),
@@ -99,14 +160,85 @@ class ProfileScreen extends StatelessWidget {
                         // User's phone
                         if (userData?.phone != null && userData!.phone!.isNotEmpty)
                           ListTile(
-                            leading: Icon(
-                              Icons.phone,
-                              color: Theme.of(context).colorScheme.primary,
+                            leading: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade100,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.phone,
+                                color: Colors.blue.shade800,
+                                size: 20,
+                              ),
                             ),
                             title: const Text('Phone Number'),
                             subtitle: Text(userData.phone!),
                             contentPadding: EdgeInsets.zero,
                           ),
+                        
+                        // Account created date
+                        ListTile(
+                          leading: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.green.shade100,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.calendar_today,
+                              color: Colors.green.shade800,
+                              size: 20,
+                            ),
+                          ),
+                          title: const Text('Account Created'),
+                          subtitle: Text(accountCreatedDate),
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        
+                        // Last sign in date
+                        if (user?.metadata.lastSignInTime != null)
+                          ListTile(
+                            leading: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.purple.shade100,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.access_time,
+                                color: Colors.purple.shade800,
+                                size: 20,
+                              ),
+                            ),
+                            title: const Text('Last Sign In'),
+                            subtitle: Text('${user!.metadata.lastSignInTime!.month}/${user.metadata.lastSignInTime!.day}/${user.metadata.lastSignInTime!.year}'),
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                          
+                        const SizedBox(height: 16),
+                        
+                        // Edit Profile Button
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            icon: const Icon(Icons.edit),
+                            label: const Text('Edit Profile'),
+                            onPressed: () {
+                              // Show a coming soon message
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Edit profile feature coming soon')),
+                              );
+                            },
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              side: BorderSide(color: Theme.of(context).colorScheme.primary),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     );
                   },
@@ -200,20 +332,58 @@ class ProfileScreen extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Column(
-                children: [
-                  // Sign out button
-                  ListTile(
-                    leading: Icon(
-                      Icons.logout,
-                      color: Theme.of(context).colorScheme.error,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    // Sign out button
+                    ListTile(
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                      leading: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.red.shade50,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.logout,
+                          color: Theme.of(context).colorScheme.error,
+                          size: 24,
+                        ),
+                      ),
+                      title: const Text('Sign Out'),
+                      subtitle: const Text('Log out of your account'),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 16,
+                        color: Colors.grey.shade400,
+                      ),
+                      onTap: () {
+                        _showSignOutConfirmation(context, authService);
+                      },
                     ),
-                    title: const Text('Sign Out'),
-                    onTap: () async {
-                      await authService.signOut();
-                    },
-                  ),
-                ],
+                    const SizedBox(height: 12),
+                    // Full-width sign out button
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Icons.logout),
+                        label: const Text('Sign Out'),
+                        onPressed: () {
+                          _showSignOutConfirmation(context, authService);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.error,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             
@@ -320,6 +490,59 @@ class ProfileScreen extends StatelessWidget {
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Cache cleared successfully')),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
+  // Helper to show sign out confirmation dialog
+  void _showSignOutConfirmation(
+    BuildContext context,
+    AuthService authService,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Sign Out?'),
+          content: const Text(
+            'Are you sure you want to sign out? You will need to sign in again to access your account.'
+          ),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).colorScheme.error,
+              ),
+              child: const Text('Sign Out'),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                
+                // Show loading indicator
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Signing out...'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+                
+                // Perform sign out
+                await authService.signOut();
+                
+                if (context.mounted) {
+                  // Show success message
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Signed out successfully')),
                   );
                 }
               },

@@ -1,0 +1,624 @@
+bill_id,roll_call_id,date,chamber,description,yea,nay,nv,absent,total
+1906054,1542453,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1906084,1540045,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1906087,1544740,2025-04-10,House,"Third Reading in House",82,30,1,0,113
+1906221,1541397,2025-04-08,House,"Third Reading in House",115,0,0,0,115
+1906238,1539001,2025-04-07,House,"Third Reading in House",107,0,0,0,107
+1906311,1545469,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1906342,1539041,2025-04-07,House,"Third Reading in House",103,0,4,0,107
+1906354,1545842,2025-04-10,House,"Third Reading in House",112,0,1,0,113
+1906359,1541679,2025-04-09,House,"Third Reading in House",113,0,3,0,116
+1906391,1546328,2025-04-11,House,"Third Reading in House",109,0,6,0,115
+1906396,1541393,2025-04-09,House,"Third Reading in House",114,0,1,0,115
+1906420,1542335,2025-04-09,House,"Third Reading in House",79,35,2,0,116
+1906491,1538991,2025-04-07,House,"Third Reading in House",107,0,0,0,107
+1906524,1538283,2025-04-07,House,"Third Reading in House",94,11,1,0,106
+1906528,1538521,2025-04-07,House,"Third Reading in House",107,0,1,0,108
+1906559,1538620,2025-04-07,House,"Third Reading in House",89,12,6,0,107
+1906643,1539073,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1906650,1539851,2025-04-08,House,"Third Reading in House",113,0,2,0,115
+1906814,1538453,2025-04-07,House,"Third Reading in House",107,0,0,0,107
+1906859,1539077,2025-04-07,House,"Third Reading in House",72,33,2,0,107
+1906917,1541197,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1906923,1544183,2025-04-10,House,"Third Reading in House",82,30,3,0,115
+1906929,1539533,2025-04-08,House,"Third Reading in House",116,0,0,0,116
+1906988,1538336,2025-04-07,House,"Third Reading in House",106,0,0,0,106
+1907004,1538891,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1907052,1545113,2025-04-10,House,"Third Reading in House",74,37,3,0,114
+1907052,1545114,2025-04-10,House,"Motion in House",38,73,1,0,112
+1907157,1538619,2025-04-07,House,"Third Reading in House",72,30,5,0,107
+1907538,1471196,2025-01-08,Senate,"Motion in Senate",58,0,1,0,59
+1908502,1471226,2025-01-09,House,"Motion in House",77,36,0,0,113
+1908678,1540145,2025-04-08,House,"Third Reading in House",82,28,3,0,113
+1909420,1471225,2025-01-09,Senate,"Motion To Adopt in Senate",40,14,5,0,59
+1909515,1541808,2025-04-09,House,"Third Reading in House",79,35,1,0,115
+1909588,1541500,2025-04-09,House,"Third Reading in House",114,0,1,0,115
+1909806,1538641,2025-04-07,House,"Third Reading in House",76,29,2,0,107
+1910700,1543385,2025-04-10,House,"Motion in House",70,38,7,0,115
+1910700,1543386,2025-04-10,House,"Third Reading in House",71,40,4,0,115
+1910725,1541260,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1911459,1539696,2025-04-08,House,"Third Reading in House",70,39,5,0,114
+1915121,1540140,2025-04-08,House,"Third Reading in House",110,0,3,0,113
+1915324,1541943,2025-04-09,House,"Third Reading in House",76,38,2,0,116
+1915768,1543972,2025-04-09,House,"Third Reading in House",76,40,0,0,116
+1915919,1542384,2025-04-09,Senate,"Third Reading in Senate",54,0,5,0,59
+1915926,1545297,2025-04-10,Senate,"Third Reading in Senate",54,0,5,0,59
+1915952,1545001,2025-04-10,Senate,"Third Reading in Senate",32,22,5,0,59
+1916019,1545154,2025-04-10,Senate,"Third Reading in Senate",33,19,7,0,59
+1916034,1537134,2025-04-04,Senate,"Third Reading in Senate",52,0,7,0,59
+1916111,1536337,2025-04-03,Senate,"Third Reading in Senate",52,0,7,0,59
+1916140,1536178,2025-04-03,Senate,"Third Reading in Senate",54,0,5,0,59
+1916154,1541662,2025-04-09,Senate,"Agreed Bill List in Senate",56,0,3,0,59
+1916272,1535841,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1916315,1537168,2025-04-04,Senate,"Third Reading in Senate",51,0,8,0,59
+1916327,1536434,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1916411,1541864,2025-04-09,Senate,"Third Reading in Senate",52,0,7,0,59
+1916421,1541565,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1916436,1535859,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1916524,1544882,2025-04-10,Senate,"Third Reading in Senate",33,20,6,0,59
+1916592,1541574,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1917076,1542914,2025-04-09,House,"Third Reading in House",115,0,0,0,115
+1917574,1538573,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1918059,1543100,2025-04-09,House,"Third Reading in House",114,0,2,0,116
+1918340,1542166,2025-04-09,House,"Third Reading in House",114,0,2,0,116
+1918405,1541799,2025-04-09,House,"Third Reading in House",115,0,1,0,116
+1918424,1541594,2025-04-09,House,"Third Reading in House",87,26,3,0,116
+1918482,1542444,2025-04-09,House,"Third Reading in House",115,1,0,0,116
+1918493,1539920,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1918776,1541136,2025-04-08,House,"Third Reading in House",116,0,0,0,116
+1918873,1539808,2025-04-08,House,"Third Reading in House",75,39,1,0,115
+1918969,1541084,2025-04-08,House,"Third Reading in House",115,0,0,0,115
+1919590,1540287,2025-04-08,House,"Third Reading in House",75,40,1,0,116
+1919929,1539039,2025-04-07,House,"Third Reading in House",78,23,6,0,107
+1920377,1539260,2025-04-07,House,"Third Reading in House",103,1,3,0,107
+1924102,1538492,2025-04-07,House,"Third Reading in House",106,0,0,0,106
+1925066,1538695,2025-04-07,House,"Third Reading in House",103,0,1,0,104
+1925790,1538841,2025-04-07,House,"Third Reading in House",67,38,2,0,107
+1927196,1535774,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1927274,1544634,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1927349,1535862,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1927516,1541634,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1927601,1543767,2025-04-10,Senate,"Third Reading in Senate",47,7,5,0,59
+1927688,1536048,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1927808,1542398,2025-04-09,Senate,"Third Reading in Senate",51,1,7,0,59
+1927884,1542386,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1927895,1541916,2025-04-09,Senate,"Motion in Senate",51,4,4,0,59
+1927929,1536036,2025-04-03,Senate,"Third Reading in Senate",54,1,4,0,59
+1927967,1537171,2025-04-04,Senate,"Third Reading in Senate",32,19,8,0,59
+1928016,1541618,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1928025,1542647,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1928080,1544368,2025-04-10,Senate,"Third Reading in Senate",35,19,5,0,59
+1928287,1537335,2025-04-04,Senate,"Third Reading in Senate",52,0,7,0,59
+1928377,1538956,2025-04-07,House,"Third Reading in House",102,0,5,0,107
+1928690,1545260,2025-04-10,House,"Third Reading in House",101,10,3,0,114
+1928810,1544990,2025-04-10,House,"Third Reading in House",74,38,0,0,112
+1928850,1541328,2025-04-08,House,"Third Reading in House",111,0,2,0,113
+1930919,1539012,2025-04-07,House,"Third Reading in House",107,0,0,0,107
+1931368,1539667,2025-04-08,House,"Third Reading in House",115,0,0,0,115
+1931595,1538279,2025-04-07,House,"Third Reading in House",106,0,0,0,106
+1931642,1538727,2025-04-07,House,"Third Reading in House",105,0,1,0,106
+1931686,1543924,2025-04-10,House,"Third Reading in House",108,2,4,0,114
+1934097,1542681,2025-04-09,House,"Third Reading in House",115,0,1,0,116
+1934275,1538708,2025-04-07,House,"Third Reading in House",105,0,2,0,107
+1934483,1541250,2025-04-08,House,"Third Reading in House",75,38,0,0,113
+1934541,1535732,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1934626,1539140,2025-04-07,House,"Third Reading in House",68,38,2,0,108
+1934717,1543854,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1934733,1562104,2025-04-30,Senate,"Third Reading in Senate",34,17,8,0,59
+1935020,1537545,2025-04-04,Senate,"Third Reading in Senate",33,17,9,0,59
+1935099,1541861,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1935120,1541669,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1935136,1562725,2025-04-30,Senate,"Third Reading in Senate",39,13,7,0,59
+1935248,1542266,2025-04-09,Senate,"Third Reading in Senate",50,3,6,0,59
+1935544,1544730,2025-04-10,House,"Third Reading in House",73,35,6,0,114
+1935680,1538778,2025-04-07,House,"Third Reading in House",102,0,5,0,107
+1936178,1544578,2025-04-10,House,"Third Reading in House",75,39,0,0,114
+1936976,1544181,2025-04-10,House,"Third Reading in House",97,17,0,0,114
+1936994,1545054,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1937079,1539010,2025-04-07,House,"Third Reading in House",95,9,3,0,107
+1937153,1539121,2025-04-07,House,"Third Reading in House",70,34,2,0,106
+1937204,1545182,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1937274,1542832,2025-04-09,House,"Third Reading in House",82,30,4,0,116
+1937431,1545669,2025-04-10,House,"Third Reading in House",113,0,1,0,114
+1937548,1545351,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1937862,1540724,2025-04-08,House,"Third Reading in House",114,0,1,0,115
+1937899,1545051,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1939676,1541838,2025-04-09,House,"Third Reading in House",76,40,0,0,116
+1939685,1541099,2025-04-08,House,"Third Reading in House",115,0,1,0,116
+1939732,1542571,2025-04-09,House,"Third Reading in House",84,30,2,0,116
+1939746,1538671,2025-04-07,House,"Third Reading in House",105,0,1,0,106
+1939757,1539066,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1939785,1541672,2025-04-09,House,"Third Reading in House",115,0,0,0,115
+1939936,1543158,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1939942,1543838,2025-04-10,Senate,"Third Reading in Senate",56,0,3,0,59
+1940020,1543870,2025-04-10,Senate,"Third Reading in Senate",56,0,3,0,59
+1940087,1562367,2025-04-30,Senate,"Third Reading in Senate",55,0,4,0,59
+1940159,1543028,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1940165,1568832,2025-05-08,Senate,"Third Reading in Senate",52,1,6,0,59
+1940175,1542932,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1940185,1543136,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1940199,1568365,2025-05-08,Senate,"Third Reading in Senate",56,0,3,0,59
+1940215,1542933,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1940226,1542278,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1940298,1545162,2025-04-10,Senate,"Third Reading in Senate",44,12,3,0,59
+1940573,1567845,2025-05-07,Senate,"Third Reading in Senate",57,0,2,0,59
+1940627,1545259,2025-04-10,Senate,"Third Reading in Senate",51,5,3,0,59
+1940637,1541735,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1940719,1545281,2025-04-10,Senate,"Third Reading in Senate",56,0,3,0,59
+1940740,1568390,2025-05-08,Senate,"Third Reading in Senate",55,0,4,0,59
+1940863,1567540,2025-05-07,Senate,"Third Reading in Senate",57,0,2,0,59
+1940893,1562409,2025-04-30,Senate,"Third Reading in Senate",56,0,3,0,59
+1941055,1544547,2025-04-10,Senate,"Third Reading in Senate",55,1,3,0,59
+1941066,1562456,2025-04-30,Senate,"Third Reading in Senate",38,18,3,0,59
+1941175,1564809,2025-05-01,Senate,"Third Reading in Senate",51,0,8,0,59
+1941184,1541764,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1941187,1568704,2025-05-08,Senate,"Third Reading in Senate",51,4,4,0,59
+1941247,1536094,2025-04-03,Senate,"Third Reading in Senate",53,0,6,0,59
+1941298,1568627,2025-05-08,Senate,"Third Reading in Senate",56,0,3,0,59
+1941304,1544083,2025-04-10,Senate,"Third Reading in Senate",55,1,3,0,59
+1941333,1539100,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1941685,1539079,2025-04-07,House,"Third Reading in House",106,0,0,0,106
+1942075,1545483,2025-04-11,House,"Motion in House",111,0,4,0,115
+1942075,1545484,2025-04-11,House,"Third Reading in House",111,0,4,0,115
+1942075,1545485,2025-04-11,House,"Third Reading in House",78,34,3,0,115
+1942369,1543822,2025-04-10,House,"Third Reading in House",115,0,0,0,115
+1942546,1539539,2025-04-07,House,"Third Reading in House",105,0,2,0,107
+1942773,1544126,2025-04-10,House,"Third Reading in House",114,0,0,0,114
+1943671,1544694,2025-04-10,House,"Third Reading in House",113,0,0,0,113
+1943858,1541499,2025-04-09,House,"Third Reading in House",114,0,1,0,115
+1943925,1546224,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1944364,1541141,2025-04-08,House,"Third Reading in House",114,0,1,0,115
+1944408,1545145,2025-04-10,House,"Third Reading in House",112,0,1,0,113
+1944473,1539253,2025-04-07,House,"Third Reading in House",107,0,0,0,107
+1944555,1545263,2025-04-10,House,"Third Reading in House",107,6,0,0,113
+1944627,1545478,2025-04-11,Senate,"Motion To Adopt in Senate",47,1,11,0,59
+1944630,1544212,2025-04-10,House,"Third Reading in House",77,35,3,0,115
+1944676,1537068,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1944714,1541926,2025-04-09,Senate,"Third Reading in Senate",42,12,5,0,59
+1944747,1543925,2025-04-10,Senate,"Third Reading in Senate",56,0,3,0,59
+1944778,1542381,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1944793,1535782,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1944807,1541647,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1944823,1537031,2025-04-03,Senate,"Third Reading in Senate",54,0,5,0,59
+1944836,1568319,2025-05-08,Senate,"Third Reading in Senate",55,0,4,0,59
+1944893,1545360,2025-04-11,House,"Third Reading in House",114,0,1,0,115
+1944931,1542619,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1945022,1543862,2025-04-10,Senate,"Third Reading in Senate",56,0,3,0,59
+1945026,1536030,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1945029,1535742,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1945052,1535914,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1945071,1542154,2025-04-09,Senate,"Third Reading in Senate",54,0,5,0,59
+1945075,1537057,2025-04-03,Senate,"Third Reading in Senate",49,5,5,0,59
+1945078,1545634,2025-04-11,Senate,"Motion To Adopt in Senate",50,0,9,0,59
+1945083,1543108,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1945463,1538715,2025-04-07,House,"Third Reading in House",104,0,3,0,107
+1945541,1542142,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1945547,1544281,2025-04-10,House,"Third Reading in House",115,0,0,0,115
+1945608,1538707,2025-04-07,House,"Third Reading in House",107,0,0,0,107
+1945615,1545490,2025-04-11,House,"Third Reading in House",112,0,3,0,115
+1945646,1541897,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1945671,1538810,2025-04-07,House,"Third Reading in House",87,17,3,0,107
+1945679,1543901,2025-04-10,House,"Third Reading in House",75,35,4,0,114
+1945706,1476445,2025-01-29,House,"Motion in House",74,38,0,1,113
+1945735,1536212,2025-04-03,Senate,"Third Reading in Senate",54,0,5,0,59
+1945798,1541760,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1945874,1545115,2025-04-10,House,"Third Reading in House",113,0,2,0,115
+1945898,1539921,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1945920,1545763,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1945985,1541968,2025-04-09,Senate,"Third Reading in Senate",54,0,5,0,59
+1946100,1538302,2025-04-07,House,"Third Reading in House",106,0,2,0,108
+1946226,1537123,2025-04-04,Senate,"Third Reading in Senate",50,0,9,0,59
+1946330,1541532,2025-04-09,House,"Third Reading in House",114,0,2,0,116
+1946579,1544519,2025-04-10,House,"Third Reading in House",114,0,0,0,114
+1946828,1545344,2025-04-11,House,"Third Reading in House",113,0,2,0,115
+1946986,1541741,2025-04-09,House,"Third Reading in House",102,11,3,0,116
+1946991,1543026,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1947012,1541531,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1947181,1538608,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1947286,1545353,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1947419,1545095,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1947932,1544639,2025-04-10,House,"Third Reading in House",113,0,1,0,114
+1948050,1541507,2025-04-09,House,"Third Reading in House",114,0,2,0,116
+1948210,1542406,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1948268,1541579,2025-04-09,House,"Third Reading in House",75,40,1,0,116
+1948365,1544626,2025-04-10,House,"Third Reading in House",110,0,2,0,112
+1948603,1542179,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1948749,1540265,2025-04-08,House,"Third Reading in House",111,0,2,0,113
+1948949,1538739,2025-04-07,House,"Third Reading in House",107,0,0,0,107
+1949144,1541615,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1949298,1545100,2025-04-10,House,"Third Reading in House",114,0,1,0,115
+1949374,1545723,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1949409,1541060,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1949556,1541702,2025-04-09,House,"Third Reading in House",115,0,1,0,116
+1949907,1544773,2025-04-10,House,"Third Reading in House",74,38,0,0,112
+1949922,1542410,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1949967,1541181,2025-04-08,House,"Third Reading in House",115,0,0,0,115
+1950228,1538704,2025-04-07,House,"Third Reading in House",103,0,4,0,107
+1950255,1545128,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1950271,1536681,2025-04-03,Senate,"Third Reading in Senate",53,0,6,0,59
+1950312,1542658,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1950338,1541611,2025-04-09,Senate,"Third Reading in Senate",37,19,3,0,59
+1950385,1544432,2025-04-10,House,"Third Reading in House",114,0,0,0,114
+1950407,1542514,2025-04-09,Senate,"Motion in Senate",53,3,3,0,59
+1950424,1538332,2025-04-07,House,"Third Reading in House",78,27,3,0,108
+1950623,1544079,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1950647,1541629,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1950654,1535771,2025-04-03,Senate,"Third Reading in Senate",52,0,7,0,59
+1950674,1540396,2025-04-08,House,"Third Reading in House",75,37,1,0,113
+1950682,1540594,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1950744,1535744,2025-04-03,Senate,"Third Reading in Senate",48,6,5,0,59
+1950753,1545701,2025-04-11,Senate,"Third Reading in Senate",53,0,6,0,59
+1950766,1568228,2025-05-08,Senate,"Third Reading in Senate",53,1,5,0,59
+1950805,1542481,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1950812,1545716,2025-04-11,Senate,"Third Reading in Senate",51,0,8,0,59
+1950821,1545138,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1950886,1545133,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1950925,1544863,2025-04-10,House,"Third Reading in House",109,0,3,0,112
+1950964,1544981,2025-04-10,House,"Third Reading in House",76,38,0,0,114
+1951465,1541617,2025-04-09,House,"Third Reading in House",113,0,2,0,115
+1951538,1545441,2025-04-11,House,"Third Reading in House",114,0,1,0,115
+1951569,1544809,2025-04-10,House,"Third Reading in House",68,41,5,0,114
+1951595,1543722,2025-04-10,House,"Third Reading in House",76,38,0,0,114
+1951602,1544534,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1951624,1538252,2025-04-07,House,"Third Reading in House",105,0,1,0,106
+1951635,1540038,2025-04-08,House,"Third Reading in House",114,0,0,0,114
+1951642,1538776,2025-04-07,House,"Third Reading in House",104,0,2,0,106
+1951767,1545268,2025-04-10,House,"Third Reading in House",85,25,2,0,112
+1951806,1539618,2025-04-08,House,"Third Reading in House",85,22,8,0,115
+1951905,1540385,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1951915,1543973,2025-04-10,House,"Third Reading in House",80,34,0,0,114
+1951950,1546298,2025-04-11,House,"Third Reading in House",84,30,1,0,115
+1952033,1544253,2025-04-10,House,"Third Reading in House",72,39,4,0,115
+1952194,1542203,2025-04-09,House,"Third Reading in House",79,37,0,0,116
+1952380,1544800,2025-04-10,House,"Third Reading in House",109,0,5,0,114
+1952725,1543848,2025-04-10,House,"Third Reading in House",71,39,4,0,114
+1952755,1544745,2025-04-10,House,"Third Reading in House",82,29,2,0,113
+1953374,1541360,2025-04-09,House,"Third Reading in House",113,0,2,0,115
+1953387,1544799,2025-04-10,House,"Third Reading in House",110,0,2,0,112
+1953465,1538998,2025-04-07,House,"Third Reading in House",107,0,0,0,107
+1953579,1539557,2025-04-08,House,"Motion in House",74,40,2,0,116
+1953607,1540324,2025-04-08,House,"Third Reading in House",69,42,2,0,113
+1953640,1545195,2025-04-10,House,"Third Reading in House",75,38,0,0,113
+1953684,1542187,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1953857,1541180,2025-04-08,House,"Third Reading in House",112,0,3,0,115
+1954000,1541575,2025-04-09,Senate,"Motion in Senate",50,6,3,0,59
+1954034,1539928,2025-04-08,House,"Third Reading in House",108,0,5,0,113
+1954058,1545600,2025-04-11,Senate,"Third Reading in Senate",52,0,7,0,59
+1954074,1536021,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1954078,1544493,2025-04-10,Senate,"Third Reading in Senate",56,0,3,0,59
+1954087,1543859,2025-04-10,House,"Third Reading in House",114,0,1,0,115
+1954101,1541860,2025-04-09,Senate,"Motion in Senate",44,12,3,0,59
+1954275,1545904,2025-04-11,Senate,"Third Reading in Senate",51,0,8,0,59
+1954290,1543119,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1954295,1543832,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1954347,1542233,2025-04-09,Senate,"Third Reading in Senate",37,17,5,0,59
+1954351,1543135,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1954355,1536097,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1954421,1562100,2025-04-30,Senate,"Third Reading in Senate",32,22,5,0,59
+1954434,1536944,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1954457,1543173,2025-04-09,Senate,"Motion in Senate",55,1,3,0,59
+1954475,1543883,2025-04-10,Senate,"Third Reading in Senate",37,19,3,0,59
+1954527,1542445,2025-04-09,Senate,"Motion in Senate",55,1,3,0,59
+1954538,1541767,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1954559,1542270,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1954594,1537319,2025-04-04,Senate,"Third Reading in Senate",51,0,8,0,59
+1954605,1541736,2025-04-09,Senate,"Motion in Senate",45,11,3,0,59
+1954690,1542551,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1954710,1544823,2025-04-10,House,"Motion in House",68,29,16,0,113
+1954739,1543027,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1954741,1540464,2025-04-08,House,"Third Reading in House",114,0,1,0,115
+1954751,1542131,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1954775,1539558,2025-04-08,House,"Third Reading in House",113,0,2,0,115
+1954858,1545830,2025-04-11,House,"Third Reading in House",78,35,2,0,115
+1954864,1545495,2025-04-11,Senate,"Third Reading in Senate",52,0,7,0,59
+1955014,1544115,2025-04-10,Senate,"Third Reading in Senate",38,17,4,0,59
+1955218,1538711,2025-04-07,House,"Third Reading in House",104,0,0,0,104
+1955524,1538740,2025-04-07,House,"Third Reading in House",105,1,1,0,107
+1955583,1542030,2025-04-09,House,"Third Reading in House",114,0,2,0,116
+1955608,1538815,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1955631,1545118,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1955655,1545203,2025-04-10,House,"Third Reading in House",70,38,4,0,112
+1955665,1545393,2025-04-10,House,"Third Reading in House",76,36,0,0,112
+1955681,1541597,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1955687,1540732,2025-04-08,House,"Third Reading in House",111,0,2,0,113
+1955737,1545689,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1956216,1541839,2025-04-09,House,"Third Reading in House",111,0,5,0,116
+1956270,1543171,2025-04-09,Senate,"Motion in Senate",51,4,4,0,59
+1956327,1541444,2025-04-09,House,"Third Reading in House",115,0,1,0,116
+1956359,1540526,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1956408,1544869,2025-04-10,House,"Third Reading in House",75,37,0,0,112
+1956466,1541858,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1956533,1538323,2025-04-07,House,"Third Reading in House",68,37,1,0,106
+1956556,1542484,2025-04-09,House,"Third Reading in House",76,40,0,0,116
+1956559,1544972,2025-04-10,House,"Third Reading in House",82,29,2,0,113
+1956568,1539863,2025-04-08,House,"Third Reading in House",109,0,4,0,113
+1956601,1482935,2025-02-05,House,"Motion in House",73,0,34,0,107
+1956690,1540226,2025-04-08,House,"Third Reading in House",114,0,0,0,114
+1956777,1542510,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1956824,1545341,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1956852,1545770,2025-04-11,House,"Motion in House",66,41,8,0,115
+1956894,1482602,2025-02-05,House,"Motion in House",73,0,34,0,107
+1957060,1545200,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1957073,1542528,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1957080,1544978,2025-04-10,House,"Third Reading in House",113,0,1,0,114
+1957137,1482609,2025-02-05,House,"Motion in House",73,0,34,0,107
+1957152,1542005,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1957195,1541508,2025-04-09,House,"Third Reading in House",113,0,2,0,115
+1957201,1541641,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1957235,1541650,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1957243,1544376,2025-04-10,House,"Third Reading in House",113,0,1,0,114
+1957287,1482942,2025-02-05,House,"Motion in House",73,0,34,0,107
+1957297,1482941,2025-02-05,House,"Motion in House",73,0,34,0,107
+1957314,1542757,2025-04-09,Senate,"Third Reading in Senate",52,2,5,0,59
+1957325,1541724,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1957354,1544963,2025-04-10,House,"Third Reading in House",113,0,0,0,113
+1957359,1541872,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1957361,1544138,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1957372,1545424,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1957411,1540027,2025-04-08,House,"Motion in House",72,37,4,0,113
+1957411,1540028,2025-04-08,House,"Third Reading in House",72,38,3,0,113
+1957431,1541369,2025-04-09,House,"Third Reading in House",115,0,0,0,115
+1957831,1544847,2025-04-10,House,"Third Reading in House",111,0,1,0,112
+1957874,1544633,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1958226,1538310,2025-04-07,House,"Third Reading in House",106,0,2,0,108
+1958280,1542614,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1958292,1545280,2025-04-10,House,"Third Reading in House",111,0,2,0,113
+1958330,1539757,2025-04-08,House,"Third Reading in House",114,0,0,0,114
+1958334,1543731,2025-04-10,House,"Third Reading in House",114,0,1,0,115
+1958423,1542036,2025-04-09,House,"Third Reading in House",75,40,1,0,116
+1958438,1544905,2025-04-10,House,"Third Reading in House",76,37,1,0,114
+1958449,1540650,2025-04-08,House,"Third Reading in House",75,38,0,0,113
+1958658,1544929,2025-04-10,House,"Motion in House",70,38,4,0,112
+1958658,1544930,2025-04-10,House,"Third Reading in House",67,35,10,0,112
+1958665,1544600,2025-04-10,House,"Third Reading in House",111,0,1,0,112
+1958680,1542081,2025-04-09,House,"Third Reading in House",115,0,1,0,116
+1958688,1539042,2025-04-07,House,"Third Reading in House",106,0,0,0,106
+1958701,1544231,2025-04-10,House,"Third Reading in House",81,33,0,0,114
+1958734,1544715,2025-04-10,House,"Third Reading in House",114,0,0,0,114
+1958739,1538469,2025-04-07,House,"Third Reading in House",91,7,9,0,107
+1958769,1545279,2025-04-10,House,"Third Reading in House",75,36,1,0,112
+1958936,1543024,2025-04-09,House,"Third Reading in House",114,0,2,0,116
+1958949,1544599,2025-04-10,House,"Third Reading in House",111,0,1,0,112
+1958954,1541216,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1958961,1544646,2025-04-10,House,"Third Reading in House",78,34,2,0,114
+1958983,1544576,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1959043,1540180,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1959074,1545088,2025-04-10,House,"Third Reading in House",84,27,2,0,113
+1959112,1543785,2025-04-10,House,"Third Reading in House",112,0,2,0,114
+1959160,1542092,2025-04-09,House,"Third Reading in House",115,0,1,0,116
+1959166,1544734,2025-04-10,House,"Third Reading in House",78,33,2,0,113
+1959253,1540723,2025-04-08,House,"Third Reading in House",115,0,0,0,115
+1959282,1545871,2025-04-11,House,"Third Reading in House",76,39,0,0,115
+1959294,1540551,2025-04-08,House,"Third Reading in House",75,38,0,0,113
+1959303,1568323,2025-05-08,Senate,"Third Reading in Senate",54,0,5,0,59
+1959337,1541571,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1959392,1541083,2025-04-08,House,"Third Reading in House",83,30,0,0,113
+1959414,1539135,2025-04-07,House,"Third Reading in House",104,1,1,0,106
+1959430,1545290,2025-04-10,House,"Third Reading in House",84,24,4,0,112
+1959438,1538659,2025-04-07,House,"Third Reading in House",91,10,3,0,104
+1959450,1538471,2025-04-07,House,"Third Reading in House",69,37,1,0,107
+1959471,1543905,2025-04-10,House,"Third Reading in House",81,32,2,0,115
+1959481,1540527,2025-04-08,House,"Third Reading in House",75,38,0,0,113
+1959510,1545119,2025-04-10,Senate,"Third Reading in Senate",33,17,9,0,59
+1959524,1544484,2025-04-10,House,"Third Reading in House",76,38,0,0,114
+1959532,1542400,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1959534,1544209,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1959546,1537270,2025-04-04,Senate,"Third Reading in Senate",41,7,11,0,59
+1959554,1542477,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1959631,1545143,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1959637,1541988,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1959640,1543052,2025-04-09,Senate,"Third Reading in Senate",54,0,5,0,59
+1959654,1562219,2025-04-30,Senate,"Third Reading in Senate",49,1,9,0,59
+1959665,1544218,2025-04-10,Senate,"Third Reading in Senate",39,17,3,0,59
+1959687,1543759,2025-04-10,House,"Third Reading in House",115,0,0,0,115
+1959691,1546135,2025-04-10,House,"Third Reading in House",106,0,4,0,110
+1959710,1542026,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1959724,1536056,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1959782,1537199,2025-04-04,Senate,"Third Reading in Senate",52,0,7,0,59
+1959818,1542652,2025-04-09,Senate,"Third Reading in Senate",47,4,8,0,59
+1959842,1542237,2025-04-09,Senate,"Third Reading in Senate",42,8,9,0,59
+1959861,1545440,2025-04-10,House,"Third Reading in House",114,0,0,0,114
+1959887,1542336,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1959924,1536049,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1959970,1544720,2025-04-10,House,"Third Reading in House",71,38,5,0,114
+1959984,1542120,2025-04-09,Senate,"Third Reading in Senate",53,0,6,0,59
+1959996,1540276,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1960040,1542977,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1960065,1541815,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1960079,1539191,2025-04-07,House,"Third Reading in House",104,0,0,0,104
+1960104,1545892,2025-04-11,House,"Third Reading in House",112,0,3,0,115
+1960116,1542043,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1960148,1544297,2025-04-10,House,"Third Reading in House",109,2,4,0,115
+1960170,1545737,2025-04-11,House,"Third Reading in House",107,0,8,0,115
+1960178,1541577,2025-04-09,House,"Third Reading in House",114,0,2,0,116
+1960223,1535857,2025-04-03,Senate,"Third Reading in Senate",54,0,5,0,59
+1960234,1536585,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1960239,1542276,2025-04-09,Senate,"Third Reading in Senate",50,2,7,0,59
+1960255,1544672,2025-04-10,Senate,"Third Reading in Senate",40,15,4,0,59
+1960286,1542213,2025-04-09,House,"Third Reading in House",68,39,9,0,116
+1960290,1545528,2025-04-10,House,"Third Reading in House",107,0,5,0,112
+1960325,1542024,2025-04-09,Senate,"Third Reading in Senate",54,0,5,0,59
+1960327,1543174,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1960342,1545063,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1960348,1542197,2025-04-09,House,"Third Reading in House",115,0,1,0,116
+1960349,1545343,2025-04-11,Senate,"Third Reading in Senate",50,0,9,0,59
+1960364,1543169,2025-04-09,Senate,"Third Reading in Senate",44,10,5,0,59
+1960369,1536590,2025-04-03,Senate,"Third Reading in Senate",54,0,5,0,59
+1960380,1542549,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1960398,1544674,2025-04-10,House,"Third Reading in House",77,35,1,0,113
+1960450,1540555,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1960455,1542150,2025-04-09,House,"Third Reading in House",71,42,3,0,116
+1960533,1543813,2025-04-10,House,"Third Reading in House",77,38,0,0,115
+1960544,1544182,2025-04-10,Senate,"Third Reading in Senate",35,19,5,0,59
+1960547,1545366,2025-04-11,House,"Third Reading in House",75,37,3,0,115
+1960571,1535789,2025-04-03,Senate,"Third Reading in Senate",37,16,6,0,59
+1960581,1539250,2025-04-07,House,"Third Reading in House",68,35,1,0,104
+1960583,1542331,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1960586,1538844,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1960606,1542483,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1960669,1541967,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1960672,1544772,2025-04-10,House,"Third Reading in House",85,27,0,0,112
+1960690,1545283,2025-04-10,Senate,"Third Reading in Senate",56,0,3,0,59
+1960728,1540325,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1960734,1543020,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1960737,1541862,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1960763,1543918,2025-04-10,House,"Third Reading in House",115,0,0,0,115
+1960790,1541684,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1960813,1542425,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1960857,1538720,2025-04-07,House,"Third Reading in House",68,38,1,0,107
+1960897,1544774,2025-04-10,House,"Third Reading in House",72,38,2,0,112
+1960917,1545966,2025-04-11,House,"Third Reading in House",85,30,0,0,115
+1960933,1539718,2025-04-08,House,"Third Reading in House",108,0,6,0,114
+1960935,1542094,2025-04-09,Senate,"Third Reading in Senate",54,1,4,0,59
+1960952,1546245,2025-04-11,House,"Third Reading in House",85,26,4,0,115
+1960953,1536336,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1960962,1545291,2025-04-10,Senate,"Third Reading in Senate",36,19,4,0,59
+1961101,1545869,2025-04-11,House,"Third Reading in House",90,25,0,0,115
+1961466,1541421,2025-04-09,House,"Third Reading in House",113,0,2,0,115
+1961474,1544880,2025-04-10,House,"Third Reading in House",106,0,6,0,112
+1961478,1544511,2025-04-10,House,"Third Reading in House",114,0,0,0,114
+1961493,1545346,2025-04-11,House,"Third Reading in House",114,0,1,0,115
+1961537,1541007,2025-04-08,House,"Third Reading in House",114,0,0,0,114
+1961549,1538691,2025-04-07,House,"Third Reading in House",107,0,0,0,107
+1961550,1542177,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1961570,1541503,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1961576,1540972,2025-04-08,House,"Third Reading in House",116,0,0,0,116
+1961586,1542294,2025-04-09,House,"Third Reading in House",72,41,3,0,116
+1961590,1544801,2025-04-10,House,"Third Reading in House",115,0,0,0,115
+1961616,1541456,2025-04-09,House,"Third Reading in House",114,0,1,0,115
+1961628,1541467,2025-04-09,House,"Third Reading in House",113,0,3,0,116
+1961634,1543786,2025-04-10,House,"Third Reading in House",73,38,4,0,115
+1961636,1545659,2025-04-10,House,"Third Reading in House",49,51,12,0,112
+1961653,1546353,2025-04-11,House,"Third Reading in House",74,39,2,0,115
+1961666,1544338,2025-04-10,House,"Third Reading in House",114,0,1,0,115
+1961678,1542858,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1961689,1543816,2025-04-10,House,"Third Reading in House",77,36,1,0,114
+1961694,1544842,2025-04-10,House,"Third Reading in House",89,23,0,0,112
+1961706,1539454,2025-04-08,House,"Third Reading in House",80,36,0,0,116
+1961729,1538224,2025-04-07,House,"Third Reading in House",107,0,1,0,108
+1961741,1540439,2025-04-08,House,"Third Reading in House",69,38,6,0,113
+1961751,1546505,2025-04-11,House,"Third Reading in House",75,39,1,0,115
+1961776,1544620,2025-04-10,House,"Third Reading in House",110,0,4,0,114
+1961785,1539995,2025-04-08,House,"Third Reading in House",87,25,1,0,113
+1961788,1542409,2025-04-09,House,"Third Reading in House",112,0,4,0,116
+1961809,1540421,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1961811,1545085,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1961813,1540730,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1961824,1538798,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1961857,1539857,2025-04-08,House,"Third Reading in House",77,37,1,0,115
+1961868,1539767,2025-04-08,House,"Third Reading in House",74,40,0,0,114
+1961872,1542938,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1961883,1543968,2025-04-10,House,"Third Reading in House",115,0,0,0,115
+1961899,1541846,2025-04-09,Senate,"Motion in Senate",47,8,4,0,59
+1961900,1541457,2025-04-09,House,"Third Reading in House",115,0,1,0,116
+1961918,1544647,2025-04-10,House,"Third Reading in House",73,38,2,0,113
+1961923,1545792,2025-04-11,House,"Third Reading in House",77,38,0,0,115
+1961937,1538731,2025-04-07,House,"Third Reading in House",104,0,0,0,104
+1961943,1544505,2025-04-10,House,"Third Reading in House",87,26,0,0,113
+1961960,1545271,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1961977,1541761,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1961980,1546278,2025-04-11,House,"Third Reading in House",75,39,1,0,115
+1961989,1544246,2025-04-10,House,"Third Reading in House",92,21,2,0,115
+1961995,1538632,2025-04-07,House,"Third Reading in House",67,39,1,0,107
+1962006,1545150,2025-04-10,Senate,"Third Reading in Senate",54,0,5,0,59
+1962011,1545197,2025-04-10,House,"Third Reading in House",111,0,1,0,112
+1962046,1545476,2025-04-11,House,"Motion in House",74,38,3,0,115
+1962046,1545477,2025-04-11,House,"Third Reading in House",77,38,0,0,115
+1962050,1568571,2025-05-08,Senate,"Third Reading in Senate",56,0,3,0,59
+1962070,1541865,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1962088,1545152,2025-04-10,Senate,"Third Reading in Senate",52,2,5,0,59
+1962118,1544807,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1962133,1539660,2025-04-08,House,"Third Reading in House",61,43,12,0,116
+1962164,1544867,2025-04-10,Senate,"Third Reading in Senate",43,11,5,0,59
+1962197,1539162,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1962210,1542596,2025-04-09,House,"Third Reading in House",115,0,1,0,116
+1962240,1541365,2025-04-09,House,"Third Reading in House",110,1,4,0,115
+1962256,1544496,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1962264,1539923,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1962266,1543398,2025-04-09,House,"Third Reading in House",72,42,2,0,116
+1962276,1543614,2025-04-10,House,"Third Reading in House",75,37,3,0,115
+1962278,1545442,2025-04-11,House,"Third Reading in House",111,0,4,0,115
+1962289,1541985,2025-04-09,Senate,"Third Reading in Senate",37,19,3,0,59
+1962314,1543746,2025-04-10,House,"Third Reading in House",76,38,0,0,114
+1962316,1539989,2025-04-08,House,"Third Reading in House",114,0,2,0,116
+1962321,1538367,2025-04-07,House,"Third Reading in House",106,0,1,0,107
+1962334,1539913,2025-04-08,House,"Third Reading in House",74,37,2,0,113
+1962342,1541746,2025-04-09,House,"Motion in House",73,39,4,0,116
+1962342,1541747,2025-04-09,House,"Third Reading in House",76,39,1,0,116
+1962345,1542283,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1962413,1542025,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1962418,1539728,2025-04-08,House,"Motion in House",71,40,5,0,116
+1962418,1539729,2025-04-08,House,"Third Reading in House",71,38,7,0,116
+1962422,1542989,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1962426,1540356,2025-04-08,House,"Third Reading in House",72,42,0,0,114
+1962431,1542995,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1962462,1542031,2025-04-09,House,"Third Reading in House",114,0,2,0,116
+1962481,1542525,2025-04-09,Senate,"Motion in Senate",48,7,4,0,59
+1962487,1543060,2025-04-09,House,"Third Reading in House",112,0,4,0,116
+1962512,1545285,2025-04-10,House,"Third Reading in House",114,0,0,0,114
+1962524,1543881,2025-04-10,House,"Third Reading in House",114,1,0,0,115
+1962546,1541817,2025-04-09,Senate,"Third Reading in Senate",44,11,4,0,59
+1962563,1536211,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1962579,1538840,2025-04-07,House,"Third Reading in House",100,2,4,0,106
+1962608,1542366,2025-04-09,Senate,"Third Reading in Senate",51,4,4,0,59
+1962628,1539687,2025-04-08,House,"Third Reading in House",113,0,2,0,115
+1962637,1545591,2025-04-11,House,"Third Reading in House",113,0,2,0,115
+1962638,1542214,2025-04-09,Senate,"Third Reading in Senate",54,0,5,0,59
+1962659,1545087,2025-04-10,House,"Third Reading in House",76,38,0,0,114
+1962675,1542126,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1962677,1539817,2025-04-08,House,"Third Reading in House",77,36,2,0,115
+1962704,1542057,2025-04-09,Senate,"Third Reading in Senate",35,17,7,0,59
+1962727,1541190,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1962727,1543347,2025-04-10,House,"Motion in House",115,0,0,0,115
+1962727,1544970,2025-04-10,House,"Third Reading in House",114,0,0,0,114
+1962744,1541154,2025-04-08,House,"Third Reading in House",111,0,4,0,115
+1962750,1546326,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1962755,1544455,2025-04-10,Senate,"Third Reading in Senate",48,4,7,0,59
+1962785,1542039,2025-04-09,Senate,"Third Reading in Senate",39,16,4,0,59
+1962812,1542003,2025-04-09,Senate,"Third Reading in Senate",56,0,3,0,59
+1962816,1546305,2025-04-11,House,"Third Reading in House",113,0,2,0,115
+1962834,1544997,2025-04-10,House,"Third Reading in House",73,38,1,0,112
+1962837,1538751,2025-04-07,House,"Third Reading in House",103,0,1,0,104
+1962844,1539813,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1962860,1544428,2025-04-10,Senate,"Third Reading in Senate",56,0,3,0,59
+1962861,1545123,2025-04-10,House,"Third Reading in House",112,0,0,0,112
+1962862,1541631,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1962893,1541655,2025-04-09,Senate,"Motion in Senate",44,12,3,0,59
+1962906,1536376,2025-04-03,Senate,"Third Reading in Senate",54,1,4,0,59
+1962909,1544061,2025-04-10,House,"Third Reading in House",75,38,1,0,114
+1962920,1545196,2025-04-10,House,"Third Reading in House",103,0,11,0,114
+1962930,1543175,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1962933,1545213,2025-04-10,House,"Third Reading in House",71,38,3,0,112
+1962948,1542248,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1962963,1536252,2025-04-03,Senate,"Third Reading in Senate",54,0,5,0,59
+1962979,1541614,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1962981,1545269,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1962986,1541778,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1963019,1542000,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1963021,1541871,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1963022,1545350,2025-04-11,House,"Third Reading in House",115,0,0,0,115
+1963032,1544803,2025-04-10,Senate,"Third Reading in Senate",55,0,4,0,59
+1963033,1545149,2025-04-10,Senate,"Third Reading in Senate",55,1,3,0,59
+1963072,1536958,2025-04-03,Senate,"Third Reading in Senate",55,0,4,0,59
+1963077,1540570,2025-04-08,House,"Third Reading in House",113,0,0,0,113
+1963078,1568455,2025-05-08,Senate,"Third Reading in Senate",56,0,3,0,59
+1963084,1540717,2025-04-08,House,"Third Reading in House",112,0,1,0,113
+1963089,1546269,2025-04-11,House,"Third Reading in House",76,39,0,0,115
+1963100,1541948,2025-04-09,Senate,"Motion in Senate",52,4,3,0,59
+1963117,1543770,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1963130,1546027,2025-04-11,Senate,"Third Reading in Senate",52,0,7,0,59
+1963172,1542437,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1963176,1544595,2025-04-10,Senate,"Third Reading in Senate",54,0,5,0,59
+1963188,1542454,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1963192,1542124,2025-04-09,House,"Third Reading in House",116,0,0,0,116
+1963194,1542590,2025-04-09,Senate,"Motion in Senate",56,0,3,0,59
+1963202,1542118,2025-04-09,Senate,"Motion in Senate",54,2,3,0,59
+1963224,1544731,2025-04-10,House,"Third Reading in House",62,46,4,0,112
+1963234,1544480,2025-04-10,Senate,"Third Reading in Senate",35,21,3,0,59
+1963242,1542339,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1963260,1545178,2025-04-10,Senate,"Third Reading in Senate",44,10,5,0,59
+1963296,1541766,2025-04-09,Senate,"Third Reading in Senate",55,0,4,0,59
+1963300,1544613,2025-04-10,House,"Third Reading in House",113,0,1,0,114
+2015070,1542998,2025-04-09,House,"Motion in House",110,0,5,0,115
+2016263,1568223,2025-05-08,House,"Motion in House",71,37,7,0,115
+2027160,1568698,2025-05-08,Senate,"Motion To Adopt in Senate",55,0,4,0,59

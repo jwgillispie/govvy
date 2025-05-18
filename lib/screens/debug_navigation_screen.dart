@@ -1,6 +1,7 @@
 // lib/screens/debug/debug_navigation_screen.dart
 import 'package:flutter/material.dart';
 import 'package:govvy/screens/api_debug_screen.dart';
+import 'package:govvy/screens/bills/test_state_bills_screen.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:govvy/utils/api_debug_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -172,6 +173,20 @@ class _DebugNavigationScreenState extends State<DebugNavigationScreen> {
                         ),
                       );
                     },
+                  ),
+
+                  _buildDebugTile(
+                    'State Bills Test',
+                    'Test state-specific bill data loading',
+                    Icons.ballot,
+                    Colors.purple,
+                    true,
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TestStateBillsScreen(),
+                      ),
+                    ),
                   ),
                   
                   const SizedBox(height: 24),

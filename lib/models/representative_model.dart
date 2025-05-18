@@ -449,6 +449,8 @@ class RepresentativeBill {
   final String? latestAction;
   // Added source to track where the bill came from
   String source = 'Congress';
+  // Extra data map for additional bill information (especially for FL and GA)
+  final Map<String, dynamic>? extraData;
 
   RepresentativeBill({
     required this.congress,
@@ -458,6 +460,7 @@ class RepresentativeBill {
     this.introducedDate,
     this.latestAction,
     this.source = 'Congress',
+    this.extraData,
   });
 
   factory RepresentativeBill.fromMap(Map<String, dynamic> map) {
@@ -471,6 +474,12 @@ class RepresentativeBill {
       latestActionText = map['latestAction'] as String;
     }
 
+    // Extract extra data if available
+    Map<String, dynamic>? extraData;
+    if (map.containsKey('extraData') && map['extraData'] is Map) {
+      extraData = Map<String, dynamic>.from(map['extraData'] as Map);
+    }
+
     // Convert all values to strings to prevent type errors
     return RepresentativeBill(
       congress: map['congress']?.toString() ?? '',
@@ -480,6 +489,7 @@ class RepresentativeBill {
       introducedDate: map['introducedDate']?.toString(),
       latestAction: latestActionText,
       source: map['source']?.toString() ?? 'Congress',
+      extraData: extraData,
     );
   }
 
@@ -492,6 +502,47 @@ class RepresentativeBill {
       'introducedDate': introducedDate,
       'latestAction': latestAction,
       'source': source,
+      'extraData': extraData,
     };
+  }
+  
+  // Helper method to get a description
+  String? get description {
+    if (extraData != null && extraData!.containsKey('description')) {
+      return extraData!['description'] as String?;
+    }
+    return null;
+  }
+  
+  // Helper method to get state link
+  String? get stateLink {
+    if (extraData != null && extraData!.containsKey('state_link')) {
+      return extraData!['state_link'] as String?;
+    }
+    return null;
+  }
+  
+  // Helper method to get URL
+  String? get url {
+    if (extraData != null && extraData!.containsKey('url')) {
+      return extraData!['url'] as String?;
+    }
+    return null;
+  }
+  
+  // Helper method to get committee
+  String? get committee {
+    if (extraData != null && extraData!.containsKey('committee')) {
+      return extraData!['committee'] as String?;
+    }
+    return null;
+  }
+  
+  // Helper method to get status description
+  String? get statusDescription {
+    if (extraData != null && extraData!.containsKey('status_desc')) {
+      return extraData!['status_desc'] as String?;
+    }
+    return null;
   }
 }

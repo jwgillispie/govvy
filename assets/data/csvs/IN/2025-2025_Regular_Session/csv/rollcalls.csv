@@ -1,0 +1,1011 @@
+bill_id,roll_call_id,date,chamber,description,yea,nay,nv,absent,total
+1897639,1475495,2025-01-28,House,"House - Third reading",92,0,1,7,100
+1897639,1519686,2025-03-18,Senate,"Senate - Third reading",48,0,1,1,50
+1897641,1477112,2025-01-30,House,"House - Third reading",91,0,1,8,100
+1897641,1524753,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1897641,1557771,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 2",42,8,0,0,50
+1897641,1557772,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 2",79,13,1,7,100
+1897643,1477127,2025-01-30,House,"House - Third reading",91,0,1,8,100
+1897643,1522810,2025-03-20,Senate,"Senate - Third reading",46,0,1,3,50
+1897651,1489107,2025-02-13,House,"House - Third reading",92,0,3,5,100
+1897651,1544582,2025-04-10,Senate,"Senate - Third reading",43,0,5,2,50
+1897651,1553599,2025-04-22,House,"House - House concurred with Senate amendments",86,0,1,13,100
+1897658,1479608,2025-02-04,House,"House - Third reading",92,0,5,3,100
+1897658,1532407,2025-04-01,Senate,"Senate - Third reading",50,0,0,0,50
+1897658,1549558,2025-04-16,House,"House - House concurred with Senate amendments",83,0,1,16,100
+1897659,1494693,2025-02-20,House,"House - Third reading",68,21,6,5,100
+1897660,1483076,2025-02-06,House,"House - Third reading",84,1,5,10,100
+1897660,1519690,2025-03-18,Senate,"Senate - Third reading",48,0,1,1,50
+1897663,1479607,2025-02-04,House,"House - Third reading",66,23,7,4,100
+1897663,1548822,2025-04-15,Senate,"Senate - Third reading",31,18,0,1,50
+1897663,1550985,2025-04-17,House,"House - House concurred with Senate amendments",68,20,1,11,100
+1897667,1491031,2025-02-17,House,"House - Amendment #5 (Hamilton) failed",30,66,2,2,100
+1897667,1491032,2025-02-17,House,"House - Amendment #4 (Gore) failed",28,67,2,3,100
+1897667,1491965,2025-02-18,House,"House - Third reading",71,25,1,3,100
+1897667,1532397,2025-04-01,Senate,"Senate - Amendment #1 (Ford J.D.) failed",9,39,2,0,50
+1897667,1532398,2025-04-01,Senate,"Senate - Amendment #2 (Ford J.D.) failed",10,39,1,0,50
+1897667,1532399,2025-04-01,Senate,"Senate - Amendment #3 (Ford J.D.) failed",9,39,2,0,50
+1897667,1532400,2025-04-01,Senate,"Senate - Amendment #4 (Ford J.D.) failed",9,40,1,0,50
+1897667,1535954,2025-04-03,Senate,"Senate - Third reading",42,6,0,2,50
+1897670,1483074,2025-02-06,House,"House - Third reading",70,17,2,11,100
+1897675,1491970,2025-02-18,House,"House - Third reading",95,1,1,3,100
+1897676,1475477,2025-01-28,House,"House - Third reading",92,0,1,7,100
+1897676,1513535,2025-03-11,Senate,"Senate - Third reading",48,0,2,0,50
+1897677,1475485,2025-01-28,House,"House - Third reading",91,0,1,8,100
+1897677,1524757,2025-03-24,Senate,"Senate - Third reading",43,4,0,3,50
+1897677,1532396,2025-04-01,House,"House - House concurred with Senate amendments",92,0,4,4,100
+1897678,1478780,2025-02-03,House,"House - Amendment #1 (Errington) failed",27,64,1,8,100
+1897678,1483077,2025-02-06,House,"House - Third reading",60,27,2,11,100
+1897678,1532356,2025-04-01,Senate,"Senate - Third reading",45,5,0,0,50
+1897678,1551267,2025-04-17,House,"House - House concurred with Senate amendments",64,16,1,19,100
+1897679,1475480,2025-01-28,House,"House - Third reading",91,0,1,8,100
+1897679,1533176,2025-04-01,Senate,"Senate - Third reading",44,6,0,0,50
+1897679,1552525,2025-04-21,House,"House - Conference Committee Report 1",76,10,1,13,100
+1897679,1553238,2025-04-22,Senate,"Senate - Conference Committee Report 1",42,7,0,1,50
+1897681,1474897,2025-01-27,House,"House - Appeal the ruling of the chair (Miller K)",66,29,2,3,100
+1897681,1475488,2025-01-28,House,"House - Third reading",92,0,1,7,100
+1897681,1513403,2025-03-11,Senate,"Senate - Third reading",49,1,0,0,50
+1897688,1486265,2025-02-11,House,"House - Third reading",67,25,1,7,100
+1897688,1548834,2025-04-15,Senate,"Senate - Third reading",30,19,0,1,50
+1897688,1550990,2025-04-17,House,"House - House concurred with Senate amendments",64,24,1,11,100
+1897689,1491059,2025-02-17,House,"House - Third reading",95,0,1,4,100
+1897689,1519665,2025-03-18,Senate,"Senate - Third reading",49,0,0,1,50
+1897697,1475493,2025-01-28,House,"House - Third reading",86,5,2,7,100
+1897697,1532367,2025-04-01,Senate,"Senate - Third reading",47,2,1,0,50
+1897697,1549560,2025-04-16,House,"House - House concurred with Senate amendments",83,2,1,14,100
+1899905,1473681,2025-01-23,Senate,"Senate - Third reading",42,7,0,1,50
+1899907,1479022,2025-02-03,Senate,"Senate - Third reading",48,1,0,1,50
+1899918,1473686,2025-01-23,Senate,"Senate - Third reading",49,0,0,1,50
+1899918,1539634,2025-04-08,House,"House - Third reading",88,6,1,5,100
+1899918,1552517,2025-04-21,House,"House - Conference Committee Report 1",83,8,1,8,100
+1899918,1553292,2025-04-22,Senate,"Senate - Conference Committee Report 1",48,1,0,1,50
+1899923,1486706,2025-02-11,Senate,"Senate - Third reading",47,2,0,1,50
+1899930,1492447,2025-02-18,Senate,"Senate - Third reading",49,0,0,1,50
+1899933,1492460,2025-02-18,Senate,"Senate - Third reading",33,16,0,1,50
+1899933,1530948,2025-03-31,House,"House - Third reading",64,26,5,5,100
+1899933,1555021,2025-04-23,Senate,"Senate - Senate concurred with House amendments",37,11,0,2,50
+1899963,1479028,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1899963,1538223,2025-04-07,House,"House - Third reading",75,13,10,2,100
+1899963,1553282,2025-04-22,Senate,"Senate - Conference Committee Report 1",49,0,0,1,50
+1899963,1553283,2025-04-22,House,"House - Rules Suspended. Conference Committee Report 1",86,0,1,13,100
+1899964,1475790,2025-01-28,Senate,"Senate - Third reading",43,6,0,1,50
+1899964,1522391,2025-03-20,House,"House - Third reading",87,3,2,8,100
+1899965,1472625,2025-01-21,Senate,"Senate - Third reading",49,0,0,1,50
+1899965,1518484,2025-03-17,House,"House - Third reading",95,0,2,3,100
+1899965,1557647,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",50,0,0,0,50
+1899965,1557648,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",90,1,1,8,100
+1900112,1489069,2025-02-13,Senate,"Senate - Third reading",46,0,0,4,50
+1900112,1532395,2025-04-01,House,"House - Third reading",93,0,2,5,100
+1900112,1535989,2025-04-03,Senate,"Senate - Senate concurred with House amendments",46,1,1,2,50
+1900117,1486680,2025-02-11,Senate,"Senate - Third reading",44,5,0,1,50
+1900117,1539755,2025-04-08,House,"House - Third reading",82,10,3,5,100
+1900118,1479021,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1900118,1522389,2025-03-20,House,"House - Third reading",90,1,2,7,100
+1900119,1492449,2025-02-18,Senate,"Senate - Third reading",49,0,0,1,50
+1900123,1491379,2025-02-17,Senate,"Senate - Third reading",47,0,1,2,50
+1900123,1539763,2025-04-08,House,"House - Third reading",91,1,3,5,100
+1900123,1553564,2025-04-22,Senate,"Senate - Senate concurred with House amendments",49,0,0,1,50
+1900124,1484821,2025-02-10,Senate,"Senate - Third reading",46,3,0,1,50
+1900127,1486714,2025-02-11,Senate,"Senate - Third reading",42,7,0,1,50
+1900128,1492470,2025-02-18,Senate,"Senate - Third reading",39,10,0,1,50
+1900128,1539744,2025-04-08,House,"House - Third reading",75,17,2,6,100
+1900128,1549822,2025-04-16,Senate,"Senate - Senate concurred with House amendments",36,1,11,2,50
+1900129,1495562,2025-02-20,Senate,"Senate - Third reading",42,7,0,1,50
+1900131,1477356,2025-01-30,Senate,"Senate - Third reading",45,3,0,2,50
+1900137,1480018,2025-02-04,Senate,"Senate - Third reading",49,1,0,0,50
+1900137,1532313,2025-04-01,House,"House - Third reading",91,1,2,6,100
+1900137,1555018,2025-04-23,Senate,"Senate - Conference Committee Report 1",48,0,0,2,50
+1900137,1555019,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",89,2,1,8,100
+1900138,1495580,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1900138,1538243,2025-04-07,House,"House - Third reading",95,0,3,2,100
+1900138,1539756,2025-04-08,Senate,"Senate - Senate concurred with House amendments",46,1,2,1,50
+1900139,1484803,2025-02-10,Senate,"Senate - Third reading",40,9,0,1,50
+1900139,1522353,2025-03-20,House,"House - Third reading",80,10,3,7,100
+1900139,1526072,2025-03-25,Senate,"Senate - Senate concurred with House amendments",39,8,0,3,50
+1900140,1477357,2025-01-30,Senate,"Senate - Third reading",44,4,0,2,50
+1900145,1484813,2025-02-10,Senate,"Senate - Third reading",40,9,0,1,50
+1900146,1472626,2025-01-21,Senate,"Senate - Third reading",49,0,0,1,50
+1900146,1526200,2025-03-25,House,"House - Third reading",93,2,1,4,100
+1900146,1528958,2025-03-27,Senate,"Senate - Senate concurred with House amendments",49,0,0,1,50
+1900156,1489067,2025-02-13,Senate,"Senate - Amendment #1 (Hunley) failed",10,36,0,4,50
+1900156,1491375,2025-02-17,Senate,"Senate - Third reading",47,0,1,2,50
+1900156,1532376,2025-04-01,House,"House - Third reading",93,0,1,6,100
+1900157,1492474,2025-02-18,Senate,"Senate - Third reading",47,2,0,1,50
+1900159,1495572,2025-02-20,Senate,"Senate - Third reading",47,2,0,1,50
+1900159,1548357,2025-04-15,House,"House - Third reading",94,0,4,2,100
+1900159,1557236,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",84,1,1,14,100
+1900159,1558096,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",39,10,1,0,50
+1900160,1495554,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1900160,1528624,2025-03-27,House,"House - Third reading",92,0,1,7,100
+1900160,1549817,2025-04-16,Senate,"Senate - Senate concurred with House amendments",35,1,12,2,50
+1900161,1475802,2025-01-28,Senate,"Senate - Third reading",49,0,0,1,50
+1900161,1539789,2025-04-08,House,"House - Third reading",85,5,4,6,100
+1900161,1549842,2025-04-16,Senate,"Senate - Senate concurred with House amendments",35,1,12,2,50
+1900162,1475022,2025-01-27,Senate,"Senate - Third reading",49,0,0,1,50
+1900162,1522406,2025-03-20,House,"House - Third reading",91,0,2,7,100
+1900164,1491381,2025-02-17,Senate,"Senate - Third reading",45,2,1,2,50
+1900168,1486708,2025-02-11,Senate,"Senate - Third reading",48,1,0,1,50
+1900168,1539596,2025-04-08,House,"House - Third reading",87,0,7,6,100
+1900168,1549816,2025-04-16,Senate,"Senate - Senate concurred with House amendments",34,3,11,2,50
+1900174,1477362,2025-01-30,Senate,"Senate - Amendment #2 (Pol) failed",8,40,0,2,50
+1900174,1479032,2025-02-03,Senate,"Senate - Third reading",48,1,0,1,50
+1900174,1530918,2025-03-31,House,"House - Third reading",74,18,3,5,100
+1900174,1556473,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",84,6,2,8,100
+1900174,1556863,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",50,0,0,0,50
+1900176,1473692,2025-01-23,Senate,"Senate - Third reading",49,0,0,1,50
+1900176,1522392,2025-03-20,House,"House - ",90,0,3,7,100
+1900176,1549829,2025-04-16,Senate,"Senate - Senate concurred with House amendments",38,0,10,2,50
+1900705,1494679,2025-02-20,House,"House - Third reading",76,11,8,5,100
+1900705,1526261,2025-03-25,Senate,"Senate - Third reading",45,2,0,3,50
+1900705,1549561,2025-04-16,House,"House - House concurred with Senate amendments",64,21,1,14,100
+1900706,1479605,2025-02-04,House,"House - Third reading",85,4,7,4,100
+1900707,1475494,2025-01-28,House,"House - Third reading",91,0,4,5,100
+1900707,1532408,2025-04-01,Senate,"Senate - Third reading",49,0,1,0,50
+1900707,1553601,2025-04-22,House,"House - Rules Suspended. Conference Committee Report 1",91,0,1,8,100
+1900707,1555020,2025-04-23,Senate,"Senate - Conference Committee Report 1",47,0,1,2,50
+1900714,1475496,2025-01-28,House,"House - Third reading",89,0,6,5,100
+1900714,1513459,2025-03-11,Senate,"Senate - Third reading",49,1,0,0,50
+1900714,1524666,2025-03-24,House,"House - House concurred with Senate amendments",95,0,2,3,100
+1900721,1479591,2025-02-04,House,"House - Third reading",89,0,3,8,100
+1900721,1518508,2025-03-17,Senate,"Senate - Third reading",46,0,2,2,50
+1900724,1489090,2025-02-13,House,"House - Third reading",92,0,4,4,100
+1900724,1548806,2025-04-15,Senate,"Senate - Third reading",47,0,2,1,50
+1900724,1553602,2025-04-22,House,"House - House concurred with Senate amendments",89,0,2,9,100
+1900725,1479611,2025-02-04,House,"House - Third reading",90,0,2,8,100
+1900725,1519678,2025-03-18,Senate,"Senate - Third reading",49,0,0,1,50
+1900728,1477116,2025-01-30,House,"House - Third reading",91,0,1,8,100
+1900728,1519718,2025-03-18,Senate,"Senate - Third reading",49,0,0,1,50
+1900729,1486278,2025-02-11,House,"House - Third reading",90,0,4,6,100
+1900729,1548826,2025-04-15,Senate,"Senate - Third reading",48,0,1,1,50
+1900927,1479015,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1900928,1475018,2025-01-27,Senate,"Senate - Third reading",44,5,0,1,50
+1900928,1532310,2025-04-01,House,"House - Third reading",69,24,1,6,100
+1900928,1539739,2025-04-08,Senate,"Senate - Senate concurred with House amendments",43,4,2,1,50
+1900936,1473669,2025-01-23,Senate,"Senate - Third reading",49,0,0,1,50
+1900936,1522356,2025-03-20,House,"House - Third reading",90,0,3,7,100
+1900936,1528927,2025-03-27,Senate,"Senate - Senate concurred with House amendments",49,0,0,1,50
+1900938,1491393,2025-02-17,Senate,"Senate - Third reading",43,4,1,2,50
+1900938,1524672,2025-03-24,House,"House - ",74,20,2,4,100
+1900941,1473682,2025-01-23,Senate,"Senate - Third reading",49,0,0,1,50
+1900942,1495548,2025-02-20,Senate,"Senate - Third reading",40,9,0,1,50
+1900942,1539723,2025-04-08,House,"House - Third reading",82,6,5,7,100
+1903363,1484846,2025-02-10,House,"House - Third reading",70,18,8,4,100
+1903363,1548876,2025-04-15,Senate,"Senate - Third reading",48,1,0,1,50
+1903363,1555255,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",67,26,1,6,100
+1903363,1555515,2025-04-23,Senate,"Senate - Rules Suspended. Conference Committee Report 1",44,1,3,2,50
+1903377,1475491,2025-01-28,House,"House - Third reading",90,0,5,5,100
+1903377,1548788,2025-04-15,Senate,"Senate - Third reading",49,0,0,1,50
+1903383,1479609,2025-02-04,House,"House - Third reading",89,0,3,8,100
+1903383,1538220,2025-04-07,Senate,"Senate - Third reading",49,0,0,1,50
+1903397,1491939,2025-02-18,House,"House - Third reading",84,10,1,5,100
+1903400,1474898,2025-01-27,House,"House - Second reading",96,0,0,4,100
+1903403,1491028,2025-02-17,House,"House - Third reading",91,4,1,4,100
+1903403,1532308,2025-04-01,Senate,"Senate - Third reading",47,1,2,0,50
+1903403,1549567,2025-04-16,House,"House - House concurred with Senate amendments",67,13,4,16,100
+1903429,1479619,2025-02-04,House,"House - Third reading",70,19,4,7,100
+1903429,1513525,2025-03-11,Senate,"Senate - Third reading",39,10,1,0,50
+1903440,1475490,2025-01-28,House,"House - Third reading",90,0,4,6,100
+1903440,1509074,2025-03-10,Senate,"Senate - Third reading",49,0,1,0,50
+1903443,1486701,2025-02-11,House,"House - Third reading",89,3,2,6,100
+1903443,1524783,2025-03-24,Senate,"Senate - Third reading",43,4,0,3,50
+1903458,1477129,2025-01-30,House,"House - Third reading",90,1,1,8,100
+1903458,1518537,2025-03-17,Senate,"Senate - Third reading",46,0,2,2,50
+1903479,1475478,2025-01-28,House,"House - Third reading",90,0,4,6,100
+1903479,1524773,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1903484,1475487,2025-01-28,House,"House - Third reading",91,2,1,6,100
+1903484,1524704,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1903511,1491075,2025-02-17,House,"House - Third reading",51,46,0,3,100
+1903519,1486704,2025-02-11,House,"House - Third reading",91,0,3,6,100
+1903519,1548804,2025-04-15,Senate,"Senate - Third reading",33,16,0,1,50
+1903519,1556897,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",83,5,1,11,100
+1903519,1558254,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",45,4,1,0,50
+1903531,1475481,2025-01-28,House,"House - Third reading",91,0,1,8,100
+1903531,1522691,2025-03-20,Senate,"Senate - Third reading",45,1,1,3,50
+1903545,1491940,2025-02-18,House,"House - Third reading",84,10,3,3,100
+1903548,1478770,2025-02-03,House,"House - Third reading",83,5,5,7,100
+1903548,1509086,2025-03-10,Senate,"Senate - Third reading",49,0,1,0,50
+1903587,1474899,2025-01-27,House,"House - Second reading",71,23,2,4,100
+1903615,1479594,2025-02-04,House,"House - Third reading",89,2,3,6,100
+1903619,1477115,2025-01-30,House,"House - Third reading",91,0,1,8,100
+1903619,1513447,2025-03-11,Senate,"Senate - Third reading",49,0,1,0,50
+1903619,1518494,2025-03-17,House,"House - House concurred with Senate amendments",96,0,1,3,100
+1903623,1477365,2025-01-30,House,"House - Third reading",81,7,3,9,100
+1903623,1518493,2025-03-17,Senate,"Senate - Third reading",43,3,2,2,50
+1903634,1493313,2025-02-19,House,"House - Third reading",94,0,1,5,100
+1903634,1548840,2025-04-15,Senate,"Senate - Third reading",49,0,0,1,50
+1903634,1550977,2025-04-17,House,"House - House concurred with Senate amendments",89,0,1,10,100
+1903638,1489093,2025-02-13,House,"House - Third reading",69,24,3,4,100
+1903638,1522771,2025-03-20,Senate,"Senate - Amendment #1 (Pol) failed",8,39,0,3,50
+1903638,1524813,2025-03-24,Senate,"Senate - Third reading",43,4,0,3,50
+1903638,1549553,2025-04-16,House,"House - House concurred with Senate amendments",69,17,1,13,100
+1903659,1477113,2025-01-30,House,"House - ",63,27,3,7,100
+1903659,1478779,2025-02-03,House,"House - Third reading",69,19,5,7,100
+1903659,1532404,2025-04-01,Senate,"Senate - Third reading",38,10,2,0,50
+1903659,1549557,2025-04-16,House,"House - House concurred with Senate amendments",63,17,3,17,100
+1903663,1491938,2025-02-18,House,"House - Third reading",95,0,2,3,100
+1903663,1518506,2025-03-17,Senate,"Senate - Third reading",44,1,3,2,50
+1903663,1557777,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",47,3,0,0,50
+1903663,1557778,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",78,0,1,21,100
+1903679,1486725,2025-02-11,House,"House - Third reading",85,7,2,6,100
+1903687,1475483,2025-01-28,House,"House - Third reading",91,0,3,6,100
+1903687,1524778,2025-03-24,Senate,"Senate - Third reading",46,1,0,3,50
+1903687,1535957,2025-04-03,House,"House - House concurred with Senate amendments",90,0,1,9,100
+1903701,1491937,2025-02-18,House,"House - Third reading",88,8,1,3,100
+1903703,1491944,2025-02-18,House,"House - Third reading",95,0,2,3,100
+1903771,1489106,2025-02-13,Senate,"Senate - Third reading",44,2,0,4,50
+1903771,1539743,2025-04-08,House,"House - Third reading",79,9,3,9,100
+1903771,1553276,2025-04-22,Senate,"Senate - Senate concurred with House amendments",47,2,0,1,50
+1903834,1480002,2025-02-04,Senate,"Senate - Third reading",37,13,0,0,50
+1903834,1530901,2025-03-31,House,"House - Third reading",74,17,4,5,100
+1903834,1535962,2025-04-03,Senate,"Senate - Senate concurred with House amendments",35,12,1,2,50
+1903908,1495156,2025-02-20,Senate,"Senate - Third reading",41,8,0,1,50
+1903908,1543349,2025-04-10,House,"House - ",28,61,5,6,100
+1903908,1547455,2025-04-14,House,"House - Third reading",52,40,3,5,100
+1903927,1472627,2025-01-21,Senate,"Senate - Third reading",49,0,0,1,50
+1903927,1522380,2025-03-20,House,"House - Third reading",90,0,3,7,100
+1903982,1491396,2025-02-17,Senate,"Senate - Third reading",47,0,1,2,50
+1904023,1479036,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1904023,1524791,2025-03-24,House,"House - Third reading",94,0,1,5,100
+1904081,1486687,2025-02-11,Senate,"Senate - Third reading",47,1,1,1,50
+1904081,1526212,2025-03-25,House,"House - Third reading",95,0,1,4,100
+1904081,1549777,2025-04-16,Senate,"Senate - Senate concurred with House amendments",34,0,14,2,50
+1904282,1480004,2025-02-04,Senate,"Senate - Third reading",50,0,0,0,50
+1904282,1530937,2025-03-31,House,"House - Third reading",90,0,5,5,100
+1905353,1473671,2025-01-23,Senate,"Senate - Third reading",48,1,0,1,50
+1905353,1524761,2025-03-24,House,"House - ",94,1,1,4,100
+1905366,1473683,2025-01-23,Senate,"Senate - Third reading",49,0,0,1,50
+1905366,1526225,2025-03-25,House,"House - Third reading",94,0,2,4,100
+1905366,1549832,2025-04-16,Senate,"Senate - Senate concurred with House amendments",39,0,9,2,50
+1905377,1477109,2025-01-30,House,"House - Third reading",91,0,1,8,100
+1905377,1519727,2025-03-18,Senate,"Senate - Third reading",39,10,0,1,50
+1905437,1484847,2025-02-10,House,"House - Third reading",90,0,6,4,100
+1905437,1513413,2025-03-11,Senate,"Senate - Third reading",49,0,1,0,50
+1905461,1491027,2025-02-17,House,"House - Third reading",94,0,4,2,100
+1905461,1526214,2025-03-25,Senate,"Senate - Third reading",47,0,0,3,50
+1905461,1553632,2025-04-22,Senate,"Senate - Conference Committee Report 1",43,1,5,1,50
+1905461,1555250,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",93,0,1,6,100
+1905498,1475019,2025-01-27,Senate,"Senate - Third reading",31,18,0,1,50
+1905498,1516887,2025-03-13,House,"House - Amendment #3 (Pierce M) failed",26,59,1,14,100
+1905498,1516888,2025-03-13,House,"House - Amendment #2 (Hamilton) failed",26,56,1,17,100
+1905498,1518503,2025-03-17,House,"House - Third reading",66,30,1,3,100
+1905512,1492457,2025-02-18,Senate,"Senate - Third reading",48,1,0,1,50
+1905512,1518486,2025-03-17,House,"House - Third reading",94,2,1,3,100
+1905574,1495561,2025-02-20,Senate,"Senate - Third reading",48,1,0,1,50
+1905574,1518496,2025-03-17,House,"House - Amendment #1 (Summers) prevailed",96,0,1,3,100
+1905574,1522428,2025-03-20,House,"House - Third reading",90,0,2,8,100
+1905574,1558272,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",48,2,0,0,50
+1905574,1558273,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",77,2,1,20,100
+1905599,1475482,2025-01-28,House,"House - Third reading",84,8,1,7,100
+1905599,1544473,2025-04-10,Senate,"Senate - Amendment #1 (Walker K) prevailed",28,17,3,2,50
+1905599,1548846,2025-04-15,Senate,"Senate - Third reading",49,0,0,1,50
+1905599,1550999,2025-04-17,House,"House - House concurred with Senate amendments",88,0,1,11,100
+1905657,1479038,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1905657,1522401,2025-03-20,House,"House - Third reading",90,0,3,7,100
+1905672,1479029,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1905672,1522381,2025-03-20,House,"House - Third reading",90,0,2,8,100
+1905682,1479616,2025-02-04,House,"House - Third reading",88,2,4,6,100
+1905682,1513485,2025-03-11,Senate,"Senate - Third reading",46,3,1,0,50
+1905682,1532405,2025-04-01,House,"House - House concurred with Senate amendments",92,0,2,6,100
+1905742,1478785,2025-02-03,House,"House - Third reading",87,0,6,7,100
+1905742,1519656,2025-03-18,Senate,"Senate - Third reading",49,0,0,1,50
+1905742,1524777,2025-03-24,House,"House - House concurred with Senate amendments",95,0,1,4,100
+1905755,1473675,2025-01-23,Senate,"Senate - Third reading",49,0,0,1,50
+1905755,1518525,2025-03-17,House,"House - Amendment #1 (Bauer) failed",30,66,1,3,100
+1905755,1522408,2025-03-20,House,"House - Third reading",89,1,3,7,100
+1905805,1473690,2025-01-23,Senate,"Senate - Third reading",49,0,0,1,50
+1905805,1524814,2025-03-24,House,"House - Third reading",94,1,1,4,100
+1905854,1477110,2025-01-30,House,"House - Third reading",87,0,5,8,100
+1905854,1519609,2025-03-18,Senate,"Senate - Third reading",49,0,0,1,50
+1905900,1477128,2025-01-30,House,"House - Third reading",87,0,5,8,100
+1905974,1479617,2025-02-04,House,"House - Third reading",89,0,2,9,100
+1905974,1528914,2025-03-27,Senate,"Senate - Third reading",48,0,1,1,50
+1905974,1535975,2025-04-03,House,"House - House concurred with Senate amendments",90,0,1,9,100
+1907560,1491029,2025-02-17,House,"House - Amendment #1 (Errington) failed",26,64,8,2,100
+1907618,1491936,2025-02-18,House,"House - Third reading",93,0,1,6,100
+1907629,1486676,2025-02-11,House,"House - Third reading",92,0,2,6,100
+1907629,1532366,2025-04-01,Senate,"Senate - Third reading",48,0,2,0,50
+1907629,1549569,2025-04-16,House,"House - House concurred with Senate amendments",82,0,2,16,100
+1907647,1474900,2025-01-27,House,"House - Second reading",93,0,4,3,100
+1907664,1479615,2025-02-04,House,"House - Third reading",89,0,3,8,100
+1907664,1547856,2025-04-14,Senate,"Senate - Amendment #1 (Qaddoura) failed",18,31,0,1,50
+1907664,1548859,2025-04-15,Senate,"Senate - Third reading",46,3,0,1,50
+1907664,1555524,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",90,0,1,9,100
+1907664,1556855,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",39,11,0,0,50
+1907713,1491050,2025-02-17,House,"House - Third reading",94,0,4,2,100
+1907713,1526219,2025-03-25,Senate,"Senate - Third reading",45,2,0,3,50
+1907800,1486679,2025-02-11,House,"House - Third reading",80,11,3,6,100
+1907819,1477111,2025-01-30,House,"House - Third reading",88,0,4,8,100
+1907837,1494696,2025-02-20,House,"House - Third reading",89,0,3,8,100
+1907837,1519653,2025-03-18,Senate,"Senate - Third reading",49,0,0,1,50
+1907837,1524759,2025-03-24,House,"House - House concurred with Senate amendments",95,0,2,3,100
+1907973,1494706,2025-02-20,House,"House - Third reading",71,15,9,5,100
+1907991,1484825,2025-02-10,House,"House - Third reading",91,0,2,7,100
+1907991,1526213,2025-03-25,Senate,"Senate - Third reading",45,2,0,3,50
+1908016,1484848,2025-02-10,House,"House - Amendment #3 (Hamilton) failed",27,65,4,4,100
+1908016,1486715,2025-02-11,House,"House - Third reading",91,0,3,6,100
+1908016,1538239,2025-04-07,Senate,"Senate - Third reading",48,1,0,1,50
+1908016,1552444,2025-04-21,House,"House - House concurred with Senate amendments",72,0,1,27,100
+1908447,1474901,2025-01-27,House,"House - Second reading",93,0,0,7,100
+1909451,1484830,2025-02-10,House,"House - Third reading",90,1,5,4,100
+1909451,1532371,2025-04-01,Senate,"Senate - Third reading",48,0,2,0,50
+1909451,1549564,2025-04-16,House,"House - House concurred with Senate amendments",82,0,2,16,100
+1909452,1479600,2025-02-04,House,"House - Third reading",90,0,3,7,100
+1909452,1530900,2025-03-31,Senate,"Senate - Third reading",42,4,1,3,50
+1909452,1549563,2025-04-16,House,"House - House concurred with Senate amendments",81,0,2,17,100
+1909454,1477117,2025-01-30,House,"House - ",84,3,5,8,100
+1909454,1548879,2025-04-15,Senate,"Senate - Third reading",39,10,0,1,50
+1909454,1550988,2025-04-17,House,"House - House concurred with Senate amendments",86,3,1,10,100
+1909455,1489114,2025-02-13,House,"House - Third reading",83,9,4,4,100
+1909455,1548831,2025-04-15,Senate,"Senate - Third reading",40,9,0,1,50
+1909455,1550982,2025-04-17,House,"House - House concurred with Senate amendments",85,5,1,9,100
+1909459,1491946,2025-02-18,House,"House - Third reading",92,0,1,7,100
+1909459,1524756,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1909464,1491961,2025-02-18,House,"House - Third reading",90,0,3,7,100
+1909464,1530849,2025-03-31,Senate,"Senate - Third reading",46,1,0,3,50
+1909468,1486713,2025-02-11,House,"House - Third reading",90,0,4,6,100
+1909468,1513527,2025-03-11,Senate,"Senate - Third reading",49,0,1,0,50
+1909471,1491942,2025-02-18,House,"House - Third reading",83,6,6,5,100
+1909471,1540435,2025-04-08,Senate,"Senate - Third reading",46,2,1,1,50
+1909471,1549535,2025-04-16,House,"House - House concurred with Senate amendments",75,7,2,16,100
+1909476,1491047,2025-02-17,House,"House - Third reading",94,0,4,2,100
+1909476,1519726,2025-03-18,Senate,"Senate - Third reading",49,0,0,1,50
+1909476,1524763,2025-03-24,House,"House - House concurred with Senate amendments",94,0,1,5,100
+1909491,1491037,2025-02-17,House,"House - Amendment #1 (Porter) failed",29,64,5,2,100
+1909491,1491957,2025-02-18,House,"House - Third reading",57,36,2,5,100
+1909499,1475489,2025-01-28,House,"House - Third reading",87,7,1,5,100
+1909499,1519670,2025-03-18,Senate,"Senate - Third reading",48,1,0,1,50
+1909501,1491042,2025-02-17,House,"House - Third reading",86,9,2,3,100
+1909501,1526312,2025-03-25,Senate,"Senate - Third reading",47,0,0,3,50
+1909505,1491966,2025-02-18,House,"House - Third reading",65,28,2,5,100
+1910696,1484840,2025-02-10,Senate,"Senate - Third reading",49,0,0,1,50
+1910696,1539742,2025-04-08,House,"House - Third reading",90,0,2,8,100
+1910696,1549808,2025-04-16,Senate,"Senate - Senate concurred with House amendments",39,0,9,2,50
+1910739,1495157,2025-02-20,Senate,"Senate - Third reading",47,2,0,1,50
+1910878,1479024,2025-02-03,Senate,"Senate - Amendment #2 (Qaddoura) failed",11,38,0,1,50
+1910878,1479025,2025-02-03,Senate,"Senate - Amendment #1 (Qaddoura) failed",9,40,0,1,50
+1910878,1480003,2025-02-04,Senate,"Senate - Third reading",50,0,0,0,50
+1910878,1539615,2025-04-08,House,"House - Third reading",90,1,3,6,100
+1910878,1555275,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",90,1,1,8,100
+1910878,1555528,2025-04-23,Senate,"Senate - Rules Suspended. Conference Committee Report 1",47,0,1,2,50
+1910945,1486727,2025-02-11,Senate,"Senate - Third reading",49,0,0,1,50
+1910989,1492453,2025-02-18,Senate,"Senate - Third reading",47,2,0,1,50
+1911172,1475805,2025-01-28,Senate,"Senate - Third reading",49,0,0,1,50
+1911172,1548354,2025-04-15,House,"House - Third reading",94,0,2,4,100
+1911172,1555254,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",66,25,1,8,100
+1911172,1555516,2025-04-23,Senate,"Senate - Rules Suspended. Conference Committee Report 1",32,12,4,2,50
+1911195,1495571,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1911313,1495540,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1911333,1486724,2025-02-11,Senate,"Senate - Third reading",39,10,0,1,50
+1911333,1526229,2025-03-25,House,"House - Third reading",65,29,2,4,100
+1911333,1530902,2025-03-25,Senate,"Senate - Third reading",34,13,0,3,50
+1911376,1486684,2025-02-11,Senate,"Senate - Third reading",48,1,0,1,50
+1911470,1489098,2025-02-13,Senate,"Senate - Amendment #1 (Ford J.D.) failed",11,34,0,5,50
+1911470,1491394,2025-02-17,Senate,"Senate - Third reading",26,20,1,3,50
+1911470,1517097,2025-03-13,House,"House - Referred to Committee on Education pursuant to House Rule 126.4",26,58,3,13,100
+1911470,1522382,2025-03-20,House,"House - Amendment #1 (Boy) failed",29,62,1,8,100
+1911470,1522383,2025-03-20,House,"House - Amendment #2 (Errington) failed",27,63,2,8,100
+1911470,1530920,2025-03-31,House,"House - Third reading",54,40,1,5,100
+1911470,1556857,2025-04-24,Senate,"Senate - Senate concurred with House amendments",26,24,0,0,50
+1911605,1480026,2025-02-04,Senate,"Senate - Amendment #5 (Hunley) failed",10,39,1,0,50
+1911605,1483504,2025-02-06,Senate,"Senate - Third reading",34,13,0,3,50
+1911605,1547488,2025-04-14,House,"House - Third reading",67,27,1,5,100
+1911605,1556465,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",64,26,2,8,100
+1911605,1556839,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",34,16,0,0,50
+1911628,1480006,2025-02-04,Senate,"Senate - Third reading",47,2,1,0,50
+1911742,1480022,2025-02-04,Senate,"Senate - Third reading",50,0,0,0,50
+1911742,1528599,2025-03-27,House,"House - Third reading",92,0,1,7,100
+1911742,1532369,2025-04-01,Senate,"Senate - Senate concurred with House amendments",46,1,3,0,50
+1911766,1484808,2025-02-10,Senate,"Senate - Third reading",46,3,0,1,50
+1911808,1495532,2025-02-20,Senate,"Senate - Third reading",47,2,0,1,50
+1911808,1528620,2025-03-27,House,"House - Third reading",71,21,1,7,100
+1911808,1538255,2025-04-07,Senate,"Senate - Senate concurred with House amendments",48,0,1,1,50
+1911869,1475476,2025-01-28,House,"House - Third reading",91,1,2,6,100
+1911869,1519676,2025-03-18,Senate,"Senate - Third reading",49,0,0,1,50
+1911869,1549546,2025-04-16,House,"House - House concurred with Senate amendments",82,0,2,16,100
+1911870,1477355,2025-01-30,House,"House - Third reading",62,29,1,8,100
+1911870,1526217,2025-03-25,Senate,"Senate - Third reading",32,15,0,3,50
+1911876,1486681,2025-02-11,House,"House - Third reading",91,0,3,6,100
+1911876,1509078,2025-03-10,Senate,"Senate - Third reading",49,0,1,0,50
+1911876,1524774,2025-03-24,House,"House - House concurred with Senate amendments",94,0,1,5,100
+1911897,1491935,2025-02-18,House,"House - Third reading",91,0,3,6,100
+1911897,1539738,2025-04-08,Senate,"Senate - Third reading",49,0,0,1,50
+1911901,1484810,2025-02-10,House,"House - Third reading",90,0,6,4,100
+1911901,1526202,2025-03-25,Senate,"Senate - Third reading",45,2,0,3,50
+1911903,1474902,2025-01-27,House,"House - Second reading",94,0,0,6,100
+1911914,1491060,2025-02-17,House,"House - Third reading",97,0,1,2,100
+1911914,1539795,2025-04-08,Senate,"Senate - Third reading",48,1,0,1,50
+1911914,1549566,2025-04-16,House,"House - House concurred with Senate amendments",79,0,2,19,100
+1911915,1492456,2025-02-18,Senate,"Senate - Third reading",44,5,0,1,50
+1911925,1484824,2025-02-10,Senate,"Senate - Third reading",46,3,0,1,50
+1911946,1486723,2025-02-11,House,"House - Third reading",90,0,4,6,100
+1911946,1524750,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1911946,1535966,2025-04-03,House,"House - House concurred with Senate amendments",88,0,4,8,100
+1911960,1478772,2025-02-03,House,"House - Amendment #6 (Andrade) failed",30,62,1,7,100
+1911960,1478773,2025-02-03,House,"House - Amendment #4 (Bauer) failed",29,62,1,8,100
+1911960,1478774,2025-02-03,House,"House - Appeal the ruling of the chair (Garcia Wilburn)",61,28,4,7,100
+1911960,1479606,2025-02-04,House,"House - Third reading",67,26,1,6,100
+1911960,1524754,2025-03-24,Senate,"Senate - Third reading",37,10,0,3,50
+1911960,1549534,2025-04-16,House,"House - House concurred with Senate amendments",58,19,3,20,100
+1911981,1491036,2025-02-17,House,"House - Third reading",90,6,2,2,100
+1911981,1548803,2025-04-15,Senate,"Senate - Third reading",36,13,0,1,50
+1911981,1557214,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",68,23,1,8,100
+1911981,1557672,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",17,33,0,0,50
+1912001,1495553,2025-02-20,Senate,"Senate - Third reading",23,26,0,1,50
+1912040,1486712,2025-02-11,Senate,"Senate - Third reading",48,1,0,1,50
+1912040,1528619,2025-03-27,House,"House - Amendment #1 (Ireland) prevailed",64,27,2,7,100
+1912040,1530941,2025-03-31,House,"House - Third reading",72,20,3,5,100
+1912045,1489077,2025-02-13,Senate,"Senate - Third reading",30,16,0,4,50
+1912045,1539727,2025-04-08,House,"House - Third reading",63,27,4,6,100
+1912045,1549760,2025-04-16,Senate,"Senate - Concurrence failed for lack of constitutional majority",24,13,11,2,50
+1912045,1551280,2025-04-17,Senate,"Senate - Senate concurred with House amendments",29,17,2,2,50
+1912048,1492448,2025-02-18,Senate,"Senate - Third reading",47,2,0,1,50
+1912074,1484822,2025-02-10,Senate,"Senate - Amendment #2 (Goode) prevailed",49,0,0,1,50
+1912074,1486696,2025-02-11,Senate,"Senate - Third reading",49,0,0,1,50
+1912080,1494694,2025-02-20,House,"House - Third reading",94,0,1,5,100
+1912080,1548854,2025-04-15,Senate,"Senate - Third reading",47,2,0,1,50
+1912080,1552450,2025-04-21,House,"House - ",80,0,1,19,100
+1912082,1489068,2025-02-13,House,"House - Third reading",90,0,5,5,100
+1912082,1539783,2025-04-08,Senate,"Senate - Third reading",38,11,0,1,50
+1912082,1555298,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",81,9,1,9,100
+1912082,1556834,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",31,19,0,0,50
+1912093,1491377,2025-02-17,Senate,"Senate - Third reading",47,0,1,2,50
+1912104,1495566,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1912104,1532389,2025-04-01,House,"House - Third reading",89,3,2,6,100
+1912106,1484838,2025-02-10,Senate,"Senate - Third reading",49,0,0,1,50
+1912106,1532403,2025-04-01,House,"House - Third reading",89,3,1,7,100
+1912106,1538214,2025-04-07,Senate,"Senate - Senate concurred with House amendments",48,0,1,1,50
+1912124,1479027,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1912139,1494682,2025-02-20,House,"House - Third reading",91,2,2,5,100
+1912139,1524758,2025-03-24,Senate,"Senate - Third reading",46,1,0,3,50
+1912139,1549559,2025-04-16,House,"House - House concurred with Senate amendments",79,0,4,17,100
+1912140,1495606,2025-02-20,Senate,"Senate - Third reading",48,1,0,1,50
+1912144,1479039,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1912144,1538211,2025-04-07,House,"House - Third reading",61,32,5,2,100
+1912144,1549818,2025-04-16,Senate,"Senate - Senate concurred with House amendments",39,0,9,2,50
+1912148,1484809,2025-02-10,Senate,"Senate - Third reading",47,2,0,1,50
+1912155,1475786,2025-01-28,Senate,"Senate - Third reading",49,0,0,1,50
+1912155,1547132,2025-04-14,House,"House - Amendment #2 (DeLaney) failed",27,66,3,4,100
+1912155,1548400,2025-04-15,House,"House - Third reading",76,20,2,2,100
+1912155,1556469,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",91,0,1,8,100
+1912155,1556925,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",31,19,0,0,50
+1912167,1495533,2025-02-20,Senate,"Senate - Third reading",29,20,0,1,50
+1912169,1478789,2025-02-03,House,"House - Third reading",87,0,6,7,100
+1912169,1524788,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1912169,1532380,2025-04-01,House,"House - House concurred with Senate amendments",91,2,2,5,100
+1912174,1486694,2025-02-11,Senate,"Senate - Third reading",49,0,0,1,50
+1912174,1532385,2025-04-01,House,"House - Amendment #1 (DeLaney) failed",27,66,2,5,100
+1912174,1535941,2025-04-03,House,"House - Third reading",66,24,2,8,100
+1912174,1549796,2025-04-16,Senate,"Senate - Senate concurred with House amendments",37,1,10,2,50
+1912179,1479023,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1912189,1479034,2025-02-03,Senate,"Senate - Third reading",49,0,0,1,50
+1912200,1495604,2025-02-20,Senate,"Senate - Third reading",39,10,0,1,50
+1912200,1535943,2025-04-03,House,"House - Third reading",90,0,2,8,100
+1912200,1556820,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",37,12,1,0,50
+1912200,1556821,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",58,28,1,13,100
+1912209,1495551,2025-02-20,Senate,"Senate - Third reading",30,19,0,1,50
+1912209,1541619,2025-04-09,House,"House - Third reading",96,0,1,3,100
+1912214,1480027,2025-02-04,Senate,"Senate - Third reading",35,13,2,0,50
+1912214,1539856,2025-04-08,House,"House - Third reading",57,31,5,7,100
+1912214,1549851,2025-04-16,Senate,"Senate - Senate concurred with House amendments",29,9,10,2,50
+1912249,1484814,2025-02-10,Senate,"Senate - Third reading",45,4,0,1,50
+1912249,1522386,2025-03-20,House,"House - Third reading",84,5,2,9,100
+1912249,1526240,2025-03-25,Senate,"Senate - Senate concurred with House amendments",47,0,0,3,50
+1912271,1489078,2025-02-13,Senate,"Senate - Third reading",42,4,0,4,50
+1912274,1492472,2025-02-18,Senate,"Senate - Third reading",46,3,0,1,50
+1912274,1539752,2025-04-08,House,"House - Third reading",91,0,3,6,100
+1912274,1557209,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",89,0,1,10,100
+1912274,1558202,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",48,1,1,0,50
+1912283,1492466,2025-02-18,Senate,"Senate - Third reading",49,0,0,1,50
+1912283,1547473,2025-04-14,House,"House - Third reading",72,22,1,5,100
+1912283,1555027,2025-04-23,Senate,"Senate - Conference Committee Report 1",45,2,1,2,50
+1912283,1555028,2025-04-22,House,"House - Rules Suspended. Conference Committee Report 1",73,17,2,8,100
+1912300,1495577,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1912332,1495537,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1912332,1532375,2025-04-01,House,"House - Amendment #3 (Hamilton) failed",27,67,1,5,100
+1912332,1535967,2025-04-03,House,"House - Third reading",89,0,3,8,100
+1912332,1555031,2025-04-23,Senate,"Senate - Conference Committee Report 1",47,0,1,2,50
+1912332,1555032,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",91,0,1,8,100
+1912337,1492452,2025-02-18,Senate,"Senate - Third reading",46,3,0,1,50
+1912341,1492450,2025-02-18,Senate,"Senate - Third reading",49,0,0,1,50
+1912341,1526235,2025-03-25,House,"House - Third reading",94,0,2,4,100
+1912341,1552441,2025-04-21,Senate,"Senate - Senate concurred with House amendments",44,0,5,1,50
+1914860,1486707,2025-02-11,House,"House - Third reading",91,0,1,8,100
+1914860,1548828,2025-04-15,Senate,"Senate - Third reading",44,5,0,1,50
+1914860,1556404,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",91,0,2,7,100
+1914860,1556841,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",46,4,0,0,50
+1914901,1489117,2025-02-13,House,"House - Third reading",89,0,6,5,100
+1914901,1524707,2025-03-24,Senate,"Senate - Third reading",41,6,0,3,50
+1914901,1555312,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",74,15,2,9,100
+1914901,1556851,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",43,7,0,0,50
+1914926,1486689,2025-02-11,House,"House - Third reading",90,0,4,6,100
+1914952,1477121,2025-01-30,House,"House - Amendment #9 (Behning) prevailed",63,27,2,8,100
+1914952,1477122,2025-01-30,House,"House - Amendment #2 (DeLaney) failed",30,60,2,8,100
+1914952,1477123,2025-01-30,House,"House - Amendment #3 (DeLaney) failed",28,63,2,7,100
+1914952,1477124,2025-01-30,House,"House - Amendment #5 (Smith V) prevailed",91,0,2,7,100
+1914952,1477125,2025-01-30,House,"House - Amendment #6 (Smith V) prevailed",88,3,2,7,100
+1914952,1477126,2025-01-30,House,"House - Amendment #7 (Klinker) failed",28,62,3,7,100
+1914952,1478784,2025-02-03,House,"House - Third reading",75,16,2,7,100
+1914952,1544450,2025-04-10,Senate,"Senate - Amendment #9 (Ford J.D.) failed",11,32,5,2,50
+1914952,1544451,2025-04-10,Senate,"Senate - Amendment #21 (Ford J.D.) failed",9,32,7,2,50
+1914952,1544452,2025-04-10,Senate,"Senate - Amendment #15 (Yoder) failed",9,34,5,2,50
+1914952,1548875,2025-04-15,Senate,"Senate - Third reading",31,18,0,1,50
+1914952,1557228,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",61,25,0,14,100
+1914952,1557784,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",27,21,2,0,50
+1914979,1484805,2025-02-10,House,"House - Amendment #1 (Pierce M) failed",26,69,1,4,100
+1914979,1484806,2025-02-10,House,"House - Amendment #3 (Pierce M) failed",27,67,2,4,100
+1914979,1489075,2025-02-13,House,"House - Third reading",67,25,4,4,100
+1914979,1544507,2025-04-10,Senate,"Senate - Amendment #5 (Yoder) failed",11,35,2,2,50
+1914979,1548809,2025-04-15,Senate,"Senate - Third reading",36,13,0,1,50
+1914979,1553293,2025-04-22,House,"House - Rules Suspended. House concurred with Senate amendments",63,23,0,14,100
+1914990,1491952,2025-02-18,House,"House - Third reading",89,1,4,6,100
+1914990,1548819,2025-04-15,Senate,"Senate - Third reading",41,8,0,1,50
+1914990,1557724,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",37,13,0,0,50
+1914990,1557725,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",69,23,1,7,100
+1915014,1474903,2025-01-27,House,"House - Second reading",94,0,0,6,100
+1915056,1488674,2025-02-11,House,"House - Third reading",91,0,3,6,100
+1915056,1538218,2025-04-07,Senate,"Senate - Third reading",31,18,0,1,50
+1915056,1549550,2025-04-16,House,"House - House concurred with Senate amendments",59,19,3,19,100
+1915189,1491386,2025-02-17,Senate,"Senate - Amendment #5 (Pol) failed",9,39,0,2,50
+1915189,1495527,2025-02-20,Senate,"Senate - Third reading",42,7,0,1,50
+1915190,1495570,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1915190,1543331,2025-04-10,House,"House - Third reading",93,0,1,6,100
+1915191,1486698,2025-02-11,Senate,"Senate - Third reading",49,0,0,1,50
+1915191,1518501,2025-03-17,House,"House - Third reading",95,0,2,3,100
+1915192,1479999,2025-02-04,Senate,"Senate - Third reading",49,0,1,0,50
+1915192,1518492,2025-03-17,House,"House - Third reading",96,0,1,3,100
+1915193,1479020,2025-02-03,Senate,"Senate - Third reading",41,7,1,1,50
+1915193,1548365,2025-04-15,House,"House - Third reading",67,29,2,2,100
+1915193,1551274,2025-04-17,Senate,"Senate - Senate concurred with House amendments",34,12,2,2,50
+1915194,1479043,2025-02-03,Senate,"Senate - Third reading",34,14,1,1,50
+1915194,1522403,2025-03-20,House,"House - Third reading",59,30,3,8,100
+1915194,1526255,2025-03-25,Senate,"Senate - Senate concurred with House amendments",32,15,0,3,50
+1915195,1495160,2025-02-20,Senate,"Senate - Third reading",37,12,0,1,50
+1915195,1547112,2025-04-14,House,"House - Amendment #3 (Pierce M) failed",27,68,1,4,100
+1915195,1548363,2025-04-15,House,"House - Third reading",59,38,1,2,100
+1915195,1556454,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",51,40,1,8,100
+1915195,1556750,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",31,19,0,0,50
+1915196,1486682,2025-02-11,Senate,"Senate - Third reading",46,3,0,1,50
+1915196,1522414,2025-03-20,House,"House - Third reading",76,15,1,8,100
+1915200,1479042,2025-02-03,Senate,"Senate - Third reading",39,9,1,1,50
+1915201,1480013,2025-02-04,Senate,"Senate - Third reading",48,0,2,0,50
+1915201,1526203,2025-03-25,House,"House - Third reading",94,0,2,4,100
+1915201,1528947,2025-03-27,Senate,"Senate - Senate concurred with House amendments",49,0,0,1,50
+1915203,1495528,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1915203,1539719,2025-04-08,House,"House - Third reading",92,0,2,6,100
+1915203,1553284,2025-04-22,Senate,"Senate - Conference Committee Report 1",49,0,0,1,50
+1915203,1553285,2025-04-22,House,"House - Rules Suspended. Conference Committee Report 1",88,0,1,11,100
+1915208,1475816,2025-01-28,Senate,"Senate - Third reading",49,0,0,1,50
+1915212,1486678,2025-02-11,Senate,"Senate - Third reading",39,9,1,1,50
+1915212,1547129,2025-04-14,House,"House - Amendment #2 (Errington) failed",31,59,6,4,100
+1915212,1548345,2025-04-15,House,"House - Third reading",76,19,3,2,100
+1915212,1555217,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",72,20,1,7,100
+1915212,1555529,2025-04-23,Senate,"Senate - Rules Suspended. Conference Committee Report 1",35,12,1,2,50
+1915213,1489087,2025-02-13,Senate,"Senate - Third reading",39,7,0,4,50
+1915218,1495545,2025-02-20,Senate,"Senate - Third reading",48,1,0,1,50
+1915218,1548353,2025-04-15,House,"House - Third reading",75,21,2,2,100
+1915218,1551290,2025-04-17,Senate,"Senate - Senate concurred with House amendments",39,3,6,2,50
+1915220,1484850,2025-02-10,Senate,"Senate - Third reading",33,16,0,1,50
+1915220,1524703,2025-03-24,House,"House - Third reading",69,27,1,3,100
+1915221,1475808,2025-01-28,Senate,"Senate - Third reading",49,0,0,1,50
+1915221,1532391,2025-04-01,House,"House - Third reading",74,18,3,5,100
+1915221,1538245,2025-04-07,Senate,"Senate - Senate concurred with House amendments",48,0,1,1,50
+1915222,1475810,2025-01-28,Senate,"Senate - Third reading",49,0,0,1,50
+1915223,1489086,2025-02-13,Senate,"Senate - Amendment #1 (Qaddoura) failed",9,37,0,4,50
+1915223,1495552,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1915223,1538580,2025-04-07,House,"House - Amendment #1 (Hatcher) failed",27,64,5,4,100
+1915223,1539799,2025-04-08,House,"House - Third reading",93,1,1,5,100
+1915223,1556478,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",89,0,2,9,100
+1915223,1556845,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",50,0,0,0,50
+1915227,1486677,2025-02-11,Senate,"Senate - Third reading",27,21,1,1,50
+1915227,1522407,2025-03-20,House,"House - Third reading",55,37,1,7,100
+1915229,1486716,2025-02-11,Senate,"Senate - Third reading",48,0,1,1,50
+1915229,1541681,2025-04-09,House,"House - Third reading",95,0,2,3,100
+1915229,1549849,2025-04-16,Senate,"Senate - Senate concurred with House amendments",39,0,9,2,50
+1915231,1486693,2025-02-11,Senate,"Senate - Third reading",44,4,1,1,50
+1915231,1541664,2025-04-09,House,"House - Third reading",95,0,1,4,100
+1915231,1549856,2025-04-16,Senate,"Senate - Senate concurred with House amendments",41,0,7,2,50
+1915232,1475785,2025-01-28,Senate,"Senate - Third reading",49,0,0,1,50
+1915232,1539741,2025-04-08,House,"House - Third reading",94,0,1,5,100
+1915233,1495587,2025-02-20,Senate,"Senate - Third reading",44,5,0,1,50
+1915233,1541678,2025-04-09,House,"House - Third reading",94,0,2,4,100
+1915233,1551266,2025-04-17,Senate,"Senate - Senate concurred with House amendments",35,6,7,2,50
+1915234,1477347,2025-01-30,Senate,"Senate - Third reading",48,0,0,2,50
+1915234,1526188,2025-03-25,House,"House - Third reading",92,3,1,4,100
+1915234,1555013,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",91,0,1,8,100
+1915234,1556850,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 2",48,1,1,0,50
+1915234,1557208,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 2",85,0,2,13,100
+1915235,1495543,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1915235,1548392,2025-04-15,House,"House - Third reading",93,2,2,3,100
+1915238,1484823,2025-02-10,Senate,"Senate - Third reading",49,0,0,1,50
+1915238,1539754,2025-04-08,House,"House - Third reading",94,0,1,5,100
+1915238,1551277,2025-04-17,Senate,"Senate - Senate concurred with House amendments",38,4,6,2,50
+1915242,1495531,2025-02-20,Senate,"Senate - Third reading",47,2,0,1,50
+1915242,1548369,2025-04-15,House,"House - Third reading",97,0,1,2,100
+1915242,1552448,2025-04-21,Senate,"Senate - Senate concurred with House amendments",43,0,6,1,50
+1915243,1495547,2025-02-20,Senate,"Senate - Third reading",47,2,0,1,50
+1915243,1541717,2025-04-09,House,"House - Third reading",93,0,4,3,100
+1915243,1549821,2025-04-16,Senate,"Senate - Senate concurred with House amendments",41,0,7,2,50
+1915245,1475784,2025-01-28,Senate,"Senate - Third reading",47,2,0,1,50
+1915245,1541701,2025-04-09,House,"House - Third reading",71,23,1,5,100
+1915245,1556842,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",46,4,0,0,50
+1915245,1556843,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",65,21,1,13,100
+1915247,1480023,2025-02-04,Senate,"Senate - Third reading",49,0,1,0,50
+1915247,1522402,2025-03-20,House,"House - Third reading",91,0,1,8,100
+1915249,1495550,2025-02-20,Senate,"Senate - Third reading",47,2,0,1,50
+1915249,1547462,2025-04-14,House,"House - Third reading",94,0,1,5,100
+1915249,1549846,2025-04-16,Senate,"Senate - Senate concurred with House amendments",39,2,7,2,50
+1915251,1480005,2025-02-04,Senate,"Senate - Third reading",49,0,1,0,50
+1915251,1548352,2025-04-15,House,"House - Third reading",82,15,1,2,100
+1915251,1555527,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",84,8,1,7,100
+1915251,1556856,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",48,2,0,0,50
+1915253,1475017,2025-01-27,Senate,"Senate - Third reading",47,1,1,1,50
+1915253,1518497,2025-03-17,House,"House - Third reading",96,0,1,3,100
+1915253,1528926,2025-03-27,Senate,"Senate - Senate concurred with House amendments",49,0,0,1,50
+1915255,1495581,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1915255,1522804,2025-03-20,House,"House - Third reading",91,0,1,8,100
+1915256,1495546,2025-02-20,Senate,"Senate - Third reading",45,2,2,1,50
+1917003,1489080,2025-02-13,Senate,"Senate - Amendment #1 (Qaddoura) failed",10,36,0,4,50
+1917003,1489081,2025-02-13,Senate,"Senate - Amendment #3 (Young M) failed",15,31,0,4,50
+1917003,1489082,2025-02-13,Senate,"Senate - Amendment #2 (Young M) failed",12,34,0,4,50
+1917003,1489083,2025-02-13,Senate,"Senate - Amendment #5 (Young M) failed",9,37,0,4,50
+1917003,1489084,2025-02-13,Senate,"Senate - Amendment #4 (Young M) failed",16,30,0,4,50
+1917003,1491378,2025-02-17,Senate,"Senate - Third reading",37,10,1,2,50
+1917003,1541687,2025-04-09,House,"House - Amendment #36 (Thompson) prevailed",70,27,0,3,100
+1917003,1541688,2025-04-09,House,"House - Amendment #1 (Campbell) failed",27,64,6,3,100
+1917003,1541689,2025-04-09,House,"House - Amendment #7 (DeLaney) failed",27,66,4,3,100
+1917003,1541690,2025-04-09,House,"House - Amendment #9 (DeLaney) failed",27,64,6,3,100
+1917003,1541691,2025-04-09,House,"House - Amendment #8 (DeLaney) failed",27,65,4,4,100
+1917003,1541692,2025-04-09,House,"House - Amendment #11 (DeLaney) failed",26,63,5,6,100
+1917003,1541693,2025-04-09,House,"House - Amendment #3 (Jackson C) failed",20,68,7,5,100
+1917003,1541694,2025-04-09,House,"House - Amendment #14 (Porter) failed",25,62,8,5,100
+1917003,1541695,2025-04-09,House,"House - Amendment #15 (Porter) failed",25,60,10,5,100
+1917003,1541696,2025-04-09,House,"House - Amendment #16 (Porter) failed",24,61,8,7,100
+1917003,1541697,2025-04-09,House,"House - Amendment #19 (Porter) failed",27,58,6,9,100
+1917003,1541698,2025-04-09,House,"House - Amendment #20 (Porter) failed",22,60,8,10,100
+1917003,1542288,2025-04-09,House,"House - Amendment #26 (Porter) failed",22,59,9,10,100
+1917003,1542289,2025-04-09,House,"House - Amendment #22 (Porter) failed",25,57,9,9,100
+1917003,1542290,2025-04-09,House,"House - Amendment #24 (Porter) failed",23,60,9,8,100
+1917003,1542291,2025-04-09,House,"House - Amendment #2 (Pryor) failed",22,65,8,5,100
+1917003,1543337,2025-04-10,House,"House - Third reading",65,29,0,6,100
+1917003,1547843,2025-04-09,Senate,"Senate - Amendment #1 (Campbell) failed",27,22,0,1,50
+1917004,1491399,2025-02-17,Senate,"Senate - Amendment #7 (Qaddoura) failed",9,39,0,2,50
+1917004,1491400,2025-02-17,Senate,"Senate - Amendment #8 (Qaddoura) failed",9,39,0,2,50
+1917004,1492464,2025-02-18,Senate,"Senate - Third reading",40,9,0,1,50
+1917004,1538200,2025-04-07,House,"House - Amendment #10 (DeLaney) failed",28,60,10,2,100
+1917004,1538201,2025-04-07,House,"House - Amendment #1 (Garcia Wilburn) failed",28,60,10,2,100
+1917004,1538202,2025-04-07,House,"House - Amendment #2 (Shackleford) failed",26,67,4,3,100
+1917004,1538203,2025-04-07,House,"House - Amendment #3 (Shackleford) failed",28,66,2,4,100
+1917004,1538204,2025-04-07,House,"House - Amendment #4 (Shackleford) failed",27,67,2,4,100
+1917004,1538205,2025-04-07,House,"House - Amendment #5 (Shackleford) failed",28,65,3,4,100
+1917004,1538206,2025-04-07,House,"House - Amendment #8 (Porter) failed",27,64,5,4,100
+1917004,1538207,2025-04-07,House,"House - Amendment #6 (Shackleford) failed",28,65,2,5,100
+1917004,1538208,2025-04-07,House,"House - Amendment #12 (DeLaney) failed",28,67,1,4,100
+1917004,1539781,2025-04-08,House,"House - Third reading",66,28,1,5,100
+1917004,1551292,2025-04-17,Senate,"Senate - Senate concurred with House amendments",37,10,1,2,50
+1917005,1491398,2025-02-17,Senate,"Senate - Third reading",47,0,1,2,50
+1917005,1528621,2025-03-27,House,"House - Amendment #1 (Campbell) failed",28,61,2,9,100
+1917005,1531015,2025-03-31,House,"House - Third reading",89,0,5,6,100
+1917005,1536293,2025-04-03,Senate,"Senate - Senate concurred with House amendments",48,0,0,2,50
+1917006,1480007,2025-02-04,Senate,"Senate - Third reading",48,0,2,0,50
+1917006,1530909,2025-03-31,House,"House - Amendment #1 (Pierce M) failed",27,66,2,5,100
+1917006,1530910,2025-03-31,House,"House - Amendment #2 (Campbell) failed",25,66,4,5,100
+1917006,1532378,2025-04-01,House,"House - Third reading",93,0,2,5,100
+1917006,1539720,2025-04-08,Senate,"Senate - Senate concurred with House amendments",45,2,2,1,50
+1917007,1475783,2025-01-28,Senate,"Senate - Third reading",49,0,0,1,50
+1917007,1538235,2025-04-07,House,"House - Amendment #5 (Lehman) prevailed",68,27,2,3,100
+1917007,1538236,2025-04-07,House,"House - ",63,28,6,3,100
+1917007,1538237,2025-04-07,House,"House - Amendment #2 (Lopez) prevailed",65,30,2,3,100
+1917007,1539701,2025-04-08,House,"House - Third reading",92,1,1,6,100
+1917007,1555001,2025-04-23,Senate,"Senate - Conference Committee Report 1",48,0,0,2,50
+1917007,1555002,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",90,1,1,8,100
+1917090,1477363,2025-01-30,Senate,"Senate - Amendment #1 (Ford J.D.) failed",11,37,0,2,50
+1917090,1480028,2025-02-04,Senate,"Senate - Third reading",39,11,0,0,50
+1917090,1530972,2025-03-31,House,"House - Amendment #2 (Boy) failed",27,67,1,5,100
+1917090,1530973,2025-03-31,House,"House - Amendment #3 (Errington) failed",26,66,3,5,100
+1917090,1532383,2025-04-01,House,"House - Third reading",66,25,4,5,100
+1917090,1538227,2025-04-07,Senate,"Senate - Senate concurred with House amendments",39,9,1,1,50
+1917135,1484816,2025-02-10,Senate,"Senate - Third reading",42,7,0,1,50
+1917135,1535947,2025-04-03,House,"House - Third reading",90,1,1,8,100
+1917135,1538566,2025-04-07,Senate,"Senate - Senate concurred with House amendments",44,4,1,1,50
+1917190,1495567,2025-02-20,Senate,"Senate - Third reading",47,0,2,1,50
+1917488,1491380,2025-02-17,Senate,"Senate - Third reading",47,0,1,2,50
+1917488,1547471,2025-04-14,House,"House - Third reading",93,0,2,5,100
+1917488,1558119,2025-04-24,Senate,"Senate - Senate concurred with House amendments",47,2,1,0,50
+1917615,1495593,2025-02-20,Senate,"Senate - Third reading",48,0,1,1,50
+1917615,1539759,2025-04-08,House,"House - Third reading",90,3,1,6,100
+1917668,1484817,2025-02-10,House,"House - Third reading",91,0,5,4,100
+1917668,1528938,2025-03-27,Senate,"Senate - Third reading",49,0,0,1,50
+1917668,1535985,2025-04-03,House,"House - House concurred with Senate amendments",91,0,1,8,100
+1917674,1484845,2025-02-10,House,"House - Third reading",92,1,1,6,100
+1917674,1524790,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1917674,1535959,2025-04-03,House,"House - House concurred with Senate amendments",90,0,2,8,100
+1917700,1478788,2025-02-03,House,"House - Amendment #1 (DeLaney) failed",28,62,3,7,100
+1917700,1479610,2025-02-04,House,"House - Third reading",62,28,3,7,100
+1917700,1526111,2025-03-25,Senate,"Senate - Third reading",43,4,0,3,50
+1917700,1557230,2025-04-24,House,"House - House concurred with Senate amendments",65,25,1,9,100
+1917793,1477114,2025-01-30,House,"House - Amendment #2 (Bartlett) failed",28,62,2,8,100
+1917793,1478782,2025-02-03,House,"House - Third reading",86,1,6,7,100
+1917793,1532370,2025-04-01,Senate,"Senate - Third reading",48,0,2,0,50
+1917793,1551008,2025-04-17,House,"House - House concurred with Senate amendments",88,2,1,9,100
+1917818,1493310,2025-02-19,House,"House - Third reading",72,24,0,4,100
+1917818,1539764,2025-04-08,Senate,"Senate - Amendment #1 (Pol) failed",15,34,0,1,50
+1917818,1544464,2025-04-10,Senate,"Senate - Third reading",35,8,5,2,50
+1917818,1551279,2025-04-17,House,"House - House concurred with Senate amendments",61,21,0,18,100
+1917846,1479602,2025-02-04,House,"House - Third reading",85,4,3,8,100
+1917856,1484834,2025-02-10,House,"House - Third reading",90,1,2,7,100
+1917856,1538246,2025-04-07,Senate,"Senate - Third reading",48,1,0,1,50
+1917863,1491945,2025-02-18,House,"House - Third reading",94,0,3,3,100
+1917899,1484828,2025-02-10,House,"House - Third reading",89,1,3,7,100
+1917905,1494703,2025-02-20,House,"House - Third reading",72,21,2,5,100
+1917905,1547839,2025-04-14,Senate,"Senate - Amendment #10 (Pol) failed",15,33,1,1,50
+1917905,1547840,2025-04-14,Senate,"Senate - Amendment #11 (Pol) failed",12,35,2,1,50
+1917905,1547841,2025-04-14,Senate,"Senate - Amendment #9 (Young M) failed",2,47,0,1,50
+1917905,1548815,2025-04-15,Senate,"Senate - Third reading",38,10,1,1,50
+1917905,1551304,2025-04-17,House,"House - House concurred with Senate amendments",68,17,2,13,100
+1917914,1484827,2025-02-10,House,"House - Third reading",87,2,6,5,100
+1917914,1539761,2025-04-08,Senate,"Senate - Third reading",41,8,0,1,50
+1917914,1549552,2025-04-16,House,"House - House concurred with Senate amendments",71,8,1,20,100
+1917919,1491955,2025-02-18,House,"House - Third reading",95,0,2,3,100
+1917919,1526211,2025-03-25,Senate,"Senate - Third reading",46,1,0,3,50
+1917919,1553619,2025-04-22,House,"House - House concurred with Senate amendments",90,0,1,9,100
+1917955,1491046,2025-02-17,House,"House - Third reading",95,0,2,3,100
+1917955,1528925,2025-03-27,Senate,"Senate - Third reading",48,1,0,1,50
+1917991,1493304,2025-02-19,House,"House - Amendment #1 (Johnson B) failed",29,65,3,3,100
+1917991,1493305,2025-02-19,House,"House - Amendment #4 (Dvorak) failed",28,66,3,3,100
+1917991,1494695,2025-02-20,House,"House - Third reading",69,25,1,5,100
+1917991,1548812,2025-04-15,Senate,"Senate - Third reading",36,13,0,1,50
+1917991,1551012,2025-04-17,House,"House - House concurred with Senate amendments",64,23,1,12,100
+1918061,1494692,2025-02-20,House,"House - Third reading",68,26,1,5,100
+1918061,1547842,2025-04-14,Senate,"Senate - Amendment #9 (Yoder) failed",13,36,0,1,50
+1918061,1548870,2025-04-15,Senate,"Senate - Third reading",29,19,1,1,50
+1918061,1557221,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",67,23,1,9,100
+1918061,1557738,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",37,13,0,0,50
+1918078,1491053,2025-02-17,House,"House - Amendment #1 (Pfaff) failed",30,63,5,2,100
+1918078,1491947,2025-02-18,House,"House - Third reading",66,28,3,3,100
+1918086,1494710,2025-02-20,House,"House - Third reading",93,0,2,5,100
+1918086,1548810,2025-04-15,Senate,"Senate - Third reading",48,0,1,1,50
+1918086,1550983,2025-04-17,House,"House - House concurred with Senate amendments",90,0,1,9,100
+1918095,1483086,2025-02-06,House,"House - Third reading",57,28,4,11,100
+1918095,1544469,2025-04-10,Senate,"Senate - Amendment #4 (Qaddoura) failed",10,34,4,2,50
+1918095,1548816,2025-04-15,Senate,"Senate - Third reading",32,16,1,1,50
+1918095,1557779,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",28,22,0,0,50
+1918095,1557780,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",62,30,1,7,100
+1918133,1477350,2025-01-30,House,"House - Third reading",91,0,1,8,100
+1918148,1489072,2025-02-13,House,"House - Amendment #5 (Pryor) failed",26,63,7,4,100
+1918148,1489073,2025-02-13,House,"House - Amendment #1 (Hamilton) failed",27,65,4,4,100
+1918148,1489074,2025-02-13,House,"House - Amendment #2 (Pryor) failed",27,67,1,5,100
+1918148,1491056,2025-02-17,House,"House - Third reading",95,0,2,3,100
+1918148,1526197,2025-03-25,Senate,"Senate - Third reading",45,2,0,3,50
+1918148,1536013,2025-04-03,House,"House - House concurred with Senate amendments",90,0,2,8,100
+1918176,1486283,2025-02-11,House,"House - Third reading",93,0,1,6,100
+1918176,1532362,2025-04-01,Senate,"Senate - Third reading",45,5,0,0,50
+1918176,1549555,2025-04-16,House,"House - House concurred with Senate amendments",69,16,0,15,100
+1918183,1483075,2025-02-06,House,"House - Third reading",64,23,2,11,100
+1918183,1519622,2025-03-18,Senate,"Senate - Third reading",47,2,0,1,50
+1918183,1552511,2025-04-21,House,"House - ",59,18,9,14,100
+1918282,1491950,2025-02-18,House,"House - Third reading",92,4,1,3,100
+1918282,1524786,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1918300,1494711,2025-02-20,House,"House - Third reading",89,2,4,5,100
+1918300,1538225,2025-04-07,Senate,"Senate - Third reading",49,0,0,1,50
+1918300,1549565,2025-04-16,House,"House - House concurred with Senate amendments",76,0,2,22,100
+1918345,1494697,2025-02-20,House,"House - Third reading",89,0,6,5,100
+1918345,1524755,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1918362,1491040,2025-02-17,House,"House - Third reading",96,0,1,3,100
+1918362,1539732,2025-04-08,Senate,"Senate - Third reading",48,1,0,1,50
+1918362,1551276,2025-04-17,House,"House - House concurred with Senate amendments",84,0,1,15,100
+1918379,1491044,2025-02-17,House,"House - Third reading",94,0,3,3,100
+1918379,1532357,2025-04-01,Senate,"Senate - Third reading",48,0,2,0,50
+1918379,1550987,2025-04-17,House,"House - House concurred with Senate amendments",88,2,1,9,100
+1918399,1494681,2025-02-20,House,"House - Third reading",91,0,4,5,100
+1918399,1526198,2025-03-25,Senate,"Senate - Third reading",47,0,0,3,50
+1918399,1532393,2025-04-01,House,"House - House concurred with Senate amendments",91,0,2,7,100
+1918407,1491030,2025-02-17,House,"House - Third reading",93,0,4,3,100
+1918407,1544490,2025-04-10,Senate,"Senate - Amendment #2 (Qaddoura) failed",12,33,3,2,50
+1918407,1544491,2025-04-10,Senate,"Senate - Amendment #3 (Qaddoura) failed",10,34,4,2,50
+1918407,1548843,2025-04-15,Senate,"Senate - Third reading",47,1,1,1,50
+1918407,1551331,2025-04-17,House,"House - House concurred with Senate amendments",85,0,1,14,100
+1918429,1491974,2025-02-18,House,"House - Third reading",66,32,0,2,100
+1918429,1548835,2025-04-15,Senate,"Senate - Third reading",48,1,0,1,50
+1918429,1556472,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",67,25,3,5,100
+1918429,1556836,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",30,20,0,0,50
+1918462,1483087,2025-02-06,House,"House - Third reading",85,0,4,11,100
+1918462,1524771,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1918462,1532372,2025-04-01,House,"House - House concurred with Senate amendments",92,0,2,6,100
+1920025,1495565,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1920025,1530908,2025-03-31,House,"House - Amendment #1 (DeLaney) failed",33,57,5,5,100
+1920025,1532411,2025-04-01,House,"House - Third reading",87,4,4,5,100
+1920025,1549813,2025-04-16,Senate,"Senate - Senate concurred with House amendments",41,0,7,2,50
+1920218,1475814,2025-01-28,Senate,"Senate - Third reading",49,0,0,1,50
+1920218,1528623,2025-03-27,House,"House - Third reading",92,0,1,7,100
+1920218,1535977,2025-04-03,Senate,"Senate - Senate concurred with House amendments",48,0,0,2,50
+1920352,1493864,2025-02-19,Senate,"Senate - Amendment #5 (Qaddoura) failed",10,39,0,1,50
+1920352,1493865,2025-02-19,Senate,"Senate - Amendment #4 (Qaddoura) failed",12,37,0,1,50
+1920352,1493866,2025-02-19,Senate,"Senate - Amendment #8 (Hunley) failed",10,39,0,1,50
+1920352,1493867,2025-02-19,Senate,"Senate - Amendment #12 (Hunley) failed",9,40,0,1,50
+1920352,1493868,2025-02-19,Senate,"Senate - Amendment #17 (Hunley) failed",10,39,0,1,50
+1920352,1493869,2025-02-19,Senate,"Senate - Amendment #1 (Qaddoura) failed",9,40,0,1,50
+1920352,1493870,2025-02-19,Senate,"Senate - Amendment #3 (Qaddoura) failed",9,40,0,1,50
+1920352,1493871,2025-02-19,Senate,"Senate - Amendment #6 (Qaddoura) failed",12,37,0,1,50
+1920352,1493872,2025-02-19,Senate,"Senate - Amendment #13 (Qaddoura) failed",8,40,1,1,50
+1920352,1493873,2025-02-19,Senate,"Senate - Amendment #14 (Qaddoura) failed",11,38,0,1,50
+1920352,1493874,2025-02-19,Senate,"Senate - Amendment #15 (Qaddoura) failed",9,40,0,1,50
+1920352,1495136,2025-02-19,Senate,"Senate - Amendment #2 (Qaddoura) failed",9,40,0,1,50
+1920352,1495137,2025-02-19,Senate,"Senate - Amendment #20 (Hunley) failed",9,40,0,1,50
+1920352,1495138,2025-02-19,Senate,"Senate - Amendment #22 (Hunley) failed",10,39,0,1,50
+1920352,1495542,2025-02-20,Senate,"Senate - Third reading",28,21,0,1,50
+1920461,1495534,2025-02-20,Senate,"Senate - Third reading",33,15,1,1,50
+1920461,1548358,2025-04-15,House,"House - Third reading",96,0,1,3,100
+1920461,1555297,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",85,7,1,7,100
+1920461,1555581,2025-04-23,Senate,"Senate - Rules Suspended. Conference Committee Report 1",45,2,1,2,50
+1920500,1495538,2025-02-20,Senate,"Senate - Third reading",47,1,1,1,50
+1920500,1532409,2025-04-01,House,"House - Third reading",90,0,5,5,100
+1920500,1556507,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",65,26,1,8,100
+1920500,1556915,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",40,10,0,0,50
+1920621,1495530,2025-02-20,Senate,"Senate - Third reading",47,1,1,1,50
+1920621,1526243,2025-03-25,House,"House - Third reading",89,6,1,4,100
+1920665,1486249,2025-02-11,Senate,"Senate - Third reading",32,16,1,1,50
+1920731,1495549,2025-02-20,Senate,"Senate - Third reading",49,0,0,1,50
+1920731,1539726,2025-04-08,House,"House - Third reading",93,0,2,5,100
+1920779,1486688,2025-02-11,House,"House - Third reading",91,0,2,7,100
+1920779,1544523,2025-04-10,Senate,"Senate - Third reading",42,1,5,2,50
+1920779,1555263,2025-04-23,House,"House - House concurred with Senate amendments",92,0,1,7,100
+1920781,1486683,2025-02-11,House,"House - Third reading",88,4,1,7,100
+1920794,1479599,2025-02-04,House,"House - Third reading",88,0,3,9,100
+1920794,1518510,2025-03-17,Senate,"Senate - Third reading",44,1,3,2,50
+1920795,1489076,2025-02-13,House,"House - Third reading",91,1,4,4,100
+1920795,1539748,2025-04-08,Senate,"Senate - Third reading",48,1,0,1,50
+1920795,1553614,2025-04-22,House,"House - Rules Suspended. Conference Committee Report 1",90,1,1,8,100
+1920795,1554984,2025-04-23,Senate,"Senate - Conference Committee Report 1",47,0,1,2,50
+1920796,1486695,2025-02-11,House,"House - Third reading",89,1,1,9,100
+1920800,1477359,2025-01-30,House,"House - Third reading",91,0,1,8,100
+1920800,1522803,2025-03-20,Senate,"Senate - Third reading",46,0,1,3,50
+1920812,1486286,2025-02-11,House,"House - Third reading",74,17,1,8,100
+1920814,1491043,2025-02-17,House,"House - Third reading",97,0,1,2,100
+1920814,1548814,2025-04-15,Senate,"Senate - Third reading",47,0,2,1,50
+1920814,1550984,2025-04-17,House,"House - House concurred with Senate amendments",90,0,1,9,100
+1920818,1478777,2025-02-03,House,"House - Third reading",87,2,4,7,100
+1920818,1513410,2025-03-11,Senate,"Senate - Third reading",50,0,0,0,50
+1920818,1518499,2025-03-17,House,"House - House concurred with Senate amendments",96,0,1,3,100
+1920820,1486276,2025-02-11,House,"House - ",90,0,2,8,100
+1920820,1540370,2025-04-08,Senate,"Senate - Third reading",38,11,0,1,50
+1920820,1550993,2025-04-17,House,"House - House concurred with Senate amendments",91,0,1,8,100
+1920823,1479595,2025-02-04,House,"House - Amendment #8 (Pryor) failed",29,66,2,3,100
+1920823,1479596,2025-02-04,House,"House - Amendment #16 (Errington) failed",29,65,3,3,100
+1920823,1479597,2025-02-04,House,"House - Amendment #5 (Boy) failed",28,66,3,3,100
+1920823,1483078,2025-02-06,House,"House - Third reading",61,27,2,10,100
+1920831,1484831,2025-02-10,House,"House - Third reading",88,4,1,7,100
+1920832,1483088,2025-02-06,House,"House - Third reading",87,1,1,11,100
+1920832,1538216,2025-04-07,Senate,"Senate - Third reading",48,0,1,1,50
+1920835,1486251,2025-02-11,House,"House - Appeal the ruling of the chair (Jackson C)",66,27,1,6,100
+1920835,1486252,2025-02-11,House,"House - Appeal the ruling of the chair (Pryor)",64,27,3,6,100
+1920835,1486253,2025-02-11,House,"House - Amendment #4 (Boy) prevailed",87,3,4,6,100
+1920835,1489079,2025-02-13,House,"House - Third reading",87,8,1,4,100
+1920835,1548813,2025-04-15,Senate,"Senate - Third reading",37,10,2,1,50
+1920835,1557254,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",63,24,1,12,100
+1920835,1558133,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",41,7,2,0,50
+1920836,1486685,2025-02-11,House,"House - Third reading",65,25,1,9,100
+1920836,1538195,2025-04-07,Senate,"Senate - Amendment #2 (Ford J.D.) failed",15,33,1,1,50
+1920836,1544347,2025-04-10,Senate,"Senate - Third reading",34,8,6,2,50
+1920836,1555035,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",65,25,1,9,100
+1920836,1555540,2025-04-23,Senate,"Senate - Rules Suspended. Conference Committee Report 1",36,9,3,2,50
+1920837,1486246,2025-02-11,House,"House - Amendment #1 (Errington) failed",27,64,3,6,100
+1920837,1489096,2025-02-13,House,"House - Third reading",64,31,1,4,100
+1920839,1484811,2025-02-10,House,"House - Third reading",92,0,1,7,100
+1920839,1540395,2025-04-08,Senate,"Senate - Third reading",47,1,1,1,50
+1920839,1555522,2025-04-23,Senate,"Senate - Rules Suspended. Conference Committee Report 1",44,1,3,2,50
+1920839,1555523,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",91,0,1,8,100
+1920870,1491941,2025-02-18,House,"House - Third reading",92,0,5,3,100
+1920929,1495099,2025-02-20,House,"House - Third reading",92,0,1,7,100
+1920929,1519618,2025-03-18,Senate,"Senate - Third reading",49,0,0,1,50
+1920929,1556860,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",50,0,0,0,50
+1920929,1556861,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",85,0,1,14,100
+1920952,1486703,2025-02-11,House,"House - Third reading",90,0,1,9,100
+1920952,1532392,2025-04-01,Senate,"Senate - Third reading",45,2,3,0,50
+1921050,1491948,2025-02-18,House,"House - Third reading",95,0,4,1,100
+1921050,1524768,2025-03-24,Senate,"Senate - Third reading",47,0,0,3,50
+1921050,1532386,2025-04-01,House,"House - House concurred with Senate amendments",94,0,1,5,100
+1921462,1483084,2025-02-06,House,"House - Third reading",74,12,4,10,100
+1921462,1535976,2025-04-03,Senate,"Senate - Amendment #1 (Ford J.D.) failed",11,37,0,2,50
+1921462,1538226,2025-04-07,Senate,"Senate - Third reading",35,13,1,1,50
+1921497,1489063,2025-02-13,House,"House - Third reading",91,0,5,4,100
+1921497,1526189,2025-03-25,Senate,"Senate - Third reading",47,0,0,3,50
+1921497,1535965,2025-04-03,House,"House - House concurred with Senate amendments",90,0,2,8,100
+1921516,1479592,2025-02-04,House,"House - Third reading",90,0,2,8,100
+1921527,1494705,2025-02-20,House,"House - Third reading",69,23,2,6,100
+1921527,1536398,2025-04-03,Senate,"Senate - Third reading",45,3,0,2,50
+1921527,1551003,2025-04-17,House,"House - House concurred with Senate amendments",76,14,1,9,100
+1921587,1493322,2025-02-19,House,"House - Amendment #1 (Burton) failed",28,65,4,3,100
+1921587,1493323,2025-02-19,House,"House - Amendment #8 (Dvorak) failed",28,63,6,3,100
+1921587,1493324,2025-02-19,House,"House - Amendment #6 (Burton) failed",27,60,10,3,100
+1921587,1494698,2025-02-20,House,"House - Third reading",64,26,4,6,100
+1921624,1491934,2025-02-18,House,"House - Third reading",94,0,5,1,100
+1921624,1535950,2025-04-03,Senate,"Senate - Third reading",48,0,0,2,50
+1921624,1557229,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",93,0,1,6,100
+1921624,1557783,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",50,0,0,0,50
+1921652,1491960,2025-02-18,House,"House - Third reading",94,2,2,2,100
+1921652,1538229,2025-04-07,Senate,"Senate - Third reading",48,1,0,1,50
+1921652,1555542,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",88,2,1,9,100
+1921652,1556870,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",50,0,0,0,50
+1921697,1491035,2025-02-17,House,"House - Third reading",95,0,3,2,100
+1921697,1526190,2025-03-25,Senate,"Senate - Third reading",44,3,0,3,50
+1921697,1555015,2025-04-23,Senate,"Senate - Conference Committee Report 1",45,2,1,2,50
+1921697,1555016,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",91,0,1,8,100
+1921735,1479593,2025-02-04,House,"House - Third reading",90,0,2,8,100
+1921735,1526263,2025-03-25,Senate,"Senate - Third reading",47,0,0,3,50
+1921820,1491971,2025-02-18,House,"House - Third reading",94,0,5,1,100
+1921830,1491752,2025-02-18,House,"House - Third reading",92,0,7,1,100
+1921830,1530916,2025-03-31,Senate,"Senate - Third reading",47,0,0,3,50
+1921879,1491051,2025-02-17,House,"House - Amendment #2 (DeLaney) failed",28,68,2,2,100
+1921879,1491954,2025-02-18,House,"House - Third reading",76,18,4,2,100
+1921879,1538219,2025-04-07,Senate,"Senate - Amendment #1 (Qaddoura) failed",12,35,2,1,50
+1921879,1548817,2025-04-15,Senate,"Senate - Third reading",30,18,1,1,50
+1921879,1552516,2025-04-21,House,"House - House concurred with Senate amendments",61,24,1,14,100
+1921890,1479598,2025-02-04,House,"House - Third reading",73,15,4,8,100
+1921890,1532413,2025-04-01,Senate,"Senate - Third reading",38,9,3,0,50
+1921890,1550991,2025-04-17,House,"House - House concurred with Senate amendments",80,10,1,9,100
+1921918,1491081,2025-02-17,House,"House - Third reading",94,0,3,3,100
+1921918,1528929,2025-03-27,Senate,"Senate - Third reading",49,0,0,1,50
+1921918,1535969,2025-04-03,House,"House - House concurred with Senate amendments",91,0,1,8,100
+1921954,1491964,2025-02-18,House,"House - Third reading",92,0,6,2,100
+1921954,1548880,2025-04-15,Senate,"Senate - Third reading",47,1,1,1,50
+1921954,1556430,2025-04-24,House,"House - Rules Suspended. Conference Committee Report 1",91,0,1,8,100
+1921954,1556849,2025-04-24,Senate,"Senate - Rules Suspended. Conference Committee Report 1",50,0,0,0,50
+1921977,1489085,2025-02-13,House,"House - Third reading",95,0,1,4,100
+1922001,1478783,2025-02-03,House,"House - Third reading",88,0,5,7,100
+1922001,1539736,2025-04-08,Senate,"Senate - Third reading",49,0,0,1,50
+1922012,1489138,2025-02-13,House,"House - Third reading",70,25,1,4,100
+1922012,1526187,2025-03-25,Senate,"Senate - Third reading",46,1,0,3,50
+1922012,1554979,2025-04-23,Senate,"Senate - Conference Committee Report 1",46,0,2,2,50
+1922012,1554980,2025-04-23,House,"House - Rules Suspended. Conference Committee Report 1",78,13,1,8,100
+1922063,1491392,2025-02-17,House,"House - Third reading",94,3,1,2,100
+1922063,1548807,2025-04-15,Senate,"Senate - Third reading",45,2,2,1,50
+1922063,1551306,2025-04-17,House,"House - House concurred with Senate amendments",83,1,1,15,100
+1922501,1495539,2025-02-20,Senate,"Senate - Third reading",40,9,0,1,50
+1922501,1548371,2025-04-15,House,"House - Third reading",60,37,1,2,100
+1930816,1493325,2025-02-19,House,"House - Amendment #11 (Porter) failed",29,68,1,2,100
+1930816,1493326,2025-02-19,House,"House - Amendment #2 (DeLaney) failed",29,67,2,2,100
+1930816,1493327,2025-02-19,House,"House - Amendment #5 (DeLaney) failed",26,68,4,2,100
+1930816,1493328,2025-02-19,House,"House - Amendment #9 (DeLaney) failed",29,65,2,4,100
+1930816,1493329,2025-02-19,House,"House - Amendment #6 (DeLaney) failed",28,63,5,4,100
+1930816,1493330,2025-02-19,House,"House - Amendment #22 (Hamilton) failed",27,65,5,3,100
+1930816,1493331,2025-02-19,House,"House - Amendment #12 (Klinker) failed",29,67,1,3,100
+1930816,1493332,2025-02-19,House,"House - Amendment #16 (Bauer) failed",29,64,4,3,100
+1930816,1493333,2025-02-19,House,"House - Amendment #14 (Garcia Wilburn) failed",29,66,1,4,100
+1930816,1493334,2025-02-19,House,"House - Amendment #15 (Andrade) failed",29,66,1,4,100
+1930816,1494687,2025-02-20,House,"House - Third reading",66,28,1,5,100
+1930816,1547812,2025-04-14,Senate,"Senate - Amendment #1 (Young M) failed",15,33,1,1,50
+1930816,1547813,2025-04-14,Senate,"Senate - Amendment #2 (Young M) failed",16,33,0,1,50
+1930816,1547814,2025-04-14,Senate,"Senate - Amendment #3 (Young M) failed",5,44,0,1,50
+1930816,1547815,2025-04-14,Senate,"Senate - Amendment #42 (Young M) failed",10,39,0,1,50
+1930816,1547816,2025-04-14,Senate,"Senate - Amendment #24 (Yoder) failed",13,35,1,1,50
+1930816,1547817,2025-04-14,Senate,"Senate - Amendment #13 (Qaddoura) failed",10,38,1,1,50
+1930816,1547818,2025-04-14,Senate,"Senate - Amendment #17 (Qaddoura) failed",10,38,1,1,50
+1930816,1547819,2025-04-14,Senate,"Senate - Amendment #33 (Qaddoura) failed",9,39,1,1,50
+1930816,1547820,2025-04-14,Senate,"Senate - Amendment #59 (Qaddoura) failed",11,38,0,1,50
+1930816,1547821,2025-04-14,Senate,"Senate - Amendment #31 (Qaddoura) failed",10,38,1,1,50
+1930816,1547822,2025-04-14,Senate,"Senate - Amendment #60 (Qaddoura) failed",10,38,1,1,50
+1930816,1547823,2025-04-14,Senate,"Senate - Amendment #61 (Qaddoura) failed",9,39,1,1,50
+1930816,1547824,2025-04-14,Senate,"Senate - Amendment #62 (Qaddoura) failed",11,38,0,1,50
+1930816,1547825,2025-04-14,Senate,"Senate - Amendment #34 (Qaddoura) failed",13,36,0,1,50
+1930816,1547826,2025-04-14,Senate,"Senate - Amendment #66 (Hunley) failed",13,36,0,1,50
+1930816,1547827,2025-04-14,Senate,"Senate - Amendment #15 (Qaddoura) failed",11,38,0,1,50
+1930816,1547828,2025-04-14,Senate,"Senate - Amendment #14 (Qaddoura) failed",11,37,1,1,50
+1930816,1547829,2025-04-14,Senate,"Senate - Amendment #6 (Pol) failed",11,38,0,1,50
+1930816,1547830,2025-04-14,Senate,"Senate - Amendment #7 (Ford J.D.) failed",18,31,0,1,50
+1930816,1547831,2025-04-14,Senate,"Senate - Amendment #22 (Ford J.D.) failed",16,33,0,1,50
+1930816,1547832,2025-04-14,Senate,"Senate - Amendment #44 (Jackson) failed",10,39,0,1,50
+1930816,1547833,2025-04-14,Senate,"Senate - Amendment #32 (Qaddoura) failed",9,39,1,1,50
+1930816,1547834,2025-04-14,Senate,"Senate - Amendment #11 (Ford J.D.) failed",15,33,1,1,50
+1930816,1547835,2025-04-14,Senate,"Senate - Amendment #10 (Ford J.D.) failed",13,34,2,1,50
+1930816,1547836,2025-04-14,Senate,"Senate - Amendment #18 (Qaddoura) failed",9,39,1,1,50
+1930816,1547837,2025-04-14,Senate,"Senate - Amendment #50 (Hunley) failed",13,35,1,1,50
+1930816,1548821,2025-04-15,Senate,"Senate - Third reading",40,9,0,1,50
+1930816,1557867,2025-04-25,Senate,"Senate - Rules Suspended. Conference Committee Report 1",39,11,0,0,50
+1930816,1557868,2025-04-25,House,"House - Rules Suspended. Conference Committee Report 1",66,27,0,7,100
+1946486,1516891,2025-03-13,House,"House - Second reading",81,0,2,17,100
+1946487,1516886,2025-03-13,House,"House - Second reading",83,0,1,16,100
+1946488,1516890,2025-03-13,House,"House - Second reading",81,0,3,16,100
+1946489,1516892,2025-03-13,House,"House - Second reading",79,0,5,16,100
+1949889,1535948,2025-04-03,House,"House - Second reading",90,0,2,8,100
+1989591,1518498,2025-03-17,Senate,"Senate - Second reading",39,9,0,2,50
+1993498,1526215,2025-03-25,Senate,"Senate - Second reading",46,1,0,3,50

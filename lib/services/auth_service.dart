@@ -23,6 +23,14 @@ class AuthService with ChangeNotifier {
   // Constructor to listen for auth state changes
   AuthService() {
     _auth.authStateChanges().listen((User? user) {
+      if (kDebugMode) {
+        print('Auth state changed: User ${user != null ? 'logged in' : 'logged out'}');
+        if (user != null) {
+          print('User ID: ${user.uid}');
+          print('User Email: ${user.email}');
+        }
+      }
+      
       // Update UI when auth state changes
       notifyListeners();
       if (user != null) {

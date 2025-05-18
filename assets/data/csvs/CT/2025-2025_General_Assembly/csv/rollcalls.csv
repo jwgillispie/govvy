@@ -1,0 +1,1961 @@
+bill_id,roll_call_id,date,chamber,description,yea,nay,nv,absent,total
+1904811,1475523,2025-01-27,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1904820,1493803,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1904826,1484836,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",23,11,0,1,35
+1904826,1518008,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",23,10,0,1,34
+1904826,1518009,2025-03-14,Joint,"ENV Vote Tally Sheet-A",10,19,0,5,34
+1904826,1518010,2025-03-14,Joint,"ENV Vote Tally Sheet-B",8,20,0,6,34
+1904826,1518011,2025-03-14,Joint,"ENV Vote Tally Sheet-C",8,21,0,5,34
+1904826,1564141,2025-05-01,House,"House Roll Call Vote 62 AS AMENDED ",98,47,0,6,151
+1904839,1473925,2025-01-23,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1904839,1502421,2025-02-20,Joint,"CE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904839,1519497,2025-03-18,Joint,"CE Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1904839,1568847,2025-05-08,House,"House Roll Call Vote 76 ",141,0,0,10,151
+1904846,1474521,2025-01-23,Joint,"HSG Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",14,6,0,0,20
+1904846,1495228,2025-02-20,Joint,"HSG Vote Tally Sheet (Vote to Draft)",12,6,0,2,20
+1904846,1508652,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",12,6,0,2,20
+1904846,1565378,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",32,20,0,2,54
+1904847,1474477,2025-01-23,Joint,"HSG Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",20,0,0,0,20
+1904847,1496069,2025-02-20,Joint,"HSG Vote Tally Sheet (Vote to Draft)",12,6,0,2,20
+1904847,1508653,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",13,5,0,2,20
+1904847,1565026,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",38,14,0,2,54
+1904848,1492440,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904857,1492961,2025-02-18,Joint,"APP Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1904859,1491738,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904860,1474337,2025-01-24,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904863,1485848,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904863,1517982,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",24,9,0,1,34
+1904863,1558680,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",25,12,0,4,41
+1904863,1565647,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",40,10,0,3,53
+1904870,1489287,2025-01-23,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1904872,1472749,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1904876,1474305,2025-01-24,Joint,"ENV Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1904885,1472997,2025-01-22,Joint,"TRA Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1904885,1477622,2025-01-30,Joint,"CE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904885,1523342,2025-03-20,Joint,"CE Vote Tally Sheet (House)",13,0,0,0,13
+1904901,1473263,2025-01-22,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904901,1524201,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",14,7,0,1,22
+1904901,1558681,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",25,12,0,4,41
+1904901,1565698,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1904902,1492948,2025-02-18,Joint,"APP Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1904908,1471435,2025-01-14,Joint,"LAB Vote Tally Sheet (Vote to Draft)",9,4,0,0,13
+1904908,1508457,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1904908,1558694,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",25,12,0,4,41
+1904908,1565893,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1904920,1472178,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904920,1527723,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",24,6,0,4,34
+1904941,1474232,2025-01-21,Joint,"AGE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904941,1508863,2025-03-06,Joint,"AGE Vote Tally Sheet (Joint Favorable)",14,0,0,0,14
+1904943,1472834,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1904956,1472858,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1904957,1472602,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1904964,1472268,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904964,1517951,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable)",33,0,0,1,34
+1904964,1568706,2025-05-08,Senate,"Senate Roll Call Vote 143 ",35,0,1,0,36
+1904979,1485822,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1904989,1472761,2025-01-21,Joint,"HS Vote Tally Sheet (Vote to Draft)",16,5,0,2,23
+1904989,1517855,2025-03-13,Joint,"HS Vote Tally Sheet-B",0,0,0,0,0
+1904989,1517859,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",15,7,0,1,23
+1904989,1517860,2025-03-13,Joint,"HS Vote Tally Sheet-A",5,16,0,2,23
+1904989,1517861,2025-03-13,Joint,"HS Vote Tally Sheet-C",5,16,0,2,23
+1904989,1517862,2025-03-13,Joint,"HS Vote Tally Sheet-D",5,16,0,2,23
+1904989,1517863,2025-03-13,Joint,"HS Vote Tally Sheet-E",5,16,0,2,23
+1904989,1523029,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",15,7,0,1,23
+1904989,1566316,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",28,11,0,2,41
+1905028,1472174,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905028,1493028,2025-02-19,Joint,"ENV Vote Tally Sheet (Joint Unfavorable)",35,0,0,0,35
+1905028,1493029,2025-02-19,Joint,"ENV Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1905032,1473068,2025-01-22,Joint,"TRA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905034,1492094,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",17,2,0,0,19
+1905034,1529692,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1905041,1472756,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1905054,1474341,2025-01-24,Joint,"ENV Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1905069,1473159,2025-01-22,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905069,1524150,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",17,4,0,1,22
+1905069,1566059,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",28,11,0,2,41
+1905084,1472157,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905084,1503118,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",35,0,0,0,35
+1905084,1558682,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1905091,1472117,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905091,1494488,2025-02-19,Joint,"ENV Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1905091,1568848,2025-05-08,House,"House Roll Call Vote 77 AS AMENDED ",141,0,0,10,151
+1905093,1474564,2025-01-24,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905109,1471927,2025-01-15,Joint,"SED Vote Tally Sheet (Change of Reference)",10,5,0,0,15
+1905109,1490396,2025-02-10,Joint,"ED Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905109,1526723,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable Change of Reference)",30,15,0,0,45
+1905109,1558192,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",41,13,0,0,54
+1905112,1471669,2025-01-14,Joint,"KID Vote Tally Sheet (Vote to Draft)",13,4,0,0,17
+1905112,1509697,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute)",12,5,0,0,17
+1905112,1565732,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1905114,1472132,2025-01-17,Joint,"PH Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905114,1528611,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",21,10,0,1,32
+1905114,1528612,2025-03-27,Joint,"PH Vote Tally Sheet-D (In line 456, after “gender-affirming health care services” insert the following: “and who is at least sixteen years of age or older"")",10,20,0,2,32
+1905114,1528613,2025-03-27,Joint,"PH Vote Tally Sheet-E (Strike line 503, from “Such”, through line 505 ending with “grant"")",10,19,0,3,32
+1905114,1528614,2025-03-27,Joint,"PH Vote Tally Sheet-F (Amend the motion from “JFS to the Floor” to “JFS to Appropriations”)",9,18,0,5,32
+1905114,1528615,2025-03-27,Joint,"PH Vote Tally Sheet-A (Strike Section 2)",10,20,0,2,32
+1905114,1528616,2025-03-27,Joint,"PH Vote Tally Sheet-B (Strike Section 13)",9,17,0,6,32
+1905114,1528617,2025-03-27,Joint,"PH Vote Tally Sheet-C (Strike sections 22-26)",9,19,0,4,32
+1905122,1483911,2025-02-07,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1905126,1472836,2025-01-21,Joint,"HS Vote Tally Sheet (Vote to Draft)",21,0,0,2,23
+1905128,1489279,2025-01-23,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1905129,1471730,2025-01-14,Joint,"KID Vote Tally Sheet (Vote to Draft)",13,4,0,0,17
+1905129,1509026,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable)",12,5,0,0,17
+1905129,1539317,2025-04-08,Joint,"ED Vote Tally Sheet (Joint Favorable)",29,15,0,1,45
+1905129,1566297,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1905135,1472208,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905135,1493008,2025-02-19,Joint,"ENV Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1905140,1472105,2025-01-17,Joint,"ED Vote Tally Sheet (Vote to Draft)",34,9,0,2,45
+1905140,1526020,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable)",30,15,0,0,45
+1905140,1566126,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",28,11,0,2,41
+1905141,1472717,2025-01-21,Joint,"INS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905141,1517987,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",10,3,0,0,13
+1905141,1517988,2025-03-13,Joint,"INS Vote Tally Sheet-A",11,0,0,2,13
+1905141,1566356,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",28,11,0,2,41
+1905145,1484939,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905146,1472231,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905146,1503117,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1905156,1474389,2025-01-24,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905156,1503105,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable)",30,5,0,0,35
+1905158,1472672,2025-01-21,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",21,0,0,2,23
+1905181,1472718,2025-01-16,Joint,"HED Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905181,1505689,2025-02-27,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1905181,1566165,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1905182,1493186,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1905198,1489257,2025-01-23,Joint,"ET Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905198,1517371,2025-03-13,Joint,"ET Vote Tally Sheet (Joint Favorable Substitute)",17,8,0,0,25
+1905198,1517372,2025-03-13,Joint,"ET Vote Tally Sheet-A (Joint Favorable Substitute)",8,16,0,1,25
+1905198,1517974,2025-03-13,Joint,"ET Vote Tally Sheet-A (MOTION FAILED)",8,16,0,1,25
+1905220,1472244,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905220,1518027,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",33,0,0,1,34
+1905220,1557938,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",54,0,0,0,54
+1905225,1472183,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905225,1503082,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",24,11,0,0,35
+1905229,1493571,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1905235,1492106,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905249,1485764,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905256,1474558,2025-01-24,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1905273,1479304,2025-02-03,Joint,"GL Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1905275,1494410,2025-02-18,Joint,"APP Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1905734,1471273,2025-01-08,House,"House Roll Call Vote 1 ",133,11,0,6,150
+1907548,1472810,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1907551,1472136,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1907551,1494417,2025-02-19,Joint,"ENV Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1907719,1492980,2025-02-18,Joint,"APP Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1907775,1472598,2025-01-21,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1907775,1514604,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,1,21
+1907807,1479823,2025-02-04,Joint,"VA Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1907830,1493971,2025-02-18,Joint,"APP Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1907871,1472241,2025-01-17,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1907871,1517980,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1907909,1493940,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1907911,1472740,2025-01-21,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1907911,1492356,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1907911,1565848,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",43,7,0,3,53
+1907922,1472809,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1909545,1472748,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1909557,1492068,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1909557,1528715,2025-03-26,Joint,"GAE Vote Tally Sheet (House)",14,1,0,0,15
+1909564,1472757,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1909591,1472813,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1909599,1478763,2025-02-03,Joint,"GL Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1909670,1472618,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1909725,1479172,2025-02-03,Joint,"GL Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1909731,1471677,2025-01-14,Joint,"KID Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1909764,1472816,2025-01-17,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1909798,1494473,2025-02-18,Joint,"APP Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1909851,1489309,2025-01-23,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1911963,1473197,2025-01-22,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1911963,1516367,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable Change of Reference)",17,5,0,0,22
+1911975,1478943,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1912054,1472709,2025-01-21,Joint,"VA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1912085,1473750,2025-01-23,Joint,"GOS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1912085,1519692,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",12,0,0,0,12
+1912127,1487285,2025-02-11,Joint,"LAB Vote Tally Sheet (Vote to Draft)",9,4,0,0,13
+1912127,1520567,2025-03-18,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1912177,1479235,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1912177,1524300,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",21,0,0,1,22
+1912331,1479720,2025-02-04,Joint,"HED Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1912331,1514580,2025-03-11,Joint,"HED Vote Tally Sheet (Joint Favorable)",18,0,0,0,18
+1912347,1479066,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1912347,1524140,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",14,7,0,1,22
+1915932,1494461,2025-02-18,Joint,"APP Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1915979,1472708,2025-01-21,Joint,"VA Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1916016,1489331,2025-01-23,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1916038,1473112,2025-01-22,Joint,"TRA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1916038,1518327,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1916150,1478766,2025-02-03,Joint,"GL Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1916231,1493375,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1916240,1491732,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1916243,1484765,2025-02-10,Joint,"PH Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1916273,1476418,2025-01-29,Joint,"TRA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1916336,1489377,2025-01-23,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1916379,1489130,2025-01-23,Joint,"ET Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1916379,1517263,2025-03-13,Joint,"ET Vote Tally Sheet (Joint Favorable)",16,9,0,0,25
+1916415,1485981,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1916432,1485924,2025-02-10,Joint,"PH Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1916495,1480709,2025-02-04,Joint,"HED Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1918590,1492446,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1918636,1479427,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1918636,1524277,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",21,0,0,1,22
+1918636,1564997,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1918653,1479443,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1918653,1516068,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1918662,1474103,2025-01-23,Joint,"CE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1918662,1520526,2025-03-18,Joint,"CE Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1918786,1491758,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1918786,1529345,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1918786,1566216,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1918810,1479136,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1918810,1524193,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",21,0,0,1,22
+1918836,1492947,2025-02-18,Joint,"APP Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1918846,1473942,2025-01-23,Joint,"CE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1918846,1519673,2025-03-18,Joint,"CE Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1918853,1472871,2025-01-21,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1918853,1493781,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,0,20
+1918914,1472636,2025-01-21,Joint,"VA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1918929,1483009,2025-02-04,Joint,"HSG Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1918991,1491836,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1919023,1479468,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1919023,1515985,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1920852,1489329,2025-01-30,Joint,"ET Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1920916,1472693,2025-01-21,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1920916,1492137,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1920916,1541552,2025-04-09,Senate,"Senate Roll Call Vote 77 ",35,0,1,0,36
+1921121,1482976,2025-02-04,Joint,"HSG Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1921121,1495255,2025-02-20,Joint,"HSG Vote Tally Sheet (Vote to Draft)",18,0,0,2,20
+1921258,1478953,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1921297,1478872,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1921444,1472825,2025-01-21,Joint,"VA Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1921567,1473346,2025-01-22,Joint,"TRA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1921567,1518429,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable)",34,0,1,0,35
+1921567,1565774,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1921657,1484832,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1921657,1517989,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Change of Reference)",33,0,0,1,34
+1921657,1558029,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",39,15,0,0,54
+1921973,1475669,2025-01-27,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1922056,1474523,2025-01-24,Joint,"ENV Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1922081,1487294,2025-02-11,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",9,4,0,0,13
+1922087,1475668,2025-01-27,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1922087,1489052,2025-02-13,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1922118,1479390,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1922118,1516010,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1924600,1486662,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",36,16,0,1,53
+1924692,1476027,2025-01-27,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1924797,1489294,2025-01-30,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1924865,1478876,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1924865,1516181,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1924906,1485852,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1924967,1492469,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1924967,1529108,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+1925014,1491737,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1925014,1524581,2025-03-19,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1925049,1478958,2025-02-03,Joint,"GL Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1925099,1474240,2025-01-24,Joint,"ENV Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1925152,1484854,2025-02-10,Joint,"ENV Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1925175,1486077,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",36,16,0,1,53
+1925356,1473274,2025-01-22,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1925356,1524244,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",14,7,0,1,22
+1925356,1565477,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1925384,1475710,2025-01-27,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1925417,1485992,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1925474,1475899,2025-01-28,Joint,"KID Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1925474,1491980,2025-02-18,Joint,"KID Vote Tally Sheet (Vote to Draft)",15,2,0,0,17
+1925474,1509047,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable)",15,2,0,0,17
+1925482,1475828,2025-01-27,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1925498,1485023,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1925498,1530224,2025-03-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1925498,1565962,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1925606,1489844,2025-01-30,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1925613,1485836,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1925723,1485726,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1925740,1473269,2025-01-22,Joint,"TRA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1925740,1518378,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable)",25,10,0,0,35
+1927201,1493821,2025-02-18,Joint,"APP Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1927249,1487295,2025-02-11,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",13,0,0,0,13
+1927249,1507333,2025-03-06,Joint,"LAB Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1927249,1523889,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1927279,1475410,2025-01-28,Joint,"LAB Vote Tally Sheet (Vote to Draft)",13,0,0,0,13
+1927279,1523203,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1927360,1475954,2025-01-28,Joint,"LAB Vote Tally Sheet (Vote to Draft)",9,4,0,0,13
+1927504,1475988,2025-01-28,Joint,"LAB Vote Tally Sheet (Vote to Draft)",13,0,0,0,13
+1927504,1517151,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1927571,1475964,2025-01-28,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1927718,1476032,2025-01-28,Joint,"HS Vote Tally Sheet (Vote to Draft)",15,8,0,0,23
+1927718,1517888,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,6,0,1,23
+1927718,1517889,2025-03-13,Joint,"HS Vote Tally Sheet-A (Change of Reference)",5,15,0,3,23
+1927718,1517890,2025-03-13,Joint,"HS Vote Tally Sheet-A (MOTION FAILED)",5,15,0,3,23
+1927718,1566712,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1927783,1475632,2025-01-28,Joint,"HS Vote Tally Sheet (Vote to Draft)",17,6,0,0,23
+1927783,1517909,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",17,5,0,1,23
+1927798,1479316,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1927798,1524496,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",14,7,0,1,22
+1928327,1475920,2025-01-28,Joint,"HS Vote Tally Sheet (Vote to Draft)",16,7,0,0,23
+1928327,1517901,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,6,0,1,23
+1928361,1479276,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928376,1473716,2025-01-23,Joint,"GOS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1928376,1499578,2025-02-25,Joint,"GOS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928376,1520461,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,0,12
+1928396,1486655,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1928405,1475947,2025-01-28,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1928405,1501555,2025-02-27,Joint,"HS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928405,1518067,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",17,5,0,1,23
+1928405,1565680,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1928417,1486114,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1928433,1484802,2025-02-10,Joint,"PH Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1928448,1475697,2025-01-28,Joint,"HS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928448,1505685,2025-03-04,Joint,"HS Vote Tally Sheet (Change of Reference)",16,7,0,0,23
+1928525,1473055,2025-01-22,Joint,"TRA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928525,1518349,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",35,0,0,0,35
+1928579,1485838,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1928582,1475994,2025-01-28,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",9,4,0,0,13
+1928582,1507517,2025-03-06,Joint,"LAB Vote Tally Sheet (Vote to Draft)",10,3,0,0,13
+1928582,1520248,2025-03-18,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1928582,1520249,2025-03-18,Joint,"LAB Vote Tally Sheet-A",0,0,0,0,0
+1928582,1545986,2025-04-11,Joint,"HS Vote Tally Sheet (Joint Favorable)",14,6,0,3,23
+1928584,1479319,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928584,1516289,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,0,22
+1928587,1478887,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928587,1524994,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1928587,1558688,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1928587,1566127,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1928672,1482952,2025-02-04,Joint,"HSG Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1928684,1489295,2025-01-30,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1928709,1476007,2025-01-28,Joint,"HS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928709,1505920,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",23,0,0,0,23
+1928716,1487379,2025-02-11,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",13,0,0,0,13
+1928716,1508008,2025-03-06,Joint,"LAB Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928716,1522851,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1928727,1475572,2025-01-27,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1928748,1487027,2025-02-11,Joint,"LAB Vote Tally Sheet (Change of Reference)",13,0,0,0,13
+1928753,1473074,2025-01-22,Joint,"TRA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1928766,1475643,2025-01-27,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1928781,1484235,2025-02-05,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1928785,1491913,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928785,1516777,2025-03-12,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1928788,1487237,2025-02-11,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",13,0,0,0,13
+1928788,1508132,2025-03-06,Joint,"LAB Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928788,1522855,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1928788,1568778,2025-05-08,House,"House Roll Call Vote 86 ",141,0,0,10,151
+1928799,1479307,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928802,1474476,2025-01-24,Joint,"ENV Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1928821,1485132,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928909,1479848,2025-02-04,Joint,"BA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1928909,1513116,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1928982,1492942,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1928994,1487403,2025-02-11,Joint,"LAB Vote Tally Sheet (Vote to Draft)",13,0,0,0,13
+1928994,1519675,2025-03-18,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1929017,1479908,2025-02-04,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1929017,1492415,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1929032,1479033,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1931727,1493856,2025-02-18,Joint,"APP Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1931733,1475882,2025-01-28,Joint,"HS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1931733,1506049,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",16,6,0,1,23
+1931747,1484960,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1931748,1479983,2025-02-04,Joint,"HED Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1931748,1519008,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",16,2,0,0,18
+1931748,1519009,2025-03-13,Joint,"HED Vote Tally Sheet-A",0,0,0,0,0
+1931748,1566483,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",38,12,0,3,53
+1931751,1475754,2025-01-28,Joint,"KID Vote Tally Sheet (Vote to Draft)",11,5,0,1,17
+1931751,1511526,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute)",16,1,0,0,17
+1931753,1493182,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",37,15,0,1,53
+1931872,1475924,2025-01-28,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1931873,1476902,2025-01-29,Joint,"TRA Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1931879,1476349,2025-01-29,Joint,"TRA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1931879,1518372,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1931879,1565957,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1931897,1477953,2025-01-30,Joint,"GOS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1931897,1499439,2025-02-25,Joint,"GOS Vote Tally Sheet (Joint Favorable)",9,0,0,3,12
+1931899,1479194,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1931899,1524171,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",18,3,0,1,22
+1931907,1486341,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1931907,1524608,2025-03-24,Joint,"FIN Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1931907,1556766,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",42,10,0,0,52
+1931918,1487265,2025-02-11,Joint,"LAB Vote Tally Sheet (Vote to Draft)",9,4,0,0,13
+1931918,1520208,2025-03-18,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1931920,1475562,2025-01-28,Joint,"LAB Vote Tally Sheet (Vote to Draft)",13,0,0,0,13
+1931920,1508323,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1931920,1566148,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1931930,1486970,2025-02-11,Joint,"LAB Vote Tally Sheet (Vote to Draft)",12,1,0,0,13
+1931930,1517131,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1931973,1492496,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1931973,1529438,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1931977,1490676,2025-02-14,Joint,"JUD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1931985,1489385,2025-01-30,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1931993,1479979,2025-02-04,Joint,"HED Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932104,1480307,2025-02-04,Joint,"BA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932117,1491884,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932117,1521831,2025-03-19,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+1932178,1476002,2025-01-28,Joint,"KID Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932178,1492149,2025-02-18,Joint,"KID Vote Tally Sheet (Vote to Draft)",17,0,0,0,17
+1932178,1509293,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable)",17,0,0,0,17
+1932191,1493184,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932246,1492035,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932258,1482664,2025-02-04,Joint,"HSG Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1932294,1480271,2025-02-04,Joint,"BA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932298,1482513,2025-02-04,Joint,"HSG Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1932316,1474533,2025-01-24,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932316,1503275,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",35,0,0,0,35
+1932316,1558672,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",32,5,0,4,41
+1932316,1565407,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1932323,1479210,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932342,1486839,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932342,1534892,2025-04-02,Joint,"FIN Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932342,1557129,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",40,12,0,0,52
+1932348,1476023,2025-01-28,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",22,1,0,0,23
+1932374,1475951,2025-01-28,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932384,1478987,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932384,1525160,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1932386,1479254,2025-02-03,Joint,"GL Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932386,1525132,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable)",15,7,0,0,22
+1932386,1566475,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1932418,1491717,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932418,1529397,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1932424,1491743,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932443,1475939,2025-01-28,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932443,1501128,2025-02-27,Joint,"HS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932443,1517954,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",22,0,0,1,23
+1932443,1565959,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1932495,1474534,2025-01-24,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932495,1517908,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1932527,1483971,2025-02-05,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1932529,1493050,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932535,1492409,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932535,1516596,2025-03-12,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+1932536,1475650,2025-01-28,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932537,1480233,2025-02-04,Joint,"HED Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932537,1505805,2025-02-27,Joint,"HED Vote Tally Sheet (Joint Favorable)",18,0,0,0,18
+1932543,1493003,2025-02-18,Joint,"APP Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1932567,1493597,2025-02-18,Joint,"APP Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932567,1558535,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",54,0,0,0,54
+1932587,1475932,2025-01-28,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932601,1475753,2025-01-28,Joint,"LAB Vote Tally Sheet (Vote to Draft)",13,0,0,0,13
+1932601,1517158,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1932626,1475956,2025-01-28,Joint,"HS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932626,1506164,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",23,0,0,0,23
+1932639,1475565,2025-01-28,Joint,"KID Vote Tally Sheet (Vote to Draft)",11,5,0,1,17
+1932639,1492463,2025-02-18,Joint,"KID Vote Tally Sheet (Joint Favorable)",11,6,0,0,17
+1932641,1480040,2025-02-04,Joint,"HED Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932641,1518644,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1932641,1565677,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",28,11,0,2,41
+1932654,1476003,2025-01-28,Joint,"KID Vote Tally Sheet (Vote to Draft)",11,5,0,1,17
+1932654,1498947,2025-02-25,Joint,"KID Vote Tally Sheet (Joint Favorable Change of Reference)",16,1,0,0,17
+1932693,1479900,2025-02-04,Joint,"VA Vote Tally Sheet (Vote to Draft)",15,5,0,0,20
+1932693,1514155,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,1,21
+1932734,1475578,2025-01-28,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",9,4,0,0,13
+1932803,1479077,2025-02-03,Joint,"GL Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932818,1475776,2025-01-28,Joint,"KID Vote Tally Sheet (Vote to Draft)",12,5,0,0,17
+1932818,1492887,2025-02-18,Joint,"KID Vote Tally Sheet (Joint Favorable)",12,5,0,0,17
+1932905,1474266,2025-01-24,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932934,1492939,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1932947,1491782,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932947,1529759,2025-03-27,Joint,"GAE Vote Tally Sheet (Joint Favorable)",18,1,0,0,19
+1932951,1477934,2025-01-30,Joint,"GOS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1932951,1499332,2025-02-25,Joint,"GOS Vote Tally Sheet (Joint Favorable)",9,0,0,3,12
+1932987,1489834,2025-01-30,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1933013,1479842,2025-02-04,Joint,"HED Vote Tally Sheet (Vote to Draft)",14,3,0,1,18
+1933013,1518766,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",14,4,0,0,18
+1933037,1492987,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",37,15,0,1,53
+1933038,1486598,2025-02-11,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1933038,1524661,2025-03-24,Joint,"FIN Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1933038,1556645,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",36,16,0,0,52
+1933050,1475342,2025-01-28,Joint,"HS Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1935359,1484865,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935370,1485837,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935374,1484962,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935374,1530230,2025-03-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1935385,1480048,2025-02-04,Joint,"BA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935385,1515277,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,0,13
+1935390,1486172,2025-02-11,Joint,"LAB Vote Tally Sheet (Vote to Draft)",13,0,0,0,13
+1935390,1508250,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1935395,1492850,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1935406,1485424,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935406,1528326,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,2,34
+1935406,1558698,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1935440,1480068,2025-02-04,Joint,"HED Vote Tally Sheet (Joint Favorable)",14,3,0,1,18
+1935460,1486135,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935467,1486482,2025-02-11,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",13,0,0,0,13
+1935467,1508199,2025-03-06,Joint,"LAB Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935467,1522877,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1935467,1566576,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1935496,1495048,2025-02-20,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,0,13
+1935498,1513680,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1935498,1566097,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",43,7,0,3,53
+1935503,1495977,2025-02-20,Joint,"INS Vote Tally Sheet (Joint Favorable)",10,3,0,0,13
+1935509,1486197,2025-02-11,Joint,"LAB Vote Tally Sheet (Vote to Draft)",11,2,0,0,13
+1935516,1489350,2025-01-30,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1935526,1485897,2025-02-10,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1935558,1492697,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",17,3,0,0,20
+1935558,1562424,2025-04-30,House,"House Roll Call Vote 56 AS AMENDED ",146,0,0,5,151
+1935558,1562425,2025-04-30,House,"House Roll Call Vote 55 HOUSE AMD A",139,7,0,5,151
+1935625,1491792,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935634,1486150,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935639,1485893,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935653,1480763,2025-02-04,Joint,"HSG Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1935659,1493047,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable Change of Reference)",20,0,0,0,20
+1935670,1485791,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935670,1527951,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable)",29,4,0,1,34
+1935670,1558673,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1935670,1565392,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1935696,1477380,2025-01-30,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1935699,1485983,2025-02-11,Joint,"KID Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1935699,1490565,2025-02-11,Joint,"KID Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1935768,1484867,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935768,1518014,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1935775,1476935,2025-01-29,Joint,"TRA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935778,1484923,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",24,11,0,0,35
+1935786,1485847,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935786,1530161,2025-03-28,Joint,"ENV Vote Tally Sheet (Joint Favorable)",30,2,0,2,34
+1935791,1480135,2025-02-04,Joint,"HED Vote Tally Sheet (Joint Favorable)",17,0,0,1,18
+1935821,1485001,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935821,1518129,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Change of Reference)",33,0,0,1,34
+1935821,1557293,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+1935828,1496063,2025-02-20,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",12,1,0,0,13
+1935843,1479994,2025-02-04,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",16,1,0,1,18
+1935870,1479829,2025-02-04,Joint,"VA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1935870,1493851,2025-02-18,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935870,1515246,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1935888,1489376,2025-02-13,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1935916,1485819,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935916,1530124,2025-03-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1935930,1485597,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",22,13,0,0,35
+1935930,1527833,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",19,14,0,1,34
+1935940,1491874,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935940,1529664,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",16,3,0,0,19
+1935948,1482948,2025-02-04,Joint,"HSG Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1935953,1486920,2025-02-11,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",13,0,0,0,13
+1935953,1508195,2025-03-06,Joint,"LAB Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935953,1517167,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1935953,1566319,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1935970,1486972,2025-02-11,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",9,4,0,0,13
+1935981,1482651,2025-02-04,Joint,"HSG Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1935981,1495991,2025-02-20,Joint,"HSG Vote Tally Sheet (Vote to Draft)",18,0,0,2,20
+1935981,1508659,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",12,6,0,2,20
+1935984,1485099,2025-02-10,Joint,"ENV Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1935993,1475896,2025-01-28,Joint,"HS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1935993,1506571,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,1,23
+1936001,1485224,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1936001,1527940,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",25,8,0,1,34
+1936019,1486829,2025-02-10,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1936036,1495059,2025-02-20,Joint,"INS Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1936036,1564539,2025-05-01,House,"House Roll Call Vote 59 ",145,0,0,6,151
+1936040,1479988,2025-02-04,Joint,"HED Vote Tally Sheet (Joint Favorable)",17,0,0,1,18
+1936040,1568013,2025-05-07,Senate,"Senate Roll Call Vote 125 ",36,0,0,0,36
+1936052,1492814,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1936072,1479672,2025-02-04,Joint,"HED Vote Tally Sheet (Joint Favorable)",17,0,0,1,18
+1936072,1543141,2025-04-09,Senate,"Senate Roll Call Vote 75 ",35,0,1,0,36
+1936114,1486098,2025-02-10,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1936118,1485069,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1936118,1530039,2025-03-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",31,2,0,1,34
+1936123,1515453,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable)",10,9,1,1,21
+1936123,1515454,2025-03-11,Joint,"VA Vote Tally Sheet-A",5,11,0,5,21
+1936140,1513601,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,1,21
+1936140,1543964,2025-04-08,Joint,"HED Vote Tally Sheet (Joint Favorable)",18,0,0,0,18
+1936140,1565402,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1936164,1485725,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1936164,1518118,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable)",33,0,0,1,34
+1936200,1485724,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1936225,1487352,2025-02-11,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",13,0,0,0,13
+1936225,1507341,2025-03-06,Joint,"LAB Vote Tally Sheet (Vote to Draft)",9,4,0,0,13
+1936225,1522879,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1936248,1485110,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1936248,1530004,2025-03-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1936260,1477474,2025-01-30,Joint,"GOS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1936292,1482259,2025-02-04,Joint,"HSG Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1936316,1486425,2025-02-10,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1936322,1484903,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1936322,1528132,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",23,10,0,1,34
+1936342,1479830,2025-02-04,Joint,"HED Vote Tally Sheet (Joint Favorable)",15,2,0,1,18
+1936350,1505790,2025-02-27,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1936352,1484973,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1936352,1517981,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1936378,1495945,2025-02-20,Joint,"INS Vote Tally Sheet (Joint Favorable)",12,1,0,0,13
+1936396,1493044,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",16,3,0,1,20
+1936396,1566591,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",43,7,0,3,53
+1936402,1491790,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1936402,1528746,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",14,5,0,0,19
+1936427,1487001,2025-02-11,Joint,"KID Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1938112,1482178,2025-02-04,Joint,"HSG Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1938112,1495321,2025-02-20,Joint,"HSG Vote Tally Sheet (Vote to Draft)",18,0,0,2,20
+1938121,1479620,2025-02-04,Joint,"VA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1938121,1493072,2025-02-18,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938121,1513681,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,1,21
+1938126,1479626,2025-02-04,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938126,1492702,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1938166,1484257,2025-02-05,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1938219,1482822,2025-02-04,Joint,"HSG Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1938257,1480157,2025-02-04,Joint,"VA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1938257,1493020,2025-02-18,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938257,1515247,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1938286,1480826,2025-02-04,Joint,"HSG Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",14,6,0,0,20
+1938304,1477348,2025-01-30,Joint,"GOS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938304,1519629,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",12,0,0,0,12
+1938420,1475729,2025-01-28,Joint,"HS Vote Tally Sheet (Vote to Draft)",17,6,0,0,23
+1938420,1506007,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,7,0,0,23
+1938464,1479711,2025-02-04,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938464,1492870,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1938516,1482964,2025-02-04,Joint,"HSG Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1938579,1486773,2025-02-10,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1938616,1479871,2025-02-04,Joint,"VA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1938616,1493057,2025-02-18,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938616,1515236,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1938634,1478791,2025-02-03,Joint,"GL Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1938652,1479560,2025-02-04,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938652,1513399,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",20,0,0,1,21
+1938657,1485851,2025-02-10,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1938657,1513470,2025-03-07,Joint,"PD Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938657,1531045,2025-03-28,Joint,"PD Vote Tally Sheet (Joint Favorable)",12,8,1,1,22
+1938677,1486398,2025-02-11,Joint,"LAB Vote Tally Sheet (Vote to Draft)",9,4,0,0,13
+1938677,1519691,2025-03-18,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1938697,1480092,2025-02-04,Joint,"VA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1938697,1493137,2025-02-18,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938697,1515558,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1938764,1482738,2025-02-04,Joint,"HSG Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1938791,1503081,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",34,1,0,0,35
+1938810,1477472,2025-01-30,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1938846,1491728,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938846,1530268,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1938849,1485830,2025-02-10,Joint,"ENV Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938901,1476893,2025-01-29,Joint,"TRA Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1938912,1491778,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1938912,1529737,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1938921,1486014,2025-02-10,Joint,"PH Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",26,6,0,1,33
+1939572,1474373,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,1,40
+1939572,1475737,2025-01-28,Senate,"Senate Roll Call Vote 27 ",34,0,1,0,35
+1939572,1491355,2025-01-28,House,"House Roll Call Vote 11 CONSENT CALENDAR ",141,0,0,9,150
+1939589,1474387,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,1,1,40
+1939589,1476043,2025-01-28,House,"House Roll Call Vote 3 ",144,0,0,6,150
+1939589,1476044,2025-01-28,Senate,"Senate Roll Call Vote 25 ",34,0,1,0,35
+1939609,1474377,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,1,1,40
+1939609,1475590,2025-01-28,Senate,"Senate Roll Call Vote 33 ",34,0,1,0,35
+1939609,1478630,2025-01-28,House,"House Roll Call Vote 9 ",143,0,0,7,150
+1939629,1474374,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,1,0,1,40
+1939629,1475908,2025-01-28,House,"House Roll Call Vote 2 ",131,13,0,6,150
+1939629,1475909,2025-01-28,Senate,"Senate Roll Call Vote 18 ",31,3,1,0,35
+1939648,1474385,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,1,1,40
+1939648,1476061,2025-01-28,House,"House Roll Call Vote 6 ",143,0,0,7,150
+1939648,1476062,2025-01-28,Senate,"Senate Roll Call Vote 20 ",34,0,1,0,35
+1939670,1474465,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,1,1,40
+1939670,1475587,2025-01-28,Senate,"Senate Roll Call Vote 31 ",34,0,1,0,35
+1939670,1478629,2025-01-28,House,"House Roll Call Vote 10 ",142,0,0,8,150
+1939689,1474487,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,1,40
+1939689,1475978,2025-01-28,Senate,"Senate Roll Call Vote 32 ",34,0,1,0,35
+1939689,1491600,2025-01-28,House,"House Roll Call Vote 11 CONSENT CALENDAR ",141,0,0,9,150
+1939707,1474382,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,1,40
+1939707,1478623,2025-01-28,Senate,"Senate Roll Call Vote 23 ",34,0,1,0,35
+1939707,1491068,2025-01-28,House,"House Roll Call Vote 11 CONSENT CALENDAR ",141,0,0,9,150
+1939726,1474375,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,1,40
+1939726,1475461,2025-01-28,Senate,"Senate Roll Call Vote 21 ",34,0,1,0,35
+1939726,1478624,2025-01-28,House,"House Roll Call Vote 11 CONSENT CALENDAR ",141,0,0,9,150
+1939750,1474383,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,1,40
+1939750,1475508,2025-01-28,Senate,"Senate Roll Call Vote 24 ",34,0,1,0,35
+1939750,1491165,2025-01-28,House,"House Roll Call Vote 11 CONSENT CALENDAR ",141,0,0,9,150
+1939770,1474379,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,1,1,40
+1939770,1475755,2025-01-28,House,"House Roll Call Vote 5 ",132,12,0,6,150
+1939770,1475756,2025-01-28,Senate,"Senate Roll Call Vote 19 ",34,0,1,0,35
+1939790,1474393,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,1,40
+1939790,1475989,2025-01-28,Senate,"Senate Roll Call Vote 22 ",34,0,1,0,35
+1939790,1491607,2025-01-28,House,"House Roll Call Vote 11 CONSENT CALENDAR ",141,0,0,9,150
+1939809,1474489,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,1,1,40
+1939809,1475739,2025-01-28,House,"House Roll Call Vote 8 ",143,0,0,7,150
+1939809,1475740,2025-01-28,Senate,"Senate Roll Call Vote 29 ",34,0,1,0,35
+1939830,1474376,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,1,0,1,40
+1939830,1476034,2025-01-28,House,"House Roll Call Vote 4 ",142,3,0,5,150
+1939830,1476035,2025-01-28,Senate,"Senate Roll Call Vote 34 ",32,1,2,0,35
+1939850,1474384,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,1,40
+1939850,1475750,2025-01-28,Senate,"Senate Roll Call Vote 30 ",34,0,1,0,35
+1939850,1491384,2025-01-28,House,"House Roll Call Vote 11 CONSENT CALENDAR ",141,0,0,9,150
+1939870,1474380,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,1,40
+1939870,1475941,2025-01-28,House,"House Roll Call Vote 7 ",139,6,0,5,150
+1939870,1475942,2025-01-28,Senate,"Senate Roll Call Vote 26 ",34,0,1,0,35
+1939889,1474381,2025-01-22,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,1,40
+1939889,1475474,2025-01-28,Senate,"Senate Roll Call Vote 28 ",34,0,1,0,35
+1939889,1491091,2025-01-28,House,"House Roll Call Vote 11 CONSENT CALENDAR ",141,0,0,9,150
+1939912,1475015,2025-01-23,Joint,"EXN Vote Tally Sheet (Joint Favorable)",19,0,0,1,20
+1939912,1506789,2025-03-05,Senate,"Senate Roll Call Vote 47 ",35,0,1,0,36
+1941356,1474932,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,1,3,41
+1941356,1475683,2025-01-28,House,"House Roll Call Vote 23 ",137,1,0,12,150
+1941356,1475684,2025-01-28,Senate,"Senate Roll Call Vote 15 ",34,0,1,0,35
+1941368,1474795,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,1,0,3,41
+1941368,1475960,2025-01-28,House,"House Roll Call Vote 21 ",110,28,0,12,150
+1941368,1475961,2025-01-28,Senate,"Senate Roll Call Vote 14 ",34,0,1,0,35
+1941378,1474962,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941378,1475734,2025-01-28,House,"House Roll Call Vote 16 ",105,38,0,7,150
+1941378,1475735,2025-01-28,Senate,"Senate Roll Call Vote 1 ",26,7,2,0,35
+1941404,1477954,2025-01-30,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1941416,1474815,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941416,1475479,2025-01-28,Senate,"Senate Roll Call Vote 7 ",34,0,1,0,35
+1941416,1491686,2025-01-28,House,"House Roll Call Vote 24 CONSENT CALENDAR ",139,0,0,11,150
+1941426,1477451,2025-01-30,Joint,"CE Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1941437,1474964,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",36,0,2,3,41
+1941437,1475694,2025-01-28,House,"House Roll Call Vote 20 ",126,12,0,12,150
+1941437,1475695,2025-01-28,Senate,"Senate Roll Call Vote 11 ",34,0,1,0,35
+1941450,1484067,2025-02-05,Joint,"PD Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1941460,1474798,2025-01-23,Joint,"EXN Vote Tally Sheet (Joint Favorable)",19,0,0,1,20
+1941460,1506990,2025-03-05,Senate,"Senate Roll Call Vote 46 ",35,0,1,0,36
+1941474,1477966,2025-01-30,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1941474,1502320,2025-02-20,Joint,"CE Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1941485,1474831,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941485,1475497,2025-01-28,Senate,"Senate Roll Call Vote 5 ",34,0,1,0,35
+1941485,1491687,2025-01-28,House,"House Roll Call Vote 24 CONSENT CALENDAR ",139,0,0,11,150
+1941498,1475127,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941498,1475943,2025-01-28,Senate,"Senate Roll Call Vote 9 ",34,0,1,0,35
+1941498,1491563,2025-01-28,House,"House Roll Call Vote 24 CONSENT CALENDAR ",139,0,0,11,150
+1941519,1474723,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941519,1475337,2025-01-28,Senate,"Senate Roll Call Vote 6 ",34,0,1,0,35
+1941519,1491565,2025-01-28,House,"House Roll Call Vote 24 CONSENT CALENDAR ",139,0,0,11,150
+1941530,1491773,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1941530,1522045,2025-03-19,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",19,0,0,0,19
+1941571,1474700,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941571,1475553,2025-01-28,Senate,"Senate Roll Call Vote 3 ",34,0,1,0,35
+1941571,1478626,2025-01-28,House,"House Roll Call Vote 24 CONSENT CALENDAR ",139,0,0,11,150
+1941638,1474893,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941638,1476010,2025-01-28,House,"House Roll Call Vote 15 ",138,5,0,7,150
+1941638,1476011,2025-01-28,Senate,"Senate Roll Call Vote 2 ",29,5,1,0,35
+1941650,1475006,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,1,0,3,41
+1941650,1475787,2025-01-28,House,"House Roll Call Vote 19 ",136,3,0,11,150
+1941650,1475788,2025-01-28,Senate,"Senate Roll Call Vote 4 ",34,0,1,0,35
+1941660,1474724,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941660,1475348,2025-01-28,Senate,"Senate Roll Call Vote 10 ",34,0,1,0,35
+1941660,1476045,2025-01-28,House,"House Roll Call Vote 18 ",126,15,0,9,150
+1941683,1474909,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941683,1475615,2025-01-28,Senate,"Senate Roll Call Vote 12 ",34,0,1,0,35
+1941683,1491278,2025-01-28,House,"House Roll Call Vote 24 CONSENT CALENDAR ",139,0,0,11,150
+1941697,1475072,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,1,3,41
+1941697,1475456,2025-01-28,Senate,"Senate Roll Call Vote 13 ",34,0,1,0,35
+1941697,1476069,2025-01-28,House,"House Roll Call Vote 22 ",137,1,0,12,150
+1941707,1474811,2025-01-24,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,0,0,3,41
+1941707,1475475,2025-01-28,Senate,"Senate Roll Call Vote 8 ",34,0,1,0,35
+1941707,1478625,2025-01-28,House,"House Roll Call Vote 17 ",119,23,0,8,150
+1941729,1480272,2025-02-04,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1941729,1515309,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute)",19,1,0,1,21
+1942325,1475361,2025-01-28,Senate,"Senate Roll Call Vote 16 ",34,0,1,0,35
+1942501,1475995,2025-01-28,Senate,"Senate Roll Call Vote 17 ",34,0,1,0,35
+1942683,1475962,2025-01-28,House,"House Roll Call Vote 14 EMERGENCY CERTIFICATION ",143,0,0,7,150
+1942875,1479680,2025-02-04,Joint,"VA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1942909,1480119,2025-02-04,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1942909,1515301,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",20,0,0,1,21
+1942928,1479918,2025-02-04,Joint,"VA Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1942978,1479914,2025-02-04,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1942978,1514264,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,1,21
+1943020,1492107,2025-02-14,Joint,"GAE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1943020,1521807,2025-03-19,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",14,5,0,0,19
+1943144,1479603,2025-02-04,Joint,"VA Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1943158,1478622,2025-01-28,House,"House Roll Call Vote 12 EMERGENCY CERTIFICATION ",143,0,0,7,150
+1943281,1478621,2025-01-28,House,"House Roll Call Vote 13 EMERGENCY CERTIFICATION ",143,0,0,7,150
+1944581,1493032,2025-02-18,Joint,"FIN Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1944585,1492504,2025-02-14,Joint,"PD Vote Tally Sheet (Joint Favorable)",17,1,0,4,22
+1944591,1505305,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable)",13,0,0,1,14
+1944596,1513516,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1944596,1565396,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",45,6,0,3,54
+1944601,1516841,2025-03-12,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",13,7,0,2,22
+1944601,1567016,2025-05-07,Senate,"Senate Roll Call Vote 116 ",23,11,2,0,36
+1944620,1491800,2025-02-14,Joint,"PD Vote Tally Sheet (Joint Favorable)",18,0,0,4,22
+1944644,1513560,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable Change of Reference)",20,0,0,2,22
+1944663,1516836,2025-03-12,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",12,8,0,2,22
+1944663,1516982,2025-03-12,Joint,"PD Vote Tally Sheet-A",8,10,0,4,22
+1944663,1516983,2025-03-12,Joint,"PD Vote Tally Sheet-B",7,12,0,3,22
+1944663,1516984,2025-03-12,Joint,"PD Vote Tally Sheet-C",7,11,0,4,22
+1944663,1516985,2025-03-12,Joint,"PD Vote Tally Sheet-D",7,11,0,4,22
+1944663,1516986,2025-03-12,Joint,"PD Vote Tally Sheet-E",6,12,0,4,22
+1944663,1557961,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",40,14,0,0,54
+1944674,1484246,2025-02-05,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",11,8,0,3,22
+1944681,1492839,2025-02-18,Joint,"AGE Vote Tally Sheet (Joint Favorable Substitute)",14,0,0,0,14
+1944688,1485193,2025-02-10,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,1,33
+1944694,1493672,2025-02-19,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",31,1,0,1,33
+1944701,1508717,2025-03-06,Joint,"AGE Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",14,0,0,0,14
+1944707,1477597,2025-01-30,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1944737,1492250,2025-02-14,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,4,22
+1944737,1564327,2025-05-01,Senate,"Senate Roll Call Vote 108 ",30,6,0,0,36
+1944749,1517430,2025-03-13,Joint,"ET Vote Tally Sheet (Joint Favorable Substitute)",25,0,0,0,25
+1944749,1565572,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1944774,1485520,2025-02-10,Joint,"PH Vote Tally Sheet (Joint Favorable)",32,0,0,1,33
+1944788,1494303,2025-02-19,Joint,"PH Vote Tally Sheet (Joint Favorable)",20,12,0,1,33
+1944828,1477935,2025-01-30,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1944828,1502327,2025-02-20,Joint,"CE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1944828,1520431,2025-03-18,Joint,"CE Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,0,20
+1944837,1516870,2025-03-12,Joint,"PD Vote Tally Sheet (Joint Favorable)",15,5,0,2,22
+1944842,1491716,2025-02-14,Joint,"PD Vote Tally Sheet (Joint Favorable)",18,0,0,4,22
+1944842,1564110,2025-05-01,House,"House Roll Call Vote 61 ",146,0,0,5,151
+1944861,1485206,2025-02-10,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,1,33
+1944883,1477387,2025-01-30,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",13,6,0,0,19
+1944883,1502325,2025-02-28,Joint,"CE Vote Tally Sheet (Vote to Draft)",15,3,0,1,19
+1944883,1522630,2025-03-20,Joint,"CE Vote Tally Sheet (Joint Favorable Change of Reference)",17,3,0,0,20
+1944890,1477839,2025-01-30,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1944890,1502336,2025-02-20,Joint,"CE Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1944890,1523847,2025-03-20,Joint,"CE Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,0,20
+1944890,1523848,2025-03-20,Joint,"CE Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1944897,1492429,2025-02-18,Joint,"AGE Vote Tally Sheet (Joint Favorable)",12,2,0,0,14
+1944910,1486068,2025-02-10,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1944916,1492781,2025-02-18,Joint,"AGE Vote Tally Sheet (Joint Favorable)",12,2,0,0,14
+1944916,1566136,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1944932,1482959,2025-02-04,Joint,"HSG Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1944932,1486900,2025-02-10,Joint,"PD Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1944932,1513430,2025-03-07,Joint,"PD Vote Tally Sheet (Vote to Draft)",19,1,0,2,22
+1944932,1530782,2025-03-28,Joint,"PD Vote Tally Sheet (Joint Favorable)",21,0,0,1,22
+1944932,1531517,2025-03-28,Joint,"PD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1944983,1477908,2025-01-30,Joint,"CE Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",0,0,0,0,0
+1944989,1492030,2025-02-18,Joint,"AGE Vote Tally Sheet (Joint Favorable)",14,0,0,0,14
+1945001,1513547,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1945013,1506666,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+1945039,1504342,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,1,14
+1945039,1532180,2025-04-01,Joint,"INS Vote Tally Sheet (Joint Favorable)",11,2,0,0,13
+1945039,1565666,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",41,9,0,3,53
+1945039,1568553,2025-05-08,House,"House Roll Call Vote 79 AS AMENDED ",147,0,0,4,151
+1945044,1513559,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable Change of Reference)",20,0,0,2,22
+1945044,1545775,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+1945044,1545776,2025-04-10,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1945049,1477904,2025-01-30,Joint,"CE Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1945056,1484908,2025-02-10,Joint,"PH Vote Tally Sheet (Joint Favorable)",32,0,0,1,33
+1945056,1565003,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1945063,1477929,2025-01-30,Joint,"CE Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1946498,1520852,2025-03-18,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1946498,1568879,2025-05-08,House,"House Roll Call Vote 85 ",131,12,0,8,151
+1946539,1508389,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1946539,1566562,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1946559,1492872,2025-02-18,Joint,"KID Vote Tally Sheet (Joint Favorable)",12,5,0,0,17
+1946559,1565804,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1946680,1519817,2025-03-18,Joint,"ET Vote Tally Sheet (Joint Favorable Substitute)",17,6,0,2,25
+1946701,1508416,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1946748,1509022,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute)",13,4,0,0,17
+1946890,1492296,2025-02-18,Joint,"KID Vote Tally Sheet (Joint Favorable Change of Reference)",13,4,0,0,17
+1946912,1508381,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1946912,1564447,2025-05-01,Senate,"Senate Roll Call Vote 114 ",25,11,0,0,36
+1946912,1564448,2025-05-01,Senate,"Senate Roll Call Vote 113 ",10,17,0,0,27
+1947009,1517192,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",12,1,0,0,13
+1947009,1566549,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1947031,1508364,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1947031,1566606,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1947076,1479026,2025-02-03,Joint,"GL Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1947076,1486857,2025-02-11,Joint,"LAB Vote Tally Sheet (Reserved for Subject Matter Public Hearing)",13,0,0,0,13
+1947149,1509040,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute)",13,4,0,0,17
+1947193,1508398,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1947193,1566658,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1947219,1499700,2025-02-25,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute)",17,0,0,0,17
+1947219,1561954,2025-04-30,Senate,"Senate Roll Call Vote 98 ",36,0,0,0,36
+1947219,1561955,2025-04-30,Senate,"Senate Roll Call Vote 97 ",11,25,0,0,36
+1947291,1507672,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1947313,1499589,2025-02-25,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute)",17,0,0,0,17
+1947313,1566608,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1947335,1479546,2025-02-04,Joint,"GOS Vote Tally Sheet (Vote to Draft)",0,0,0,0,0
+1947335,1520230,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",8,4,0,0,12
+1947362,1492879,2025-02-18,Joint,"KID Vote Tally Sheet (Joint Favorable)",17,0,0,0,17
+1947362,1541521,2025-04-09,Senate,"Senate Roll Call Vote 74 ",35,0,1,0,36
+1947382,1492723,2025-02-18,Joint,"KID Vote Tally Sheet (Joint Favorable)",14,3,0,0,17
+1947382,1565571,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1949174,1502662,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",15,4,0,0,19
+1949174,1558675,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",35,2,0,4,41
+1949196,1502885,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",14,5,0,0,19
+1949219,1502904,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",14,5,0,0,19
+1949219,1540522,2025-04-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",17,3,0,2,22
+1949243,1521565,2025-03-19,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+1949267,1502883,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",18,1,0,0,19
+1949289,1502755,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1949312,1502694,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1949339,1502525,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",19,0,0,0,19
+1949339,1566514,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1949361,1502822,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1949385,1502522,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1949385,1561510,2025-04-28,House,"House Roll Call Vote 51 AS AMENDED ",145,0,0,6,151
+1949385,1568344,2025-05-08,Senate,"Senate Roll Call Vote 134 ",35,0,1,0,36
+1949407,1502549,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",14,5,0,0,19
+1949432,1502876,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,5,1,0,19
+1949455,1502773,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1949476,1502676,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1949501,1502497,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1949525,1502586,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",19,0,0,0,19
+1949525,1502587,2025-02-28,Joint,"GAE Vote Tally Sheet-A",0,0,0,0,0
+1949525,1565705,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1949548,1502815,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",14,5,0,0,19
+1949548,1568280,2025-05-08,Senate,"Senate Roll Call Vote 136 ",8,17,0,0,25
+1949548,1568281,2025-05-08,Senate,"Senate Roll Call Vote 135 ",31,5,0,0,36
+1949548,1568784,2025-05-08,Senate,"Senate Roll Call Vote 137 ",35,1,0,0,36
+1949570,1502896,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1949588,1502617,2025-02-28,Joint,"GAE Vote Tally Sheet (Joint Favorable)",14,5,0,0,19
+1950432,1478148,2025-01-30,Joint,"EXN Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1950432,1549063,2025-04-15,Senate,"Senate Roll Call Vote 82 ",31,0,5,0,36
+1950633,1478154,2025-01-30,Joint,"EXN Vote Tally Sheet (House)",11,0,0,0,11
+1950842,1478158,2025-01-30,Joint,"EXN Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1950842,1506981,2025-03-05,Senate,"Senate Roll Call Vote 48 ",35,0,1,0,36
+1951779,1490554,2025-02-14,Joint,"JUD Vote Tally Sheet (Senate)",9,1,0,2,12
+1952406,1520254,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1952406,1558695,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",29,7,1,4,41
+1952555,1519752,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1952702,1490061,2025-02-14,Joint,"JUD Vote Tally Sheet (Joint Favorable)",20,3,0,6,29
+1952846,1520702,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1955041,1524066,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",30,4,0,1,35
+1955065,1524900,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,0,22
+1955065,1558686,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",37,0,0,4,41
+1955065,1558687,2025-04-25,Joint,"JUD Vote Tally Sheet-A (Joint Favorable)",0,0,0,0,0
+1955095,1520720,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Change of Reference)",29,0,0,0,29
+1955125,1519068,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",35,0,0,0,35
+1955125,1558696,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1955154,1516045,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,0,22
+1955186,1520229,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1955213,1515976,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1955213,1549163,2025-04-15,Senate,"Senate Roll Call Vote 89 ",31,0,5,0,36
+1955246,1520611,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1955246,1565611,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",44,6,0,3,53
+1955276,1524792,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable)",18,4,0,0,22
+1955313,1519925,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1955340,1516007,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",15,7,0,0,22
+1955369,1519052,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",35,0,0,0,35
+1955401,1525130,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,0,22
+1955428,1523982,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",34,0,0,1,35
+1955459,1525815,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,0,22
+1955459,1525816,2025-03-24,Joint,"GL Vote Tally Sheet-A",0,0,0,0,0
+1955489,1517092,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",14,8,0,0,22
+1955519,1520616,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1955519,1566325,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",40,10,0,3,53
+1955549,1525457,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,0,22
+1957508,1492688,2025-02-18,Joint,"KID Vote Tally Sheet (Joint Favorable Change of Reference)",17,0,0,0,17
+1957508,1505919,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",24,8,0,0,32
+1957508,1566115,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1957516,1513118,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,0,13
+1957523,1508590,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1957549,1530764,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",28,15,0,2,45
+1957549,1557976,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",39,14,0,1,54
+1957558,1508882,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",16,2,0,2,20
+1957568,1519638,2025-03-18,Joint,"CE Vote Tally Sheet (Joint Favorable)",19,1,0,0,20
+1957574,1507456,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1957574,1561752,2025-04-30,Senate,"Senate Roll Call Vote 93 ",34,0,2,0,36
+1957584,1558120,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",40,14,0,0,54
+1957591,1523349,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1957601,1523975,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1957609,1524118,2025-03-21,Joint,"PH Vote Tally Sheet (Joint Favorable)",24,8,0,0,32
+1957609,1524119,2025-03-21,Joint,"PH Vote Tally Sheet-A (Deletes Lines 110-112)",9,20,0,3,32
+1957609,1565809,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1957618,1508866,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",12,6,0,2,20
+1957618,1508867,2025-03-06,Joint,"HSG Vote Tally Sheet-A (MOTION FAILED)",5,12,0,3,20
+1957628,1509019,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute)",12,5,0,0,17
+1957637,1537561,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",38,2,1,0,41
+1957645,1507334,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1957674,1508415,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1957688,1490632,2025-02-14,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",36,0,0,5,41
+1957707,1517725,2025-03-13,Joint,"CE Vote Tally Sheet (Joint Favorable)",18,2,0,0,20
+1957715,1499574,2025-02-25,Joint,"INS Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1957724,1513471,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",12,1,0,0,13
+1957734,1508703,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,2,20
+1957734,1566284,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1957742,1519026,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",13,5,0,0,18
+1957742,1566650,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1957750,1494994,2025-02-20,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",12,1,0,0,13
+1957750,1568079,2025-05-07,House,"House Roll Call Vote 73 ",144,1,0,6,151
+1957760,1490370,2025-02-14,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1957769,1520784,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",16,6,0,1,23
+1957769,1520785,2025-03-18,Joint,"HS Vote Tally Sheet-A (MOTION FAILED)",4,12,0,7,23
+1957769,1566236,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",29,10,0,2,41
+1957778,1492970,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,0,20
+1957778,1492971,2025-02-18,Joint,"VA Vote Tally Sheet-A",6,11,0,3,20
+1957778,1566390,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",44,6,0,3,53
+1957786,1492494,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1957796,1490327,2025-02-14,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",36,0,0,5,41
+1957804,1508628,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,2,20
+1957824,1490590,2025-02-14,Joint,"JUD Vote Tally Sheet (Joint Favorable)",35,0,2,4,41
+1957832,1496086,2025-02-20,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1957840,1490194,2025-02-14,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",36,0,0,5,41
+1957852,1508861,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",14,4,0,2,20
+1957859,1506128,2025-02-27,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",18,0,0,0,18
+1957859,1557826,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+1957867,1499369,2025-02-25,Joint,"KID Vote Tally Sheet (Joint Favorable)",12,5,0,0,17
+1957876,1524225,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",20,1,0,1,22
+1957883,1490516,2025-02-14,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1957893,1520206,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",22,7,0,0,29
+1957893,1568850,2025-05-08,House,"House Roll Call Vote 78 AS AMENDED ",97,45,0,9,151
+1957904,1495970,2025-02-20,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1957911,1495637,2025-02-20,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1957921,1490213,2025-02-14,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",36,0,0,5,41
+1957928,1490196,2025-02-14,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",36,0,0,5,41
+1957937,1499357,2025-02-25,Joint,"KID Vote Tally Sheet (Joint Favorable)",12,5,0,0,17
+1957954,1513448,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable)",11,2,0,0,13
+1957965,1507690,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,1,13
+1957965,1565404,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1957973,1508687,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",11,8,0,1,20
+1957973,1508688,2025-03-06,Joint,"HSG Vote Tally Sheet-A (MOTION FAILED)",4,10,0,6,20
+1957973,1508689,2025-03-06,Joint,"HSG Vote Tally Sheet-B",0,0,0,0,0
+1957973,1508690,2025-03-06,Joint,"HSG Vote Tally Sheet-C (MOTION FAILED)",4,11,0,5,20
+1957973,1508691,2025-03-06,Joint,"HSG Vote Tally Sheet-H",3,14,0,3,20
+1957973,1508692,2025-03-06,Joint,"HSG Vote Tally Sheet-I",3,14,0,3,20
+1957973,1508693,2025-03-06,Joint,"HSG Vote Tally Sheet-J",3,14,0,3,20
+1957973,1508694,2025-03-06,Joint,"HSG Vote Tally Sheet-D (MOTION FAILED)",6,10,0,4,20
+1957973,1508695,2025-03-06,Joint,"HSG Vote Tally Sheet-E (MOTION FAILED)",4,10,0,6,20
+1957973,1508696,2025-03-06,Joint,"HSG Vote Tally Sheet-F (MOTION FAILED)",5,12,0,3,20
+1957973,1508697,2025-03-06,Joint,"HSG Vote Tally Sheet-G (MOTION FAILED)",4,14,0,2,20
+1957973,1508698,2025-03-06,Joint,"HSG Vote Tally Sheet-K (MOTION FAILED)",3,13,0,4,20
+1957973,1508699,2025-03-06,Joint,"HSG Vote Tally Sheet-L (MOTION FAILED)",3,13,0,4,20
+1957973,1508700,2025-03-06,Joint,"HSG Vote Tally Sheet-M (MOTION FAILED)",3,12,0,5,20
+1957973,1508701,2025-03-06,Joint,"HSG Vote Tally Sheet-N (MOTION FAILED)",4,13,0,3,20
+1957980,1507951,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1957995,1513431,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Substitute)",14,6,0,1,21
+1958002,1508663,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",12,6,0,2,20
+1958002,1508664,2025-03-06,Joint,"HSG Vote Tally Sheet-A (MOTION FAILED)",6,12,0,2,20
+1958009,1492307,2025-02-18,Joint,"KID Vote Tally Sheet (Joint Favorable Change of Reference)",17,0,0,0,17
+1958009,1526008,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable Change of Reference)",31,14,0,0,45
+1958009,1557958,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",43,11,0,0,54
+1958019,1513316,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",7,6,0,0,13
+1958019,1565984,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",33,17,0,3,53
+1958028,1505824,2025-02-27,Joint,"HED Vote Tally Sheet (Joint Favorable)",15,3,0,0,18
+1958028,1541931,2025-04-09,Senate,"Senate Roll Call Vote 76 ",35,0,1,0,36
+1958036,1516911,2025-03-13,Joint,"CE Vote Tally Sheet (Joint Favorable)",19,1,0,0,20
+1958045,1507993,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1958045,1565861,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1958045,1567355,2025-05-07,House,"House Roll Call Vote 72 AS AMENDED ",97,48,0,6,151
+1958045,1567356,2025-05-07,House,"House Roll Call Vote 71 HOUSE AMD D",47,101,0,3,151
+1958045,1567357,2025-05-07,House,"House Roll Call Vote 70 HOUSE AMD C",47,99,0,5,151
+1958045,1567358,2025-05-07,House,"House Roll Call Vote 69 HOUSE AMD B",48,97,0,6,151
+1958055,1492507,2025-02-18,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1958064,1516268,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable)",15,7,0,0,22
+1958072,1499579,2025-02-25,Joint,"INS Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1958081,1499085,2025-02-25,Joint,"KID Vote Tally Sheet (Joint Favorable)",12,5,0,0,17
+1958099,1513477,2025-03-11,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1958099,1540065,2025-04-08,Joint,"ED Vote Tally Sheet (Joint Favorable)",44,0,0,1,45
+1958108,1498659,2025-02-25,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",9,0,0,3,12
+1958117,1506108,2025-02-27,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",15,3,0,0,18
+1958123,1517940,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable)",27,5,0,2,34
+1958132,1506460,2025-02-27,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1958132,1566492,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1958142,1507264,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1958142,1561504,2025-04-28,House,"House Roll Call Vote 49 ",145,0,0,6,151
+1958153,1556770,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",50,2,0,0,52
+1958160,1492102,2025-02-18,Joint,"KID Vote Tally Sheet (Joint Favorable)",14,3,0,0,17
+1958168,1514116,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable)",12,1,0,0,13
+1958168,1558683,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1958168,1565838,2025-05-06,Joint,"APP Vote Tally Sheet (Joint Favorable)",41,9,0,3,53
+1958177,1495965,2025-02-20,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,2,20
+1958187,1555175,2025-04-22,Joint,"APP Vote Tally Sheet (Joint Favorable)",43,10,0,1,54
+1958197,1506674,2025-02-27,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1958205,1518616,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",15,3,0,0,18
+1958214,1513812,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",12,1,0,0,13
+1958222,1530754,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",32,11,0,2,45
+1958222,1558052,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",45,9,0,0,54
+1958231,1523122,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1958247,1523294,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1958256,1499402,2025-02-25,Joint,"GOS Vote Tally Sheet (Joint Favorable)",9,0,0,3,12
+1958263,1530760,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable)",29,14,0,2,45
+1958263,1530840,2025-03-31,Joint,"ED Vote Tally Sheet (Joint Favorable Change of Reference)",29,14,0,2,45
+1958263,1557963,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",40,14,0,0,54
+1958271,1507400,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1958271,1558677,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1958282,1554958,2025-04-22,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",40,13,0,1,54
+1958282,1554959,2025-04-22,Joint,"APP Vote Tally Sheet-A (MOTION FAILED)",11,41,0,2,54
+1958282,1554960,2025-04-22,Joint,"APP Vote Tally Sheet-B",45,6,0,3,54
+1958289,1499423,2025-02-25,Joint,"KID Vote Tally Sheet (Joint Favorable)",12,5,0,0,17
+1958297,1556598,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",33,19,0,0,52
+1958297,1556599,2025-04-24,Joint,"FIN Vote Tally Sheet-A",27,21,0,4,52
+1958303,1517596,2025-03-13,Joint,"CE Vote Tally Sheet (Joint Favorable)",19,1,0,0,20
+1961646,1483904,2025-02-06,Joint,"EXN Vote Tally Sheet (Joint Favorable)",19,0,0,2,21
+1961646,1506133,2025-03-05,Senate,"Senate Roll Call Vote 49 ",35,0,1,0,36
+1961831,1483907,2025-02-06,Joint,"EXN Vote Tally Sheet (Joint Favorable)",19,0,0,2,21
+1961831,1506871,2025-03-05,Senate,"Senate Roll Call Vote 50 ",35,0,1,0,36
+1961832,1484020,2025-02-06,Joint,"EXN Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1962839,1539205,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable)",41,0,0,0,41
+1962839,1567582,2025-05-07,Senate,"Senate Roll Call Vote 126 ",36,0,0,0,36
+1962873,1502262,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",25,10,0,0,35
+1962873,1502263,2025-02-28,Joint,"ENV Vote Tally Sheet-A (MOTION FAILED)",11,24,0,0,35
+1962907,1503086,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1962907,1561967,2025-04-30,Senate,"Senate Roll Call Vote 96 ",36,0,0,0,36
+1962974,1504645,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable Change of Reference)",13,0,0,1,14
+1962974,1515235,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1963009,1505428,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable Substitute)",12,1,0,1,14
+1963043,1505114,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable)",13,0,0,1,14
+1963079,1503132,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",24,11,0,0,35
+1963079,1557999,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",38,15,0,1,54
+1963114,1505217,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable)",10,3,0,1,14
+1963114,1568824,2025-05-08,House,"House Roll Call Vote 82 AS AMENDED ",124,19,0,8,151
+1963148,1517917,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1963181,1541262,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable)",40,1,0,0,41
+1963181,1567823,2025-05-07,Senate,"Senate Roll Call Vote 127 ",35,1,0,0,36
+1963216,1503099,2025-02-28,Joint,"ENV Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1963249,1505506,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,1,14
+1963283,1537405,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1963283,1537406,2025-04-04,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1963313,1505449,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable Substitute)",10,3,0,1,14
+1964108,1506494,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",28,4,0,0,32
+1964226,1505850,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",32,0,0,0,32
+1964226,1533435,2025-04-01,Joint,"INS Vote Tally Sheet (Joint Favorable)",11,2,0,0,13
+1964226,1566533,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",43,7,0,3,53
+1964346,1524190,2025-03-21,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",23,9,0,0,32
+1965431,1525523,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",19,0,0,3,22
+1965437,1495338,2025-02-20,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1965437,1568009,2025-05-07,Senate,"Senate Roll Call Vote 119 ",36,0,0,0,36
+1965437,1568010,2025-05-07,Senate,"Senate Roll Call Vote 118 ",9,12,0,0,21
+1965439,1520284,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1965445,1520052,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1965447,1498609,2025-02-25,Joint,"GOS Vote Tally Sheet (Joint Favorable)",9,0,0,3,12
+1965452,1499012,2025-02-25,Joint,"KID Vote Tally Sheet (Joint Favorable)",17,0,0,0,17
+1965455,1517242,2025-03-12,Joint,"ED Vote Tally Sheet (Joint Favorable)",40,0,0,5,45
+1965455,1562265,2025-04-30,Senate,"Senate Roll Call Vote 104 ",36,0,0,0,36
+1965462,1517143,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1965472,1513406,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,2,22
+1965479,1517850,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1965480,1506504,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",19,3,0,1,23
+1965482,1508775,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",12,6,0,2,20
+1965490,1520092,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1965495,1525773,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable)",33,11,0,1,45
+1965500,1519955,2025-03-18,Joint,"ET Vote Tally Sheet (Joint Favorable Substitute)",24,0,0,1,25
+1965507,1522251,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,1,23
+1965507,1566551,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",42,8,0,3,53
+1965511,1512488,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",12,8,0,2,22
+1965517,1537795,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1965517,1537796,2025-04-04,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1965522,1508713,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",17,1,0,2,20
+1965523,1524275,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",21,0,0,1,22
+1965523,1561505,2025-04-28,House,"House Roll Call Vote 50 AS AMENDED ",114,30,0,7,151
+1965526,1508871,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",11,7,0,2,20
+1965532,1519935,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1965534,1517387,2025-03-12,Joint,"ED Vote Tally Sheet (Joint Favorable)",30,10,0,5,45
+1965535,1508870,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",17,1,0,2,20
+1965543,1505702,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",23,0,0,0,23
+1965552,1530755,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable)",29,14,0,2,45
+1965554,1495358,2025-02-20,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1965562,1495416,2025-02-20,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1965568,1508859,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",12,6,0,2,20
+1965569,1495328,2025-02-20,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1965572,1508680,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",12,6,0,2,20
+1965572,1508681,2025-03-06,Joint,"HSG Vote Tally Sheet-A (MOTION FAILED)",6,12,0,2,20
+1965572,1557954,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,12,0,0,54
+1965575,1513377,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1965577,1540708,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1965589,1498625,2025-02-25,Joint,"GOS Vote Tally Sheet (Joint Favorable)",9,0,0,3,12
+1965591,1517358,2025-03-13,Joint,"ET Vote Tally Sheet (Joint Favorable)",18,7,0,0,25
+1965595,1519867,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Change of Reference)",25,3,1,0,29
+1965595,1556976,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",47,5,0,0,52
+1965595,1556977,2025-04-24,Joint,"FIN Vote Tally Sheet-A",16,29,0,7,52
+1965596,1546181,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+1965604,1506589,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",23,0,0,0,23
+1965610,1545309,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+1965610,1545310,2025-04-10,Joint,"JUD Vote Tally Sheet-A",0,0,0,0,0
+1965614,1512728,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1965616,1499154,2025-02-25,Joint,"INS Vote Tally Sheet (Joint Favorable)",11,2,0,0,13
+1965620,1508705,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1965630,1517468,2025-03-13,Joint,"ET Vote Tally Sheet (Joint Favorable)",18,7,0,0,25
+1965634,1516927,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1965641,1519767,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1965641,1548908,2025-04-15,Senate,"Senate Roll Call Vote 90 ",31,0,5,0,36
+1965642,1531114,2025-03-28,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",21,0,0,1,22
+1965645,1509018,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable Change of Reference)",15,2,0,0,17
+1965645,1558019,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",52,2,0,0,54
+1965648,1505807,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",23,0,0,0,23
+1965648,1565948,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1965651,1513375,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,2,22
+1965652,1495308,2025-02-20,Joint,"HSG Vote Tally Sheet (Joint Favorable)",14,4,0,2,20
+1965652,1540509,2025-04-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",13,7,0,2,22
+1965660,1508052,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",11,2,0,0,13
+1965662,1516851,2025-03-12,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,2,22
+1965662,1568768,2025-05-08,House,"House Roll Call Vote 81 AS AMENDED ",134,9,0,8,151
+1965671,1520400,2025-03-18,Joint,"ET Vote Tally Sheet (Joint Favorable)",24,0,0,1,25
+1965671,1568895,2025-05-08,Senate,"Senate Roll Call Vote 138 ",35,0,1,0,36
+1965676,1524224,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",21,0,0,1,22
+1965680,1518036,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",22,0,0,1,23
+1965688,1508892,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",12,6,0,2,20
+1965690,1517370,2025-03-12,Joint,"ED Vote Tally Sheet (Joint Favorable)",30,10,0,5,45
+1965697,1522913,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1965698,1505870,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",21,2,0,0,23
+1965714,1525520,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable)",19,0,0,3,22
+1965719,1509033,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute)",14,3,0,0,17
+1965723,1519020,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1965723,1563189,2025-04-30,Senate,"Senate Roll Call Vote 100 ",36,0,0,0,36
+1965723,1563190,2025-04-30,Senate,"Senate Roll Call Vote 99 ",11,24,1,0,36
+1965724,1517019,2025-03-12,Joint,"ED Vote Tally Sheet (Joint Favorable)",40,0,0,5,45
+1965724,1565140,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1965729,1513421,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1965729,1566565,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1965730,1508181,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",12,1,0,0,13
+1965732,1524566,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",19,0,0,3,22
+1965732,1561506,2025-04-28,House,"House Roll Call Vote 52 AS AMENDED ",144,0,0,7,151
+1965735,1530757,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",32,12,0,1,45
+1965738,1552044,2025-03-18,Joint,"ET Vote Tally Sheet (Change of Reference)",0,0,0,0,0
+1968524,1488628,2025-02-11,Joint,"EXN Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1968524,1548511,2025-04-15,Senate,"Senate Roll Call Vote 83 ",31,0,5,0,36
+1968693,1488630,2025-02-11,Joint,"EXN Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1968693,1506964,2025-03-05,Senate,"Senate Roll Call Vote 45 ",34,1,1,0,36
+1968864,1488640,2025-02-11,Joint,"EXN Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1968864,1506335,2025-03-05,Senate,"Senate Roll Call Vote 44 ",34,1,1,0,36
+1970039,1506442,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+1970039,1557430,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+1970058,1517876,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable)",12,1,0,0,13
+1970080,1506690,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",32,0,0,0,32
+1970099,1505735,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",32,0,0,0,32
+1970099,1566401,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1970122,1506312,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",32,0,0,0,32
+1970144,1505987,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",24,8,0,0,32
+1970165,1516671,2025-03-12,Joint,"PH Vote Tally Sheet (Joint Favorable)",32,0,0,0,32
+1970184,1513305,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable Change of Reference)",11,2,0,0,13
+1970184,1541733,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1970184,1541734,2025-04-08,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1970205,1505793,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",23,9,0,0,32
+1970229,1516173,2025-03-12,Joint,"PH Vote Tally Sheet (Joint Favorable)",26,6,0,0,32
+1970288,1505851,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",26,6,0,0,32
+1970288,1565149,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1970306,1504550,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable)",13,0,0,1,14
+1971562,1524165,2025-03-21,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+1971603,1515303,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",11,2,0,0,13
+1971617,1545198,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1971629,1537584,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1971641,1539268,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable)",32,9,0,0,41
+1971641,1566302,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1971654,1540630,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable)",31,10,0,0,41
+1973897,1504547,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable)",11,2,0,1,14
+1973901,1507944,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1973907,1516889,2025-03-12,Joint,"PD Vote Tally Sheet (Joint Favorable)",13,7,0,2,22
+1973913,1512633,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,2,22
+1973920,1512701,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",17,3,0,2,22
+1973926,1504570,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable)",11,2,0,1,14
+1973946,1512661,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",17,3,0,2,22
+1973953,1513336,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1973959,1512683,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",18,3,0,1,22
+1973965,1507148,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1973972,1508026,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1973999,1508862,2025-03-06,Joint,"AGE Vote Tally Sheet (Joint Favorable Substitute)",14,0,0,0,14
+1974004,1508864,2025-03-06,Joint,"AGE Vote Tally Sheet (Joint Favorable)",13,1,0,0,14
+1974013,1507970,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,1,13
+1974021,1507467,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1974028,1516862,2025-03-12,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",13,7,0,2,22
+1974035,1513010,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1974041,1515318,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1974041,1558701,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,0,0,4,41
+1974041,1568791,2025-05-08,House,"House Roll Call Vote 87 AS AMENDED ",140,0,0,11,151
+1974048,1507602,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1974054,1508868,2025-03-06,Joint,"AGE Vote Tally Sheet (Joint Favorable)",14,0,0,0,14
+1974054,1565840,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1974060,1531835,2025-03-28,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",21,0,0,1,22
+1974067,1512686,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1974067,1568466,2025-05-08,House,"House Roll Call Vote 80 AS AMENDED ",147,0,0,4,151
+1974075,1516896,2025-03-12,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1974093,1512662,2025-03-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",17,3,0,2,22
+1974099,1507226,2025-03-06,Joint,"BA Vote Tally Sheet (Joint Favorable)",12,0,0,1,13
+1974099,1565110,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",51,1,0,2,54
+1974106,1508857,2025-03-06,Joint,"AGE Vote Tally Sheet (Joint Favorable)",14,0,0,0,14
+1974106,1566318,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1974112,1517121,2025-03-12,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",12,8,0,2,22
+1975662,1525727,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",44,0,0,1,45
+1975667,1517720,2025-03-13,Joint,"ET Vote Tally Sheet (Joint Favorable Substitute)",21,4,0,0,25
+1975672,1508893,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",13,5,0,2,20
+1975672,1565853,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1975677,1520080,2025-03-18,Joint,"ET Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",24,0,0,1,25
+1975682,1509585,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable)",13,4,0,0,17
+1975682,1566455,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1975688,1509030,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",10,7,0,0,17
+1975696,1506568,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+1975711,1517869,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1975719,1525148,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable)",29,15,0,1,45
+1975726,1508684,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",13,5,0,2,20
+1975756,1530781,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",30,14,0,1,45
+1975756,1558330,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",37,17,0,0,54
+1975760,1508676,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1975760,1539731,2025-04-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1975766,1517104,2025-03-13,Joint,"CE Vote Tally Sheet (Joint Favorable Change of Reference)",19,0,1,0,20
+1975766,1557846,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+1975775,1520202,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",25,3,1,0,29
+1975780,1505749,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",21,1,0,1,23
+1975788,1518315,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",30,5,0,0,35
+1975808,1520575,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Change of Reference)",29,0,0,0,29
+1975808,1557899,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+1975819,1522255,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",21,1,0,1,23
+1975819,1566661,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",36,3,0,2,41
+1975828,1505358,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable)",13,0,0,1,14
+1975828,1535816,2025-04-01,Joint,"HED Vote Tally Sheet (Joint Favorable)",17,0,0,1,18
+1975828,1564939,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1975841,1508675,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",16,2,0,2,20
+1975857,1524197,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",16,5,0,1,22
+1975857,1558670,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",28,9,0,4,41
+1975857,1566294,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1975864,1508678,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",14,4,0,2,20
+1975880,1524861,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",14,8,0,0,22
+1975886,1518317,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",35,0,0,0,35
+1975886,1566614,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",40,9,0,4,53
+1975896,1520683,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1975900,1508282,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1975906,1515907,2025-03-12,Joint,"PH Vote Tally Sheet (Joint Favorable)",22,10,0,0,32
+1975914,1517856,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1975914,1565946,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1975929,1506686,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable)",23,9,0,0,32
+1975935,1517148,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1975945,1524737,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,0,22
+1975945,1558678,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",36,1,0,4,41
+1975945,1558679,2025-04-25,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1975962,1524474,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",33,1,0,1,35
+1975966,1516155,2025-03-12,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1975966,1561507,2025-04-28,House,"House Roll Call Vote 47 AS AMENDED ",145,0,0,6,151
+1975972,1519876,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",24,5,0,0,29
+1975978,1525383,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",44,0,0,1,45
+1975978,1558213,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",54,0,0,0,54
+1975983,1528586,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable)",21,10,0,1,32
+1975992,1520714,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1975992,1566629,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",43,7,0,3,53
+1976001,1540120,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable)",41,0,0,0,41
+1976007,1525173,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",30,14,0,1,45
+1976011,1517933,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,6,0,1,23
+1976020,1508650,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",15,3,0,2,20
+1976026,1524055,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1976026,1565793,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1976031,1530767,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",39,5,0,1,45
+1976042,1508752,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",17,1,0,2,20
+1976049,1509754,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable)",17,0,0,0,17
+1976060,1505671,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",16,6,0,1,23
+1976060,1565815,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1976065,1520309,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",15,14,0,0,29
+1976070,1504610,2025-03-04,Joint,"AGE Vote Tally Sheet (Joint Favorable Change of Reference)",13,0,0,1,14
+1976078,1508725,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",13,5,0,2,20
+1976078,1539312,2025-04-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",12,8,0,2,22
+1976093,1517116,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1976093,1566517,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1976099,1517800,2025-03-13,Joint,"ET Vote Tally Sheet (Joint Favorable Substitute)",19,6,0,0,25
+1976110,1506311,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,7,0,0,23
+1976120,1507990,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1976128,1545907,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",28,11,0,2,41
+1976133,1517444,2025-03-12,Joint,"ED Vote Tally Sheet (Joint Favorable)",32,8,0,5,45
+1976142,1539082,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",31,10,0,0,41
+1976142,1539083,2025-04-07,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",31,10,0,0,41
+1976142,1539084,2025-04-07,Joint,"JUD Vote Tally Sheet-B (Joint Favorable Substitute)",0,0,0,0,0
+1976142,1562360,2025-04-30,House,"House Roll Call Vote 54 AS AMENDED ",100,46,0,5,151
+1976142,1562361,2025-04-30,House,"House Roll Call Vote 53 HOUSE AMD B",46,100,0,5,151
+1976148,1525064,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable)",42,2,0,1,45
+1976152,1518997,2025-03-12,Joint,"TRA Vote Tally Sheet (Joint Favorable)",35,0,0,0,35
+1976160,1508856,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1976160,1566636,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1976175,1506397,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",23,0,0,0,23
+1976175,1536693,2025-04-03,Joint,"AGE Vote Tally Sheet (Joint Favorable)",13,0,0,1,14
+1976181,1509517,2025-03-06,Joint,"KID Vote Tally Sheet (Joint Favorable Substitute)",17,0,0,0,17
+1976181,1567092,2025-05-07,Senate,"Senate Roll Call Vote 124 ",36,0,0,0,36
+1976181,1567093,2025-05-07,Senate,"Senate Roll Call Vote 123 ",12,24,0,0,36
+1976181,1567094,2025-05-07,Senate,"Senate Roll Call Vote 122 ",36,0,0,0,36
+1976187,1524178,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",34,0,0,1,35
+1976187,1558702,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",37,0,0,4,41
+1976197,1520093,2025-03-18,Joint,"ET Vote Tally Sheet (Joint Favorable Substitute)",17,8,0,0,25
+1976201,1517728,2025-03-12,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",40,0,0,5,45
+1976201,1558048,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",54,0,0,0,54
+1976207,1517915,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",10,3,0,0,13
+1976219,1519972,2025-03-18,Joint,"ET Vote Tally Sheet (Joint Favorable)",14,10,0,1,25
+1976231,1520552,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1976236,1505922,2025-03-04,Joint,"HS Vote Tally Sheet (Joint Favorable)",23,0,0,0,23
+1976241,1524004,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",25,9,0,1,35
+1977907,1524571,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable)",12,7,0,3,22
+1978037,1531174,2025-03-28,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",18,3,0,1,22
+1978037,1531175,2025-03-28,Joint,"PD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1978909,1496156,2025-02-20,Joint,"EXN Vote Tally Sheet (Joint Favorable)",13,8,0,0,21
+1978909,1501796,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1978909,1506662,2025-03-05,Senate,"Senate Roll Call Vote 65 ",31,0,5,0,36
+1978909,1511427,2025-03-05,House,"House Roll Call Vote 32 CONSENT CALENDAR ",147,0,0,3,150
+1979857,1518059,2025-03-14,Joint,"ENV Vote Tally Sheet (Joint Favorable Change of Reference)",33,0,0,1,34
+1979884,1537600,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1979913,1545295,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+1979913,1563153,2025-04-30,Senate,"Senate Roll Call Vote 101 ",35,0,1,0,36
+1979940,1537493,2025-04-04,Joint,"JUD Vote Tally Sheet-A (Joint Favorable)",12,23,1,5,41
+1979940,1537494,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable)",29,12,0,0,41
+1979966,1537806,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1980689,1498500,2025-02-24,House,"House Roll Call Vote 29 EMERGENCY CERTIFICATION ",140,5,0,5,150
+1980689,1498501,2025-02-24,House,"House Roll Call Vote 28 HOUSE AMD A",48,96,0,6,150
+1980689,1499021,2025-02-25,Senate,"Senate Roll Call Vote 39 ",34,0,1,0,35
+1980690,1498074,2025-02-24,House,"House Roll Call Vote 27 EMERGENCY CERTIFICATION ",94,49,0,7,150
+1980690,1498075,2025-02-24,House,"House Roll Call Vote 26 HOUSE AMD B",47,95,0,8,150
+1980690,1498076,2025-02-24,House,"House Roll Call Vote 25 HOUSE AMD A",49,89,0,12,150
+1980690,1498834,2025-02-25,Senate,"Senate Roll Call Vote 38 ",25,9,1,0,35
+1980690,1498835,2025-02-25,Senate,"Senate Roll Call Vote 37 ",25,9,1,0,35
+1980690,1498836,2025-02-25,Senate,"Senate Roll Call Vote 36 ",9,23,3,0,35
+1981736,1514326,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",12,1,0,0,13
+1981752,1518086,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable)",8,5,0,0,13
+1981752,1564348,2025-05-01,Senate,"Senate Roll Call Vote 110 ",20,14,2,0,36
+1981752,1564349,2025-05-01,Senate,"Senate Roll Call Vote 109 ",11,23,2,0,36
+1981771,1520580,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1981771,1548883,2025-04-15,Senate,"Senate Roll Call Vote 91 ",31,0,5,0,36
+1981787,1545896,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",29,10,0,2,41
+1981806,1518099,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,0,13
+1981806,1549001,2025-04-15,Joint,"PS Vote Tally Sheet (Joint Favorable)",27,0,0,2,29
+1981822,1520600,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1981859,1517852,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",13,0,0,0,13
+1981859,1539160,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable)",40,1,0,0,41
+1981895,1515320,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1981910,1539242,2025-04-07,Joint,"JUD Vote Tally Sheet (MOTION FAILED)",13,28,0,0,41
+1981926,1537623,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable)",41,0,0,0,41
+1981946,1519797,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1981981,1520085,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1981996,1519956,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1982010,1520283,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1983579,1524926,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",44,0,0,1,45
+1983595,1517473,2025-03-12,Joint,"ED Vote Tally Sheet (Joint Favorable)",40,0,0,5,45
+1983595,1565397,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1983618,1526381,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",42,3,0,0,45
+1983637,1518097,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1983637,1566237,2025-05-06,Joint,"APP Vote Tally Sheet (MOTION FAILED)",19,30,0,4,53
+1983660,1526022,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",33,12,0,0,45
+1983683,1526384,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable)",43,2,0,0,45
+1983708,1505956,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+1983725,1516172,2025-03-12,Joint,"PH Vote Tally Sheet (Joint Favorable Change of Reference)",32,0,0,0,32
+1983744,1524094,2025-03-21,Joint,"PH Vote Tally Sheet (Joint Favorable)",32,0,0,0,32
+1983770,1505784,2025-03-05,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+1983770,1561508,2025-04-28,House,"House Roll Call Vote 46 AS AMENDED ",144,0,0,7,151
+1983787,1517467,2025-03-12,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",40,0,0,5,45
+1983810,1515245,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1985513,1519551,2025-03-18,Joint,"CE Vote Tally Sheet (Joint Favorable)",19,1,0,0,20
+1985516,1520922,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",17,5,0,1,23
+1985519,1520313,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",12,0,0,0,12
+1985521,1508616,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Change of Reference)",16,2,0,2,20
+1985526,1515322,2025-03-11,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1985526,1564504,2025-05-01,House,"House Roll Call Vote 58 ",145,0,0,6,151
+1985529,1515336,2025-03-11,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1985532,1513402,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1985535,1515310,2025-03-11,Joint,"HED Vote Tally Sheet (Joint Favorable)",18,0,0,0,18
+1985535,1541807,2025-04-09,Senate,"Senate Roll Call Vote 80 ",35,0,1,0,36
+1985547,1520219,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,0,12
+1985547,1566000,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",41,8,0,4,53
+1985552,1518447,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable Change of Reference)",18,0,0,0,18
+1985556,1508869,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",18,0,0,2,20
+1985564,1515285,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1985568,1520364,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",11,1,0,0,12
+1985570,1517942,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",22,0,0,1,23
+1985570,1566275,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",50,0,0,3,53
+1985575,1513117,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1985575,1563949,2025-05-01,House,"House Roll Call Vote 57 AS AMENDED ",144,0,0,7,151
+1985580,1520783,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,1,23
+1985580,1565723,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",50,0,0,3,53
+1985584,1519059,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",18,0,0,0,18
+1985584,1568002,2025-05-07,Senate,"Senate Roll Call Vote 117 ",36,0,0,0,36
+1985586,1514937,2025-03-11,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",13,5,0,0,18
+1985589,1520789,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",17,5,0,1,23
+1985589,1566272,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",40,10,0,3,53
+1985592,1518089,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",15,7,0,1,23
+1985594,1519636,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,0,12
+1985594,1566534,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",43,6,0,4,53
+1985599,1517865,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,6,0,1,23
+1985602,1517959,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,0,13
+1985607,1521181,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,1,23
+1985607,1566632,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",44,6,0,3,53
+1985611,1517626,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1985611,1566398,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1985617,1515062,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1985618,1520172,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",12,0,0,0,12
+1985624,1515343,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1985627,1520365,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Change of Reference)",29,0,0,0,29
+1985627,1557978,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",54,0,0,0,54
+1985630,1515274,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1985646,1521833,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable)",15,7,0,1,23
+1985647,1517864,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",22,0,0,1,23
+1985647,1566223,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1985650,1518069,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",18,4,0,1,23
+1985650,1518070,2025-03-13,Joint,"HS Vote Tally Sheet-A (Change of Reference)",5,15,0,3,23
+1985650,1518071,2025-03-13,Joint,"HS Vote Tally Sheet-A (MOTION FAILED)",5,15,0,3,23
+1985654,1507675,2025-03-06,Joint,"LAB Vote Tally Sheet (Joint Favorable)",12,1,0,0,13
+1985654,1563290,2025-04-30,Senate,"Senate Roll Call Vote 102 ",36,0,0,0,36
+1985654,1567725,2025-05-07,House,"House Roll Call Vote 74 ",144,0,0,7,151
+1985657,1515302,2025-03-11,Joint,"HED Vote Tally Sheet (Joint Favorable)",18,0,0,0,18
+1985659,1515244,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable)",20,0,0,1,21
+1985659,1540616,2025-04-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1985661,1520095,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1985667,1518596,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable)",18,0,0,0,18
+1985667,1565952,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1985668,1520466,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",12,0,0,0,12
+1985674,1508858,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",12,6,0,2,20
+1985674,1564938,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",35,17,0,2,54
+1985677,1523967,2025-03-20,Joint,"CE Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1985677,1563251,2025-04-30,Senate,"Senate Roll Call Vote 103 ",36,0,0,0,36
+1985678,1515015,2025-03-11,Joint,"HED Vote Tally Sheet (Joint Favorable)",18,0,0,0,18
+1985678,1542301,2025-04-09,Senate,"Senate Roll Call Vote 79 ",35,0,1,0,36
+1985683,1515288,2025-03-11,Joint,"INS Vote Tally Sheet (Joint Favorable)",10,3,0,0,13
+1985683,1565900,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",32,18,0,3,53
+1985691,1513228,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,0,13
+1985692,1520537,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",8,4,0,0,12
+1985698,1519519,2025-03-18,Joint,"CE Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1985700,1517939,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",16,6,0,1,23
+1985700,1566625,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1985705,1523052,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1985705,1568447,2025-05-08,Senate,"Senate Roll Call Vote 142 ",24,11,1,0,36
+1985705,1568448,2025-05-08,Senate,"Senate Roll Call Vote 141 ",11,24,1,0,36
+1985705,1568449,2025-05-08,Senate,"Senate Roll Call Vote 140 ",11,24,1,0,36
+1985714,1520025,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",12,0,0,0,12
+1985716,1517950,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable)",11,2,0,0,13
+1985725,1508879,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable)",17,1,0,2,20
+1985725,1508880,2025-03-06,Joint,"HSG Vote Tally Sheet-A (MOTION FAILED)",0,0,0,0,0
+1985725,1519415,2025-03-06,Joint,"HSG Vote Tally Sheet-A",0,0,0,0,0
+1985725,1519416,2025-03-06,Joint,"HSG Vote Tally Sheet (Joint Favorable Substitute)",17,1,0,2,20
+1985725,1519417,2025-03-06,Joint,"HSG Vote Tally Sheet-A",0,0,0,0,0
+1985725,1540544,2025-04-07,Joint,"PD Vote Tally Sheet (Joint Favorable)",15,5,0,2,22
+1985732,1517875,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",17,5,0,1,23
+1985732,1561509,2025-04-28,House,"House Roll Call Vote 48 AS AMENDED ",145,0,0,6,151
+1985735,1515284,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,0,13
+1985735,1566175,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+1985737,1521358,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",16,6,0,1,23
+1985743,1513237,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable Substitute)",13,0,0,0,13
+1985743,1566627,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1985746,1520458,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",12,0,0,0,12
+1985749,1517931,2025-03-13,Joint,"INS Vote Tally Sheet (Joint Favorable Substitute)",12,1,0,0,13
+1985750,1520178,2025-03-18,Joint,"ET Vote Tally Sheet (Joint Favorable Substitute)",14,9,1,1,25
+1985750,1520179,2025-03-18,Joint,"ET Vote Tally Sheet-A (MOTION FAILED)",7,15,0,3,25
+1985755,1520408,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,0,12
+1985755,1566522,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",41,8,0,4,53
+1985760,1523950,2025-03-20,Joint,"CE Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,0,20
+1985763,1515260,2025-03-11,Joint,"VA Vote Tally Sheet (Joint Favorable Change of Reference)",20,0,0,1,21
+1985765,1513026,2025-03-11,Joint,"BA Vote Tally Sheet (Joint Favorable)",13,0,0,0,13
+1985768,1515222,2025-03-11,Joint,"HED Vote Tally Sheet (Joint Favorable)",18,0,0,0,18
+1985768,1564415,2025-05-01,House,"House Roll Call Vote 60 AS AMENDED ",146,0,0,5,151
+1985771,1518006,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,6,0,1,23
+1985771,1566640,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1985772,1517723,2025-03-13,Joint,"CE Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,0,20
+1985772,1561993,2025-04-30,Senate,"Senate Roll Call Vote 95 ",36,0,0,0,36
+1986253,1501603,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",33,6,0,2,41
+1986253,1506415,2025-03-05,House,"House Roll Call Vote 39 ",120,25,0,5,150
+1986253,1506416,2025-03-05,Senate,"Senate Roll Call Vote 54 ",28,7,1,0,36
+1986265,1505996,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986265,1506132,2025-03-05,Senate,"Senate Roll Call Vote 52 ",35,0,1,0,36
+1986265,1509093,2025-03-05,House,"House Roll Call Vote 40 CONSENT CALENDAR ",145,0,0,5,150
+1986279,1501612,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986279,1506748,2025-03-05,Senate,"Senate Roll Call Vote 57 ",35,0,1,0,36
+1986279,1511646,2025-03-05,House,"House Roll Call Vote 40 CONSENT CALENDAR ",145,0,0,5,150
+1986291,1501606,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986291,1506591,2025-03-05,Senate,"Senate Roll Call Vote 56 ",35,0,1,0,36
+1986291,1509741,2025-03-05,House,"House Roll Call Vote 40 CONSENT CALENDAR ",145,0,0,5,150
+1986303,1501600,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,1,0,2,41
+1986303,1506367,2025-03-05,Senate,"Senate Roll Call Vote 53 ",34,1,1,0,36
+1986303,1509522,2025-03-05,House,"House Roll Call Vote 40 CONSENT CALENDAR ",145,0,0,5,150
+1986310,1501930,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",37,1,0,3,41
+1986310,1509150,2025-03-05,House,"House Roll Call Vote 32 CONSENT CALENDAR ",147,0,0,3,150
+1986310,1509151,2025-03-05,Senate,"Senate Roll Call Vote 64 ",30,1,5,0,36
+1986355,1501932,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986355,1506822,2025-03-05,Senate,"Senate Roll Call Vote 66 ",31,0,5,0,36
+1986355,1511858,2025-03-05,House,"House Roll Call Vote 32 CONSENT CALENDAR ",147,0,0,3,150
+1986405,1501928,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",36,0,2,3,41
+1986405,1506445,2025-03-05,Senate,"Senate Roll Call Vote 71 ",31,0,5,0,36
+1986405,1506446,2025-03-05,House,"House Roll Call Vote 33 ",144,0,0,6,150
+1986457,1501918,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986457,1506865,2025-03-05,House,"House Roll Call Vote 37 ",145,0,0,5,150
+1986457,1506866,2025-03-05,Senate,"Senate Roll Call Vote 51 ",35,0,1,0,36
+1986505,1501927,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986505,1506751,2025-03-05,Senate,"Senate Roll Call Vote 58 ",35,0,1,0,36
+1986505,1511677,2025-03-05,House,"House Roll Call Vote 40 CONSENT CALENDAR ",145,0,0,5,150
+1986557,1501941,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986557,1506492,2025-03-05,Senate,"Senate Roll Call Vote 67 ",31,0,5,0,36
+1986557,1509633,2025-03-05,House,"House Roll Call Vote 32 CONSENT CALENDAR ",147,0,0,3,150
+1986609,1501940,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986609,1506646,2025-03-05,Senate,"Senate Roll Call Vote 69 ",31,0,5,0,36
+1986609,1511384,2025-03-05,House,"House Roll Call Vote 32 CONSENT CALENDAR ",147,0,0,3,150
+1986655,1501943,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986655,1506847,2025-03-05,Senate,"Senate Roll Call Vote 70 ",31,0,5,0,36
+1986655,1511939,2025-03-05,House,"House Roll Call Vote 32 CONSENT CALENDAR ",147,0,0,3,150
+1986702,1501946,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986702,1506738,2025-03-05,House,"House Roll Call Vote 40 CONSENT CALENDAR ",145,0,0,5,150
+1986702,1506739,2025-03-05,Senate,"Senate Roll Call Vote 59 ",35,0,1,0,36
+1986750,1501944,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986750,1506820,2025-03-05,Senate,"Senate Roll Call Vote 63 ",32,0,4,0,36
+1986750,1506821,2025-03-05,House,"House Roll Call Vote 32 CONSENT CALENDAR ",147,0,0,3,150
+1986803,1501959,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1986803,1506781,2025-03-05,Senate,"Senate Roll Call Vote 68 ",31,0,5,0,36
+1986803,1511726,2025-03-05,House,"House Roll Call Vote 32 CONSENT CALENDAR ",147,0,0,3,150
+1986851,1501960,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",36,3,0,2,41
+1986851,1506805,2025-03-05,House,"House Roll Call Vote 38 ",137,8,0,5,150
+1986851,1506806,2025-03-05,Senate,"Senate Roll Call Vote 55 ",34,1,1,0,36
+1987609,1502085,2025-02-26,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1987609,1506776,2025-03-05,Senate,"Senate Roll Call Vote 72 ",31,0,5,0,36
+1987609,1511678,2025-03-05,House,"House Roll Call Vote 32 CONSENT CALENDAR ",147,0,0,3,150
+1987626,1516597,2025-03-12,Joint,"GAE Vote Tally Sheet (Joint Favorable)",14,5,0,0,19
+1987637,1516572,2025-03-12,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1987650,1522124,2025-03-19,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+1987662,1516592,2025-03-12,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1987662,1548972,2025-04-14,Joint,"PD Vote Tally Sheet (Joint Favorable)",20,0,0,2,22
+1987673,1516579,2025-03-12,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1987673,1543182,2025-04-09,House,"House Roll Call Vote 43 ",147,0,0,3,150
+1987673,1568128,2025-05-08,Senate,"Senate Roll Call Vote 132 ",10,26,0,0,36
+1987673,1568129,2025-05-08,Senate,"Senate Roll Call Vote 131 ",11,25,0,0,36
+1987688,1537712,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1987688,1537713,2025-04-04,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1987698,1528697,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1987711,1529213,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",16,3,0,0,19
+1987726,1529987,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1987734,1541244,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable)",29,12,0,0,41
+1987747,1537624,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable)",41,0,0,0,41
+1987759,1516740,2025-03-12,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",19,0,0,0,19
+1987759,1568825,2025-05-08,Senate,"Senate Roll Call Vote 139 ",35,0,1,0,36
+1987783,1541258,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1987783,1541259,2025-04-08,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+1987783,1567574,2025-05-07,Senate,"Senate Roll Call Vote 121 ",36,0,0,0,36
+1987795,1519146,2025-03-13,Joint,"HED Vote Tally Sheet (Joint Favorable Substitute)",17,1,0,0,18
+1987808,1529550,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+1987818,1541273,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable)",41,0,0,0,41
+1987827,1539243,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",40,1,0,0,41
+1987827,1568792,2025-05-08,House,"House Roll Call Vote 84 AS AMENDED ",143,0,0,8,151
+1987827,1568793,2025-05-08,House,"House Roll Call Vote 83 HOUSE AMD B",63,79,0,9,151
+1989011,1541241,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1989091,1537629,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable)",35,6,0,0,41
+1989171,1537620,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",30,11,0,0,41
+1990129,1540722,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable)",41,0,0,0,41
+1990151,1539104,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1990170,1539273,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1990190,1545245,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",35,4,0,2,41
+1990214,1546117,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1990234,1539203,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable)",30,11,0,0,41
+1990277,1545786,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",35,6,0,0,41
+1990956,1509010,2025-03-05,House,"House Roll Call Vote 34 EMERGENCY CERTIFICATION ",106,40,0,4,150
+1990956,1509011,2025-03-05,Senate,"Senate Roll Call Vote 40 ",33,1,2,0,36
+1991216,1524032,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",35,0,0,0,35
+1991220,1524227,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",22,12,0,1,35
+1991220,1565161,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",35,17,0,2,54
+1991231,1529121,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",23,7,0,2,32
+1991238,1524969,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable)",12,7,0,3,22
+1991248,1516544,2025-03-12,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+1991254,1524670,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable)",15,4,0,3,22
+1991263,1524023,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",22,12,0,1,35
+1991263,1566190,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1991268,1524915,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable)",11,8,0,3,22
+1991278,1524575,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",11,8,0,3,22
+1991284,1525129,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",19,0,0,3,22
+1991292,1524693,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",19,0,0,3,22
+1991299,1524370,2025-03-21,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",29,3,0,0,32
+1991314,1524166,2025-03-21,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+1991321,1515857,2025-03-12,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+1991335,1524726,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable)",19,0,0,3,22
+1991346,1525077,2025-03-21,Joint,"PD Vote Tally Sheet (Joint Favorable)",16,3,0,3,22
+1991350,1545347,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",31,8,0,2,41
+1991371,1524219,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",23,12,0,0,35
+1991379,1545355,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+1991386,1545219,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1991391,1523992,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",35,0,0,0,35
+1991409,1530895,2025-03-28,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",21,0,0,1,22
+1991416,1523998,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",33,2,0,0,35
+1991416,1566426,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1991422,1523974,2025-03-19,Joint,"TRA Vote Tally Sheet (Joint Favorable Substitute)",22,12,0,1,35
+1991422,1565044,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",34,18,0,2,54
+1991429,1531069,2025-03-28,Joint,"PD Vote Tally Sheet (Joint Favorable Substitute)",21,0,0,1,22
+1991442,1506539,2025-03-05,Senate,"Senate Roll Call Vote 62 ",26,7,3,0,36
+1991442,1506540,2025-03-05,Senate,"Senate Roll Call Vote 61 ",10,23,3,0,36
+1991442,1506541,2025-03-05,House,"House Roll Call Vote 31 EMERGENCY CERTIFICATION ",117,29,0,4,150
+1991442,1506542,2025-03-05,House,"House Roll Call Vote 30 EMERGENCY CERTIFICATION HOUSE AMD B",47,98,0,5,150
+1991442,1506543,2025-03-05,Senate,"Senate Roll Call Vote 60 ",12,23,1,0,36
+1991513,1506131,2025-03-05,Senate,"Senate Roll Call Vote 41 ",24,10,2,0,36
+1991513,1506472,2025-03-05,House,"House Roll Call Vote 36 AS AMENDED ",92,51,0,7,150
+1991513,1506473,2025-03-05,House,"House Roll Call Vote 35 EMERGENCY CERTIFICATION HOUSE AMD A",47,98,0,5,150
+1991513,1506474,2025-03-05,Senate,"Senate Roll Call Vote 43 ",25,10,1,0,36
+1991513,1506475,2025-03-05,Senate,"Senate Roll Call Vote 42 ",11,23,2,0,36
+1992701,1520632,2025-03-18,Joint,"LAB Vote Tally Sheet (Joint Favorable)",10,3,0,0,13
+1992702,1524988,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1992702,1558674,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",37,0,0,4,41
+1992709,1530324,2025-03-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",33,0,0,1,34
+1992713,1524935,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",16,6,0,0,22
+1992713,1566186,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1992716,1519745,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",9,3,0,0,12
+1992718,1530773,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable)",42,0,0,3,45
+1992721,1516974,2025-03-13,Joint,"CE Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1992721,1542541,2025-04-09,Senate,"Senate Roll Call Vote 78 ",35,0,1,0,36
+1992724,1520500,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,0,12
+1992727,1519647,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",26,3,0,0,29
+1992732,1519929,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,0,12
+1992732,1565046,2025-05-05,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,2,54
+1992738,1520005,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1992738,1565716,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",50,0,0,3,53
+1992739,1520147,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1992739,1568076,2025-05-08,Senate,"Senate Roll Call Vote 130 ",36,0,0,0,36
+1992743,1519693,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1992743,1568821,2025-05-08,Senate,"Senate Roll Call Vote 144 ",35,0,1,0,36
+1992744,1521272,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",17,5,0,1,23
+1992748,1524315,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",21,0,0,1,22
+1992752,1517898,2025-03-13,Joint,"HS Vote Tally Sheet-A (Change of Reference)",6,15,0,2,23
+1992752,1517899,2025-03-13,Joint,"HS Vote Tally Sheet-A (MOTION FAILED)",6,15,0,2,23
+1992752,1517900,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,6,0,1,23
+1992753,1517892,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",20,2,0,1,23
+1992756,1528012,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable Change of Reference)",32,0,0,2,34
+1992761,1517866,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",15,7,0,1,23
+1992764,1527789,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",24,9,0,1,34
+1992764,1558740,2025-04-25,Joint,"PD Vote Tally Sheet (Joint Favorable)",12,6,0,4,22
+1992764,1558741,2025-04-25,Joint,"PD Vote Tally Sheet-A (Joint Favorable)",3,10,0,9,22
+1992764,1558742,2025-04-25,Joint,"PD Vote Tally Sheet-B",3,9,0,10,22
+1992764,1558743,2025-04-25,Joint,"PD Vote Tally Sheet-C",3,11,0,8,22
+1992764,1558744,2025-04-25,Joint,"PD Vote Tally Sheet-D",3,11,0,8,22
+1992764,1558745,2025-04-25,Joint,"PD Vote Tally Sheet-E",3,11,0,8,22
+1992765,1518081,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,6,0,1,23
+1992768,1520237,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1992770,1519535,2025-03-18,Joint,"CE Vote Tally Sheet (Joint Favorable Substitute)",20,0,0,0,20
+1992776,1517784,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1992778,1538816,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+1992788,1528192,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable)",32,0,0,2,34
+1992791,1517858,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",21,1,0,1,23
+1992791,1566400,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",50,0,0,3,53
+1992796,1524963,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",37,7,0,1,45
+1992799,1519735,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,0,12
+1992800,1517872,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",19,3,0,1,23
+1992800,1548409,2025-04-15,Joint,"INS Vote Tally Sheet (Joint Favorable)",8,5,0,0,13
+1992800,1566555,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",44,6,0,3,53
+1992804,1520545,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1992804,1548829,2025-04-15,Senate,"Senate Roll Call Vote 92 ",27,4,5,0,36
+1992807,1517897,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,1,23
+1992808,1557874,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+1992815,1526878,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable Change of Reference)",30,15,0,0,45
+1992818,1520620,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable Substitute)",12,0,0,0,12
+1992818,1548872,2025-04-15,Joint,"INS Vote Tally Sheet (Joint Favorable)",12,1,0,0,13
+1992820,1520979,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,6,0,1,23
+1992823,1519851,2025-03-18,Joint,"GOS Vote Tally Sheet (Joint Favorable)",11,1,0,0,12
+1992824,1523268,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1992824,1565869,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",28,11,0,2,41
+1992827,1528091,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,2,34
+1992836,1517881,2025-03-13,Joint,"HS Vote Tally Sheet-A (Change of Reference)",5,15,0,3,23
+1992836,1517882,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",15,7,0,1,23
+1992836,1517883,2025-03-13,Joint,"HS Vote Tally Sheet-A (MOTION FAILED)",5,15,0,3,23
+1992840,1517024,2025-03-13,Joint,"CE Vote Tally Sheet (Joint Favorable Change of Reference)",20,0,0,0,20
+1992840,1558436,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",44,10,0,0,54
+1992842,1556464,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+1992844,1557897,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",50,2,0,0,52
+1992849,1523752,2025-03-20,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1992854,1524797,2025-03-24,Joint,"GL Vote Tally Sheet (Joint Favorable)",22,0,0,0,22
+1992855,1517913,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",17,5,0,1,23
+1992855,1564445,2025-05-01,Senate,"Senate Roll Call Vote 105 ",36,0,0,0,36
+1992862,1517914,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",22,0,0,1,23
+1992865,1517239,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1992866,1520166,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1992871,1521282,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",22,0,0,1,23
+1992872,1517857,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",17,5,0,1,23
+1992882,1517891,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",15,7,0,1,23
+1992885,1528056,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable)",32,0,0,2,34
+1992886,1541214,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable)",41,0,0,0,41
+1992886,1566279,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1992892,1524914,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable Change of Reference)",44,0,0,1,45
+1992892,1558586,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",54,0,0,0,54
+1992894,1520606,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",18,11,0,0,29
+1992894,1564321,2025-05-01,Senate,"Senate Roll Call Vote 107 ",25,11,0,0,36
+1992894,1564322,2025-05-01,Senate,"Senate Roll Call Vote 106 ",11,25,0,0,36
+1992897,1517778,2025-03-13,Joint,"LAB Vote Tally Sheet (Joint Favorable)",9,4,0,0,13
+1992900,1520544,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1992900,1565922,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1992902,1525000,2025-03-21,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",37,7,0,1,45
+1992906,1520617,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable)",29,0,0,0,29
+1992909,1524274,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",21,0,0,1,22
+1992910,1519667,2025-03-18,Joint,"CE Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1992916,1520094,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Substitute)",29,0,0,0,29
+1992919,1528181,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",23,10,0,1,34
+1992919,1566597,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1992921,1520041,2025-03-18,Joint,"LAB Vote Tally Sheet (Joint Favorable Substitute)",9,4,0,0,13
+1992924,1524143,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable Substitute)",21,0,0,1,22
+1992924,1524144,2025-03-21,Joint,"GL Vote Tally Sheet-A (Strike Subsection F.)",0,0,0,0,0
+1992925,1527802,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable)",24,9,0,1,34
+1992925,1566589,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+1992934,1519642,2025-03-18,Joint,"PS Vote Tally Sheet (Joint Favorable Change of Reference)",29,0,0,0,29
+1992935,1524276,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",21,0,0,1,22
+1992940,1524350,2025-03-21,Joint,"GL Vote Tally Sheet (Joint Favorable)",21,0,0,1,22
+1992941,1517871,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",22,0,0,1,23
+1992941,1563326,2025-04-30,Senate,"Senate Roll Call Vote 94 ",35,0,1,0,36
+1992945,1528206,2025-03-24,Joint,"ENV Vote Tally Sheet (Joint Favorable)",32,0,0,2,34
+1992946,1517944,2025-03-13,Joint,"HS Vote Tally Sheet-A (Change of Reference)",6,14,0,3,23
+1992946,1517945,2025-03-13,Joint,"HS Vote Tally Sheet (Joint Favorable)",16,6,0,1,23
+1992946,1517946,2025-03-13,Joint,"HS Vote Tally Sheet-A (MOTION FAILED)",6,14,0,3,23
+1992951,1523004,2025-03-20,Joint,"CE Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",19,1,0,0,20
+1992951,1556589,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+1992953,1517018,2025-03-13,Joint,"CE Vote Tally Sheet (Joint Favorable)",20,0,0,0,20
+1992957,1520787,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable Substitute)",16,6,0,1,23
+1992958,1521923,2025-03-18,Joint,"HS Vote Tally Sheet (Joint Favorable)",17,5,0,1,23
+1993094,1507036,2025-02-20,Joint,"EXN Vote Tally Sheet (Joint Favorable)",13,8,0,0,21
+1993094,1543232,2025-04-09,House,"House Roll Call Vote 42 ",91,52,0,7,150
+1993094,1549182,2025-04-15,Senate,"Senate Roll Call Vote 81 ",21,0,15,0,36
+1994043,1529424,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+1994043,1560901,2025-04-29,Joint,"ET Vote Tally Sheet (Joint Favorable)",15,8,0,2,25
+1994068,1521908,2025-03-19,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+1994095,1522235,2025-03-19,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+1994095,1558739,2025-04-25,Joint,"PD Vote Tally Sheet (Joint Favorable)",11,7,0,4,22
+1994124,1529104,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1994152,1521814,2025-03-19,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+1994152,1565975,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",41,8,0,4,53
+1995372,1537580,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",28,12,0,1,41
+1995372,1537581,2025-04-04,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",10,25,0,6,41
+1995498,1545403,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",28,11,0,2,41
+1996609,1545092,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+1996648,1545506,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",27,12,0,2,41
+1996690,1539109,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",29,12,0,0,41
+1996732,1537622,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable)",41,0,0,0,41
+1996771,1545211,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+2000052,1539470,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+2000052,1566016,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+2000070,1541172,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",29,12,0,0,41
+2000089,1529181,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",19,11,0,2,32
+2000089,1529182,2025-03-27,Joint,"PH Vote Tally Sheet-A (After the last section, add the following and renumber sections and internal references accordingly: Sec. 501 (NEW) (Effective July 1, 2025) No person)",12,18,0,2,32
+2000089,1529183,2025-03-27,Joint,"PH Vote Tally Sheet-B (After the last section, add the following and renumber sections and internal references accordingly: Sec. 501 (NEW) (Effective July 1, 2025) If a newb)",10,20,0,2,32
+2000089,1529184,2025-03-27,Joint,"PH Vote Tally Sheet-C (After the last section, add the following and renumber sections and internal references accordingly: Sec. 501 (NEW) (Effective from passage) All induc)",10,18,0,4,32
+2000089,1529185,2025-03-27,Joint,"PH Vote Tally Sheet-D (After the last section, add the following and renumber sections and internal references accordingly: Sec. 501 (NEW) (Effective from passage) All induc)",11,16,0,5,32
+2000089,1529186,2025-03-27,Joint,"PH Vote Tally Sheet-E (Strike sections 2-4)",10,18,0,4,32
+2000089,1530489,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",19,11,0,2,32
+2000089,1530490,2025-03-27,Joint,"PH Vote Tally Sheet-A (On File in the Public Health Committee)",12,18,0,2,32
+2000089,1530491,2025-03-27,Joint,"PH Vote Tally Sheet-B (On File in the Public Health Committee)",10,20,0,2,32
+2000089,1530492,2025-03-27,Joint,"PH Vote Tally Sheet-C (On File in the Public Health Committee)",10,18,0,4,32
+2000089,1530493,2025-03-27,Joint,"PH Vote Tally Sheet-D (On File in the Public Health Committee)",11,16,0,5,32
+2000089,1530494,2025-03-27,Joint,"PH Vote Tally Sheet-E (Delete Sections 2-4)",10,18,0,4,32
+2000089,1563895,2025-05-01,House,"House Roll Call Vote 65 AS AMENDED ",117,27,0,7,151
+2000089,1563896,2025-05-01,House,"House Roll Call Vote 64 HOUSE AMD C",55,88,0,8,151
+2000089,1563897,2025-05-01,House,"House Roll Call Vote 63 HOUSE AMD B",61,85,0,5,151
+2000109,1524138,2025-03-21,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+2000131,1539633,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+2000149,1541161,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+2000149,1563801,2025-05-01,Senate,"Senate Roll Call Vote 112 ",35,0,1,0,36
+2000149,1563802,2025-05-01,Senate,"Senate Roll Call Vote 111 ",11,24,1,0,36
+2000188,1529140,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable)",20,10,0,2,32
+2000210,1529299,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",21,9,0,2,32
+2000210,1529300,2025-03-27,Joint,"PH Vote Tally Sheet-A (Strike section 2)",10,20,0,2,32
+2000228,1530395,2025-03-28,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",26,6,0,0,32
+2004602,1526794,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable Change of Reference)",31,14,0,0,45
+2004602,1558099,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",41,12,0,1,54
+2004694,1530753,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",41,3,0,1,45
+2004791,1545261,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+2004883,1526795,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",32,13,0,0,45
+2004883,1557945,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",43,10,0,1,54
+2004883,1557946,2025-04-24,Joint,"APP Vote Tally Sheet-A (MOTION FAILED)",21,25,0,8,54
+2004980,1530769,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",41,3,0,1,45
+2005077,1526841,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",26,19,0,0,45
+2005170,1530768,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable)",33,11,0,1,45
+2005267,1526138,2025-03-24,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute Change of Reference)",29,16,0,0,45
+2005364,1530756,2025-03-28,Joint,"ED Vote Tally Sheet (Joint Favorable Substitute)",42,0,0,3,45
+2006604,1529508,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",14,5,0,0,19
+2006604,1566676,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",31,8,0,2,41
+2006619,1529247,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+2006619,1558699,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",36,1,0,4,41
+2006636,1529709,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",14,5,0,0,19
+2006653,1529102,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2006661,1528850,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2006661,1566243,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+2006680,1529278,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+2006697,1528714,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2006697,1566618,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+2006715,1528860,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+2006715,1566631,2025-05-06,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+2006731,1529490,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+2006750,1529263,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",17,2,0,0,19
+2006750,1565917,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+2006766,1528789,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",18,1,0,0,19
+2006784,1529028,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",18,1,0,0,19
+2006784,1568020,2025-05-07,Senate,"Senate Roll Call Vote 129 ",36,0,0,0,36
+2006802,1528775,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",18,1,0,0,19
+2006820,1529051,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",14,5,0,0,19
+2006838,1529337,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+2006854,1529317,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2006854,1566602,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+2006873,1529201,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",17,2,0,0,19
+2006873,1566600,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+2006891,1529135,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+2006908,1529082,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",18,1,0,0,19
+2006908,1568085,2025-05-07,Senate,"Senate Roll Call Vote 128 ",36,0,0,0,36
+2006924,1529238,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+2007081,1517846,2025-03-13,Joint,"EXN Vote Tally Sheet (Joint Favorable)",20,1,0,0,21
+2007081,1542921,2025-04-09,House,"House Roll Call Vote 41 ",136,9,0,5,150
+2007081,1549043,2025-04-15,Senate,"Senate Roll Call Vote 87 ",23,7,6,0,36
+2008282,1530186,2025-03-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",27,6,0,1,34
+2008399,1530107,2025-03-28,Joint,"ENV Vote Tally Sheet (Joint Favorable Substitute)",30,3,0,1,34
+2009405,1545091,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+2009408,1558061,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",40,14,0,0,54
+2009421,1545315,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+2009436,1558357,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",49,5,0,0,54
+2009446,1558622,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",54,0,0,0,54
+2009459,1558383,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",54,0,0,0,54
+2009469,1545139,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+2009483,1558245,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",54,0,0,0,54
+2009483,1558246,2025-04-24,Joint,"APP Vote Tally Sheet-A",0,0,0,0,0
+2009511,1545284,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+2009514,1545303,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+2009529,1558628,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",54,0,0,0,54
+2009533,1539166,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",36,5,0,0,41
+2009558,1545294,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+2009583,1558601,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",45,9,0,0,54
+2010350,1530032,2025-03-28,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",32,0,0,0,32
+2010357,1545190,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+2010359,1529289,2025-03-27,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2010364,1557402,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+2010372,1528635,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2010374,1529429,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",18,1,0,0,19
+2010382,1545217,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+2010386,1545083,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+2010398,1529439,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",14,5,0,0,19
+2010406,1529462,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2010409,1530275,2025-03-28,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",31,1,0,0,32
+2010416,1529666,2025-03-27,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2010422,1529805,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",13,6,0,0,19
+2010434,1529525,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2010434,1566365,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",38,12,0,3,53
+2010441,1545311,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",39,0,0,2,41
+2010443,1529644,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable Substitute)",13,6,0,0,19
+2010452,1529423,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",17,2,0,0,19
+2010457,1545349,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",30,9,0,2,41
+2010459,1529293,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable Change of Reference)",31,0,0,1,32
+2010459,1558627,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",54,0,0,0,54
+2010468,1556713,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",50,2,0,0,52
+2010476,1528543,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable)",24,7,0,1,32
+2010479,1529775,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",19,0,0,0,19
+2010479,1529776,2025-03-26,Joint,"GAE Vote Tally Sheet-B (MOTION FAILED)",6,13,0,0,19
+2010479,1529777,2025-03-26,Joint,"GAE Vote Tally Sheet-C (MOTION FAILED)",6,11,0,2,19
+2010479,1529778,2025-03-26,Joint,"GAE Vote Tally Sheet-D",6,12,0,1,19
+2010479,1529779,2025-03-26,Joint,"GAE Vote Tally Sheet-E (MOTION FAILED)",5,12,0,2,19
+2010479,1565877,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",47,3,0,3,53
+2010483,1530117,2025-03-28,Joint,"PH Vote Tally Sheet (Joint Favorable Substitute)",23,9,0,0,32
+2010483,1530118,2025-03-28,Joint,"PH Vote Tally Sheet-A (On File in the Public Health Committee)",23,0,0,9,32
+2010483,1530119,2025-03-28,Joint,"PH Vote Tally Sheet-B (Delete Section 2)",9,13,0,10,32
+2010491,1528700,2025-03-27,Joint,"PH Vote Tally Sheet (Joint Favorable Change of Reference)",31,0,0,1,32
+2010491,1558281,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",54,0,0,0,54
+2010494,1557462,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+2010506,1556456,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+2010511,1530264,2025-03-28,Joint,"PH Vote Tally Sheet (Joint Favorable)",22,10,0,0,32
+2010511,1530265,2025-03-28,Joint,"PH Vote Tally Sheet-A (On File in the Public Health Committee)",9,18,0,5,32
+2010515,1529773,2025-03-26,Joint,"GAE Vote Tally Sheet (Joint Favorable)",16,3,0,0,19
+2010704,1520740,2025-03-18,Joint,"EXN Vote Tally Sheet (Joint Favorable)",20,0,1,0,21
+2010704,1549487,2025-04-15,Senate,"Senate Roll Call Vote 84 ",30,1,5,0,36
+2010704,1561511,2025-04-28,House,"House Roll Call Vote 45 ",126,9,0,16,151
+2010799,1520742,2025-03-18,Joint,"EXN Vote Tally Sheet (Joint Favorable)",21,0,0,0,21
+2010799,1549484,2025-04-15,Senate,"Senate Roll Call Vote 85 ",31,0,5,0,36
+2011116,1545202,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",33,6,0,2,41
+2011193,1541003,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+2011193,1541004,2025-04-08,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+2011271,1541110,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",31,10,0,0,41
+2011349,1537617,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+2011349,1537618,2025-04-04,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+2011349,1565860,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",40,10,0,3,53
+2012005,1537625,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+2012005,1537626,2025-04-04,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+2012005,1567827,2025-05-07,Senate,"Senate Roll Call Vote 120 ",36,0,0,0,36
+2012120,1545186,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+2012628,1557947,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",43,11,0,0,54
+2012651,1558338,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",49,5,0,0,54
+2012720,1558130,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable Substitute)",51,2,0,1,54
+2012742,1558054,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",40,14,0,0,54
+2013613,1545110,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,1,0,2,41
+2013655,1545282,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,1,0,2,41
+2013699,1537616,2025-04-04,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+2013699,1566342,2025-05-05,Joint,"APP Vote Tally Sheet (Joint Favorable)",42,8,0,3,53
+2014415,1539244,2025-04-07,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",22,19,0,0,41
+2014415,1539245,2025-04-07,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+2014452,1545317,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",39,0,0,2,41
+2014452,1545318,2025-04-10,Joint,"JUD Vote Tally Sheet-A",0,0,0,0,0
+2014492,1540926,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+2014492,1540927,2025-04-08,Joint,"JUD Vote Tally Sheet-A (Joint Favorable Substitute)",0,0,0,0,0
+2014530,1545302,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,1,0,2,41
+2014573,1541140,2025-04-08,Joint,"JUD Vote Tally Sheet (Joint Favorable Substitute)",41,0,0,0,41
+2014613,1545326,2025-04-10,Joint,"JUD Vote Tally Sheet (Joint Favorable)",38,1,0,2,41
+2015276,1556624,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+2015307,1557936,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",48,6,0,0,54
+2015337,1557011,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+2015370,1558304,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",40,14,0,0,54
+2015401,1556746,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+2015432,1556517,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+2015464,1556470,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+2015493,1558347,2025-04-24,Joint,"APP Vote Tally Sheet (Joint Favorable)",49,5,0,0,54
+2018388,1557081,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+2018529,1556651,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+2018624,1533926,2025-04-01,Joint,"EXN Vote Tally Sheet (Joint Favorable)",18,0,0,3,21
+2018624,1549196,2025-04-15,Senate,"Senate Roll Call Vote 86 ",31,0,5,0,36
+2021414,1542249,2025-04-09,House,"House Roll Call Vote 44 EMERGENCY CERTIFICATION ",145,2,0,3,150
+2021414,1542250,2025-04-09,Senate,"Senate Roll Call Vote 73 ",31,3,2,0,36
+2021636,1557049,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",36,16,0,0,52
+2021655,1556758,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+2021675,1556723,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",37,15,0,0,52
+2021693,1557012,2025-04-24,Joint,"FIN Vote Tally Sheet (MOTION FAILED)",17,35,0,0,52
+2021716,1556509,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",37,15,0,0,52
+2021736,1556728,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+2021772,1557073,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",52,0,0,0,52
+2021790,1556595,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",33,19,0,0,52
+2021811,1556908,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",34,17,0,1,52
+2022314,1557116,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",52,0,0,0,52
+2022341,1558295,2025-04-23,Joint,"APP Vote Tally Sheet (House)",37,1,0,2,40
+2022371,1556558,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable Substitute)",35,17,0,0,52
+2022397,1556620,2025-04-24,Joint,"FIN Vote Tally Sheet (Joint Favorable)",45,6,1,0,52
+2022934,1558296,2025-04-23,Joint,"APP Vote Tally Sheet (Senate)",14,0,0,0,14
+2022934,1567489,2025-05-07,Senate,"Senate Roll Call Vote 115 ",25,8,3,0,36
+2023032,1545354,2025-04-10,Joint,"EXN Vote Tally Sheet (Senate)",7,0,0,2,9
+2023032,1548534,2025-04-15,Senate,"Senate Roll Call Vote 88 ",28,3,5,0,36
+2023525,1545735,2025-04-10,Joint,"EXN Vote Tally Sheet (House)",10,2,0,0,12
+2024176,1561612,2025-04-30,Joint,"SED Vote Tally Sheet (Joint Favorable Substitute)",8,7,0,0,15
+2024176,1561613,2025-04-30,Joint,"SED Vote Tally Sheet-A",6,9,0,0,15
+2024209,1561638,2025-04-30,Joint,"SED Vote Tally Sheet (Joint Favorable Substitute)",8,7,0,0,15
+2024209,1561639,2025-04-30,Joint,"SED Vote Tally Sheet-A",6,9,0,0,15
+2026804,1565486,2025-05-05,Joint,"APP Vote Tally Sheet (Senate)",14,0,0,0,14
+2026976,1565889,2025-05-05,Joint,"APP Vote Tally Sheet (House)",30,6,0,3,39
+2026987,1559693,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",31,4,1,5,41
+2026987,1567913,2025-05-07,House,"House Roll Call Vote 67 ",115,24,0,12,151
+2027020,1559695,2025-04-25,Joint,"JUD Vote Tally Sheet (Joint Favorable)",27,10,0,4,41
+2027020,1567807,2025-05-07,House,"House Roll Call Vote 66 ",88,55,0,8,151

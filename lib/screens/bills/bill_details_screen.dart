@@ -1,5 +1,6 @@
 // lib/screens/bills/bill_details_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/models/bill_model.dart';
 import 'package:govvy/providers/bill_provider.dart';
@@ -10,11 +11,13 @@ import 'package:url_launcher/url_launcher.dart';
 class BillDetailsScreen extends StatefulWidget {
   final int billId;
   final String stateCode;
+  final BillModel? billData; // Add billData parameter
 
   const BillDetailsScreen({
     Key? key,
     required this.billId,
     required this.stateCode,
+    this.billData, // Optional parameter for direct bill data
   }) : super(key: key);
 
   @override
@@ -44,7 +47,18 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
 
   Future<void> _fetchBillDetails() async {
     final provider = Provider.of<BillProvider>(context, listen: false);
-    await provider.fetchBillDetails(widget.billId, widget.stateCode);
+    
+    // If billData is provided, set it directly in the provider to avoid the API call
+    if (widget.billData != null) {
+      if (kDebugMode) {
+        print('Using provided bill data for ${widget.stateCode}-${widget.billId}');
+        print('Bill title: ${widget.billData!.title}');
+      }
+      provider.setSelectedBill(widget.billData!);
+    } else {
+      // Otherwise fetch bill details from API/storage
+      await provider.fetchBillDetails(widget.billId, widget.stateCode);
+    }
   }
 
   Future<void> _launchUrl(String? url) async {
@@ -71,10 +85,25 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
   Widget build(BuildContext context) {
     return Consumer<BillProvider>(
       builder: (context, provider, child) {
-        final bill = provider.selectedBill;
+        // If provider.selectedBill is null, but we have billData, use that directly
+        final bill = provider.selectedBill ?? widget.billData;
         final isLoading = provider.isLoadingDetails;
         final isLoadingDocuments = provider.isLoadingDocuments;
         final documents = provider.selectedBillDocuments;
+
+        // Special handling for FL and GA bills to improve error handling
+        final bool isStateOfInterest = widget.stateCode == 'FL' || widget.stateCode == 'GA';
+        
+        // Debug information to help trace bill loading
+        if (kDebugMode && bill == null) {
+          print('⚠️ Both provider.selectedBill and widget.billData are null for billId: ${widget.billId}, state: ${widget.stateCode}');
+          if (widget.billData != null) {
+            print('Passed billData title: ${widget.billData!.title}');
+          }
+          if (provider.errorMessageDetails != null) {
+            print('Error message: ${provider.errorMessageDetails}');
+          }
+        }
 
         return Scaffold(
           appBar: AppBar(
@@ -86,11 +115,56 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
               ? const Center(child: CircularProgressIndicator())
               : bill == null
                   ? Center(
-                      child: Text(
-                        provider.errorMessageDetails ??
-                            'Bill details not found',
-                        style: Theme.of(context).textTheme.bodyLarge,
-                        textAlign: TextAlign.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Improve the error display with icon
+                          Icon(
+                            Icons.error_outline,
+                            size: 48,
+                            color: Colors.red.shade400,
+                          ),
+                          const SizedBox(height: 16),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 32),
+                            child: Text(
+                              _formatErrorMessage(provider.errorMessageDetails, isStateOfInterest),
+                              style: Theme.of(context).textTheme.bodyLarge,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          // Show specific recovery instructions
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              provider.errorMessageDetails?.contains('not be found') == true 
+                                ? 'The bill you requested may have been moved or removed.'
+                                : 'Try returning to the bills list and selecting a different bill.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.grey.shade600),
+                            ),
+                          ),
+                          // Show bill ID for debugging in debug mode only
+                          if (kDebugMode)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 32),
+                              child: Text(
+                                'Bill ID: ${widget.billId}, State: ${widget.stateCode}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade400,
+                                ),
+                              ),
+                            ),
+                          // Return button
+                          const SizedBox(height: 24),
+                          ElevatedButton.icon(
+                            icon: const Icon(Icons.arrow_back),
+                            label: const Text('Return to Bills'),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                        ],
                       ),
                     )
                   : Column(
@@ -280,11 +354,47 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
   }
 
   Widget _buildInformationTab(BillModel bill, List<BillDocument>? documents, bool isLoadingDocuments) {
+    // Special handling for FL and GA bills to ensure details are shown
+    final bool isStateOfInterest = bill.state == 'FL' || bill.state == 'GA';
+    final bool hasUrl = bill.url.isNotEmpty;
+    
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Source badge for FL and GA bills
+          if (isStateOfInterest) ...[
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.deepPurple.shade50,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.deepPurple.shade200),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.check_circle,
+                    size: 16,
+                    color: Colors.deepPurple.shade700,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    'Official ${bill.state} Bill Data',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepPurple.shade700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+          
           // Bill description
           if (bill.description != null && bill.description!.isNotEmpty) ...[
             Text(
@@ -295,9 +405,17 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                   ),
             ),
             const SizedBox(height: 8),
-            Text(
-              bill.description!,
-              style: Theme.of(context).textTheme.bodyMedium,
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade50,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.grey.shade200),
+              ),
+              child: Text(
+                bill.description!,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             ),
             const SizedBox(height: 24),
           ],
@@ -365,6 +483,77 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             const SizedBox(height: 24),
           ],
 
+          // State-specific display for FL and GA
+          if (isStateOfInterest) ...[
+            Text(
+              'Bill Status Details',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.blue.shade200),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        color: Colors.blue.shade800,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Current Status: ${bill.status}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue.shade800,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  
+                  if (bill.lastActionDate != null) ...[
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 26),
+                      child: Text(
+                        'Last Action Date: ${bill.lastActionDate}',
+                        style: TextStyle(
+                          color: Colors.blue.shade800,
+                        ),
+                      ),
+                    ),
+                  ],
+                  
+                  if (bill.lastAction != null) ...[
+                    const SizedBox(height: 4),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 26),
+                      child: Text(
+                        'Last Action: ${bill.lastAction}',
+                        style: TextStyle(
+                          color: Colors.blue.shade800,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+
           // Bill documents/texts
           Text(
             'Bill Texts & Documents',
@@ -382,7 +571,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                 child: CircularProgressIndicator(),
               ),
             )
-          else if (documents == null || documents.isEmpty)
+          else if ((documents == null || documents.isEmpty) && !hasUrl)
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -406,7 +595,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                 ],
               ),
             )
-          else
+          else if (documents != null && documents.isNotEmpty)
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -429,25 +618,27 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
           const SizedBox(height: 24),
 
           // Link to original bill source
-          Text(
-            'View Official Bill',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+          if (hasUrl) ...[
+            Text(
+              'View Official Bill',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            OutlinedButton.icon(
+              icon: const Icon(Icons.open_in_new),
+              label: Text('View on ${isStateOfInterest ? bill.state : "Official"} Website'),
+              onPressed: () => _launchUrl(bill.url),
+              style: OutlinedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
                 ),
-          ),
-          const SizedBox(height: 8),
-          OutlinedButton.icon(
-            icon: const Icon(Icons.open_in_new),
-            label: const Text('View on Official Website'),
-            onPressed: () => _launchUrl(bill.url),
-            style: OutlinedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
               ),
             ),
-          ),
+          ],
         ],
       ),
     );
@@ -756,5 +947,31 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
   String _getSponsorLocation(RepresentativeSponsor sponsor) {
     final district = sponsor.district != null ? ' District ${sponsor.district}' : '';
     return '${sponsor.state}${district}';
+  }
+  
+  // Helper method to format error messages for better user experience
+  String _formatErrorMessage(String? errorMessage, bool isStateOfInterest) {
+    if (errorMessage == null) {
+      return 'Bill details not found${isStateOfInterest ? " for ${widget.stateCode}" : ""}';
+    }
+    
+    // Handle specific error messages
+    if (errorMessage.contains('Unknown bill id')) {
+      return 'Bill not found in the legislative database';
+    }
+    
+    if (errorMessage.contains('could not be found')) {
+      return 'This bill could not be found';
+    }
+    
+    if (errorMessage.contains('network')) {
+      return 'Unable to load bill details due to network issues';
+    }
+    
+    // For other errors, use the original message but clean it up
+    return errorMessage
+        .replaceAll('Error getting bill details:', '')
+        .replaceAll('Exception:', '')
+        .trim();
   }
 }

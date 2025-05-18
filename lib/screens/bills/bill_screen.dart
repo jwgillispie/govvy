@@ -1,4 +1,5 @@
 // lib/screens/bills/bill_list_screen.dart
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/models/bill_model.dart';
@@ -12,6 +13,32 @@ class BillListScreen extends StatefulWidget {
 
   @override
   State<BillListScreen> createState() => _BillListScreenState();
+}
+
+// Delegate for sticky tab bar
+class _StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
+  final TabBar tabBar;
+
+  _StickyTabBarDelegate(this.tabBar);
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.white, // Background color for the tabBar
+      child: tabBar,
+    );
+  }
+
+  @override
+  double get maxExtent => tabBar.preferredSize.height;
+
+  @override
+  double get minExtent => tabBar.preferredSize.height;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
+  }
 }
 
 class _BillListScreenState extends State<BillListScreen>
@@ -222,17 +249,21 @@ class _BillListScreenState extends State<BillListScreen>
                 ),
               ),
 
-              // Tab bar
-              TabBar(
-                controller: _tabController,
-                tabs: const [
-                  Tab(text: 'State Bills'),
-                  Tab(text: 'Search Results'),
-                  Tab(text: 'Recent'),
-                ],
-                labelColor: Theme.of(context).colorScheme.primary,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: Theme.of(context).colorScheme.primary,
+              // Tab bar (sticky)
+              Container(
+                color: Colors.white,
+                child: TabBar(
+                  controller: _tabController,
+                  tabs: const [
+                    Tab(text: 'State Bills'),
+                    Tab(text: 'Search Results'),
+                    Tab(text: 'Recent'),
+                  ],
+                  labelColor: Theme.of(context).colorScheme.primary,
+                  unselectedLabelColor: Colors.grey,
+                  indicatorColor: Theme.of(context).colorScheme.primary,
+                  labelPadding: const EdgeInsets.symmetric(vertical: 8.0),
+                ),
               ),
 
               // Error message if any
@@ -271,7 +302,7 @@ class _BillListScreenState extends State<BillListScreen>
                   ),
                 ),
 
-              // Tab content
+              // Tab content - Use Expanded to fill remaining space
               Expanded(
                 child: TabBarView(
                   controller: _tabController,
@@ -665,43 +696,56 @@ class _BillListScreenState extends State<BillListScreen>
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.description_outlined,
-                  size: 64,
-                  color: Colors.grey.shade400,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  emptyMessage,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.description_outlined,
+                size: 64,
+                color: Colors.grey.shade400,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                emptyMessage,
+                style: Theme.of(context).textTheme.bodyLarge,
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       );
     }
 
+    // Use a regular ListView with scrolling enabled within the TabView
     return ListView.builder(
-      controller: _scrollController,
+      controller: _scrollController, // Use the scroll controller for scrolling within tabs
       padding: const EdgeInsets.all(16),
       itemCount: bills.length,
+      // Allow scrolling within the tab view
+      physics: const AlwaysScrollableScrollPhysics(),
+      // Don't shrink wrap since we want to be able to scroll
+      shrinkWrap: false,
       itemBuilder: (context, index) {
         final bill = bills[index];
         return BillCard(
           bill: bill,
           onTap: () {
+            // Debug bill data before navigation
+            if (kDebugMode) {
+              print('Navigating to bill details screen:');
+              print('  Bill ID: ${bill.billId}');
+              print('  State Code: ${bill.state}');
+              print('  Bill Number: ${bill.billNumber}');
+              print('  Title: ${bill.title}');
+            }
+            
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => BillDetailsScreen(
                   billId: bill.billId,
                   stateCode: bill.state,
+                  billData: bill, // Pass the full bill data as fallback
                 ),
               ),
             );

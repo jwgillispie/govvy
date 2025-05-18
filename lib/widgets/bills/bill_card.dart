@@ -1,4 +1,5 @@
 // lib/widgets/bills/bill_card.dart
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:govvy/models/bill_model.dart';
 
@@ -33,21 +34,35 @@ class BillCard extends StatelessWidget {
         statusColor = Colors.grey;
     }
 
-    // Determine the badge based on bill type
+    // Determine the badge based on bill type and special handling for FL and GA
     Widget typeBadge;
-    switch (bill.type) {
-      case 'federal':
-        typeBadge = _buildBadge('Federal', Colors.indigo);
-        break;
-      case 'state':
-        typeBadge = _buildBadge('State', Colors.teal);
-        break;
-      case 'local':
-        typeBadge = _buildBadge('Local', Colors.green);
-        break;
-      default:
-        typeBadge = _buildBadge(bill.type, Colors.grey);
+    if (bill.state == 'FL' || bill.state == 'GA') {
+      // Show special badge for FL and GA
+      typeBadge = _buildBadge(bill.state, Colors.deepPurple);
+    } else {
+      switch (bill.type) {
+        case 'federal':
+          typeBadge = _buildBadge('Federal', Colors.indigo);
+          break;
+        case 'state':
+          typeBadge = _buildBadge('State', Colors.teal);
+          break;
+        case 'local':
+          typeBadge = _buildBadge('Local', Colors.green);
+          break;
+        default:
+          typeBadge = _buildBadge(bill.type, Colors.grey);
+      }
     }
+
+    // Check if bill has a description
+    final hasDescription = bill.description != null && bill.description!.isNotEmpty;
+    
+    // Check if bill has a committee
+    final hasCommittee = bill.committee != null && bill.committee!.isNotEmpty;
+    
+    // Check if bill has a URL
+    final hasUrl = bill.url.isNotEmpty;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -56,7 +71,17 @@ class BillCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: InkWell(
-        onTap: onTap,
+        onTap: () {
+          // Debug the bill ID and state
+          if (kDebugMode) {
+            print('Opening bill details: ID=${bill.billId}, State=${bill.state}');
+            print('Bill title: ${bill.title}');
+            print('Bill type: ${bill.type}');
+          }
+          if (onTap != null) {
+            onTap!();
+          }
+        },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -111,7 +136,36 @@ class BillCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
 
+              // Description if available (especially for FL and GA)
+              if (hasDescription) ...[
+                const SizedBox(height: 8),
+                Text(
+                  bill.description!,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey.shade700,
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+
               const SizedBox(height: 8),
+
+              // Committee when available (especially for FL and GA)
+              if (hasCommittee) ...[
+                Text(
+                  'Committee: ${bill.committee}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey.shade800,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+              ],
 
               // Bill status with colored indicator
               Row(
@@ -148,6 +202,30 @@ class BillCard extends StatelessWidget {
                     fontSize: 12,
                     color: Colors.grey.shade600,
                   ),
+                ),
+              ],
+              
+              // URL when available
+              if (hasUrl && (bill.state == 'FL' || bill.state == 'GA')) ...[
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(
+                      Icons.link,
+                      size: 14,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      'View online',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ],

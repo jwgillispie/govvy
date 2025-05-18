@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:govvy/widgets/auth/signup_form.dart';
+import 'package:govvy/screens/home/home_screen_wrapper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -32,10 +33,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final authService = Provider.of<AuthService>(context, listen: false);
-      await authService.signInWithEmailAndPassword(
+      // Mark that the user has used the app (to skip landing page next time)
+      await authService.setUserHasUsedApp();
+      
+      final userCredential = await authService.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
+      
+      // If user is now logged in, navigate to HomeScreenWrapper
+      if (userCredential != null && context.mounted) {
+        Navigator.pushReplacement(
+          context, 
+          MaterialPageRoute(
+            builder: (context) => const HomeScreenWrapper(),
+          ),
+        );
+      }
     } catch (e) {
       setState(() {
         _errorMessage = _handleAuthError(e.toString());

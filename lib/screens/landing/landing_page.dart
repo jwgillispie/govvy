@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:govvy/screens/auth/login_screen.dart';
 import 'package:govvy/widgets/auth/signup_form.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
@@ -156,14 +157,31 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                 ),
                 if (authService.currentUser == null)
-                  TextButton(
-                    onPressed: _toggleSignUpForm,
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Theme.of(context).colorScheme.primary,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                    ),
-                    child: const Text('Sign Up'),
+                  Row(
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        ),
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                        ),
+                        child: const Text('Login'),
+                      ),
+                      const SizedBox(width: 8),
+                      TextButton(
+                        onPressed: _toggleSignUpForm,
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Theme.of(context).colorScheme.primary,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                        ),
+                        child: const Text('Sign Up'),
+                      ),
+                    ],
                   )
                 else
                   TextButton(
@@ -220,15 +238,42 @@ class _LandingPageState extends State<LandingPage> {
           ),
           const Divider(color: Colors.white24),
           if (authService.currentUser == null)
-            ListTile(
-              title: const Text(
-                'Sign Up',
-                style: TextStyle(color: Colors.white),
-              ),
-              onTap: () {
-                _toggleMenu();
-                _toggleSignUpForm();
-              },
+            Column(
+              children: [
+                ListTile(
+                  title: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () async {
+                    _toggleMenu();
+                    
+                    // Mark that the user has used the app
+                    final authService = Provider.of<AuthService>(context, listen: false);
+                    await authService.setUserHasUsedApp();
+                    
+                    if (context.mounted) {
+                      // Use pushReplacement to replace landing page with login screen
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    }
+                  },
+                ),
+                ListTile(
+                  title: const Text(
+                    'Sign Up',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    _toggleMenu();
+                    _toggleSignUpForm();
+                  },
+                ),
+              ],
             )
           else
             ListTile(
@@ -312,19 +357,48 @@ class _LandingPageState extends State<LandingPage> {
                   ),
             ),
             const SizedBox(height: 24),
-            Row(
+            Column(
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: _toggleSignUpForm,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Theme.of(context).colorScheme.primary,
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: _toggleSignUpForm,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Theme.of(context).colorScheme.primary,
+                        ),
+                        child: const Text('Sign Up'),
+                      ),
                     ),
-                    child: const Text('Press for magic'),
-                  ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () async {
+                          // Mark that the user has used the app
+                          final authService = Provider.of<AuthService>(context, listen: false);
+                          await authService.setUserHasUsedApp();
+                          
+                          if (context.mounted) {
+                            // Use pushReplacement to replace landing page with login screen
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          }
+                        },
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.white),
+                        ),
+                        child: const Text('Login'),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(height: 8),
                 OutlinedButton.icon(
                   onPressed: _shareApp,
                   icon: const Icon(Icons.share, color: Colors.white),
@@ -371,6 +445,30 @@ class _LandingPageState extends State<LandingPage> {
                       _showSignUpForm = false;
                     });
                   },
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already have an account?',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 14,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('Login'),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -420,7 +518,31 @@ class _LandingPageState extends State<LandingPage> {
                     foregroundColor: Theme.of(context).colorScheme.primary,
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                   ),
-                  child: const Text('Press for magic'),
+                  child: const Text('Sign Up'),
+                ),
+                const SizedBox(width: 16),
+                OutlinedButton(
+                  onPressed: () async {
+                    // Mark that the user has used the app
+                    final authService = Provider.of<AuthService>(context, listen: false);
+                    await authService.setUserHasUsedApp();
+                    
+                    if (context.mounted) {
+                      // Use pushReplacement to replace landing page with login screen
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                    }
+                  },
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    side: const BorderSide(color: Colors.white),
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                  ),
+                  child: const Text('Login'),
                 ),
                 const SizedBox(width: 16),
                 OutlinedButton.icon(
@@ -471,6 +593,30 @@ class _LandingPageState extends State<LandingPage> {
                       _showSignUpForm = false;
                     });
                   },
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already have an account?',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 14,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text('Login'),
+                    ),
+                  ],
                 ),
               ],
             ),

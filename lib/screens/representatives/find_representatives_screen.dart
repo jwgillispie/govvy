@@ -780,36 +780,43 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                       ),
                     ),
 
-                  // Tab content
+                  // Tab content with fixed height
                   SizedBox(
-                    height: 600, // Fixed height for the tab content
-                    child: TabBarView(
-                      controller: _tabController,
+                    height: MediaQuery.of(context).size.height * 0.6, // 60% of the screen height, more responsive
+                    child: Column(
                       children: [
-                        // All representatives tab
-                        _buildRepresentativesList(
-                            provider.allRepresentatives,
-                            _searchTypeIndex == 0
-                                ? 'Select a state to find your representatives'
-                                : _searchTypeIndex == 1
-                                    ? 'Enter a city to find your representatives'
-                                    : 'Search by name to find representatives'),
-
-                        // Federal/State representatives tab
-                        _buildRepresentativesList(
-                            provider.federalRepresentatives,
-                            'Select a state to find your federal and state representatives'),
-
-                        // Local representatives tab
-                        _buildRepresentativesList(
-                            provider.localRepresentatives,
-                            _searchTypeIndex == 1
-                                ? 'Enter a city to find your local representatives'
-                                : 'Select a state to find your local representatives'),
-
-                        // Name search results tab
-                        _buildRepresentativesList(provider.allRepresentatives,
-                            'Search for representatives by name to see results here'),
+                          
+                        Expanded(
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: [
+                              // All representatives tab
+                              _buildRepresentativesList(
+                                  provider.allRepresentatives,
+                                  _searchTypeIndex == 0
+                                      ? 'Select a state to find your representatives'
+                                      : _searchTypeIndex == 1
+                                          ? 'Enter a city to find your representatives'
+                                          : 'Search by name to find representatives'),
+      
+                              // Federal/State representatives tab
+                              _buildRepresentativesList(
+                                  provider.federalRepresentatives,
+                                  'Select a state to find your federal and state representatives'),
+      
+                              // Local representatives tab
+                              _buildRepresentativesList(
+                                  provider.localRepresentatives,
+                                  _searchTypeIndex == 1
+                                      ? 'Enter a city to find your local representatives'
+                                      : 'Select a state to find your local representatives'),
+      
+                              // Name search results tab
+                              _buildRepresentativesList(provider.allRepresentatives,
+                                  'Search for representatives by name to see results here'),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -987,6 +994,8 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
+              const SizedBox(height: 24),
+              
             ],
           ),
         ),
@@ -1020,6 +1029,32 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                   style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
+                const SizedBox(height: 24),
+                if (_searchTypeIndex != 1) // Show this if not already in city search mode
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.location_city),
+                    label: const Text('Switch to City Search'),
+                    onPressed: () {
+                      // Switch to city search mode and scroll to top
+                      setState(() {
+                        _searchTypeIndex = 1; // Switch to city search
+                      });
+                      // Scroll to the top after UI updates
+                      Future.microtask(() {
+                        _scrollController.animateTo(
+                          0,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeOut,
+                        );
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
