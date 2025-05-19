@@ -201,124 +201,127 @@ class _BillListScreenState extends State<BillListScreen>
             backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Colors.white,
           ),
-          body: Column(
-            children: [
-              // Search form section
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    // Search type toggle
-                    SegmentedButton<int>(
-                      segments: const [
-                        ButtonSegment<int>(
-                          value: 0,
-                          label: Text('By State'),
-                          icon: Icon(Icons.public),
-                        ),
-                        ButtonSegment<int>(
-                          value: 1,
-                          label: Text('By Keyword'),
-                          icon: Icon(Icons.search),
-                        ),
-                        ButtonSegment<int>(
-                          value: 2,
-                          label: Text('By Subject'),
-                          icon: Icon(Icons.category),
-                        ),
-                      ],
-                      selected: {_searchTypeIndex},
-                      onSelectionChanged: (Set<int> selection) {
-                        setState(() {
-                          _searchTypeIndex = selection.first;
-                          // Clear errors when changing search type
-                          provider.clearErrors();
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Show search form based on selected type
-                    if (_searchTypeIndex == 0)
-                      _buildStateSearchForm()
-                    else if (_searchTypeIndex == 1)
-                      _buildKeywordSearchForm()
-                    else
-                      _buildSubjectSearchForm(),
-                  ],
-                ),
-              ),
-
-              // Tab bar (sticky)
-              Container(
-                color: Colors.white,
-                child: TabBar(
-                  controller: _tabController,
-                  tabs: const [
-                    Tab(text: 'State Bills'),
-                    Tab(text: 'Search Results'),
-                    Tab(text: 'Recent'),
-                  ],
-                  labelColor: Theme.of(context).colorScheme.primary,
-                  unselectedLabelColor: Colors.grey,
-                  indicatorColor: Theme.of(context).colorScheme.primary,
-                  labelPadding: const EdgeInsets.symmetric(vertical: 8.0),
-                ),
-              ),
-
-              // Error message if any
-              if (provider.errorMessage != null)
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Search form section
                 Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      color: Colors.red.shade50,
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(color: Colors.red.shade200),
-                    ),
-                    child: Text(
-                      provider.errorMessage!,
-                      style: TextStyle(color: Colors.red.shade700),
-                    ),
+                  child: Column(
+                    children: [
+                      // Search type toggle
+                      SegmentedButton<int>(
+                        segments: const [
+                          ButtonSegment<int>(
+                            value: 0,
+                            label: Text('By State'),
+                            icon: Icon(Icons.public),
+                          ),
+                          ButtonSegment<int>(
+                            value: 1,
+                            label: Text('By Keyword'),
+                            icon: Icon(Icons.search),
+                          ),
+                          ButtonSegment<int>(
+                            value: 2,
+                            label: Text('By Subject'),
+                            icon: Icon(Icons.category),
+                          ),
+                        ],
+                        selected: {_searchTypeIndex},
+                        onSelectionChanged: (Set<int> selection) {
+                          setState(() {
+                            _searchTypeIndex = selection.first;
+                            // Clear errors when changing search type
+                            provider.clearErrors();
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Show search form based on selected type
+                      if (_searchTypeIndex == 0)
+                        _buildStateSearchForm()
+                      else if (_searchTypeIndex == 1)
+                        _buildKeywordSearchForm()
+                      else
+                        _buildSubjectSearchForm(),
+                    ],
                   ),
                 ),
 
-              // Loading indicator
-              if (provider.isLoading)
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        const CircularProgressIndicator(),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Loading bills...',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
-                    ),
+                // Tab bar (sticky)
+                Container(
+                  color: Colors.white,
+                  child: TabBar(
+                    controller: _tabController,
+                    tabs: const [
+                      Tab(text: 'State Bills'),
+                      Tab(text: 'Search Results'),
+                      Tab(text: 'Recent'),
+                    ],
+                    labelColor: Theme.of(context).colorScheme.primary,
+                    unselectedLabelColor: Colors.grey,
+                    indicatorColor: Theme.of(context).colorScheme.primary,
+                    labelPadding: const EdgeInsets.symmetric(vertical: 8.0),
                   ),
                 ),
 
-              // Tab content - Use Expanded to fill remaining space
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    // State Bills tab
-                    _buildBillList(provider.stateBills, 'No bills found for this state. Try selecting a different state.'),
-                    
-                    // Search Results tab
-                    _buildBillList(provider.searchResultBills, 'No bills found matching your search criteria.'),
-                    
-                    // Recent Bills tab
-                    _buildBillList(provider.recentBills, 'No recently viewed bills. Browse bills to see them here.'),
-                  ],
+                // Error message if any
+                if (provider.errorMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: Colors.red.shade200),
+                      ),
+                      child: Text(
+                        provider.errorMessage!,
+                        style: TextStyle(color: Colors.red.shade700),
+                      ),
+                    ),
+                  ),
+
+                // Loading indicator
+                if (provider.isLoading)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          const CircularProgressIndicator(),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Loading bills...',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                // Tab content - Use SizedBox with fixed height
+                SizedBox(
+                  height: 500, // Fixed height for the bill list area
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      // State Bills tab
+                      _buildBillList(provider.stateBills, 'No bills found for this state. Try selecting a different state.'),
+                      
+                      // Search Results tab
+                      _buildBillList(provider.searchResultBills, 'No bills found matching your search criteria.'),
+                      
+                      // Recent Bills tab
+                      _buildBillList(provider.recentBills, 'No recently viewed bills. Browse bills to see them here.'),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
