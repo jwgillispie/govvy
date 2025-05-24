@@ -109,9 +109,9 @@ class LegiscanService {
       }
 
       if (!searchResults.containsKey('results') ||
-          !(searchResults['results'] is Map) ||
+          searchResults['results'] is! Map ||
           !searchResults['results'].containsKey('people') ||
-          !(searchResults['results']['people'] is List)) {
+          searchResults['results']['people'] is! List) {
         if (kDebugMode) {
           print('No people found in search results');
         }
@@ -127,9 +127,9 @@ class LegiscanService {
 
         if (lastNameResults == null ||
             !lastNameResults.containsKey('results') ||
-            !(lastNameResults['results'] is Map) ||
+            lastNameResults['results'] is! Map ||
             !lastNameResults['results'].containsKey('people') ||
-            !(lastNameResults['results']['people'] is List)) {
+            lastNameResults['results']['people'] is! List) {
           if (kDebugMode) {
             print('No people found in last name search results');
           }
@@ -461,7 +461,7 @@ class LegiscanService {
           }
           
           if (retryCount > maxRetries) {
-            throw timeoutError; // Re-throw the error after all retries fail
+            rethrow; // Re-throw the error after all retries fail
           }
           
           // Wait a bit before retrying
@@ -623,9 +623,9 @@ class LegiscanService {
       }
 
       if (!searchResults.containsKey('results') ||
-          !(searchResults['results'] is Map) ||
+          searchResults['results'] is! Map ||
           !searchResults['results'].containsKey('bills') ||
-          !(searchResults['results']['bills'] is List)) {
+          searchResults['results']['bills'] is! List) {
         // Try searchresult instead (the format varies in the API)
         if (searchResults.containsKey('searchresult')) {
           return _processBillsFromSearchresult(searchResults['searchresult'], state);
@@ -701,13 +701,13 @@ class LegiscanService {
     // Loop through the keys in the searchresult
     searchresult.forEach((key, value) {
       // Skip the "summary" key or any non-map entries
-      if (key == 'summary' || !(value is Map)) {
+      if (key == 'summary' || value is! Map) {
         return;
       }
       
       try {
         // Convert the value to a properly typed Map
-        final Map<String, dynamic> billData = Map<String, dynamic>.from(value as Map);
+        final Map<String, dynamic> billData = Map<String, dynamic>.from(value);
         
         // Extract bill information
         String billNumber = billData['bill_number']?.toString() ?? 'Unknown';

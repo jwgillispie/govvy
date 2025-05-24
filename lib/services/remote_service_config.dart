@@ -17,19 +17,17 @@ class RemoteConfigService {
   static const String googleMapsApiKey = 'GOOGLE_MAPS_API_KEY';
   static const String ciceroApiKey = 'CICERO_API_KEY';
   static const String legiscanApiKey = 'LEGISCAN_API_KEY'; // Added LegiScan API key
+  static const String fecApiKey = 'FEC_API_KEY'; // Added FEC API key
 
   // Initialization status and source tracking
   bool _initialized = false;
-  Map<String, String> _keySource = {};
+  final Map<String, String> _keySource = {};
 
   // Initialize remote config with improved error handling and logging
   Future<void> initialize() async {
     if (_initialized) return;
 
     try {
-      if (kDebugMode) {
-        print('🔑 Initializing RemoteConfigService...');
-      }
 
       // Set default values (these will be used until remote values are fetched)
       await _remoteConfig.setDefaults({
@@ -37,6 +35,7 @@ class RemoteConfigService {
         googleMapsApiKey: '',
         ciceroApiKey: '',
         legiscanApiKey: '', // Added default for LegiScan API key
+        fecApiKey: '', // Added default for FEC API key
       });
 
       // Set minimum fetch interval
@@ -61,6 +60,9 @@ class RemoteConfigService {
       if (_remoteConfig.getString(legiscanApiKey).isNotEmpty) {
         _keySource[legiscanApiKey] = 'Firebase';
       }
+      if (_remoteConfig.getString(fecApiKey).isNotEmpty) {
+        _keySource[fecApiKey] = 'Firebase';
+      }
 
       _initialized = true;
 
@@ -72,9 +74,6 @@ class RemoteConfigService {
       // Log the available keys
       _logKeyStatus();
     } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error initializing Remote Config: $e');
-      }
       // Fall back to .env file in development
       if (!kIsWeb) {
         await _loadLocalConfig();
@@ -87,9 +86,6 @@ class RemoteConfigService {
   Future<void> _loadLocalConfig() async {
     try {
       await dotenv.load(fileName: "assets/.env");
-      if (kDebugMode) {
-        print("🔑 Loading .env file with ${dotenv.env.length} variables");
-      }
 
       // Track which values came from .env
       if (_keySource[congressApiKey] == null && dotenv.env[congressApiKey] != null) {
@@ -104,50 +100,17 @@ class RemoteConfigService {
       if (_keySource[legiscanApiKey] == null && dotenv.env[legiscanApiKey] != null) {
         _keySource[legiscanApiKey] = '.env';
       }
-    } catch (e) {
-      if (kDebugMode) {
-        print("❌ Error loading .env file: $e");
+      if (_keySource[fecApiKey] == null && dotenv.env[fecApiKey] != null) {
+        _keySource[fecApiKey] = '.env';
       }
+    } catch (e) {
+      // Error loading .env file handled silently
     }
   }
 
-  // Log the status of all API keys
+  // Empty method stub that previously logged API key status
   void _logKeyStatus() {
-    if (!kDebugMode) return;
-
-    print('🔑 API Key Status:');
-    
-    // Congress API Key
-    final congressKey = getCongressApiKey;
-    if (congressKey != null && congressKey.isNotEmpty) {
-      print('✅ CONGRESS_API_KEY: Valid (from ${_keySource[congressApiKey] ?? "unknown"}, ${_maskKey(congressKey)})');
-    } else {
-      print('❌ CONGRESS_API_KEY: Missing or empty');
-    }
-    
-    // Google Maps API Key
-    final googleKey = getGoogleMapsApiKey;
-    if (googleKey != null && googleKey.isNotEmpty) {
-      print('✅ GOOGLE_MAPS_API_KEY: Valid (from ${_keySource[googleMapsApiKey] ?? "unknown"}, ${_maskKey(googleKey)})');
-    } else {
-      print('❌ GOOGLE_MAPS_API_KEY: Missing or empty');
-    }
-    
-    // Cicero API Key
-    final ciceroKey = getCiceroApiKey;
-    if (ciceroKey != null && ciceroKey.isNotEmpty) {
-      print('✅ CICERO_API_KEY: Valid (from ${_keySource[ciceroApiKey] ?? "unknown"}, ${_maskKey(ciceroKey)})');
-    } else {
-      print('❌ CICERO_API_KEY: Missing or empty');
-    }
-    
-    // LegiScan API Key
-    final legiscanKey = getLegiscanApiKey;
-    if (legiscanKey != null && legiscanKey.isNotEmpty) {
-      print('✅ LEGISCAN_API_KEY: Valid (from ${_keySource[legiscanApiKey] ?? "unknown"}, ${_maskKey(legiscanKey)})');
-    } else {
-      print('❌ LEGISCAN_API_KEY: Missing or empty');
-    }
+    // API key status logging removed
   }
 
   // Mask API key for safe logging
@@ -169,6 +132,7 @@ class RemoteConfigService {
       'googleMaps': getGoogleMapsApiKey?.isNotEmpty == true,
       'cicero': getCiceroApiKey?.isNotEmpty == true,
       'legiscan': getLegiscanApiKey?.isNotEmpty == true, // Added LegiScan validation
+      'fec': getFecApiKey?.isNotEmpty == true, // Added FEC validation
     };
   }
 
@@ -236,5 +200,22 @@ class RemoteConfigService {
     
     // Fall back to .env
     return dotenv.env[legiscanApiKey];
+  }
+  
+  // Added getter for FEC API key
+  String? get getFecApiKey {
+    if (!_initialized) {
+      // Try to initialize if not done yet
+      initialize();
+    }
+
+    // First try Remote Config
+    final remoteKey = _remoteConfig.getString(fecApiKey);
+    if (remoteKey.isNotEmpty) {
+      return remoteKey;
+    }
+    
+    // Fall back to .env
+    return dotenv.env[fecApiKey];
   }
 }

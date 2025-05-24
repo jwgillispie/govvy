@@ -265,7 +265,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
 
       if (_federalRepresentatives.isEmpty) {
         _errorMessageFederal =
-            'No representatives found for ${stateCode}${districtNumber != null ? ' District $districtNumber' : ''}. Please check your selection.';
+            'No representatives found for $stateCode${districtNumber != null ? ' District $districtNumber' : ''}. Please check your selection.';
       }
 
       _isLoadingFederal = false;

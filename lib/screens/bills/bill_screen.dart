@@ -1,12 +1,13 @@
 // lib/screens/bills/bill_list_screen.dart
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/models/bill_model.dart';
 import 'package:govvy/providers/bill_provider.dart';
+import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
+import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
 import 'package:govvy/widgets/bills/bill_card.dart';
-import 'package:govvy/widgets/bills/bill_search_input.dart';
 
 class BillListScreen extends StatefulWidget {
   const BillListScreen({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class _BillListScreenState extends State<BillListScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final ScrollController _scrollController = ScrollController();
-  int _searchTypeIndex = 0; // 0 = By State, 1 = By Keyword, 2 = By Subject
+  int _searchTypeIndex = 0; // 0 = By State, 1 = By Subject
   String? _selectedState;
 
   // US States mapping for dropdown
@@ -103,7 +104,6 @@ class _BillListScreenState extends State<BillListScreen>
     {"name": "District of Columbia", "code": "DC"}
   ];
 
-  final TextEditingController _searchController = TextEditingController();
   final TextEditingController _subjectController = TextEditingController();
 
   @override
@@ -129,7 +129,6 @@ class _BillListScreenState extends State<BillListScreen>
   void dispose() {
     _tabController.dispose();
     _scrollController.dispose();
-    _searchController.dispose();
     _subjectController.dispose();
     super.dispose();
   }
@@ -152,28 +151,14 @@ class _BillListScreenState extends State<BillListScreen>
       return;
     }
 
-    final provider = Provider.of<BillProvider>(context, listen: false);
+    final provider = Provider.of<EnhancedBillProvider>(context, listen: false);
     provider.fetchBillsByState(_selectedState!);
 
     // Switch to the first tab
     _tabController.animateTo(0);
   }
 
-  void _searchBillsByKeyword() {
-    final query = _searchController.text.trim();
-    if (query.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a search term')),
-      );
-      return;
-    }
-
-    final provider = Provider.of<BillProvider>(context, listen: false);
-    provider.searchBills(query, stateCode: _selectedState);
-
-    // Switch to the search tab
-    _tabController.animateTo(1);
-  }
+  // Removed keyword search method to simplify bill search ability
 
   void _searchBillsBySubject() {
     final subject = _subjectController.text.trim();
@@ -184,8 +169,8 @@ class _BillListScreenState extends State<BillListScreen>
       return;
     }
 
-    final provider = Provider.of<BillProvider>(context, listen: false);
-    provider.fetchBillsBySubject(subject, stateCode: _selectedState);
+    final provider = Provider.of<EnhancedBillProvider>(context, listen: false);
+    provider.searchBillsBySubject(subject, stateCode: _selectedState);
 
     // Switch to the search tab
     _tabController.animateTo(1);
@@ -193,7 +178,7 @@ class _BillListScreenState extends State<BillListScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BillProvider>(
+    return Consumer<EnhancedBillProvider>(
       builder: (context, provider, child) {
         return Scaffold(
           appBar: AppBar(
@@ -219,11 +204,6 @@ class _BillListScreenState extends State<BillListScreen>
                           ),
                           ButtonSegment<int>(
                             value: 1,
-                            label: Text('By Keyword'),
-                            icon: Icon(Icons.search),
-                          ),
-                          ButtonSegment<int>(
-                            value: 2,
                             label: Text('By Subject'),
                             icon: Icon(Icons.category),
                           ),
@@ -242,8 +222,6 @@ class _BillListScreenState extends State<BillListScreen>
                       // Show search form based on selected type
                       if (_searchTypeIndex == 0)
                         _buildStateSearchForm()
-                      else if (_searchTypeIndex == 1)
-                        _buildKeywordSearchForm()
                       else
                         _buildSubjectSearchForm(),
                     ],
@@ -432,110 +410,7 @@ class _BillListScreenState extends State<BillListScreen>
     );
   }
 
-  Widget _buildKeywordSearchForm() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Search keyword field
-        TextField(
-          controller: _searchController,
-          decoration: InputDecoration(
-            labelText: 'Search for bills',
-            hintText: 'Enter keywords (e.g., education, healthcare)',
-            filled: true,
-            fillColor: Colors.grey.shade100,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            prefixIcon: const Icon(Icons.search),
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.clear),
-              onPressed: () => _searchController.clear(),
-            ),
-          ),
-          onSubmitted: (_) => _searchBillsByKeyword(),
-        ),
-
-        // State selection (optional)
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Checkbox(
-              value: _selectedState != null,
-              onChanged: (bool? value) {
-                setState(() {
-                  _selectedState = value! ? "FL" : null;
-                });
-              },
-            ),
-            const Text('Limit search to state:'),
-            const SizedBox(width: 8),
-            if (_selectedState != null)
-              DropdownButton<String>(
-                value: _selectedState,
-                items: _usStates.map((Map<String, String> state) {
-                  return DropdownMenuItem<String>(
-                    value: state["code"],
-                    child: Text(state["code"]!),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedState = newValue;
-                  });
-                },
-                hint: const Text('Select'),
-              ),
-          ],
-        ),
-
-        const SizedBox(height: 16),
-
-        // Search button
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton.icon(
-            onPressed: _searchBillsByKeyword,
-            icon: const Icon(Icons.search),
-            label: const Text(
-              'Search Bills',
-              style: TextStyle(fontSize: 16),
-            ),
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-        ),
-
-        // Popular search terms
-        const SizedBox(height: 16),
-        Text(
-          'Popular Search Terms:',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            _buildKeywordChip('Education'),
-            _buildKeywordChip('Healthcare'),
-            _buildKeywordChip('Environment'),
-            _buildKeywordChip('Tax'),
-            _buildKeywordChip('Budget'),
-          ],
-        ),
-      ],
-    );
-  }
+  // Keyword search form removed to simplify bill search ability
 
   Widget _buildSubjectSearchForm() {
     return Column(
@@ -663,20 +538,7 @@ class _BillListScreenState extends State<BillListScreen>
         .toList();
   }
 
-  // Helper to build keyword chip
-  Widget _buildKeywordChip(String keyword) {
-    return ActionChip(
-      label: Text(keyword),
-      onPressed: () {
-        _searchController.text = keyword;
-        _searchBillsByKeyword();
-      },
-      backgroundColor: Colors.grey.shade100,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-    );
-  }
+  // Removed keyword chip builder to simplify bill search ability
 
   // Helper to build subject chip
   Widget _buildSubjectChip(String subject) {
@@ -733,14 +595,6 @@ class _BillListScreenState extends State<BillListScreen>
         return BillCard(
           bill: bill,
           onTap: () {
-            // Debug bill data before navigation
-            if (kDebugMode) {
-              print('Navigating to bill details screen:');
-              print('  Bill ID: ${bill.billId}');
-              print('  State Code: ${bill.state}');
-              print('  Bill Number: ${bill.billNumber}');
-              print('  Title: ${bill.title}');
-            }
             
             Navigator.push(
               context,

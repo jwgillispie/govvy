@@ -1,16 +1,17 @@
 // lib/providers/bill_provider.dart
 import 'package:flutter/foundation.dart';
 import 'package:govvy/models/bill_model.dart';
+import 'package:govvy/models/enhanced_bill_details.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/services/bill_service.dart';
-import 'package:govvy/services/csv_bill_service.dart';
+import 'package:govvy/services/enhanced_legiscan_service.dart';
 import 'package:govvy/services/network_service.dart';
-import 'package:govvy/services/remote_service_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class BillProvider with ChangeNotifier {
   final BillService _billService = BillService();
+  final EnhancedLegiscanService _enhancedService = EnhancedLegiscanService();
   final NetworkService _networkService = NetworkService();
 
   // State for bill lists
@@ -32,7 +33,7 @@ class BillProvider with ChangeNotifier {
   // Last search parameters (for caching/persistence)
   String? _lastSearchQuery;
   String? _lastStateCode;
-  int? _lastBillId;
+  int? _lastBillId; // Needed for bill details tracking
   
   // Getters for the state
   List<BillModel> get stateBills => _stateBills;
@@ -65,13 +66,7 @@ class BillProvider with ChangeNotifier {
       // Load recent bills from cache
       await _loadRecentBillsFromCache();
       
-      if (kDebugMode) {
-        print('Bill Provider initialized successfully');
-      }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error initializing Bill Provider: $e');
-      }
       _errorMessage = 'Failed to initialize bill data';
       notifyListeners();
     }
@@ -89,9 +84,6 @@ class BillProvider with ChangeNotifier {
       
       return isConnected;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error checking network: $e');
-      }
       return true; // Assume connected if check fails
     }
   }
@@ -108,65 +100,11 @@ class BillProvider with ChangeNotifier {
       _lastStateCode = stateCode;
       notifyListeners();
       
-      // Special debug handling for FL and GA
-      if (stateCode == 'FL' || stateCode == 'GA') {
-        if (kDebugMode) {
-          print('Special handling enabled for $stateCode bills');
-          print('Forcing fresh load for $stateCode with special handling');
-        }
-        
-        // Clear bills cache by calling _billService.clearCache()
-        await _billService.clearCache();
-        
-        // Create our own direct CSV service instance for testing
-        final csvService = CSVBillService();
-        await csvService.initialize();
-        
-        // Attempt to load bills directly from CSV service
-        try {
-          final csvBills = await csvService.getBillsByState(stateCode);
-          
-          if (kDebugMode) {
-            print('Directly loaded ${csvBills.length} bills from CSV for $stateCode');
-          }
-          
-          if (csvBills.isNotEmpty) {
-            // Convert to BillModel format
-            final bills = csvBills.map((bill) => 
-                BillModel.fromRepresentativeBill(bill, stateCode)).toList();
-            
-            if (kDebugMode) {
-              print('Converted ${bills.length} CSV bills to BillModel format for $stateCode');
-              
-              if (bills.isNotEmpty) {
-                print('Sample bill from $stateCode:');
-                print('  Bill Number: ${bills.first.billNumber}');
-                print('  Title: ${bills.first.title}');
-                print('  Status: ${bills.first.status}');
-              }
-            }
-            
-            _stateBills = bills;
-          } else {
-            // Fallback to standard method if no CSV bills found
-            _stateBills = await _billService.getBillsByState(stateCode);
-          }
-        } catch (csvError) {
-          if (kDebugMode) {
-            print('Error loading CSV data directly: $csvError');
-            print('Falling back to standard bill loading method');
-          }
-          
-          // Fallback to standard method
-          _stateBills = await _billService.getBillsByState(stateCode);
-        }
-      } else {
-        // Standard path for other states
-        _stateBills = await _billService.getBillsByState(stateCode);
-      }
+      // Get bills for the selected state
+      _stateBills = await _billService.getBillsByState(stateCode);
       
-      if (_stateBills.isEmpty && (stateCode == 'FL' || stateCode == 'GA')) {
-        _errorMessage = 'No bills found for $stateCode. Possible CSV loading issue. Please try a different state.';
+      if (_stateBills.isEmpty) {
+        _errorMessage = 'No bills found for $stateCode. Please try a different state.';
       }
       
       _isLoading = false;
@@ -175,39 +113,10 @@ class BillProvider with ChangeNotifier {
       _isLoading = false;
       _errorMessage = 'Error loading bills for $stateCode: ${e.toString()}';
       notifyListeners();
-      
-      if (kDebugMode) {
-        print(_errorMessage);
-      }
     }
   }
   
-  // Search for bills
-  Future<void> searchBills(String query, {String? stateCode}) async {
-    if (!await _checkNetworkBeforeRequest()) {
-      return;
-    }
-    
-    try {
-      _isLoading = true;
-      _errorMessage = null;
-      _lastSearchQuery = query;
-      notifyListeners();
-      
-      _searchResultBills = await _billService.searchBills(query, stateCode: stateCode);
-      
-      _isLoading = false;
-      notifyListeners();
-    } catch (e) {
-      _isLoading = false;
-      _errorMessage = 'Error searching for bills: ${e.toString()}';
-      notifyListeners();
-      
-      if (kDebugMode) {
-        print(_errorMessage);
-      }
-    }
-  }
+  // Removed deprecated searchBills method
   
   // Get bills by subject
   Future<void> fetchBillsBySubject(String subject, {String? stateCode}) async {
@@ -229,10 +138,6 @@ class BillProvider with ChangeNotifier {
       _isLoading = false;
       _errorMessage = 'Error fetching bills by subject: ${e.toString()}';
       notifyListeners();
-      
-      if (kDebugMode) {
-        print(_errorMessage);
-      }
     }
   }
   
@@ -256,10 +161,6 @@ class BillProvider with ChangeNotifier {
       _isLoading = false;
       _errorMessage = 'Error fetching bills for representative: ${e.toString()}';
       notifyListeners();
-      
-      if (kDebugMode) {
-        print(_errorMessage);
-      }
     }
   }
   
@@ -275,20 +176,44 @@ class BillProvider with ChangeNotifier {
       _lastBillId = billId;
       notifyListeners();
       
-      final bill = await _billService.getBillDetails(billId, stateCode);
-      
-      _selectedBill = bill;
-      
-      if (bill != null) {
-        // Add to recent bills
-        _addToRecentBills(bill);
+      // Try the enhanced LegiScan service first
+      EnhancedBillDetails? enhancedDetails;
+      try {
+        enhancedDetails = await _enhancedService.getBillDetails(billId, stateCode);
+      } catch (enhancedError) {
+        if (kDebugMode) {
+          print('Enhanced bill details error: $enhancedError');
+        }
+        // We'll fall back to regular service, no need to handle here
       }
       
-      _isLoadingDetails = false;
-      notifyListeners();
-      
-      // Also fetch documents in the background
-      fetchBillDocuments(billId);
+      if (enhancedDetails != null) {
+        // We got enhanced details
+        _selectedBill = enhancedDetails.bill;
+        _selectedBillDocuments = enhancedDetails.documents;
+        
+        // Add to recent bills
+        _addToRecentBills(enhancedDetails.bill);
+        
+        _isLoadingDetails = false;
+        notifyListeners();
+      } else {
+        // Fall back to regular bill service
+        final bill = await _billService.getBillDetails(billId, stateCode);
+        
+        _selectedBill = bill;
+        
+        if (bill != null) {
+          // Add to recent bills
+          _addToRecentBills(bill);
+        }
+        
+        _isLoadingDetails = false;
+        notifyListeners();
+        
+        // Also fetch documents in the background
+        fetchBillDocuments(billId);
+      }
     } catch (e) {
       _isLoadingDetails = false;
       
@@ -301,17 +226,11 @@ class BillProvider with ChangeNotifier {
       
       notifyListeners();
       
-      if (kDebugMode) {
-        print(_errorMessageDetails);
-        print('Error details: $e');
-        
-        // Try to find the bill in recent bills as a fallback
-        final foundInRecent = _recentBills.where((bill) => bill.billId == billId).toList();
-        if (foundInRecent.isNotEmpty) {
-          print('Found bill in recent bills, using cached data');
-          _selectedBill = foundInRecent.first;
-          notifyListeners();
-        }
+      // Try to find the bill in recent bills as a fallback
+      final foundInRecent = _recentBills.where((bill) => bill.billId == billId).toList();
+      if (foundInRecent.isNotEmpty) {
+        _selectedBill = foundInRecent.first;
+        notifyListeners();
       }
     }
   }
@@ -332,11 +251,6 @@ class BillProvider with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _isLoadingDocuments = false;
-      
-      if (kDebugMode) {
-        print('Error fetching bill documents: $e');
-      }
-      
       notifyListeners();
     }
   }
@@ -380,16 +294,8 @@ class BillProvider with ChangeNotifier {
             .toList();
         
         notifyListeners();
-        
-        if (kDebugMode) {
-          print('Loaded ${_recentBills.length} recent bills from cache');
-        }
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error loading recent bills from cache: $e');
-      }
-      
       // Clear on error
       _recentBills.clear();
     }
@@ -404,14 +310,8 @@ class BillProvider with ChangeNotifier {
       final recentBillsJson = json.encode(recentBillsData);
       
       await prefs.setString('recent_bills', recentBillsJson);
-      
-      if (kDebugMode) {
-        print('Saved ${_recentBills.length} recent bills to cache');
-      }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error saving recent bills to cache: $e');
-      }
+      // Error handled silently
     }
   }
   

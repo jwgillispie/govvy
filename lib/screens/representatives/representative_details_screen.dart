@@ -5,12 +5,13 @@ import 'package:flutter/services.dart'; // For clipboard functionality
 import 'package:govvy/utils/district_type_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
+import 'package:govvy/providers/campaign_finance_provider.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:govvy/widgets/representatives/role_info_widget.dart';
-import 'package:govvy/data/government_roles.dart';
 import 'package:govvy/widgets/representatives/email_template_dialog.dart';
-import 'package:govvy/providers/csv_representative_provider.dart';
+import 'package:govvy/widgets/campaign_finance/campaign_finance_summary_card.dart';
+// Removed: import 'package:govvy/providers/csv_representative_provider.dart';
 
 // Extension methods for RepresentativeDetails to add additional functionality
 extension RepresentativeDetailsExtension on RepresentativeDetails {
@@ -51,7 +52,7 @@ class _RepresentativeDetailsScreenState
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this); // 4 tabs
+    _tabController = TabController(length: 5, vsync: this); // 5 tabs
 
     // Fix: Use addPostFrameCallback to defer API call until after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -69,14 +70,21 @@ class _RepresentativeDetailsScreenState
     final provider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
     await provider.fetchRepresentativeDetails(widget.bioGuideId);
     
-    // After getting the representative details, also check for CSV-sourced bills
+    // Load campaign finance data if representative is found
     final rep = provider.selectedRepresentative;
-    if (rep != null && rep.isLocalOrStateRepresentative()) {
-      // Use Provider.of to get the CSVRepresentativeProvider
-      final csvProvider = Provider.of<CSVRepresentativeProvider>(context, listen: false);
-      await csvProvider.initialize();
-      await csvProvider.addCSVBillsToRepresentative(rep);
+    if (rep != null) {
+      final financeProvider = Provider.of<CampaignFinanceProvider>(context, listen: false);
+      await financeProvider.loadCandidateByName(rep.name);
     }
+    
+    // Removed: CSV bills loading
+    // final rep = provider.selectedRepresentative;
+    // if (rep != null && rep.isLocalOrStateRepresentative()) {
+    //   // Use Provider.of to get the CSVRepresentativeProvider
+    //   final csvProvider = Provider.of<CSVRepresentativeProvider>(context, listen: false);
+    //   await csvProvider.initialize();
+    //   await csvProvider.addCSVBillsToRepresentative(rep);
+    // }
   }
 
   Future<void> _launchUrl(String? url) async {
@@ -219,9 +227,11 @@ class _RepresentativeDetailsScreenState
                           // Tab bar
                           TabBar(
                             controller: _tabController,
+                            isScrollable: true,
                             tabs: const [
                               Tab(text: 'Profile'),
                               Tab(text: 'Role Info'),
+                              Tab(text: 'Finance'),
                               Tab(text: 'Sponsored'),
                               Tab(text: 'Co-Sponsored'),
                             ],
@@ -242,6 +252,7 @@ class _RepresentativeDetailsScreenState
                                   officeName: rep.office ?? '',
                                   district: rep.district,
                                 ),
+                                _buildFinanceTab(),
                                 _buildBillsTab(
                                   rep.sponsoredBills, 
                                   'No sponsored bills found',
@@ -790,7 +801,7 @@ class _RepresentativeDetailsScreenState
                     ),
                   ),
                 );
-              }).toList(),
+              }),
             ],
           ),
         );
@@ -960,7 +971,7 @@ class _RepresentativeDetailsScreenState
             '${rep.name} serves in the executive branch of ${rep.state} state government${rep.office != null ? ' as ${rep.office}' : ''}. State executive officials implement state laws and oversee various state departments and programs.';
       } else {
         aboutText =
-            '${rep.name} is a member of the ${formattedLevel} representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
+            '${rep.name} is a member of the $formattedLevel representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
       }
     }
     // Local representatives
@@ -982,7 +993,7 @@ class _RepresentativeDetailsScreenState
     // Fallback for other types
     else {
       aboutText =
-          '${rep.name} is a member of the ${formattedLevel} representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
+          '${rep.name} is a member of the $formattedLevel representing ${rep.state}${rep.district != null ? ' District ${rep.district}' : ''}.';
     }
 
     // Don't add office information anymore - it's causing confusion with the address
@@ -1202,6 +1213,13 @@ class _RepresentativeDetailsScreenState
           ],
         );
       },
+    );
+  }
+
+  Widget _buildFinanceTab() {
+    return const SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: CampaignFinanceSummaryCard(),
     );
   }
 }

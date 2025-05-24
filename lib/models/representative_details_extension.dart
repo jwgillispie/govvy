@@ -71,4 +71,23 @@ extension RepresentativeDetailsExtension on RepresentativeDetails {
       chamberUpper.contains('BOROUGH')
     );
   }
+  
+  // Convert RepresentativeDetails to Representative for compatibility
+  Representative toRepresentative() {
+    return Representative(
+      name: name,
+      bioGuideId: bioGuideId,
+      party: party,
+      chamber: chamber,
+      state: state,
+      district: district,
+      office: office,
+      phone: phone,
+      email: email,
+      website: website,
+      imageUrl: imageUrl,
+      socialMedia: socialMedia,
+      displayTitle: displayTitle,
+    );
+  }
 }

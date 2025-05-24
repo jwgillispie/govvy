@@ -1,11 +1,10 @@
 // lib/services/csv_bill_service.dart
-import 'dart:convert';
-import 'dart:io' as io;
-import 'package:flutter/foundation.dart';
+// Removed unused import: import 'dart:convert';
+// Removed unused import: import 'dart:io' as io;
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/models/local_representative_model.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:intl/intl.dart';
+// Removed unused import: import 'package:path_provider/path_provider.dart';
+// Removed unused import: import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:csv/csv.dart';
 
@@ -33,7 +32,7 @@ class CSVBillService {
   factory CSVBillService() => _instance;
   CSVBillService._internal();
 
-  // Cached data for app-wide CSVs
+  // Cached data for app-wide CSVs (needed by methods below)
   List<Map<String, dynamic>>? _peopleData;
   List<Map<String, dynamic>>? _billsData;
   List<Map<String, dynamic>>? _sponsorsData;
@@ -61,33 +60,13 @@ class CSVBillService {
       // Find available states with CSV data
       await _detectAvailableStates();
       
-      // Load app-wide CSV data
-      await Future.wait([
-        _loadPeopleData(),
-        _loadBillsData(),
-        _loadSponsorsData(),
-        _loadHistoryData(),
-      ]);
-      
       // Load first state's data as a default example
       if (_availableStates.isNotEmpty) {
         await loadStateData(_availableStates.first);
       }
       
-      if (kDebugMode) {
-        print('✅ CSV Bill Service initialized successfully');
-        print('Found states with CSV data: ${_availableStates.join(', ')}');
-        print('People count: ${_peopleData?.length ?? 0}');
-        print('Bills count: ${_billsData?.length ?? 0}');
-        print('Sponsors count: ${_sponsorsData?.length ?? 0}');
-        print('History count: ${_historyData?.length ?? 0}');
-      }
-      
       _initialized = true;
     } catch (e) {
-      if (kDebugMode) {
-        print('❌ Error initializing CSV Bill Service: $e');
-      }
       rethrow;
     }
   }
@@ -101,14 +80,7 @@ class CSVBillService {
         'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'FL', 'GA', 'HI', 
         'IA', 'IL', 'IN', 'KS', 'KY'
       ];
-      
-      if (kDebugMode) {
-        print('Using ${_availableStates.length} states with CSV data: ${_availableStates.join(', ')}');
-      }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error detecting available states: $e');
-      }
       _availableStates = [];
     }
   }
@@ -116,26 +88,15 @@ class CSVBillService {
   // Load state-specific data
   Future<bool> loadStateData(String stateCode) async {
     if (!_availableStates.contains(stateCode)) {
-      if (kDebugMode) {
-        print('State $stateCode is not available in CSV data');
-      }
       return false;
     }
     
-    // For Florida and Georgia, always force a reload to ensure fresh data
-    if (stateCode == 'FL' || stateCode == 'GA') {
-      if (kDebugMode) {
-        print('Forced reload requested for special state: $stateCode');
-      }
-      // Don't check cached data for FL and GA
-    } else {
-      // Check if already loaded for other states
-      if (_statePeopleData.containsKey(stateCode) &&
-          _stateBillsData.containsKey(stateCode) &&
-          _stateSponsorsData.containsKey(stateCode) &&
-          _stateHistoryData.containsKey(stateCode)) {
-        return true;
-      }
+      // Check if already loaded
+    if (_statePeopleData.containsKey(stateCode) &&
+        _stateBillsData.containsKey(stateCode) &&
+        _stateSponsorsData.containsKey(stateCode) &&
+        _stateHistoryData.containsKey(stateCode)) {
+      return true;
     }
     
     try {
@@ -162,225 +123,40 @@ class CSVBillService {
       String? sessionPath = sessionFolders[stateCode];
       
       if (sessionPath == null) {
-        if (kDebugMode) {
-          print('Could not find session folder for state $stateCode');
-        }
         return false;
       }
       
       // Base path for all CSV files
       final basePath = 'assets/data/csvs/$stateCode/$sessionPath/csv';
       
-      if (kDebugMode) {
-        print('Loading CSV files from path: $basePath');
-      }
-      
-      // Special handling for FL and GA to ensure proper loading
-      if (stateCode == 'FL' || stateCode == 'GA') {
-        try {
-          if (kDebugMode) {
-            print('Using sequential loading for special state: $stateCode');
-          }
-          
-          // Load data sequentially to better debug issues
-          await _loadStatePeopleData(stateCode, '$basePath/people.csv');
-          if (kDebugMode) {
-            print('People data loaded for $stateCode: ${_statePeopleData[stateCode]?.length ?? 0} records');
-          }
-          
-          await _loadStateBillsData(stateCode, '$basePath/bills.csv');
-          if (kDebugMode) {
-            print('Bills data loaded for $stateCode: ${_stateBillsData[stateCode]?.length ?? 0} records');
-          }
-          
-          await _loadStateSponsorsData(stateCode, '$basePath/sponsors.csv');
-          if (kDebugMode) {
-            print('Sponsors data loaded for $stateCode: ${_stateSponsorsData[stateCode]?.length ?? 0} records');
-          }
-          
-          await _loadStateHistoryData(stateCode, '$basePath/history.csv');
-          if (kDebugMode) {
-            print('History data loaded for $stateCode: ${_stateHistoryData[stateCode]?.length ?? 0} records');
-          }
-        } catch (e) {
-          if (kDebugMode) {
-            print('Error during sequential loading for $stateCode: $e');
-            print('Falling back to standard loading method');
-          }
-          
-          // Fallback to standard parallel loading if sequential fails
-          await Future.wait([
-            _loadStatePeopleData(stateCode, '$basePath/people.csv'),
-            _loadStateBillsData(stateCode, '$basePath/bills.csv'),
-            _loadStateSponsorsData(stateCode, '$basePath/sponsors.csv'),
-            _loadStateHistoryData(stateCode, '$basePath/history.csv'),
-          ]);
-        }
-      } else {
-        // Load all data in parallel for other states
-        await Future.wait([
-          _loadStatePeopleData(stateCode, '$basePath/people.csv'),
-          _loadStateBillsData(stateCode, '$basePath/bills.csv'),
-          _loadStateSponsorsData(stateCode, '$basePath/sponsors.csv'),
-          _loadStateHistoryData(stateCode, '$basePath/history.csv'),
-        ]);
-      }
-      
-      if (kDebugMode) {
-        print('Loaded state data for $stateCode:');
-        print('  People: ${_statePeopleData[stateCode]?.length ?? 0}');
-        print('  Bills: ${_stateBillsData[stateCode]?.length ?? 0}');
-        print('  Sponsors: ${_stateSponsorsData[stateCode]?.length ?? 0}');
-        print('  History: ${_stateHistoryData[stateCode]?.length ?? 0}');
-      }
+      // Load all data in parallel
+      await Future.wait([
+        _loadStatePeopleData(stateCode, '$basePath/people.csv'),
+        _loadStateBillsData(stateCode, '$basePath/bills.csv'),
+        _loadStateSponsorsData(stateCode, '$basePath/sponsors.csv'),
+        _loadStateHistoryData(stateCode, '$basePath/history.csv'),
+      ]);
       
       return true;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error loading state data for $stateCode: $e');
-        print('Exception details: ${e.toString()}');
-      }
       return false;
     }
   }
 
-  // Load people data from CSV
-  Future<void> _loadPeopleData() async {
-    try {
-      final data = await rootBundle.loadString('assets/data/people.csv');
-      
-      final rows = const CsvToListConverter().convert(data, eol: '\n');
-      
-      // Extract headers from first row
-      final headers = rows[0].map((e) => e.toString()).toList();
-      
-      // Convert rows to maps
-      _peopleData = [];
-      for (int i = 1; i < rows.length; i++) {
-        final rowData = <String, dynamic>{};
-        for (int j = 0; j < headers.length && j < rows[i].length; j++) {
-          rowData[headers[j]] = rows[i][j];
-        }
-        _peopleData!.add(rowData);
-      }
-      
-      if (kDebugMode) {
-        print('App-wide people data loaded: ${_peopleData!.length} records');
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error loading app-wide people data: $e');
-      }
-      _peopleData = [];
-    }
-  }
+  // Removed loading from root people.csv - using state-specific files only
 
-  // Load bills data from CSV
-  Future<void> _loadBillsData() async {
-    try {
-      final data = await rootBundle.loadString('assets/data/bills.csv');
-      
-      final rows = const CsvToListConverter().convert(data, eol: '\n');
-      
-      // Extract headers from first row
-      final headers = rows[0].map((e) => e.toString()).toList();
-      
-      // Convert rows to maps
-      _billsData = [];
-      for (int i = 1; i < rows.length; i++) {
-        final rowData = <String, dynamic>{};
-        for (int j = 0; j < headers.length && j < rows[i].length; j++) {
-          rowData[headers[j]] = rows[i][j];
-        }
-        _billsData!.add(rowData);
-      }
-      
-      if (kDebugMode) {
-        print('App-wide bills data loaded: ${_billsData!.length} records');
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error loading app-wide bills data: $e');
-      }
-      _billsData = [];
-    }
-  }
+  // Removed loading from root bills.csv - using state-specific files only
 
-  // Load sponsors data from CSV
-  Future<void> _loadSponsorsData() async {
-    try {
-      final data = await rootBundle.loadString('assets/data/sponsors.csv');
-      
-      final rows = const CsvToListConverter().convert(data, eol: '\n');
-      
-      // Extract headers from first row
-      final headers = rows[0].map((e) => e.toString()).toList();
-      
-      // Convert rows to maps
-      _sponsorsData = [];
-      for (int i = 1; i < rows.length; i++) {
-        final rowData = <String, dynamic>{};
-        for (int j = 0; j < headers.length && j < rows[i].length; j++) {
-          rowData[headers[j]] = rows[i][j];
-        }
-        _sponsorsData!.add(rowData);
-      }
-      
-      if (kDebugMode) {
-        print('App-wide sponsors data loaded: ${_sponsorsData!.length} records');
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error loading app-wide sponsors data: $e');
-      }
-      _sponsorsData = [];
-    }
-  }
+  // Removed loading from root sponsors.csv - using state-specific files only
 
-  // Load history data from CSV
-  Future<void> _loadHistoryData() async {
-    try {
-      final data = await rootBundle.loadString('assets/data/history.csv');
-      
-      final rows = const CsvToListConverter().convert(data, eol: '\n');
-      
-      // Extract headers from first row
-      final headers = rows[0].map((e) => e.toString()).toList();
-      
-      // Convert rows to maps
-      _historyData = [];
-      for (int i = 1; i < rows.length; i++) {
-        final rowData = <String, dynamic>{};
-        for (int j = 0; j < headers.length && j < rows[i].length; j++) {
-          rowData[headers[j]] = rows[i][j];
-        }
-        _historyData!.add(rowData);
-      }
-      
-      if (kDebugMode) {
-        print('App-wide history data loaded: ${_historyData!.length} records');
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error loading app-wide history data: $e');
-      }
-      _historyData = [];
-    }
-  }
+  // Removed loading from root history.csv - using state-specific files only
 
   // Load state-specific people data
   Future<void> _loadStatePeopleData(String stateCode, String assetPath) async {
     try {
-      if (kDebugMode) {
-        print('Loading people data for $stateCode from path: $assetPath');
-      }
-      
       final data = await rootBundle.loadString(assetPath);
       
       if (data.isEmpty) {
-        if (kDebugMode) {
-          print('WARNING: Empty data returned for $stateCode people CSV file');
-        }
         _statePeopleData[stateCode] = [];
         return;
       }
@@ -390,26 +166,15 @@ class CSVBillService {
       try {
         rows = const CsvToListConverter().convert(data, eol: '\n');
         if (rows.isEmpty) {
-          if (kDebugMode) {
-            print('Warning: No rows parsed with newline delimiter for $stateCode people, trying \\r\\n');
-          }
           rows = const CsvToListConverter().convert(data, eol: '\r\n');
         }
       } catch (e) {
-        if (kDebugMode) {
-          print('Error parsing people CSV data: $e');
-          print('Trying fallback CSV parsing approach');
-        }
-        
         // Manual fallback CSV parsing
         final lines = data.split('\n');
         rows = lines.map((line) => line.split(',')).toList();
       }
       
       if (rows.isEmpty) {
-        if (kDebugMode) {
-          print('Warning: Failed to parse any rows from people CSV data for $stateCode');
-        }
         _statePeopleData[stateCode] = [];
         return;
       }
@@ -433,15 +198,7 @@ class CSVBillService {
       }
       
       _statePeopleData[stateCode] = stateData;
-      
-      if (kDebugMode) {
-        print('$stateCode state people data loaded: ${stateData.length} records');
-      }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error loading $stateCode state people data: $e');
-        print('Exception details: ${e.toString()}');
-      }
       _statePeopleData[stateCode] = [];
     }
   }
@@ -449,31 +206,11 @@ class CSVBillService {
   // Load state-specific bills data
   Future<void> _loadStateBillsData(String stateCode, String assetPath) async {
     try {
-      if (kDebugMode) {
-        print('Loading bills data for $stateCode from path: $assetPath');
-      }
-      
       final data = await rootBundle.loadString(assetPath);
       
       if (data.isEmpty) {
-        if (kDebugMode) {
-          print('WARNING: Empty data returned for $stateCode bills CSV file');
-        }
         _stateBillsData[stateCode] = [];
         return;
-      }
-      
-      if (kDebugMode) {
-        print('CSV data loaded successfully for $stateCode (${data.length} bytes)');
-        final lineCount = data.split('\n').length;
-        print('Lines in CSV: $lineCount');
-      }
-      
-      // Special handling for FL and GA to check if file is being read correctly
-      if (stateCode == 'FL' || stateCode == 'GA') {
-        if (kDebugMode) {
-          print('First 100 characters of $stateCode CSV: ${data.substring(0, data.length > 100 ? 100 : data.length)}...');
-        }
       }
       
       // Use a more resilient CSV converter with different delimiters and line endings
@@ -481,40 +218,21 @@ class CSVBillService {
       try {
         rows = const CsvToListConverter().convert(data, eol: '\n');
         if (rows.isEmpty) {
-          if (kDebugMode) {
-            print('Warning: No rows parsed with newline delimiter for $stateCode, trying \\r\\n');
-          }
           rows = const CsvToListConverter().convert(data, eol: '\r\n');
         }
       } catch (e) {
-        if (kDebugMode) {
-          print('Error parsing CSV data with standard converter: $e');
-          print('Trying fallback CSV parsing approach');
-        }
-        
         // Manual fallback CSV parsing
         final lines = data.split('\n');
         rows = lines.map((line) => line.split(',')).toList();
       }
       
       if (rows.isEmpty) {
-        if (kDebugMode) {
-          print('Warning: Failed to parse any rows from CSV data for $stateCode');
-        }
         _stateBillsData[stateCode] = [];
         return;
       }
       
-      if (kDebugMode) {
-        print('Successfully parsed ${rows.length} rows from CSV data for $stateCode');
-      }
-      
       // Extract headers from first row
       final headers = rows[0].map((e) => e.toString()).toList();
-      
-      if (kDebugMode) {
-        print('CSV headers for $stateCode: ${headers.join(', ')}');
-      }
       
       // Convert rows to maps
       final stateData = <Map<String, dynamic>>[];
@@ -537,30 +255,11 @@ class CSVBillService {
         // Verify the row has minimum required data
         if (rowData.containsKey('bill_number') && rowData['bill_number'] != null) {
           stateData.add(rowData);
-        } else if (kDebugMode) {
-          print('Skipping row $i for $stateCode due to missing bill_number');
         }
       }
       
       _stateBillsData[stateCode] = stateData;
-      
-      if (kDebugMode) {
-        print('$stateCode state bills data loaded: ${stateData.length} records');
-        
-        // For FL and GA, print first bill as a sample
-        if ((stateCode == 'FL' || stateCode == 'GA') && stateData.isNotEmpty) {
-          print('Sample bill data for $stateCode:');
-          stateData.first.forEach((key, value) {
-            print('  $key: $value');
-          });
-        }
-      }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error loading $stateCode state bills data: $e');
-        print('Exception details: ${e.toString()}');
-        print('Stack trace: ${StackTrace.current}');
-      }
       _stateBillsData[stateCode] = [];
     }
   }
@@ -568,16 +267,9 @@ class CSVBillService {
   // Load state-specific sponsors data
   Future<void> _loadStateSponsorsData(String stateCode, String assetPath) async {
     try {
-      if (kDebugMode) {
-        print('Loading sponsors data for $stateCode from path: $assetPath');
-      }
-      
       final data = await rootBundle.loadString(assetPath);
       
       if (data.isEmpty) {
-        if (kDebugMode) {
-          print('WARNING: Empty data returned for $stateCode sponsors CSV file');
-        }
         _stateSponsorsData[stateCode] = [];
         return;
       }
@@ -587,26 +279,15 @@ class CSVBillService {
       try {
         rows = const CsvToListConverter().convert(data, eol: '\n');
         if (rows.isEmpty) {
-          if (kDebugMode) {
-            print('Warning: No rows parsed with newline delimiter for $stateCode sponsors, trying \\r\\n');
-          }
           rows = const CsvToListConverter().convert(data, eol: '\r\n');
         }
       } catch (e) {
-        if (kDebugMode) {
-          print('Error parsing sponsors CSV data: $e');
-          print('Trying fallback CSV parsing approach');
-        }
-        
         // Manual fallback CSV parsing
         final lines = data.split('\n');
         rows = lines.map((line) => line.split(',')).toList();
       }
       
       if (rows.isEmpty) {
-        if (kDebugMode) {
-          print('Warning: Failed to parse any rows from sponsors CSV data for $stateCode');
-        }
         _stateSponsorsData[stateCode] = [];
         return;
       }
@@ -630,15 +311,7 @@ class CSVBillService {
       }
       
       _stateSponsorsData[stateCode] = stateData;
-      
-      if (kDebugMode) {
-        print('$stateCode state sponsors data loaded: ${stateData.length} records');
-      }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error loading $stateCode state sponsors data: $e');
-        print('Exception details: ${e.toString()}');
-      }
       _stateSponsorsData[stateCode] = [];
     }
   }
@@ -646,16 +319,9 @@ class CSVBillService {
   // Load state-specific history data
   Future<void> _loadStateHistoryData(String stateCode, String assetPath) async {
     try {
-      if (kDebugMode) {
-        print('Loading history data for $stateCode from path: $assetPath');
-      }
-      
       final data = await rootBundle.loadString(assetPath);
       
       if (data.isEmpty) {
-        if (kDebugMode) {
-          print('WARNING: Empty data returned for $stateCode history CSV file');
-        }
         _stateHistoryData[stateCode] = [];
         return;
       }
@@ -665,26 +331,15 @@ class CSVBillService {
       try {
         rows = const CsvToListConverter().convert(data, eol: '\n');
         if (rows.isEmpty) {
-          if (kDebugMode) {
-            print('Warning: No rows parsed with newline delimiter for $stateCode history, trying \\r\\n');
-          }
           rows = const CsvToListConverter().convert(data, eol: '\r\n');
         }
       } catch (e) {
-        if (kDebugMode) {
-          print('Error parsing history CSV data: $e');
-          print('Trying fallback CSV parsing approach');
-        }
-        
         // Manual fallback CSV parsing
         final lines = data.split('\n');
         rows = lines.map((line) => line.split(',')).toList();
       }
       
       if (rows.isEmpty) {
-        if (kDebugMode) {
-          print('Warning: Failed to parse any rows from history CSV data for $stateCode');
-        }
         _stateHistoryData[stateCode] = [];
         return;
       }
@@ -708,15 +363,7 @@ class CSVBillService {
       }
       
       _stateHistoryData[stateCode] = stateData;
-      
-      if (kDebugMode) {
-        print('$stateCode state history data loaded: ${stateData.length} records');
-      }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error loading $stateCode state history data: $e');
-        print('Exception details: ${e.toString()}');
-      }
       _stateHistoryData[stateCode] = [];
     }
   }
@@ -729,9 +376,6 @@ class CSVBillService {
         : _peopleData;
     
     if (!_initialized || peopleData == null || peopleData.isEmpty) {
-      if (kDebugMode) {
-        print('People data not initialized${stateCode != null ? ' for state $stateCode' : ''}');
-      }
       return null;
     }
 
@@ -775,100 +419,29 @@ class CSVBillService {
       await initialize();
     }
     
-    if (kDebugMode) {
-      print('getBillsByState called for state: $stateCode');
-      print('Checking if state data is available...');
-      print('Available states: ${_availableStates.join(', ')}');
-      print('Is state in available states: ${_availableStates.contains(stateCode)}');
-      print('Already loaded states: ${_stateBillsData.keys.join(', ')}');
-    }
-    
     // Special handling for Florida and Georgia which were having issues
     if (stateCode == 'FL' || stateCode == 'GA') {
-      if (kDebugMode) {
-        print('Special handling for $stateCode');
-      }
-      
       // Remove any existing cached data for this state to ensure a clean reload
       _stateBillsData.remove(stateCode);
       _statePeopleData.remove(stateCode);
       _stateSponsorsData.remove(stateCode);
       _stateHistoryData.remove(stateCode);
       
-      if (kDebugMode) {
-        print('Cleared existing cache for $stateCode, forcing fresh load');
-      }
-      
       // Force a fresh load of the state data
-      final forcedLoad = await loadStateData(stateCode);
-      if (kDebugMode) {
-        print('Forced load of $stateCode data: $forcedLoad');
-        
-        if (_stateBillsData.containsKey(stateCode)) {
-          print('$stateCode has ${_stateBillsData[stateCode]!.length} bills after forced load');
-          
-          // Log a sample of the first few bills to debug
-          if (_stateBillsData[stateCode]!.isNotEmpty) {
-            print('Sample $stateCode bill data:');
-            final sampleBill = _stateBillsData[stateCode]!.first;
-            sampleBill.forEach((key, value) {
-              print('  $key: $value');
-            });
-          }
-        } else {
-          print('$stateCode still has no data after forced load');
-        }
-      }
+      await loadStateData(stateCode);
     }
     
     // Check if state data is available and load it if needed
     if (!_stateBillsData.containsKey(stateCode)) {
-      if (kDebugMode) {
-        print('State data not loaded yet for $stateCode, attempting to load...');
-      }
-      
       final loaded = await loadStateData(stateCode);
       if (!loaded) {
-        if (kDebugMode) {
-          print('Could not load data for state $stateCode');
-        }
         return [];
       }
     }
     
     final billsData = _stateBillsData[stateCode];
     if (billsData == null || billsData.isEmpty) {
-      if (kDebugMode) {
-        print('No bills data available for state $stateCode');
-        
-        // Additional diagnostics to help debug the issue
-        try {
-          // Attempt direct file read to see if the file exists and has content
-          final assetPath = 'assets/data/csvs/$stateCode/';
-          for (final sessionFolder in [
-            '2025-2025_Regular_Session',
-            '2025-2026_Regular_Session',
-          ]) {
-            final fullPath = '$assetPath$sessionFolder/csv/bills.csv';
-            print('Attempting direct asset read for diagnostic purposes: $fullPath');
-            try {
-              final data = await rootBundle.loadString(fullPath);
-              final firstLine = data.split('\n').first;
-              print('First line of $fullPath: $firstLine');
-              print('File exists and has content (${data.length} bytes)');
-            } catch (e) {
-              print('Failed to read $fullPath: $e');
-            }
-          }
-        } catch (e) {
-          print('Diagnostic check failed: $e');
-        }
-      }
       return [];
-    }
-    
-    if (kDebugMode) {
-      print('Found ${billsData.length} bills for state $stateCode');
     }
     
     final List<RepresentativeBill> result = [];
@@ -980,16 +553,8 @@ class CSVBillService {
         return b.introducedDate!.compareTo(a.introducedDate!);
       });
       
-      if (kDebugMode) {
-        print('Returning ${result.length} bills for state $stateCode');
-      }
-      
       return result;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error getting bills for state $stateCode: $e');
-        print('Exception details: ${e.toString()}');
-      }
       return [];
     }
   }
@@ -1014,9 +579,6 @@ class CSVBillService {
         billsData == null ||
         billsData.isEmpty ||
         historyData == null) {
-      if (kDebugMode) {
-        print('Data not initialized${stateCode != null ? ' for state $stateCode' : ''}');
-      }
       return [];
     }
     
@@ -1030,9 +592,6 @@ class CSVBillService {
           .toList();
       
       if (sponsoredBillIds.isEmpty) {
-        if (kDebugMode) {
-          print('No sponsored bills found for people_id: $peopleId${stateCode != null ? ' in state $stateCode' : ''}');
-        }
         return [];
       }
       
@@ -1099,9 +658,6 @@ class CSVBillService {
       
       return result;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error getting sponsored bills: $e');
-      }
       return [];
     }
   }
@@ -1121,9 +677,6 @@ class CSVBillService {
     final peopleId = findPersonIdByName(rep.name, stateCode: rep.state);
     
     if (peopleId == null) {
-      if (kDebugMode) {
-        print('Could not find person ID for representative: ${rep.name} in state ${rep.state}');
-      }
       return [];
     }
     
@@ -1145,9 +698,6 @@ class CSVBillService {
     final peopleId = findPersonIdByName(rep.name, stateCode: rep.state);
     
     if (peopleId == null) {
-      if (kDebugMode) {
-        print('Could not find person ID for local representative: ${rep.name} in state ${rep.state}');
-      }
       return [];
     }
     

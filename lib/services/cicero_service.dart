@@ -1,11 +1,9 @@
 // lib/services/cicero_service.dart
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:govvy/services/network_service.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:http/http.dart' as http;
-import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/models/local_representative_model.dart';
 
 class CiceroService {
@@ -583,7 +581,7 @@ class CiceroService {
       if (kDebugMode) {
         print('Error fetching representatives: $e');
       }
-      throw e;
+      rethrow;
     }
   }
 
@@ -957,7 +955,7 @@ class CiceroService {
       String sanitizedDistrict =
           district.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
       String sanitizedName = fullName.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '-');
-      bioGuideId += '${sanitizedDistrict}-${sanitizedName}';
+      bioGuideId += '$sanitizedDistrict-$sanitizedName';
     }
 
     return LocalRepresentative(

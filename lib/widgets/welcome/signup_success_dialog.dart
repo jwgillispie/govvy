@@ -1,7 +1,6 @@
 // lib/widgets/welcome/signup_success_dialog.dart
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SignupSuccessDialog extends StatelessWidget {
   final VoidCallback onDismiss;

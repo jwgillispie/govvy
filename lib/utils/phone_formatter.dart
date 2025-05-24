@@ -21,7 +21,7 @@ class PhoneInputFormatter extends TextInputFormatter {
     if (digits.isEmpty) {
       formattedValue = '';
     } else if (digits.length <= 3) {
-      formattedValue = '(${digits})';
+      formattedValue = '($digits)';
     } else if (digits.length <= 6) {
       formattedValue = '(${digits.substring(0, 3)}) ${digits.substring(3)}';
     } else {

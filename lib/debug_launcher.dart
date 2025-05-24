@@ -12,9 +12,7 @@ void main() async {
   // Load environment variables from .env file
   try {
     await dotenv.load(fileName: "assets/.env");
-    print("✅ Loaded .env file with ${dotenv.env.length} variables");
   } catch (e) {
-    print("⚠️ Failed to load .env file: $e");
   }
   
   // Initialize remote config to load API keys

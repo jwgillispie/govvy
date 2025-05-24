@@ -8,7 +8,6 @@ import 'package:govvy/widgets/representatives/name_search_input.dart';
 import 'package:govvy/widgets/representatives/representative_card.dart';
 import 'package:govvy/screens/representatives/representative_details_screen.dart';
 import 'package:govvy/services/auth_service.dart';
-import 'package:govvy/utils/district_type_formatter.dart';
 
 class FindRepresentativesScreen extends StatefulWidget {
   const FindRepresentativesScreen({Key? key}) : super(key: key);

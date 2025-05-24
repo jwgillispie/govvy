@@ -3,12 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:govvy/models/user_model.dart';
-import 'package:flutter/material.dart';
 import 'package:govvy/services/network_service.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 // Import these conditionally to fix platform compatibility
-import 'package:universal_html/html.dart' show window;
 
 class AuthService with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -23,13 +20,6 @@ class AuthService with ChangeNotifier {
   // Constructor to listen for auth state changes
   AuthService() {
     _auth.authStateChanges().listen((User? user) {
-      if (kDebugMode) {
-        print('Auth state changed: User ${user != null ? 'logged in' : 'logged out'}');
-        if (user != null) {
-          print('User ID: ${user.uid}');
-          print('User Email: ${user.email}');
-        }
-      }
       
       // Update UI when auth state changes
       notifyListeners();
@@ -309,13 +299,7 @@ class AuthService with ChangeNotifier {
         'last_login': FieldValue.serverTimestamp(),
       });
       
-      if (kDebugMode) {
-        print('Last login updated for user: $uid');
-      }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error updating last login: $e');
-      }
     }
   }
   

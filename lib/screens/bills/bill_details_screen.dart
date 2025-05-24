@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/models/bill_model.dart';
-import 'package:govvy/providers/bill_provider.dart';
+import 'package:govvy/models/enhanced_bill_details.dart';
+import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/screens/representatives/representative_details_screen.dart';
 import 'package:govvy/widgets/bills/bill_history_card.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,7 +32,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this); // 3 tabs: Info, History, Sponsors
+    _tabController = TabController(length: 4, vsync: this); // 4 tabs: Info, History, Sponsors, Votes
 
     // Fetch bill details when the screen loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -46,14 +47,10 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
   }
 
   Future<void> _fetchBillDetails() async {
-    final provider = Provider.of<BillProvider>(context, listen: false);
+    final provider = Provider.of<EnhancedBillProvider>(context, listen: false);
     
     // If billData is provided, set it directly in the provider to avoid the API call
     if (widget.billData != null) {
-      if (kDebugMode) {
-        print('Using provided bill data for ${widget.stateCode}-${widget.billId}');
-        print('Bill title: ${widget.billData!.title}');
-      }
       provider.setSelectedBill(widget.billData!);
     } else {
       // Otherwise fetch bill details from API/storage
@@ -83,27 +80,18 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BillProvider>(
+    return Consumer<EnhancedBillProvider>(
       builder: (context, provider, child) {
         // If provider.selectedBill is null, but we have billData, use that directly
         final bill = provider.selectedBill ?? widget.billData;
+        final enhancedDetails = provider.selectedBillDetails;
         final isLoading = provider.isLoadingDetails;
-        final isLoadingDocuments = provider.isLoadingDocuments;
+        final isLoadingDocuments = false; // Enhanced provider doesn't have this property
         final documents = provider.selectedBillDocuments;
 
         // Special handling for FL and GA bills to improve error handling
         final bool isStateOfInterest = widget.stateCode == 'FL' || widget.stateCode == 'GA';
         
-        // Debug information to help trace bill loading
-        if (kDebugMode && bill == null) {
-          print('⚠️ Both provider.selectedBill and widget.billData are null for billId: ${widget.billId}, state: ${widget.stateCode}');
-          if (widget.billData != null) {
-            print('Passed billData title: ${widget.billData!.title}');
-          }
-          if (provider.errorMessageDetails != null) {
-            print('Error message: ${provider.errorMessageDetails}');
-          }
-        }
 
         return Scaffold(
           appBar: AppBar(
@@ -122,7 +110,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                           Icon(
                             Icons.error_outline,
                             size: 48,
-                            color: Colors.red.shade400,
+                            color: _getColorShade(Colors.red, 400),
                           ),
                           const SizedBox(height: 16),
                           Padding(
@@ -141,7 +129,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                                 ? 'The bill you requested may have been moved or removed.'
                                 : 'Try returning to the bills list and selecting a different bill.',
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.grey.shade600),
+                              style: TextStyle(color: _getColorShade(Colors.grey, 600)),
                             ),
                           ),
                           // Show bill ID for debugging in debug mode only
@@ -153,7 +141,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey.shade400,
+                                  color: _getColorShade(Colors.grey, 400),
                                 ),
                               ),
                             ),
@@ -179,6 +167,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                             Tab(text: 'Information'),
                             Tab(text: 'History'),
                             Tab(text: 'Sponsors'),
+                            Tab(text: 'Votes'),
                           ],
                           labelColor: Theme.of(context).colorScheme.primary,
                           unselectedLabelColor: Colors.grey,
@@ -191,13 +180,16 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                             controller: _tabController,
                             children: [
                               // Information tab
-                              _buildInformationTab(bill, documents, isLoadingDocuments),
+                              _buildInformationTab(bill, documents, isLoadingDocuments, enhancedDetails),
                               
                               // History tab
                               _buildHistoryTab(bill),
                               
                               // Sponsors tab
                               _buildSponsorsTab(bill),
+                              
+                              // Votes tab
+                              _buildVotesTab(bill),
                             ],
                           ),
                         ),
@@ -318,7 +310,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                   'Status: ${bill.status}',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey.shade800,
+                    color: _getColorShade(Colors.grey, 800),
                   ),
                 ),
               ),
@@ -332,7 +324,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
               'Last Action: ${bill.lastActionDate}',
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.grey.shade700,
+                color: _getColorShade(Colors.grey, 700),
               ),
             ),
           ],
@@ -344,7 +336,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
               'Introduced: ${bill.introducedDate}',
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.grey.shade700,
+                color: _getColorShade(Colors.grey, 700),
               ),
             ),
           ],
@@ -353,7 +345,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
     );
   }
 
-  Widget _buildInformationTab(BillModel bill, List<BillDocument>? documents, bool isLoadingDocuments) {
+  Widget _buildInformationTab(BillModel bill, List<BillDocument>? documents, bool isLoadingDocuments, EnhancedBillDetails? enhancedDetails) {
     // Special handling for FL and GA bills to ensure details are shown
     final bool isStateOfInterest = bill.state == 'FL' || bill.state == 'GA';
     final bool hasUrl = bill.url.isNotEmpty;
@@ -368,9 +360,9 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.shade50,
+                color: _getColorShade(Colors.deepPurple, 50),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.deepPurple.shade200),
+                border: Border.all(color: _getColorShade(Colors.deepPurple, 200)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -378,7 +370,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                   Icon(
                     Icons.check_circle,
                     size: 16,
-                    color: Colors.deepPurple.shade700,
+                    color: _getColorShade(Colors.deepPurple, 700),
                   ),
                   const SizedBox(width: 6),
                   Text(
@@ -386,7 +378,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple.shade700,
+                      color: _getColorShade(Colors.deepPurple, 700),
                     ),
                   ),
                 ],
@@ -408,9 +400,9 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.grey.shade50,
+                color: _getColorShade(Colors.grey, 50),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.shade200),
+                border: Border.all(color: _getColorShade(Colors.grey, 200)),
               ),
               child: Text(
                 bill.description!,
@@ -433,9 +425,9 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+                color: _getColorShade(Colors.grey, 100),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey.shade300),
+                border: Border.all(color: _getColorShade(Colors.grey, 300)),
               ),
               child: Row(
                 children: [
@@ -475,11 +467,26 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
               children: bill.subjects!.map((subject) {
                 return Chip(
                   label: Text(subject),
-                  backgroundColor: Colors.blue.shade50,
-                  side: BorderSide(color: Colors.blue.shade200),
+                  backgroundColor: _getColorShade(Colors.blue, 50),
+                  side: BorderSide(color: _getColorShade(Colors.blue, 200)),
                 );
               }).toList(),
             ),
+            const SizedBox(height: 24),
+          ],
+
+          // Enhanced data section with API enrichments
+          if (enhancedDetails?.extraData.isNotEmpty == true) ...[
+            Text(
+              'Enhanced Bill Information',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            if (enhancedDetails != null)
+              _buildEnhancedDataSection(enhancedDetails),
             const SizedBox(height: 24),
           ],
 
@@ -496,9 +503,9 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.blue.shade50,
+                color: _getColorShade(Colors.blue, 50),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.blue.shade200),
+                border: Border.all(color: _getColorShade(Colors.blue, 200)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -507,7 +514,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                     children: [
                       Icon(
                         Icons.info_outline,
-                        color: Colors.blue.shade800,
+                        color: _getColorShade(Colors.blue, 800),
                         size: 18,
                       ),
                       const SizedBox(width: 8),
@@ -516,7 +523,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                           'Current Status: ${bill.status}',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue.shade800,
+                            color: _getColorShade(Colors.blue, 800),
                           ),
                         ),
                       ),
@@ -530,7 +537,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                       child: Text(
                         'Last Action Date: ${bill.lastActionDate}',
                         style: TextStyle(
-                          color: Colors.blue.shade800,
+                          color: _getColorShade(Colors.blue, 800),
                         ),
                       ),
                     ),
@@ -543,7 +550,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                       child: Text(
                         'Last Action: ${bill.lastAction}',
                         style: TextStyle(
-                          color: Colors.blue.shade800,
+                          color: _getColorShade(Colors.blue, 800),
                         ),
                       ),
                     ),
@@ -575,15 +582,15 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.amber.shade50,
+                color: _getColorShade(Colors.amber, 50),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.amber.shade200),
+                border: Border.all(color: _getColorShade(Colors.amber, 200)),
               ),
               child: Row(
                 children: [
                   Icon(
                     Icons.info_outline,
-                    color: Colors.amber.shade800,
+                    color: _getColorShade(Colors.amber, 800),
                     size: 18,
                   ),
                   const SizedBox(width: 8),
@@ -653,7 +660,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Icon(
               Icons.history,
               size: 48,
-              color: Colors.grey.shade400,
+              color: _getColorShade(Colors.grey, 400),
             ),
             const SizedBox(height: 16),
             Text(
@@ -692,7 +699,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Icon(
               Icons.person,
               size: 48,
-              color: Colors.grey.shade400,
+              color: _getColorShade(Colors.grey, 400),
             ),
             const SizedBox(height: 16),
             Text(
@@ -816,11 +823,11 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
               // Representative image or placeholder
               CircleAvatar(
                 radius: 24,
-                backgroundColor: Colors.grey.shade200,
+                backgroundColor: _getColorShade(Colors.grey, 200),
                 backgroundImage:
                     sponsor.imageUrl != null ? NetworkImage(sponsor.imageUrl!) : null,
                 child: sponsor.imageUrl == null
-                    ? Icon(Icons.person, size: 24, color: Colors.grey.shade400)
+                    ? Icon(Icons.person, size: 24, color: _getColorShade(Colors.grey, 400))
                     : null,
               ),
               const SizedBox(width: 12),
@@ -854,7 +861,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                             _getPartyName(sponsor.party),
                             style: TextStyle(
                               fontSize: 12,
-                              color: Colors.grey.shade700,
+                              color: _getColorShade(Colors.grey, 700),
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -864,7 +871,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                             sponsor.role!,
                             style: TextStyle(
                               fontSize: 12,
-                              color: Colors.grey.shade700,
+                              color: _getColorShade(Colors.grey, 700),
                             ),
                           ),
                       ],
@@ -874,7 +881,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                       _getSponsorLocation(sponsor),
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.grey.shade600,
+                        color: _getColorShade(Colors.grey, 600),
                       ),
                     ),
                   ],
@@ -886,7 +893,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 14,
-                  color: Colors.grey.shade400,
+                  color: _getColorShade(Colors.grey, 400),
                 ),
             ],
           ),
@@ -946,8 +953,309 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
 
   String _getSponsorLocation(RepresentativeSponsor sponsor) {
     final district = sponsor.district != null ? ' District ${sponsor.district}' : '';
-    return '${sponsor.state}${district}';
+    return '${sponsor.state}$district';
   }
+  
+  /// Build the votes tab showing roll call votes
+  Widget _buildVotesTab(BillModel bill) {
+    // Access enhanced bill provider to get vote information
+    final enhancedProvider = Provider.of<EnhancedBillProvider>(context, listen: false);
+    final enhancedBill = enhancedProvider.getEnhancedBillDetailsForId(bill.billId);
+    
+    // Get votes from enhanced bill if available
+    final votes = enhancedBill?.votes;
+    
+    if (votes == null || votes.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.how_to_vote_outlined,
+              size: 48,
+              color: _getColorShade(Colors.grey, 400),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No vote information available for this bill.',
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
+    }
+    
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: votes.length,
+      itemBuilder: (context, index) {
+        final vote = votes[index];
+        return _buildVoteCard(vote);
+      },
+    );
+  }
+  
+  /// Build a single vote card
+  Widget _buildVoteCard(BillVote vote) {
+    // Calculate progress values for the vote counts
+    final totalVotes = vote.yesCount + vote.noCount + vote.nVCount + vote.absentCount;
+    final yesPercent = totalVotes > 0 ? vote.yesCount / totalVotes : 0.0;
+    final noPercent = totalVotes > 0 ? vote.noCount / totalVotes : 0.0;
+    final otherPercent = totalVotes > 0 ? (vote.nVCount + vote.absentCount) / totalVotes : 0.0;
+    
+    // Results background color
+    final resultColor = vote.result.toLowerCase().contains('pass') ? 
+        _getColorShade(Colors.green, 100) : _getColorShade(Colors.red, 100);
+    final resultTextColor = vote.result.toLowerCase().contains('pass') ?
+        _getColorShade(Colors.green, 800) : _getColorShade(Colors.red, 800);
+    
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Vote date and chamber
+            Row(
+              children: [
+                Icon(
+                  Icons.event,
+                  size: 16,
+                  color: _getColorShade(Colors.grey, 600),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  vote.date,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: _getColorShade(Colors.grey, 700),
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: _getColorShade(Colors.blue, 100),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    vote.chamber,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: _getColorShade(Colors.blue, 800),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            
+            const SizedBox(height: 12),
+            
+            // Vote description
+            Text(
+              vote.description,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            
+            const SizedBox(height: 12),
+            
+            // Vote result badge
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: resultColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(
+                'Result: ${vote.result}',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: resultTextColor,
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 16),
+            
+            // Vote counts
+            Row(
+              children: [
+                Expanded(
+                  child: _buildVoteCountColumn(
+                    'Yes', 
+                    vote.yesCount, 
+                    Colors.green,
+                    totalVotes,
+                  ),
+                ),
+                Expanded(
+                  child: _buildVoteCountColumn(
+                    'No', 
+                    vote.noCount, 
+                    Colors.red,
+                    totalVotes,
+                  ),
+                ),
+                Expanded(
+                  child: _buildVoteCountColumn(
+                    'Other', 
+                    vote.nVCount + vote.absentCount, 
+                    Colors.grey,
+                    totalVotes,
+                  ),
+                ),
+              ],
+            ),
+            
+            const SizedBox(height: 12),
+            
+            // Progress bar showing vote distribution
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: (yesPercent * 100).round(),
+                    child: Container(
+                      height: 8,
+                      color: Colors.green,
+                    ),
+                  ),
+                  Expanded(
+                    flex: (noPercent * 100).round(),
+                    child: Container(
+                      height: 8,
+                      color: Colors.red,
+                    ),
+                  ),
+                  Expanded(
+                    flex: (otherPercent * 100).round(),
+                    child: Container(
+                      height: 8,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+            // View full vote details button
+            if (vote.url.isNotEmpty) ...[  
+              const SizedBox(height: 16),
+              Center(
+                child: OutlinedButton.icon(
+                  icon: const Icon(Icons.how_to_vote),
+                  label: const Text('View Full Vote Details'),
+                  onPressed: () => _launchUrl(vote.url),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+  
+  /// Helper function to get color shades safely
+  Color _getColorShade(Color baseColor, int shade) {
+    // Check if the color is already a MaterialColor with built-in shades
+    if (baseColor is MaterialColor) {
+      return baseColor[shade] ?? baseColor;
+    }
+    
+    // Handle specific colors we know have shades
+    if (baseColor == Colors.green) {
+      return Colors.green[700] ?? baseColor;
+    } else if (baseColor == Colors.red) {
+      return Colors.red[700] ?? baseColor;
+    } else if (baseColor == Colors.grey) {
+      return Colors.grey[700] ?? baseColor;
+    } else if (baseColor == Colors.blue) {
+      return Colors.blue[700] ?? baseColor;
+    } else if (baseColor == Colors.orange) {
+      return Colors.orange[700] ?? baseColor;
+    }
+    
+    // For other colors, approximate a shade based on the value
+    // Darker for higher shade values
+    if (shade > 500) {
+      // Calculate how much darker based on the shade
+      final darkerFactor = 0.1 + ((shade - 500) / 1000);
+      return _darken(baseColor, darkerFactor);
+    } else if (shade < 500) {
+      // Calculate how much lighter based on the shade
+      final lighterFactor = 0.1 + ((500 - shade) / 1000);
+      return _lighten(baseColor, lighterFactor);
+    }
+    
+    // Return the original color for shade 500
+    return baseColor;
+  }
+  
+  /// Darken a color by a factor
+  Color _darken(Color color, double factor) {
+    assert(factor >= 0 && factor <= 1);
+    
+    final r = (color.red * (1 - factor)).round().clamp(0, 255);
+    final g = (color.green * (1 - factor)).round().clamp(0, 255);
+    final b = (color.blue * (1 - factor)).round().clamp(0, 255);
+    
+    return Color.fromARGB(color.alpha, r, g, b);
+  }
+  
+  /// Lighten a color by a factor
+  Color _lighten(Color color, double factor) {
+    assert(factor >= 0 && factor <= 1);
+    
+    final r = (color.red + ((255 - color.red) * factor)).round().clamp(0, 255);
+    final g = (color.green + ((255 - color.green) * factor)).round().clamp(0, 255);
+    final b = (color.blue + ((255 - color.blue) * factor)).round().clamp(0, 255);
+    
+    return Color.fromARGB(color.alpha, r, g, b);
+  }
+
+  /// Helper widget to show vote count and label
+  Widget _buildVoteCountColumn(String label, int count, Color color, int total) {
+    final percent = total > 0 ? (count / total * 100).toStringAsFixed(1) : '0.0';
+    
+    return Column(
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: _getColorShade(color, 700),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          count.toString(),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: _getColorShade(color, 700),
+          ),
+        ),
+        Text(
+          '$percent%',
+          style: TextStyle(
+            fontSize: 12,
+            color: _getColorShade(color, 700),
+          ),
+        ),
+      ],
+    );
+  }
+  
   
   // Helper method to format error messages for better user experience
   String _formatErrorMessage(String? errorMessage, bool isStateOfInterest) {
@@ -973,5 +1281,448 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
         .replaceAll('Error getting bill details:', '')
         .replaceAll('Exception:', '')
         .trim();
+  }
+  
+  /// Build enhanced data section displaying additional API enrichments
+  Widget _buildEnhancedDataSection(EnhancedBillDetails enhancedDetails) {
+    final extraData = enhancedDetails.extraData;
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Enriched sponsor data
+        if (extraData.containsKey('enriched_sponsors')) ...[
+          _buildEnrichedSponsorsSection(extraData['enriched_sponsors']),
+          const SizedBox(height: 16),
+        ],
+        
+        // Enriched vote data
+        if (extraData.containsKey('enriched_votes')) ...[
+          _buildEnrichedVotesSection(extraData['enriched_votes']),
+          const SizedBox(height: 16),
+        ],
+        
+        // Bill text summaries
+        if (extraData.containsKey('enriched_texts')) ...[
+          _buildEnrichedTextsSection(extraData['enriched_texts']),
+          const SizedBox(height: 16),
+        ],
+        
+        // Amendment details
+        if (extraData.containsKey('enriched_amendments')) ...[
+          _buildEnrichedAmendmentsSection(extraData['enriched_amendments']),
+          const SizedBox(height: 16),
+        ],
+        
+        // Supplement details (fiscal notes, etc.)
+        if (extraData.containsKey('enriched_supplements')) ...[
+          _buildEnrichedSupplementsSection(extraData['enriched_supplements']),
+        ],
+      ],
+    );
+  }
+  
+  /// Build enriched sponsors section
+  Widget _buildEnrichedSponsorsSection(Map<int, Map<String, dynamic>> enrichedSponsors) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: _getColorShade(Colors.blue, 50),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: _getColorShade(Colors.blue, 200)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.person_pin,
+                color: _getColorShade(Colors.blue, 700),
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Sponsor Details',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: _getColorShade(Colors.blue, 800),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ...enrichedSponsors.entries.map((entry) {
+            final sponsorData = entry.value;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundColor: _getColorShade(Colors.blue, 100),
+                    child: Icon(
+                      Icons.person,
+                      size: 16,
+                      color: _getColorShade(Colors.blue, 700),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          sponsorData['name'] ?? 'Unknown',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                          ),
+                        ),
+                        if (sponsorData['party'] != null)
+                          Text(
+                            '${sponsorData['party']} ${sponsorData['role'] ?? ''}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        ],
+      ),
+    );
+  }
+  
+  /// Build enriched votes section
+  Widget _buildEnrichedVotesSection(Map<int, Map<String, dynamic>> enrichedVotes) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: _getColorShade(Colors.green, 50),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: _getColorShade(Colors.green, 200)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.how_to_vote,
+                color: _getColorShade(Colors.green, 700),
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Detailed Vote Information',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: _getColorShade(Colors.green, 800),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ...enrichedVotes.entries.map((entry) {
+            final voteData = entry.value;
+            final yesCount = voteData['yea_count'] ?? voteData['yes_count'] ?? 0;
+            final noCount = voteData['nay_count'] ?? voteData['no_count'] ?? 0;
+            final totalVotes = yesCount + noCount;
+            
+            return Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: _getColorShade(Colors.green, 100)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    voteData['desc'] ?? 'Vote',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  if (totalVotes > 0) ...[
+                    Row(
+                      children: [
+                        Text('Yes: $yesCount'),
+                        const SizedBox(width: 16),
+                        Text('No: $noCount'),
+                        const SizedBox(width: 16),
+                        Text(
+                          voteData['passed'] == 1 ? 'PASSED' : 'FAILED',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: voteData['passed'] == 1 
+                                ? _getColorShade(Colors.green, 700)
+                                : _getColorShade(Colors.red, 700),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                  if (voteData['date'] != null)
+                    Text(
+                      'Date: ${voteData['date']}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                ],
+              ),
+            );
+          }).toList(),
+        ],
+      ),
+    );
+  }
+  
+  /// Build enriched texts section
+  Widget _buildEnrichedTextsSection(Map<int, Map<String, dynamic>> enrichedTexts) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: _getColorShade(Colors.purple, 50),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: _getColorShade(Colors.purple, 200)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.description,
+                color: _getColorShade(Colors.purple, 700),
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Bill Text Documents',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: _getColorShade(Colors.purple, 800),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ...enrichedTexts.entries.map((entry) {
+            final textData = entry.value;
+            return Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: _getColorShade(Colors.purple, 100)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    textData['doc_title'] ?? textData['type'] ?? 'Document',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  if (textData['doc_date'] != null)
+                    Text(
+                      'Date: ${textData['doc_date']}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  if (textData['doc_size'] != null)
+                    Text(
+                      'Size: ${textData['doc_size']} chars',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                ],
+              ),
+            );
+          }).toList(),
+        ],
+      ),
+    );
+  }
+  
+  /// Build enriched amendments section
+  Widget _buildEnrichedAmendmentsSection(Map<int, Map<String, dynamic>> enrichedAmendments) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: _getColorShade(Colors.orange, 50),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: _getColorShade(Colors.orange, 200)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.edit_document,
+                color: _getColorShade(Colors.orange, 700),
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Amendments',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: _getColorShade(Colors.orange, 800),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ...enrichedAmendments.entries.map((entry) {
+            final amendmentData = entry.value;
+            return Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: _getColorShade(Colors.orange, 100)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    amendmentData['title'] ?? amendmentData['amendment_number'] ?? 'Amendment',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  if (amendmentData['description'] != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        amendmentData['description'],
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                    ),
+                  if (amendmentData['status'] != null)
+                    Text(
+                      'Status: ${amendmentData['status']}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                ],
+              ),
+            );
+          }).toList(),
+        ],
+      ),
+    );
+  }
+  
+  /// Build enriched supplements section
+  Widget _buildEnrichedSupplementsSection(Map<int, Map<String, dynamic>> enrichedSupplements) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: _getColorShade(Colors.teal, 50),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: _getColorShade(Colors.teal, 200)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.attach_money,
+                color: _getColorShade(Colors.teal, 700),
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                'Fiscal Notes & Analyses',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: _getColorShade(Colors.teal, 800),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ...enrichedSupplements.entries.map((entry) {
+            final supplementData = entry.value;
+            return Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: _getColorShade(Colors.teal, 100)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    supplementData['type'] ?? supplementData['title'] ?? 'Supplement',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  if (supplementData['description'] != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        supplementData['description'],
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                    ),
+                  if (supplementData['date'] != null)
+                    Text(
+                      'Date: ${supplementData['date']}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                ],
+              ),
+            );
+          }).toList(),
+        ],
+      ),
+    );
   }
 }

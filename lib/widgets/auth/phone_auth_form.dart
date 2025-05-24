@@ -370,7 +370,7 @@ Future<void> _signInWithCredential(PhoneAuthCredential credential) async {
                       style: TextStyle(fontSize: 12),
                     ),
                     // This div will be used for the invisible reCAPTCHA
-                    Container(
+                    SizedBox(
                       height: 1,
                       width: 1,
                     ),

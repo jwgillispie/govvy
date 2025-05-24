@@ -1,9 +1,9 @@
 // lib/screens/debug/debug_navigation_screen.dart
 import 'package:flutter/material.dart';
 import 'package:govvy/screens/api_debug_screen.dart';
+import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
 import 'package:govvy/screens/bills/test_state_bills_screen.dart';
 import 'package:govvy/services/remote_service_config.dart';
-import 'package:govvy/utils/api_debug_utils.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 /// A navigation screen to access different debugging tools
@@ -189,6 +189,20 @@ class _DebugNavigationScreenState extends State<DebugNavigationScreen> {
                     ),
                   ),
                   
+                  _buildDebugTile(
+                    'Enhanced Bills UI',
+                    'Test the enhanced bill search and display',
+                    Icons.search,
+                    Colors.indigo,
+                    true,
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EnhancedBillScreen(),
+                      ),
+                    ),
+                  ),
+                  
                   const SizedBox(height: 24),
                   const Text(
                     'API Keys Status',
@@ -300,6 +314,11 @@ class _DebugNavigationScreenState extends State<DebugNavigationScreen> {
               'Cicero API Key',
               _apiKeyStatus!['cicero'] ?? false,
             ),
+            const Divider(),
+            _buildApiKeyStatusRow(
+              'LegiScan API Key',
+              _apiKeyStatus!['legiscan'] ?? false,
+            ),
           ],
         ),
       ),
@@ -342,7 +361,8 @@ class _DebugNavigationScreenState extends State<DebugNavigationScreen> {
     
     return _apiKeyStatus!['congress'] == true ||
            _apiKeyStatus!['googleMaps'] == true ||
-           _apiKeyStatus!['cicero'] == true;
+           _apiKeyStatus!['cicero'] == true ||
+           _apiKeyStatus!['legiscan'] == true;
   }
   
   Future<void> _runQuickDiagnostics() async {
@@ -353,7 +373,8 @@ class _DebugNavigationScreenState extends State<DebugNavigationScreen> {
     if (mounted) {
       final bool allKeysAvailable = _apiKeyStatus!['congress'] == true &&
                                    _apiKeyStatus!['googleMaps'] == true &&
-                                   _apiKeyStatus!['cicero'] == true;
+                                   _apiKeyStatus!['cicero'] == true &&
+                                   _apiKeyStatus!['legiscan'] == true;
       
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

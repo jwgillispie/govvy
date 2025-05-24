@@ -1,5 +1,4 @@
 // lib/models/bill_model.dart
-import 'package:flutter/foundation.dart';
 import 'package:govvy/models/representative_model.dart';
 
 class BillModel {
@@ -19,6 +18,18 @@ class BillModel {
   final List<RepresentativeSponsor>? sponsors;
   final List<BillHistory>? history;
   final List<String>? subjects;
+  // Enhanced fields for more comprehensive bill data
+  final String? chamber; // House, Senate, etc.
+  final int? sessionId; // Legislative session ID
+  final String? currentCommittee; // Current committee handling the bill
+  final String? priorityStatus; // Emergency, routine, etc.
+  final double? completionPercentage; // How far through legislative process
+  final int? totalVotes; // Total number of votes on this bill
+  final String? fiscalNote; // Financial impact summary
+  final bool hasAmendments; // Whether bill has amendments
+  final bool hasSupplements; // Whether bill has fiscal notes/analyses
+  final List<String>? keywords; // Searchable keywords
+  final String? summary; // AI-generated or official summary
 
   BillModel({
     required this.billId,
@@ -37,6 +48,18 @@ class BillModel {
     this.sponsors,
     this.history,
     this.subjects,
+    // Enhanced fields
+    this.chamber,
+    this.sessionId,
+    this.currentCommittee,
+    this.priorityStatus,
+    this.completionPercentage,
+    this.totalVotes,
+    this.fiscalNote,
+    this.hasAmendments = false,
+    this.hasSupplements = false,
+    this.keywords,
+    this.summary,
   });
 
   // Convert from RepresentativeBill format (for bridging between models)
@@ -58,9 +81,7 @@ class BillModel {
         
     // Special handling for FL and GA with CSV data
     if ((state == 'FL' || state == 'GA') && bill.source == 'CSV') {
-      if (kDebugMode) {
-        print('Converting bill from CSV for $state with number ${bill.billNumber} and title: ${bill.title}');
-      }
+      // No special handling needed here anymore
     }
 
     // Make sure the bill number is properly formatted
@@ -72,7 +93,7 @@ class BillModel {
     // Extract description from extraData if available, otherwise use title
     String? description = bill.description;
     if (description == null && bill.title.length > 100) {
-      description = bill.title.substring(0, 100) + '...';
+      description = '${bill.title.substring(0, 100)}...';
     }
     
     // Get status from latestAction or statusDescription
@@ -191,18 +212,34 @@ class BillModel {
       billId = '${map['state']}-${map['bill_number']}'.hashCode;
     }
 
-    // Handle missing bill_number
-    String billNumber;
-    if (map['bill_number'] != null) {
-      if (map['bill_number'] is String) {
-        billNumber = map['bill_number'] as String;
-      } else if (map['bill_number'] is List) {
-        billNumber = (map['bill_number'] as List).join(' ');
-      } else {
-        billNumber = 'Unknown';
+    // Handle missing bill_number with improved field detection
+    String billNumber = 'Unknown';
+    
+    // Try multiple possible field names for bill number
+    final possibleBillNumberFields = [
+      'bill_number', 'number', 'bill_num', 'bill_no', 
+      'bill', 'doc_id', 'measure_number'
+    ];
+    
+    for (final fieldName in possibleBillNumberFields) {
+      if (map.containsKey(fieldName) && map[fieldName] != null) {
+        if (map[fieldName] is String && (map[fieldName] as String).isNotEmpty) {
+          billNumber = map[fieldName] as String;
+          break;
+        } else if (map[fieldName] is List && (map[fieldName] as List).isNotEmpty) {
+          billNumber = (map[fieldName] as List).join(' ');
+          break;
+        }
       }
-    } else {
-      billNumber = 'Unknown';
+    }
+    
+    // If still no bill number found, try to extract from title
+    if (billNumber == 'Unknown' && title != 'Untitled') {
+      // Try to extract bill number from title (e.g., "HB 123 - Some Title")
+      final billNumberMatch = RegExp(r'^([A-Z]{1,3}[\s]*\d+)').firstMatch(title);
+      if (billNumberMatch != null) {
+        billNumber = billNumberMatch.group(1)!.replaceAll(RegExp(r'\s+'), ' ');
+      }
     }
 
     // Handle URL field variations
@@ -240,6 +277,75 @@ class BillModel {
       }
     }
 
+    // Extract enhanced fields
+    String? chamber;
+    if (map['chamber'] != null) {
+      if (map['chamber'] is String) {
+        chamber = map['chamber'] as String;
+      } else if (map['chamber'] is List) {
+        chamber = (map['chamber'] as List).join(' ');
+      }
+    }
+    
+    int? sessionId;
+    if (map['session_id'] != null) {
+      if (map['session_id'] is int) {
+        sessionId = map['session_id'] as int;
+      } else if (map['session_id'] is String) {
+        sessionId = int.tryParse(map['session_id'] as String);
+      }
+    }
+    
+    // Extract completion percentage from progress data
+    double? completionPercentage;
+    if (map['progress'] != null && map['progress'] is List) {
+      final progress = map['progress'] as List;
+      if (progress.isNotEmpty) {
+        // Calculate completion based on number of completed steps
+        final completedSteps = progress.where((step) => step['passed'] == 1).length;
+        completionPercentage = (completedSteps / progress.length) * 100;
+      }
+    }
+    
+    // Extract vote count
+    int? totalVotes;
+    if (map['votes'] != null && map['votes'] is List) {
+      totalVotes = (map['votes'] as List).length;
+    }
+    
+    // Check for amendments and supplements
+    bool hasAmendments = false;
+    if (map['amendments'] != null && map['amendments'] is List) {
+      hasAmendments = (map['amendments'] as List).isNotEmpty;
+    }
+    
+    bool hasSupplements = false;
+    if (map['supplements'] != null && map['supplements'] is List) {
+      hasSupplements = (map['supplements'] as List).isNotEmpty;
+    }
+    
+    // Extract fiscal note summary
+    String? fiscalNote;
+    if (map['fiscal_note'] != null) {
+      if (map['fiscal_note'] is String) {
+        fiscalNote = map['fiscal_note'] as String;
+      } else if (map['fiscal_note'] is List) {
+        fiscalNote = (map['fiscal_note'] as List).join(' ');
+      }
+    }
+    
+    // Extract keywords
+    List<String>? keywords;
+    if (map['keywords'] != null && map['keywords'] is List) {
+      keywords = (map['keywords'] as List).cast<String>();
+    }
+    
+    // Use description as summary if available, otherwise use a truncated title
+    String? summary = description.isNotEmpty ? description : null;
+    if (summary == null && title.length > 100) {
+      summary = '${title.substring(0, 97)}...';
+    }
+
     // Create model with safely extracted values
     return BillModel(
       billId: billId,
@@ -258,6 +364,18 @@ class BillModel {
       sponsors: null, // To be populated separately
       history: null, // To be populated separately
       subjects: null, // To be populated separately
+      // Enhanced fields
+      chamber: chamber,
+      sessionId: sessionId,
+      currentCommittee: committee, // Use committee as current committee
+      priorityStatus: map['priority'] as String?,
+      completionPercentage: completionPercentage,
+      totalVotes: totalVotes,
+      fiscalNote: fiscalNote,
+      hasAmendments: hasAmendments,
+      hasSupplements: hasSupplements,
+      keywords: keywords,
+      summary: summary,
     );
   }
   // Convert to map for storage
@@ -276,6 +394,18 @@ class BillModel {
       'state': state,
       'url': url,
       'introduced_date': introducedDate,
+      // Enhanced fields
+      'chamber': chamber,
+      'session_id': sessionId,
+      'current_committee': currentCommittee,
+      'priority_status': priorityStatus,
+      'completion_percentage': completionPercentage,
+      'total_votes': totalVotes,
+      'fiscal_note': fiscalNote,
+      'has_amendments': hasAmendments,
+      'has_supplements': hasSupplements,
+      'keywords': keywords,
+      'summary': summary,
     };
   }
 
@@ -297,6 +427,18 @@ class BillModel {
     List<RepresentativeSponsor>? sponsors,
     List<BillHistory>? history,
     List<String>? subjects,
+    // Enhanced fields
+    String? chamber,
+    int? sessionId,
+    String? currentCommittee,
+    String? priorityStatus,
+    double? completionPercentage,
+    int? totalVotes,
+    String? fiscalNote,
+    bool? hasAmendments,
+    bool? hasSupplements,
+    List<String>? keywords,
+    String? summary,
   }) {
     return BillModel(
       billId: billId ?? this.billId,
@@ -315,6 +457,18 @@ class BillModel {
       sponsors: sponsors ?? this.sponsors,
       history: history ?? this.history,
       subjects: subjects ?? this.subjects,
+      // Enhanced fields
+      chamber: chamber ?? this.chamber,
+      sessionId: sessionId ?? this.sessionId,
+      currentCommittee: currentCommittee ?? this.currentCommittee,
+      priorityStatus: priorityStatus ?? this.priorityStatus,
+      completionPercentage: completionPercentage ?? this.completionPercentage,
+      totalVotes: totalVotes ?? this.totalVotes,
+      fiscalNote: fiscalNote ?? this.fiscalNote,
+      hasAmendments: hasAmendments ?? this.hasAmendments,
+      hasSupplements: hasSupplements ?? this.hasSupplements,
+      keywords: keywords ?? this.keywords,
+      summary: summary ?? this.summary,
     );
   }
 
@@ -516,7 +670,7 @@ class BillDocument {
 
       // Get description or use fallback
       final description =
-          map['document_desc'] as String? ?? map['desc'] as String? ?? null;
+          map['document_desc'] as String? ?? map['desc'] as String?;
 
       // Get URL with fallbacks
       String url;
@@ -538,10 +692,7 @@ class BillDocument {
         url: url,
       );
     } catch (e) {
-      if (kDebugMode) {
-        print('Error processing bill document: $e');
-        print('Document data: $map');
-      }
+      // Error handling for document processing
 
       // Return a placeholder document rather than crashing
       return BillDocument(

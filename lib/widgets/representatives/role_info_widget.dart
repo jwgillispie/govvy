@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:govvy/data/government_roles.dart';
-import 'package:govvy/utils/district_type_formatter.dart';
 
 class RoleInfoWidget extends StatelessWidget {
   final String role;

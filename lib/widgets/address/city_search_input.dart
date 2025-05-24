@@ -162,6 +162,15 @@ class _CitySearchInputState extends State<CitySearchInput> {
                   .map((city) => city["display"]!)
                   .toList();
 
+              // Always add the user's typed input as an option if it's not already in the list
+              // and they've typed at least 2 characters
+              final userInput = textEditingValue.text.trim();
+              if (userInput.length >= 2 && 
+                  !filteredOptions.any((option) => 
+                    option.toLowerCase() == userInput.toLowerCase())) {
+                filteredOptions.insert(0, userInput);
+              }
+
               // Limit to 10 suggestions max
               return filteredOptions.length > 10
                   ? filteredOptions.sublist(0, 10)
@@ -196,7 +205,7 @@ class _CitySearchInputState extends State<CitySearchInput> {
                 decoration: InputDecoration(
                   labelText: 'City',
                   hintText: 'e.g. Chicago, Miami, Portland',
-                  helperText: 'Enter city name',
+                  helperText: 'Enter any city name - you can use suggestions or type your own',
                   helperStyle: TextStyle(
                     fontSize: 12,
                     color: Colors.grey.shade600,
@@ -264,39 +273,78 @@ class _CitySearchInputState extends State<CitySearchInput> {
                       itemCount: options.length,
                       itemBuilder: (context, index) {
                         final option = options.elementAt(index);
+                        // Check if this is the user's custom input (first option and doesn't contain comma)
+                        final isCustomInput = index == 0 && 
+                            !_citiesWithStates.any((city) => 
+                              city["display"]!.toLowerCase() == option.toLowerCase());
+                        
                         // Check if it's a city-state pair
                         bool hasDuplicate = _hasDuplicateCityName(option.split(',')[0].trim());
                         
                         return ListTile(
-                          title: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: option.split(',')[0].trim(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                    fontSize: 14,
+                          title: isCustomInput 
+                            ? Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      option,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                        fontSize: 14,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                TextSpan(
-                                  text: option.contains(',') ? ', ${option.split(',')[1].trim()}' : '',
-                                  style: TextStyle(
-                                    color: Colors.grey.shade600,
-                                    fontSize: 14,
+                                  Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).colorScheme.primaryContainer,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Text(
+                                      'Use this',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
                                   ),
+                                ],
+                              )
+                            : RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: option.split(',')[0].trim(),
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black87,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: option.contains(',') ? ', ${option.split(',')[1].trim()}' : '',
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          // Show warning icon for duplicate city names
+                              ),
+                          // Show appropriate icon based on type
                           leading: Icon(
-                            hasDuplicate
-                                ? Icons.info_outline
-                                : Icons.location_city_outlined,
-                            color: hasDuplicate
-                                ? Colors.orange
-                                : Theme.of(context).colorScheme.primary,
+                            isCustomInput 
+                                ? Icons.edit_location
+                                : hasDuplicate
+                                    ? Icons.info_outline
+                                    : Icons.location_city_outlined,
+                            color: isCustomInput 
+                                ? Theme.of(context).colorScheme.primary
+                                : hasDuplicate
+                                    ? Colors.orange
+                                    : Theme.of(context).colorScheme.primary,
                             size: 20,
                           ),
                           dense: true,

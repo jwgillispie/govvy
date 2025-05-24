@@ -4,11 +4,16 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:govvy/firebase_options.dart';
 import 'package:govvy/providers/bill_provider.dart';
+import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
-import 'package:govvy/providers/csv_representative_provider.dart';
+import 'package:govvy/providers/campaign_finance_provider.dart';
+// Removed: import 'package:govvy/providers/csv_representative_provider.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
-import 'package:govvy/screens/landing/landing_page.dart';
+import 'package:govvy/screens/bills/bill_details_screen.dart';
+import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
+import 'package:govvy/screens/campaign_finance/campaign_finance_screen.dart';
 import 'package:govvy/services/bill_service.dart';
+import 'package:govvy/services/enhanced_legiscan_service.dart';
 import 'package:govvy/services/network_service.dart';
 import 'package:govvy/services/remote_service_config.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +27,9 @@ void main() async {
   // Initialize services with proper error handling
   await _initializeServices();
 
+  // Initialize enhanced bill services 
+  await _initializeEnhancedServices();
+
   runApp(const RepresentativeApp());
 }
 
@@ -34,13 +42,10 @@ Future<void> _initializeServices() async {
     );
 
     // Load .env file before RemoteConfig
-    if (kDebugMode) {
-      try {
-        await dotenv.load(fileName: "assets/.env");
-        print("✅ Loaded .env file with ${dotenv.env.length} variables");
-      } catch (e) {
-        print("⚠️ Failed to load .env file: $e");
-      }
+    try {
+      await dotenv.load(fileName: "assets/.env");
+    } catch (e) {
+      // Silently handle .env loading errors
     }
 
     // Initialize Remote Config
@@ -49,35 +54,30 @@ Future<void> _initializeServices() async {
 
     // Validate API keys
     final keyStatus = await remoteConfig.validateApiKeys();
-    if (kDebugMode) {
-      print('🔑 API Keys: $keyStatus');
-    }
 
     // Debug all API keys
     final congressKey = remoteConfig.getCongressApiKey;
     final googleMapsKey = remoteConfig.getGoogleMapsApiKey;
     final ciceroKey = remoteConfig.getCiceroApiKey;
+    final fecKey = remoteConfig.getFecApiKey;
 
-    print(
-        "Remote Config Congress API Key: ${congressKey != null ? 'Found' : 'Not found'}");
-    print(
-        "Remote Config Google Maps API Key: ${googleMapsKey != null ? 'Found' : 'Not found'}");
-    print(
-        "Remote Config Cicero API Key: ${ciceroKey != null ? 'Found' : 'Not found'}");
 
-    if (kDebugMode && congressKey != null) {
-      print("Congress API Key (masked): ${_maskApiKey(congressKey)}");
-    }
-    if (kDebugMode && googleMapsKey != null) {
-      print("Google Maps API Key (masked): ${_maskApiKey(googleMapsKey)}");
-    }
-    if (kDebugMode && ciceroKey != null) {
-      print("Cicero API Key (masked): ${_maskApiKey(ciceroKey)}");
-    }
+  } catch (e) {
+    // Silently handle initialization errors
+  }
+}
+
+// Initialize enhanced services
+Future<void> _initializeEnhancedServices() async {
+  try {
+    // Initialize the enhanced LegiScan service
+    final enhancedLegiscanService = EnhancedLegiscanService();
+    await enhancedLegiscanService.initialize();
   } catch (e) {
     if (kDebugMode) {
-      print('❌ Error initializing services: $e');
+      print('Error initializing enhanced services: $e');
     }
+    // Silently handle initialization errors in production
   }
 }
 
@@ -108,15 +108,27 @@ class RepresentativeApp extends StatelessWidget {
         // Bill Service
         Provider(create: (_) => BillService()),
         
-        // CSV Representative Provider
-        ChangeNotifierProvider(
-          create: (_) => CSVRepresentativeProvider(),
-          lazy: false,
-        ),
+        // Removed: CSV Representative Provider
+        // ChangeNotifierProvider(
+        //   create: (_) => CSVRepresentativeProvider(),
+        //   lazy: false,
+        // ),
 
         // Bill Provider
         ChangeNotifierProvider(
           create: (_) => BillProvider(),
+          lazy: false,
+        ),
+        
+        // Enhanced Bill Provider
+        ChangeNotifierProvider(
+          create: (_) => EnhancedBillProvider(),
+          lazy: false,
+        ),
+
+        // Campaign Finance Provider
+        ChangeNotifierProvider(
+          create: (_) => CampaignFinanceProvider(),
           lazy: false,
         ),
 
@@ -175,6 +187,22 @@ class RepresentativeApp extends StatelessWidget {
           ),
         ),
         home: const AuthWrapper(),
+        routes: {
+          '/bills': (context) => const EnhancedBillScreen(),
+          '/campaign_finance': (context) => const CampaignFinanceScreen(),
+        },
+        onGenerateRoute: (settings) {
+          if (settings.name == '/bill_details') {
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => BillDetailsScreen(
+                billId: args['billId'],
+                stateCode: args['stateCode'],
+              ),
+            );
+          }
+          return null;
+        },
       ),
     );
   }

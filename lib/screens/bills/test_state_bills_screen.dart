@@ -1,9 +1,8 @@
 // lib/screens/bills/test_state_bills_screen.dart
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:govvy/models/bill_model.dart';
 import 'package:govvy/services/bill_service.dart';
-import 'package:govvy/services/csv_bill_service.dart';
+// Removed: import 'package:govvy/services/csv_bill_service.dart';
 
 class TestStateBillsScreen extends StatefulWidget {
   const TestStateBillsScreen({Key? key}) : super(key: key);
@@ -14,7 +13,7 @@ class TestStateBillsScreen extends StatefulWidget {
 
 class _TestStateBillsScreenState extends State<TestStateBillsScreen> {
   final BillService _billService = BillService();
-  final CSVBillService _csvBillService = CSVBillService();
+  // Removed: final CSVBillService _csvBillService = CSVBillService();
   final _stateController = TextEditingController();
   
   List<String> _availableStates = [];
@@ -35,10 +34,10 @@ class _TestStateBillsScreenState extends State<TestStateBillsScreen> {
 
     try {
       await _billService.initialize();
-      await _csvBillService.initialize();
+      // Removed: await _csvBillService.initialize();
       
       setState(() {
-        _availableStates = _csvBillService.availableStates;
+        _availableStates = []; // Removed: _csvBillService.availableStates;
         _isLoading = false;
       });
     } catch (e) {
@@ -65,54 +64,35 @@ class _TestStateBillsScreenState extends State<TestStateBillsScreen> {
     });
 
     try {
-      if (stateCode == 'FL' || stateCode == 'GA') {
-        // Enhanced diagnostic for FL and GA
-        if (kDebugMode) {
-          print('Enhanced debugging for $stateCode bills:');
-        }
-        
-        // First, check if state is in available states
-        if (!_csvBillService.availableStates.contains(stateCode)) {
-          if (kDebugMode) {
-            print('Warning: $stateCode is not in available states: ${_csvBillService.availableStates.join(', ')}');
-          }
-        }
-        
-        // Force a full refresh of the CSV data
-        await _csvBillService.initialize();
-        
-        // Try loading directly from CSV service first
-        try {
-          final csvBills = await _csvBillService.getBillsByState(stateCode);
-          if (kDebugMode) {
-            print('Direct CSV bills for $stateCode: ${csvBills.length} bills found');
-            
-            if (csvBills.isNotEmpty) {
-              print('First CSV bill for $stateCode:');
-              print('  Bill Number: ${csvBills.first.billNumber}');
-              print('  Title: ${csvBills.first.title}');
-              print('  Status: ${csvBills.first.latestAction}');
-            }
-          }
-          
-          // Now convert these to BillModel format
-          final billModels = csvBills
-              .map((bill) => BillModel.fromRepresentativeBill(bill, stateCode))
-              .toList();
-              
-          if (billModels.isNotEmpty) {
-            setState(() {
-              _bills = billModels;
-              _isLoading = false;
-            });
-            return;
-          }
-        } catch (csvError) {
-          if (kDebugMode) {
-            print('Error loading CSV data directly for $stateCode: $csvError');
-          }
-        }
-      }
+      // Removed: CSV implementation for FL and GA
+      // if (stateCode == 'FL' || stateCode == 'GA') {
+      //   
+      //   // First, check if state is in available states
+      //   if (!_csvBillService.availableStates.contains(stateCode)) {
+      //   }
+      //   
+      //   // Force a full refresh of the CSV data
+      //   await _csvBillService.initialize();
+      //   
+      //   // Try loading directly from CSV service first
+      //   try {
+      //     final csvBills = await _csvBillService.getBillsByState(stateCode);
+      //     
+      //     // Now convert these to BillModel format
+      //     final billModels = csvBills
+      //         .map((bill) => BillModel.fromRepresentativeBill(bill, stateCode))
+      //         .toList();
+      //         
+      //     if (billModels.isNotEmpty) {
+      //       setState(() {
+      //         _bills = billModels;
+      //         _isLoading = false;
+      //       });
+      //       return;
+      //     }
+      //   } catch (csvError) {
+      //   }
+      // }
       
       // Standard path for other states or if CSV direct loading failed
       final bills = await _billService.getBillsByState(stateCode);

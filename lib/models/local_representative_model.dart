@@ -1,6 +1,5 @@
 // lib/models/local_representative_model.dart
 import 'package:govvy/models/representative_model.dart';
-import 'package:govvy/services/representative_service.dart';
 
 class LocalRepresentative {
   final String name;

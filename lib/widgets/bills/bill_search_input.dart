@@ -2,17 +2,17 @@
 import 'package:flutter/material.dart';
 
 class BillSearchInput extends StatefulWidget {
-  final Function(String query, String? stateCode) onSearch;
+  final Function(String subject, String? stateCode) onSearch;
   final bool isLoading;
-  final String? initialQuery;
   final String? initialState;
+  final bool isSubjectSearch; // Parameter to indicate subject search
 
   const BillSearchInput({
     Key? key,
     required this.onSearch,
     this.isLoading = false,
-    this.initialQuery,
     this.initialState,
+    this.isSubjectSearch = false, // Default to state search
   }) : super(key: key);
 
   @override
@@ -25,6 +25,9 @@ class _BillSearchInputState extends State<BillSearchInput> {
   String? _selectedState;
   bool _filterByState = false;
 
+  // Default search type is state search unless isSubjectSearch is true
+  late bool _isSubjectSearch;
+  
   // US States mapping for dropdown
   final List<Map<String, String>> _usStates = [
     {"name": "Alabama", "code": "AL"},
@@ -84,27 +87,22 @@ class _BillSearchInputState extends State<BillSearchInput> {
   void initState() {
     super.initState();
     
-    // Initialize with provided values
-    if (widget.initialQuery != null) {
-      _searchController.text = widget.initialQuery!;
-    }
+    // Initialize with state if provided
     
     if (widget.initialState != null) {
       _selectedState = widget.initialState;
       _filterByState = true;
     }
+    
+    // Initialize search type
+    _isSubjectSearch = widget.isSubjectSearch;
   }
 
   @override
   void didUpdateWidget(BillSearchInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     
-    // Update values if they changed
-    if (widget.initialQuery != oldWidget.initialQuery && 
-        widget.initialQuery != null && 
-        widget.initialQuery != _searchController.text) {
-      _searchController.text = widget.initialQuery!;
-    }
+    // Update state if it changed
     
     if (widget.initialState != oldWidget.initialState && 
         widget.initialState != null && 
@@ -136,82 +134,117 @@ class _BillSearchInputState extends State<BillSearchInput> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Search field
-          TextFormField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              labelText: 'Search Bills',
-              hintText: 'Enter keywords (e.g., education, healthcare)',
-              filled: true,
-              fillColor: Colors.grey.shade100,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
+          // Form header with explanation
+          if (_isSubjectSearch)
+            Container(
+              padding: const EdgeInsets.all(12),
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: Colors.blue.shade50,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.blue.shade100),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
-                  width: 1.5,
-                ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.info_outline, color: Colors.blue.shade700, size: 16),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Search for bills by legislative subject. You can optionally filter by state.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.blue.shade800,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              prefixIcon: const Icon(Icons.search, size: 20),
-              suffixIcon: _searchController.text.isNotEmpty
-                  ? IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        _searchController.clear();
-                      },
-                    )
-                  : null,
-              isDense: true,
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter search terms';
-              }
-              if (value.length < 2) {
-                return 'Search term is too short';
-              }
-              return null;
-            },
-            enabled: !widget.isLoading,
-            textInputAction: TextInputAction.search,
-            onFieldSubmitted: (_) => _submitSearch(),
-          ),
 
-          const SizedBox(height: 16),
+          // Search field - now used for subject search when _isSubjectSearch is true
+          if (_isSubjectSearch)
+            TextFormField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                labelText: 'Subject',
+                hintText: 'Enter a legislative subject (e.g., Education)',
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 1.5,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                prefixIcon: const Icon(Icons.category, size: 20),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          _searchController.clear();
+                        },
+                      )
+                    : null,
+                isDense: true,
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a subject';
+                }
+                if (value.length < 2) {
+                  return 'Subject is too short';
+                }
+                return null;
+              },
+              enabled: !widget.isLoading,
+              textInputAction: TextInputAction.search,
+              onFieldSubmitted: (_) => _submitSearch(),
+            ),
+
+          if (_isSubjectSearch)
+            const SizedBox(height: 16),
 
           // State filter
           Row(
             children: [
-              Checkbox(
-                value: _filterByState,
-                onChanged: widget.isLoading
-                    ? null
-                    : (value) {
-                        setState(() {
-                          _filterByState = value ?? false;
-                          
-                          // Set default state if enabling filter
-                          if (_filterByState && _selectedState == null) {
-                            _selectedState = 'FL';
-                          }
-                        });
-                      },
-              ),
+              // If subject search, state is optional - use checkbox
+              if (_isSubjectSearch)
+                Checkbox(
+                  value: _filterByState,
+                  onChanged: widget.isLoading
+                      ? null
+                      : (value) {
+                          setState(() {
+                            _filterByState = value ?? false;
+                            
+                            // Set default state if enabling filter
+                            if (_filterByState && _selectedState == null) {
+                              _selectedState = 'FL';
+                            }
+                          });
+                        },
+                ),
+                
+              // Different label based on search type  
               Text(
-                'Filter by state:',
+                _isSubjectSearch ? 'Filter by state:' : 'State:',
                 style: TextStyle(
                   fontSize: 14,
                   color: widget.isLoading ? Colors.grey : Colors.black87,
+                  fontWeight: _isSubjectSearch ? FontWeight.normal : FontWeight.bold,
                 ),
               ),
               const SizedBox(width: 12),
               
-              // State dropdown (only visible when filter is on)
-              if (_filterByState)
+              // State dropdown (always visible in state search, only when filter is on in subject search)
+              if (!_isSubjectSearch || _filterByState)
                 Expanded(
                   child: DropdownButtonFormField<String>(
                     value: _selectedState,
@@ -245,6 +278,12 @@ class _BillSearchInputState extends State<BillSearchInput> {
                             });
                           },
                     isExpanded: true,
+                    validator: !_isSubjectSearch ? (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please select a state';
+                      }
+                      return null;
+                    } : null,
                   ),
                 ),
             ],
@@ -267,9 +306,9 @@ class _BillSearchInputState extends State<BillSearchInput> {
                         strokeWidth: 2,
                       ),
                     )
-                  : const Icon(Icons.search),
+                  : _isSubjectSearch ? const Icon(Icons.category) : const Icon(Icons.public),
               label: Text(
-                widget.isLoading ? 'Searching...' : 'Search Bills',
+                widget.isLoading ? 'Searching...' : _isSubjectSearch ? 'Search by Subject' : 'Get State Bills',
                 style: const TextStyle(fontSize: 16),
               ),
               style: ElevatedButton.styleFrom(
@@ -281,10 +320,10 @@ class _BillSearchInputState extends State<BillSearchInput> {
             ),
           ),
 
-          // Popular search terms
+          // Popular options
           const SizedBox(height: 16),
           Text(
-            'Popular Search Terms:',
+            _isSubjectSearch ? 'Popular Subjects:' : 'Popular States:',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -295,15 +334,20 @@ class _BillSearchInputState extends State<BillSearchInput> {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: [
+            children: _isSubjectSearch ? [
               _buildKeywordChip('Education'),
-              _buildKeywordChip('Healthcare'),
+              _buildKeywordChip('Health'),
+              _buildKeywordChip('Taxation'),
+              _buildKeywordChip('Transportation'),
+              _buildKeywordChip('Elections'),
               _buildKeywordChip('Environment'),
-              _buildKeywordChip('Infrastructure'),
-              _buildKeywordChip('Budget'),
-              _buildKeywordChip('Tax'),
-              _buildKeywordChip('Election'),
               _buildKeywordChip('Criminal Justice'),
+            ] : [
+              _buildStateChip('FL'),
+              _buildStateChip('CA'),
+              _buildStateChip('TX'),
+              _buildStateChip('NY'),
+              _buildStateChip('GA'),
             ],
           ),
         ],
@@ -319,6 +363,25 @@ class _BillSearchInputState extends State<BillSearchInput> {
           ? null
           : () {
               _searchController.text = keyword;
+              _submitSearch();
+            },
+      backgroundColor: Colors.grey.shade100,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    );
+  }
+  
+  // Helper to build state chips
+  Widget _buildStateChip(String stateCode) {
+    return ActionChip(
+      label: Text(stateCode),
+      onPressed: widget.isLoading
+          ? null
+          : () {
+              setState(() {
+                _selectedState = stateCode;
+              });
               _submitSearch();
             },
       backgroundColor: Colors.grey.shade100,

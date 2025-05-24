@@ -168,7 +168,7 @@ class RepresentativeDetails {
         if (items is List && items.isNotEmpty) {
           termMap = Map<String, dynamic>.from(items[0] as Map);
         } else if (items is Map) {
-          termMap = Map<String, dynamic>.from(items as Map);
+          termMap = Map<String, dynamic>.from(items);
         }
       }
     }

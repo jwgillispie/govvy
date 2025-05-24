@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:govvy/screens/bills/bill_screen.dart';
 import 'package:govvy/screens/representatives/find_representatives_screen.dart';
+import 'package:govvy/screens/campaign_finance/campaign_finance_screen.dart';
 import 'package:govvy/screens/profile/profile_screen.dart';
 
 class HomeScreenWrapper extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomeScreenWrapperState extends State<HomeScreenWrapper> {
   final List<Widget> _screens = [
     const FindRepresentativesScreen(),
     const BillListScreen(),
+    const CampaignFinanceScreen(),
     const ProfileScreen(), // Assuming you have a ProfileScreen
   ];
 
@@ -37,6 +39,7 @@ class _HomeScreenWrapperState extends State<HomeScreenWrapper> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed, // Needed for 4+ items
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
@@ -45,6 +48,10 @@ class _HomeScreenWrapperState extends State<HomeScreenWrapper> {
           BottomNavigationBarItem(
             icon: Icon(Icons.description),
             label: 'Bills',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_balance_wallet),
+            label: 'Finance',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

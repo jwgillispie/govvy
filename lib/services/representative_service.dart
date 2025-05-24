@@ -1,6 +1,5 @@
 // lib/services/representative_service.dart
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/services/remote_service_config.dart';
@@ -338,7 +337,7 @@ class RepresentativeService {
       if (kDebugMode) {
         print('Error in alternate method: $e');
       }
-      throw e; // Let the caller handle the error or fall back to mock data
+      rethrow; // Let the caller handle the error or fall back to mock data
     }
   }
 
@@ -410,9 +409,7 @@ class RepresentativeService {
           Map<String, dynamic>.from(member['addressInformation'] as Map);
       office = addressInfo['officeAddress']?.toString();
 
-      if (phone == null) {
-        phone = addressInfo['phoneNumber']?.toString();
-      }
+      phone ??= addressInfo['phoneNumber']?.toString();
     }
 
     // Get image URL

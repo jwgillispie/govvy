@@ -1,5 +1,4 @@
 // lib/widgets/bills/bill_card.dart
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:govvy/models/bill_model.dart';
 
@@ -72,12 +71,6 @@ class BillCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          // Debug the bill ID and state
-          if (kDebugMode) {
-            print('Opening bill details: ID=${bill.billId}, State=${bill.state}');
-            print('Bill title: ${bill.title}');
-            print('Bill type: ${bill.type}');
-          }
           if (onTap != null) {
             onTap!();
           }

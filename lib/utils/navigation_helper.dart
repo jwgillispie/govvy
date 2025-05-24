@@ -1,11 +1,11 @@
 // lib/utils/navigation_helper.dart
 import 'package:flutter/material.dart';
-import 'package:govvy/models/representative_model.dart';
-import 'package:govvy/screens/bills/bill_screen.dart';
+import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
 import 'package:govvy/screens/representatives/representative_details_screen.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
 import 'package:govvy/screens/representatives/find_representatives_screen.dart';
 import 'package:govvy/providers/bill_provider.dart';
+import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +36,33 @@ class NavigationHelper {
     );
   }
   
+  /// Navigate to the enhanced bill search screen
+  static void navigateToEnhancedBillScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const EnhancedBillScreen(),
+      ),
+    );
+  }
+  
+  /// Navigate to bills by subject using the enhanced provider
+  static void navigateToBillsBySubject(
+    BuildContext context, 
+    String subject, 
+    {String? stateCode}
+  ) {
+    final enhancedBillProvider = Provider.of<EnhancedBillProvider>(context, listen: false);
+    enhancedBillProvider.searchBillsBySubject(subject, stateCode: stateCode);
+    
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const EnhancedBillScreen(),
+      ),
+    );
+  }
+  
   /// Navigate to bills sponsored by a representative
   static void navigateToBillsByRepresentative(
     BuildContext context, 
@@ -49,15 +76,16 @@ class NavigationHelper {
       final representative = repProvider.selectedRepresentative;
       
       if (representative != null) {
-        // Then navigate to the bill list screen with a filter for this representative
-        final billProvider = Provider.of<BillProvider>(context, listen: false);
-        billProvider.fetchBillsByRepresentative(representative as Representative);
+        final enhancedBillProvider = Provider.of<EnhancedBillProvider>(context, listen: false);
         
-        // Navigate to the bill list screen or refresh the current one
+        // Our enhanced provider now supports both types directly
+        enhancedBillProvider.fetchBillsByRepresentative(representative);
+        
+        // Navigate to the enhanced bill screen
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const BillListScreen(),
+            builder: (context) => const EnhancedBillScreen(),
           ),
         );
       }

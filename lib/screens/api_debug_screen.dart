@@ -575,7 +575,7 @@ class _ApiDebugScreenState extends State<ApiDebugScreen> with SingleTickerProvid
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            '${_formatDataSize(_customEndpointResult!['dataSize'] as int)}',
+                            _formatDataSize(_customEndpointResult!['dataSize'] as int),
                           ),
                         ],
                       ),
@@ -679,7 +679,7 @@ class _ApiDebugScreenState extends State<ApiDebugScreen> with SingleTickerProvid
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '${_formatDataSize(apiResult['dataSize'] as int)}',
+                    _formatDataSize(apiResult['dataSize'] as int),
                   ),
                 ],
               ),
