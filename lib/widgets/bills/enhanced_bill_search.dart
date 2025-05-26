@@ -2,11 +2,20 @@
 import 'package:flutter/material.dart';
 
 enum BillSearchType {
+  federal,
   state,
+  localImpact,
   subject,
   keyword,
   sponsor,
   advanced
+}
+
+enum GovernmentLevel {
+  federal,
+  state,
+  local,
+  all
 }
 
 class EnhancedBillSearch extends StatefulWidget {
@@ -107,7 +116,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
     
     // Set up tab controller
     _tabController = TabController(
-      length: 5, // 5 tabs now
+      length: 7, // 7 tabs now: federal, state, local, subject, keyword, sponsor, advanced
       vsync: this,
       initialIndex: _searchType.index,
     );
@@ -195,10 +204,22 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
     print('  - Date Range Filter: $_dateRangeFilter');
     print('  - Year Filter: $_yearFilter');
     
-    if (_formKey.currentState!.validate()) {
+    // For state searches, we only need to validate that a state is selected
+    bool canProceed = false;
+    if (_searchType == BillSearchType.state) {
+      canProceed = _selectedState != null && _selectedState!.isNotEmpty;
+      if (!canProceed) {
+        setState(() {}); // Trigger UI update to show validation errors
+        return;
+      }
+    } else {
+      canProceed = _formKey.currentState!.validate();
+    }
+    
+    if (canProceed) {
       final query = _searchController.text.trim();
       final stateCode = _filterByState ? _selectedState : 
-                        (_searchType == BillSearchType.state ? _selectedState : null);
+                        (_searchType == BillSearchType.state || _searchType == BillSearchType.localImpact ? _selectedState : null);
       
       print('  - Final State Code: $stateCode');
       
@@ -218,6 +239,25 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
         
         if (_yearFilter != null) {
           filters['year'] = _yearFilter;
+        }
+        
+        // Add government level filter based on search type
+        if (_searchType == BillSearchType.federal) {
+          filters['government_level'] = 'federal';
+        } else if (_searchType == BillSearchType.state) {
+          filters['government_level'] = 'state';
+        } else if (_searchType == BillSearchType.localImpact) {
+          filters['government_level'] = 'state';
+        }
+      } else {
+        // For non-advanced searches, still set government level filter
+        filters = {};
+        if (_searchType == BillSearchType.federal) {
+          filters['government_level'] = 'federal';
+        } else if (_searchType == BillSearchType.state) {
+          filters['government_level'] = 'state';
+        } else if (_searchType == BillSearchType.localImpact) {
+          filters['government_level'] = 'state';
         }
       }
       
@@ -240,12 +280,78 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             ),
             child: TabBar(
               controller: _tabController,
-              tabs: const [
-                Tab(text: 'State'),
-                Tab(text: 'Subject'),
-                Tab(text: 'Keyword'),
-                Tab(text: 'Sponsor'),
-                Tab(text: 'Advanced'),
+              isScrollable: true,
+              tabs: [
+                Tab(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.account_balance, size: 14, color: Theme.of(context).colorScheme.primary),
+                            const SizedBox(width: 4),
+                            Text('Federal', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Tab(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.location_city, size: 14, color: Theme.of(context).colorScheme.primary),
+                            const SizedBox(width: 4),
+                            Text('State', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Tab(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.location_on, size: 14, color: Theme.of(context).colorScheme.primary),
+                            const SizedBox(width: 4),
+                            Text('Local Impact', style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Tab(text: 'Subject'),
+                const Tab(text: 'Keyword'),
+                const Tab(text: 'Sponsor'),
+                const Tab(text: 'Advanced'),
               ],
               labelColor: Theme.of(context).colorScheme.primary,
               unselectedLabelColor: Colors.grey.shade600,
@@ -271,8 +377,12 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
   Widget _buildSearchUI() {
     // Show different UI based on search type
     switch (_searchType) {
+      case BillSearchType.federal:
+        return _buildFederalSearch();
       case BillSearchType.state:
         return _buildStateSearch();
+      case BillSearchType.localImpact:
+        return _buildLocalImpactSearch();
       case BillSearchType.subject:
         return _buildSubjectSearch();
       case BillSearchType.keyword:
@@ -284,6 +394,357 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
     }
   }
   
+  Widget _buildFederalSearch() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      key: const ValueKey('federal-search'),
+      children: [
+        // Federal bills explanation
+        Container(
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2)),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.account_balance, color: Theme.of(context).colorScheme.primary, size: 18),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Federal Bills',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Search for bills introduced in the U.S. House of Representatives and Senate.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        
+        // Search field for federal bills
+        TextFormField(
+          controller: _searchController,
+          decoration: InputDecoration(
+            labelText: 'Search Federal Bills',
+            hintText: 'Enter keywords to search federal legislation',
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+                width: 1.5,
+              ),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            prefixIcon: const Icon(Icons.account_balance, size: 20),
+            suffixIcon: _searchController.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      _searchController.clear();
+                    },
+                  )
+                : null,
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter search terms for federal bills';
+            }
+            return null;
+          },
+          enabled: !widget.isLoading,
+          textInputAction: TextInputAction.search,
+          onFieldSubmitted: (_) => _submitSearch(),
+        ),
+        
+        const SizedBox(height: 16),
+        
+        // Submit button
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: widget.isLoading ? null : _submitSearch,
+            icon: widget.isLoading
+                ? Container(
+                    width: 20,
+                    height: 20,
+                    padding: const EdgeInsets.all(2.0),
+                    child: const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : const Icon(Icons.account_balance),
+            label: Text(
+              widget.isLoading ? 'Searching...' : 'Search Federal Bills',
+              style: const TextStyle(fontSize: 16),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ),
+        
+        // Popular federal topics
+        const SizedBox(height: 16),
+        Text(
+          'Popular Federal Topics:',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            'Budget', 'Defense', 'Healthcare', 'Immigration', 'Tax Reform'
+          ].map((topic) => 
+            _buildActionChip(topic, () {
+              _searchController.text = topic;
+              _submitSearch();
+            })
+          ).toList(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLocalImpactSearch() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      key: const ValueKey('local-search'),
+      children: [
+        // Local bills explanation
+        Container(
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2)),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.location_on, color: Theme.of(context).colorScheme.primary, size: 18),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'State Bills with Local Impact',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Find state legislature bills that affect your local community, cities, and counties.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        
+        // Search field for local bills
+        TextFormField(
+          controller: _searchController,
+          decoration: InputDecoration(
+            labelText: 'Search Bills Affecting Local Communities',
+            hintText: 'Enter keywords like zoning, municipal, county, city services',
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+                width: 1.5,
+              ),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            prefixIcon: const Icon(Icons.location_on, size: 20),
+            suffixIcon: _searchController.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      _searchController.clear();
+                    },
+                  )
+                : null,
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter keywords to find bills affecting local communities';
+            }
+            return null;
+          },
+          enabled: !widget.isLoading,
+          textInputAction: TextInputAction.search,
+          onFieldSubmitted: (_) => _submitSearch(),
+        ),
+        
+        // State selection for local bills
+        const SizedBox(height: 16),
+        Text(
+          'Select State:',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<String>(
+          value: _selectedState,
+          decoration: InputDecoration(
+            labelText: 'State',
+            hintText: 'Select a state to see bills affecting local communities',
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.primary,
+                width: 1.5,
+              ),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            prefixIcon: const Icon(Icons.location_city, size: 20),
+          ),
+          items: _usStates.map((Map<String, String> state) {
+            return DropdownMenuItem<String>(
+              value: state["code"],
+              child: Text(
+                "${state["name"]} (${state["code"]})",
+                style: const TextStyle(fontSize: 14),
+              ),
+            );
+          }).toList(),
+          onChanged: widget.isLoading
+              ? null
+              : (String? newValue) {
+                  setState(() {
+                    _selectedState = newValue;
+                  });
+                },
+          isExpanded: true,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please select a state';
+            }
+            return null;
+          },
+        ),
+        
+        const SizedBox(height: 16),
+        
+        // Submit button
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: widget.isLoading ? null : _submitSearch,
+            icon: widget.isLoading
+                ? Container(
+                    width: 20,
+                    height: 20,
+                    padding: const EdgeInsets.all(2.0),
+                    child: const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : const Icon(Icons.location_on),
+            label: Text(
+              widget.isLoading ? 'Searching...' : 'Search Local Impact Bills',
+              style: const TextStyle(fontSize: 16),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ),
+        
+        // Popular local topics
+        const SizedBox(height: 16),
+        Text(
+          'Popular Local Impact Topics:',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            'Municipal Funding', 'Zoning Reform', 'Public Safety', 'Infrastructure', 'Property Tax'
+          ].map((topic) => 
+            _buildActionChip(topic, () {
+              _searchController.text = topic;
+              _submitSearch();
+            })
+          ).toList(),
+        ),
+      ],
+    );
+  }
+
   Widget _buildStateSearch() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -294,22 +755,36 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: Colors.blue.shade50,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.blue.shade100),
+            border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.info_outline, color: Colors.blue.shade700, size: 16),
+              Icon(Icons.location_city, color: Theme.of(context).colorScheme.primary, size: 18),
               const SizedBox(width: 8),
               Expanded(
-                child: Text(
-                  'Select a state to view all currently active bills in that state.',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.blue.shade800,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'State Bills',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Select a state to view all currently active bills in that state legislature.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -380,12 +855,14 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
                       strokeWidth: 2,
                     ),
                   )
-                : const Icon(Icons.public),
+                : const Icon(Icons.location_city),
             label: Text(
               widget.isLoading ? 'Searching...' : 'Get State Bills',
               style: const TextStyle(fontSize: 16),
             ),
             style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -431,21 +908,21 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: Colors.green.shade50,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.green.shade100),
+            border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.info_outline, color: Colors.green.shade700, size: 16),
+              Icon(Icons.info_outline, color: Theme.of(context).colorScheme.primary, size: 16),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Search for bills by legislative subject. You can optionally filter by state.',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.green.shade800,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -633,21 +1110,21 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: Colors.purple.shade50,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.purple.shade100),
+            border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.info_outline, color: Colors.purple.shade700, size: 16),
+              Icon(Icons.info_outline, color: Theme.of(context).colorScheme.primary, size: 16),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Search for bills by keyword within bill text. You can optionally filter by state.',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.purple.shade800,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -835,21 +1312,21 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: Colors.orange.shade50,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.orange.shade100),
+            border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.info_outline, color: Colors.orange.shade700, size: 16),
+              Icon(Icons.info_outline, color: Theme.of(context).colorScheme.primary, size: 16),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Search for bills by sponsor name. You can optionally filter by state.',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.orange.shade800,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -1038,21 +1515,21 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
           padding: const EdgeInsets.all(12),
           margin: const EdgeInsets.only(bottom: 16),
           decoration: BoxDecoration(
-            color: Colors.indigo.shade50,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.indigo.shade100),
+            border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.tune, color: Colors.indigo.shade700, size: 16),
+              Icon(Icons.tune, color: Theme.of(context).colorScheme.primary, size: 16),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'Advanced search with multiple filters. Combine keyword search with status, date range, and state filters.',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.indigo.shade800,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),

@@ -11,7 +11,7 @@ import 'package:govvy/providers/campaign_finance_provider.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
 import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
-import 'package:govvy/screens/campaign_finance/campaign_finance_screen.dart';
+import 'package:govvy/screens/campaign_finance/modular_campaign_finance_screen.dart';
 import 'package:govvy/services/bill_service.dart';
 import 'package:govvy/services/enhanced_legiscan_service.dart';
 import 'package:govvy/services/network_service.dart';
@@ -189,7 +189,7 @@ class RepresentativeApp extends StatelessWidget {
         home: const AuthWrapper(),
         routes: {
           '/bills': (context) => const EnhancedBillScreen(),
-          '/campaign_finance': (context) => const CampaignFinanceScreen(),
+          '/campaign_finance': (context) => const ModularCampaignFinanceScreen(),
         },
         onGenerateRoute: (settings) {
           if (settings.name == '/bill_details') {

@@ -6,7 +6,6 @@ import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
 import 'package:govvy/widgets/bills/enhanced_bill_card.dart';
 import 'package:govvy/widgets/bills/enhanced_bill_search.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class EnhancedBillScreen extends StatefulWidget {
   const EnhancedBillScreen({Key? key}) : super(key: key);
@@ -88,6 +87,17 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
     
     // Use the appropriate search method based on type
     switch (searchType) {
+      case BillSearchType.federal:
+        // Search for federal bills using keyword search with government level filter
+        provider.searchBillsWithFilters(
+          query: query.isNotEmpty ? query : null,
+          stateCode: null, // Federal bills don't have state codes
+          governmentLevel: 'federal',
+        );
+        _tabController.animateTo(0);
+        _scrollToTop();
+        break;
+        
       case BillSearchType.state:
         if (stateCode != null) {
           provider.fetchBillsByState(stateCode);
@@ -95,6 +105,18 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
           _tabController.animateTo(0);
           _scrollToTop();
         }
+        break;
+        
+      case BillSearchType.localImpact:
+        // Search for state bills that impact local communities
+        final searchQuery = query.isNotEmpty ? query : 'municipal OR county OR city OR town OR local OR zoning OR ordinance';
+        provider.searchBillsWithFilters(
+          query: searchQuery,
+          stateCode: stateCode,
+          governmentLevel: 'state',
+        );
+        _tabController.animateTo(0);
+        _scrollToTop();
         break;
         
       case BillSearchType.subject:
@@ -132,6 +154,7 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
     final String? status = filters?['status'];
     final String? dateRange = filters?['date_range'];
     final int? year = filters?['year'];
+    final String? governmentLevel = filters?['government_level'];
     
     // Calculate date ranges based on filter
     DateTime? startDate;
@@ -167,6 +190,7 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
       startDate: startDate,
       endDate: endDate,
       year: year,
+      governmentLevel: governmentLevel,
     );
   }
   
@@ -184,29 +208,7 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
     );
   }
   
-  // Launch bill URL
-  Future<void> _launchUrl(String url) async {
-    try {
-      final Uri uri = Uri.parse(url);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-      } else {
-        _showError('Could not open URL: $url');
-      }
-    } catch (e) {
-      _showError('Error opening URL: $e');
-    }
-  }
   
-  // Show error snackbar
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red.shade800,
-      ),
-    );
-  }
   
   // Scroll to top of list
   void _scrollToTop() {
@@ -239,8 +241,18 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
         String searchResultTitle = '';
         if (!isLoading && !hasError && billsToShow.isNotEmpty) {
           switch (_searchType) {
+            case BillSearchType.federal:
+              searchResultTitle = _lastQuery.isNotEmpty 
+                  ? 'Federal Bills: "$_lastQuery"'
+                  : 'Federal Bills';
+              break;
             case BillSearchType.state:
-              searchResultTitle = 'Bills in ${_currentStateCode ?? 'This State'}';
+              searchResultTitle = 'State Bills in ${_currentStateCode ?? 'This State'}';
+              break;
+            case BillSearchType.localImpact:
+              searchResultTitle = _lastQuery.isNotEmpty 
+                  ? 'Bills Affecting Local Communities: "$_lastQuery"${_currentStateCode != null ? ' in $_currentStateCode' : ''}'
+                  : 'Bills Affecting Local Communities${_currentStateCode != null ? ' in $_currentStateCode' : ''}';
               break;
             case BillSearchType.subject:
               searchResultTitle = 'Bills about "$_lastQuery"';
@@ -259,12 +271,13 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
         
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Find Bills'),
+            title: const Text('🏛️ Bills Impacting Your Community'),
             backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Colors.white,
           ),
-          body: Column(
-            children: [
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
               // Search UI
               Padding(
                 padding: const EdgeInsets.all(16),
@@ -277,23 +290,27 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
               ),
               
               // Results/Recent tabs
-              TabBar(
-                controller: _tabController,
-                tabs: [
-                  Tab(
-                    text: 'Results${billsToShow.isNotEmpty && _tabController.index == 0 ? ' (${billsToShow.length})' : ''}',
-                  ),
-                  Tab(
-                    text: 'Recent${recentBills.isNotEmpty ? ' (${recentBills.length})' : ''}',
-                  ),
-                ],
-                labelColor: Theme.of(context).colorScheme.primary,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: Theme.of(context).colorScheme.primary,
+              Container(
+                color: Colors.white,
+                child: TabBar(
+                  controller: _tabController,
+                  tabs: [
+                    Tab(
+                      text: 'Results${billsToShow.isNotEmpty && _tabController.index == 0 ? ' (${billsToShow.length})' : ''}',
+                    ),
+                    Tab(
+                      text: 'Recent${recentBills.isNotEmpty ? ' (${recentBills.length})' : ''}',
+                    ),
+                  ],
+                  labelColor: Theme.of(context).colorScheme.primary,
+                  unselectedLabelColor: Colors.grey,
+                  indicatorColor: Theme.of(context).colorScheme.primary,
+                ),
               ),
               
               // Results or error content
-              Expanded(
+              Container(
+                height: MediaQuery.of(context).size.height * 0.6,
                 child: TabBarView(
                   controller: _tabController,
                   children: [
@@ -312,6 +329,7 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
                 ),
               ),
             ],
+            ),
           ),
         );
       },
@@ -394,9 +412,21 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
     IconData emptyStateIcon;
     
     switch (_searchType) {
+      case BillSearchType.federal:
+        emptyStateMessage = _lastQuery.isNotEmpty 
+            ? 'No federal bills found for "$_lastQuery".\nTry different keywords or check your search terms.'
+            : 'No federal bills found.\nTry searching with specific keywords.';
+        emptyStateIcon = Icons.account_balance_outlined;
+        break;
       case BillSearchType.state:
-        emptyStateMessage = 'No bills found for ${_currentStateCode ?? 'this state'}.\nTry selecting a different state.';
-        emptyStateIcon = Icons.public_off;
+        emptyStateMessage = 'No state bills found for ${_currentStateCode ?? 'this state'}.\nTry selecting a different state.';
+        emptyStateIcon = Icons.location_city_outlined;
+        break;
+      case BillSearchType.localImpact:
+        emptyStateMessage = _lastQuery.isNotEmpty
+            ? 'No bills found affecting local communities for "$_lastQuery"${_currentStateCode != null ? ' in $_currentStateCode' : ''}.\nTry keywords like municipal, zoning, county, city services.'
+            : 'No bills found affecting local communities${_currentStateCode != null ? ' in $_currentStateCode' : ''}.\nTry searching with keywords like municipal, county, or city services.';
+        emptyStateIcon = Icons.location_city_outlined;
         break;
       case BillSearchType.subject:
         emptyStateMessage = 'No bills found for subject "$_lastQuery".\nTry a different subject or remove state filter.';

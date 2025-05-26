@@ -132,11 +132,8 @@ class FECService {
     try {
       final queryParams = <String, String>{
         'api_key': apiKey,
+        'cycle': (cycle ?? 2024).toString(), // Always include cycle - default to 2024
       };
-
-      if (cycle != null) {
-        queryParams['cycle'] = cycle.toString();
-      }
 
       final url = Uri.parse('$_baseUrl/candidate/$candidateId/totals/')
           .replace(queryParameters: queryParams);
@@ -166,6 +163,48 @@ class FECService {
     int page = 1,
     int perPage = 20,
   }) async {
+    // Get contributions through the candidate's committees
+    try {
+      final committees = await getCandidateCommittees(candidateId);
+      if (committees.isEmpty) {
+        return [];
+      }
+
+      // Get the most relevant committee (prefer principal campaign committees)
+      CommitteeInfo? primaryCommittee;
+      
+      // First try to find a principal campaign committee
+      for (final committee in committees) {
+        if (committee.designation == 'P') {
+          primaryCommittee = committee;
+          break;
+        }
+      }
+      
+      // If no principal committee found, use the first committee
+      primaryCommittee ??= committees.first;
+      return await getCommitteeContributions(
+        primaryCommittee.committeeId,
+        cycle: cycle,
+        minAmount: minAmount,
+        maxAmount: maxAmount,
+        page: page,
+        perPage: perPage,
+      );
+    } catch (e) {
+      print('Error getting candidate contributions: $e');
+      return [];
+    }
+  }
+
+  Future<List<CampaignContribution>> getCommitteeContributions(
+    String committeeId, {
+    int? cycle,
+    double? minAmount,
+    double? maxAmount,
+    int page = 1,
+    int perPage = 20,
+  }) async {
     final apiKey = await _apiKey;
     if (apiKey == null || apiKey.isEmpty) {
       throw Exception('FEC API key not configured');
@@ -177,11 +216,10 @@ class FECService {
         'page': page.toString(),
         'per_page': perPage.toString(),
         'sort': '-contribution_receipt_date',
+        'committee_id': committeeId,
+        'two_year_transaction_period': (cycle ?? 2024).toString(),
       };
 
-      if (cycle != null) {
-        queryParams['two_year_transaction_period'] = cycle.toString();
-      }
       if (minAmount != null) {
         queryParams['min_amount'] = minAmount.toString();
       }
@@ -190,9 +228,7 @@ class FECService {
       }
 
       final url = Uri.parse('$_baseUrl/schedules/schedule_a/')
-          .replace(queryParameters: queryParams..addAll({
-            'candidate_id': candidateId,
-          }));
+          .replace(queryParameters: queryParams);
 
       final response = await _networkService.get(url);
 
@@ -205,7 +241,7 @@ class FECService {
       
       return [];
     } catch (e) {
-      print('Error getting candidate contributions: $e');
+      print('Error getting committee contributions: $e');
       return [];
     }
   }
@@ -229,11 +265,10 @@ class FECService {
         'page': page.toString(),
         'per_page': perPage.toString(),
         'sort': '-disbursement_date',
+        'candidate_id': candidateId,
+        'two_year_transaction_period': (cycle ?? 2024).toString(), // Always include cycle
       };
 
-      if (cycle != null) {
-        queryParams['two_year_transaction_period'] = cycle.toString();
-      }
       if (minAmount != null) {
         queryParams['min_amount'] = minAmount.toString();
       }
@@ -242,9 +277,7 @@ class FECService {
       }
 
       final url = Uri.parse('$_baseUrl/schedules/schedule_b/')
-          .replace(queryParameters: queryParams..addAll({
-            'candidate_id': candidateId,
-          }));
+          .replace(queryParameters: queryParams);
 
       final response = await _networkService.get(url);
 
@@ -298,30 +331,58 @@ class FECService {
     int? cycle,
     int limit = 10,
   }) async {
-    final contributions = await getCandidateContributions(
-      candidateId,
-      cycle: cycle,
-      perPage: 1000, // Get more to find top contributors
-    );
+    try {
+      // First get the candidate's committees
+      final committees = await getCandidateCommittees(candidateId);
+      if (committees.isEmpty) {
+        return [];
+      }
 
-    // Group by contributor name and sum amounts
-    final Map<String, double> contributorTotals = {};
-    final Map<String, CampaignContribution> contributorInfo = {};
+      // Get the most relevant committee (prefer principal campaign committees)
+      CommitteeInfo? primaryCommittee;
+      
+      // First try to find a principal campaign committee
+      for (final committee in committees) {
+        if (committee.designation == 'P') {
+          primaryCommittee = committee;
+          break;
+        }
+      }
+      
+      // If no principal committee found, use the first committee
+      primaryCommittee ??= committees.first;
+      final contributions = await getCommitteeContributions(
+        primaryCommittee.committeeId,
+        cycle: cycle ?? 2024,
+        perPage: 50,
+      );
 
-    for (final contribution in contributions) {
-      final name = contribution.contributorName;
-      contributorTotals[name] = (contributorTotals[name] ?? 0) + contribution.amount;
-      contributorInfo[name] = contribution;
+      if (contributions.isEmpty) {
+        return [];
+      }
+
+      // Group by contributor name and sum amounts
+      final Map<String, double> contributorTotals = {};
+      final Map<String, CampaignContribution> contributorInfo = {};
+
+      for (final contribution in contributions) {
+        final name = contribution.contributorName;
+        contributorTotals[name] = (contributorTotals[name] ?? 0) + contribution.amount;
+        contributorInfo[name] = contribution;
+      }
+
+      // Sort by total amount and return top contributors
+      final sortedContributors = contributorTotals.entries.toList()
+        ..sort((a, b) => b.value.compareTo(a.value));
+
+      return sortedContributors
+          .take(limit)
+          .map((entry) => contributorInfo[entry.key]!)
+          .toList();
+    } catch (e) {
+      print('Error getting top contributors: $e');
+      return [];
     }
-
-    // Sort by total amount and return top contributors
-    final sortedContributors = contributorTotals.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
-
-    return sortedContributors
-        .take(limit)
-        .map((entry) => contributorInfo[entry.key]!)
-        .toList();
   }
 
   Future<Map<String, double>> getExpenditureCategorySummary(
@@ -330,8 +391,8 @@ class FECService {
   }) async {
     final expenditures = await getCandidateExpenditures(
       candidateId,
-      cycle: cycle,
-      perPage: 1000, // Get more transactions for better summary
+      cycle: cycle ?? 2024, // Default to 2024 cycle if not specified
+      perPage: 30, // Reduced for better performance
     );
 
     final Map<String, double> categorySums = {};
@@ -343,6 +404,150 @@ class FECService {
     }
 
     return categorySums;
+  }
+
+  // New method to get geographic contribution distribution
+  Future<Map<String, double>> getContributionsByState(
+    String candidateId, {
+    int? cycle,
+  }) async {
+    try {
+      final committees = await getCandidateCommittees(candidateId);
+      if (committees.isEmpty) {
+        return {};
+      }
+
+      // Get the most relevant committee (prefer principal campaign committees)
+      CommitteeInfo? primaryCommittee;
+      
+      // First try to find a principal campaign committee
+      for (final committee in committees) {
+        if (committee.designation == 'P') {
+          primaryCommittee = committee;
+          break;
+        }
+      }
+      
+      // If no principal committee found, use the first committee
+      primaryCommittee ??= committees.first;
+      final contributions = await getCommitteeContributions(
+        primaryCommittee.committeeId,
+        cycle: cycle ?? 2024,
+        perPage: 50,
+      );
+
+      final Map<String, double> stateContributions = {};
+      for (final contribution in contributions) {
+        final state = contribution.contributorState ?? 'Unknown';
+        stateContributions[state] = (stateContributions[state] ?? 0) + contribution.amount;
+      }
+
+      return stateContributions;
+    } catch (e) {
+      print('Error getting contributions by state: $e');
+      return {};
+    }
+  }
+
+  // New method to get contribution patterns by amount ranges
+  Future<Map<String, int>> getContributionAmountDistribution(
+    String candidateId, {
+    int? cycle,
+  }) async {
+    try {
+      final committees = await getCandidateCommittees(candidateId);
+      if (committees.isEmpty) {
+        return {};
+      }
+
+      // Get the most relevant committee (prefer principal campaign committees)
+      CommitteeInfo? primaryCommittee;
+      
+      // First try to find a principal campaign committee
+      for (final committee in committees) {
+        if (committee.designation == 'P') {
+          primaryCommittee = committee;
+          break;
+        }
+      }
+      
+      // If no principal committee found, use the first committee
+      primaryCommittee ??= committees.first;
+      final contributions = await getCommitteeContributions(
+        primaryCommittee.committeeId,
+        cycle: cycle ?? 2024,
+        perPage: 50,
+      );
+
+      final Map<String, int> distribution = {
+        'Small (\$1-\$200)': 0,
+        'Medium (\$201-\$1000)': 0,
+        'Large (\$1001-\$2900)': 0,
+        'Max (\$2900+)': 0,
+      };
+
+      for (final contribution in contributions) {
+        if (contribution.amount <= 200) {
+          distribution['Small (\$1-\$200)'] = distribution['Small (\$1-\$200)']! + 1;
+        } else if (contribution.amount <= 1000) {
+          distribution['Medium (\$201-\$1000)'] = distribution['Medium (\$201-\$1000)']! + 1;
+        } else if (contribution.amount <= 2900) {
+          distribution['Large (\$1001-\$2900)'] = distribution['Large (\$1001-\$2900)']! + 1;
+        } else {
+          distribution['Max (\$2900+)'] = distribution['Max (\$2900+)']! + 1;
+        }
+      }
+
+      return distribution;
+    } catch (e) {
+      print('Error getting contribution distribution: $e');
+      return {};
+    }
+  }
+
+  // New method to get monthly fundraising trends
+  Future<Map<String, double>> getMonthlyFundraisingTrends(
+    String candidateId, {
+    int? cycle,
+  }) async {
+    try {
+      final committees = await getCandidateCommittees(candidateId);
+      if (committees.isEmpty) {
+        return {};
+      }
+
+      // Get the most relevant committee (prefer principal campaign committees)
+      CommitteeInfo? primaryCommittee;
+      
+      // First try to find a principal campaign committee
+      for (final committee in committees) {
+        if (committee.designation == 'P') {
+          primaryCommittee = committee;
+          break;
+        }
+      }
+      
+      // If no principal committee found, use the first committee
+      primaryCommittee ??= committees.first;
+      final contributions = await getCommitteeContributions(
+        primaryCommittee.committeeId,
+        cycle: cycle ?? 2024,
+        perPage: 50, // Max allowed per page
+      );
+
+      final Map<String, double> monthlyTotals = {};
+      for (final contribution in contributions) {
+        if (contribution.contributionDate != null) {
+          final monthKey = '${contribution.contributionDate!.year}-${contribution.contributionDate!.month.toString().padLeft(2, '0')}';
+          monthlyTotals[monthKey] = (monthlyTotals[monthKey] ?? 0) + contribution.amount;
+        }
+      }
+
+      return monthlyTotals;
+    } catch (e) {
+      print('Error getting monthly trends: $e');
+      return {};
+    }
   }
 
   // Map FEC category codes to human-readable names

@@ -17,6 +17,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   String? _errorMessage;
   bool _showSignUpForm = false;
+  bool _isResetPasswordLoading = false;
+  String? _resetPasswordMessage;
 
   @override
   void dispose() {
@@ -78,7 +80,53 @@ class _LoginScreenState extends State<LoginScreen> {
   void _toggleSignUpForm() {
     setState(() {
       _showSignUpForm = !_showSignUpForm;
+      _errorMessage = null;
+      _resetPasswordMessage = null;
     });
+  }
+
+  Future<void> _resetPassword() async {
+    if (_emailController.text.trim().isEmpty) {
+      setState(() {
+        _errorMessage = 'Please enter your email address to reset password.';
+      });
+      return;
+    }
+
+    setState(() {
+      _isResetPasswordLoading = true;
+      _errorMessage = null;
+      _resetPasswordMessage = null;
+    });
+
+    try {
+      final authService = Provider.of<AuthService>(context, listen: false);
+      await authService.sendPasswordResetEmail(email: _emailController.text.trim());
+      
+      setState(() {
+        _resetPasswordMessage = 'Password reset email sent! Check your inbox.';
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = _handleResetPasswordError(e.toString());
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isResetPasswordLoading = false;
+        });
+      }
+    }
+  }
+
+  String _handleResetPasswordError(String errorMessage) {
+    if (errorMessage.contains('user-not-found')) {
+      return 'No account found with this email address.';
+    } else if (errorMessage.contains('invalid-email')) {
+      return 'Please enter a valid email address.';
+    } else {
+      return 'Failed to send reset email. Please try again.';
+    }
   }
 
   @override
@@ -121,6 +169,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         _errorMessage!,
                         style: TextStyle(color: Colors.red.shade700),
+                      ),
+                    ),
+                  
+                  if (_resetPasswordMessage != null)
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      margin: const EdgeInsets.only(bottom: 16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade50,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(color: Colors.green.shade200),
+                      ),
+                      child: Text(
+                        _resetPasswordMessage!,
+                        style: TextStyle(color: Colors.green.shade700),
                       ),
                     ),
                   
@@ -168,6 +231,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         : const Text('Sign In'),
                   ),
                   const SizedBox(height: 16),
+                  Center(
+                    child: TextButton(
+                      onPressed: _isResetPasswordLoading ? null : _resetPassword,
+                      child: _isResetPasswordLoading
+                          ? const SizedBox(
+                              height: 16,
+                              width: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.0,
+                              ),
+                            )
+                          : const Text('Forgot Password?'),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   Center(
                     child: TextButton(
                       onPressed: _toggleSignUpForm,

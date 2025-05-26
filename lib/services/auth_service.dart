@@ -242,6 +242,21 @@ class AuthService with ChangeNotifier {
     }
   }
   
+  // Send password reset email
+  Future<void> sendPasswordResetEmail({required String email}) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      if (kDebugMode) {
+        print('Password reset email sent to: $email');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error sending password reset email: $e');
+      }
+      rethrow;
+    }
+  }
+  
   // Sign out
   Future<void> signOut() async {
     try {
@@ -300,6 +315,10 @@ class AuthService with ChangeNotifier {
       });
       
     } catch (e) {
+      // Silently handle errors when updating last login
+      if (kDebugMode) {
+        print('Error updating last login: $e');
+      }
     }
   }
   

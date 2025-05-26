@@ -10,12 +10,24 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CampaignFinanceProvider>(
       builder: (context, provider, child) {
-        if (provider.isLoadingAny && !provider.hasData) {
-          return const Card(
+        // Show loading screen only if we don't have candidate data yet
+        if (!provider.hasData) {
+          return Card(
             child: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Center(
-                child: CircularProgressIndicator(),
+                child: Column(
+                  children: [
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 16),
+                    Text(
+                      provider.currentCandidate != null
+                          ? 'Loading campaign finance data for ${provider.currentCandidate!.name}...'
+                          : 'Searching candidate...',
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -101,6 +113,20 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
                 if (summary != null) ...[
                   const Divider(height: 24),
                   
+                  // DEBUG: Show that we have summary data
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    margin: const EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      'SUCCESS: Financial data loaded for ${summary.cycle} - \$${_formatLargeCurrency(summary.totalRaised)} raised',
+                      style: const TextStyle(fontSize: 11, color: Colors.green),
+                    ),
+                  ),
+                  
                   // Comprehensive financial overview  
                   _buildComprehensiveFinancialOverview(context, summary, provider),
                   
@@ -108,6 +134,19 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
                   
                   // Detailed financial breakdown
                   _buildDetailedFinancialBreakdown(context, summary, provider),
+                ] else ...[
+                  const Divider(height: 24),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.orange.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Text(
+                      'DEBUG: No financial summary data available',
+                      style: TextStyle(fontSize: 11, color: Colors.orange),
+                    ),
+                  ),
                 ],
                 
                 // Top contributors preview
@@ -120,6 +159,22 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
                 if (provider.expenditureCategorySummary.isNotEmpty) ...[
                   const Divider(height: 24),
                   _buildExpenditureCategoriesPreview(context, provider),
+                ],
+                
+                // Enhanced data sections with new FEC insights
+                if (provider.contributionsByState.isNotEmpty) ...[
+                  const Divider(height: 24),
+                  _buildGeographicInsights(context, provider),
+                ],
+                
+                if (provider.contributionAmountDistribution.isNotEmpty) ...[
+                  const Divider(height: 24),
+                  _buildContributionPatterns(context, provider),
+                ],
+                
+                if (provider.monthlyFundraisingTrends.isNotEmpty) ...[
+                  const Divider(height: 24),
+                  _buildFundraisingTrends(context, provider),
                 ],
               ],
             ),
@@ -173,11 +228,14 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
             children: [
               const Icon(Icons.account_balance, color: Colors.blue, size: 20),
               const SizedBox(width: 8),
-              Text(
-                'Campaign Finance Overview (${summary.cycle})',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue[800],
+              Expanded(
+                child: Text(
+                  'Overview (${summary.cycle})',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue[800],
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -365,6 +423,8 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ],
       ),
@@ -529,5 +589,288 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
           ),
       ],
     );
+  }
+
+  Widget _buildGeographicInsights(BuildContext context, CampaignFinanceProvider provider) {
+    final sortedStates = provider.contributionsByState.entries.toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.map, color: Colors.teal, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Geographic Distribution',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.teal[700],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.teal.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.teal.withOpacity(0.2)),
+          ),
+          child: Column(
+            children: [
+              Text(
+                'Top Contributing States',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ...sortedStates.take(5).map((state) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 24,
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Colors.teal.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: Center(
+                          child: Text(
+                            state.key,
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontSize: 8,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.teal[800],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          state.key == 'Unknown' ? 'Unknown State' : state.key,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      Text(
+                        _formatLargeCurrency(state.value),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.teal[700],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              if (sortedStates.length > 5)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    '... and ${sortedStates.length - 5} more states',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey[600],
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContributionPatterns(BuildContext context, CampaignFinanceProvider provider) {
+    final distribution = provider.contributionAmountDistribution;
+    final total = distribution.values.reduce((a, b) => a + b);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.pie_chart, color: Colors.indigo, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Contribution Patterns',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.indigo[700],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.indigo.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.indigo.withOpacity(0.2)),
+          ),
+          child: Column(
+            children: [
+              Text(
+                'Donor Distribution by Amount',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ...distribution.entries.map((entry) {
+                final percentage = total > 0 ? (entry.value / total * 100) : 0.0;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          entry.key,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontSize: 11,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          '${entry.value}',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.indigo[700],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          '${percentage.toStringAsFixed(1)}%',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.grey[600],
+                          ),
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFundraisingTrends(BuildContext context, CampaignFinanceProvider provider) {
+    final trends = provider.monthlyFundraisingTrends;
+    final sortedMonths = trends.entries.toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.trending_up, color: Colors.green, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Fundraising Trends',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.green[700],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.green.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.green.withOpacity(0.2)),
+          ),
+          child: Column(
+            children: [
+              Text(
+                'Monthly Fundraising Activity',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ...sortedMonths.take(6).map((month) {
+                final monthName = _getMonthName(month.key);
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          monthName,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      Text(
+                        _formatLargeCurrency(month.value),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.green[700],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+              if (sortedMonths.length > 6)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    '... and ${sortedMonths.length - 6} more months',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey[600],
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _getMonthName(String monthKey) {
+    final parts = monthKey.split('-');
+    if (parts.length != 2) return monthKey;
+    
+    final year = parts[0];
+    final month = int.tryParse(parts[1]) ?? 0;
+    
+    const monthNames = [
+      '', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    
+    if (month >= 1 && month <= 12) {
+      return '${monthNames[month]} $year';
+    }
+    
+    return monthKey;
   }
 }

@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/providers/campaign_finance_provider.dart';
-import 'package:govvy/widgets/campaign_finance/campaign_finance_summary_card.dart';
+import 'package:govvy/widgets/campaign_finance/candidate_basic_info_widget.dart';
+import 'package:govvy/widgets/campaign_finance/finance_summary_widget.dart';
+import 'package:govvy/widgets/campaign_finance/contributions_widget.dart';
+import 'package:govvy/widgets/campaign_finance/top_contributors_widget.dart';
+import 'package:govvy/widgets/campaign_finance/expenditures_widget.dart';
+import 'package:govvy/widgets/campaign_finance/congress_members_search_widget.dart';
 
-class CampaignFinanceScreen extends StatefulWidget {
-  const CampaignFinanceScreen({super.key});
+class ModularCampaignFinanceScreen extends StatefulWidget {
+  const ModularCampaignFinanceScreen({super.key});
 
   @override
-  State<CampaignFinanceScreen> createState() => _CampaignFinanceScreenState();
+  State<ModularCampaignFinanceScreen> createState() => _ModularCampaignFinanceScreenState();
 }
 
-class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
+class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
@@ -49,102 +54,85 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
 
   Widget _buildPopularCandidatesHorizontalList(BuildContext context) {
     final candidates = [
-      // Presidential
-      {'name': 'Joe Biden', 'office': 'President', 'party': 'D'},
-      {'name': 'Donald Trump', 'office': 'President', 'party': 'R'},
-      {'name': 'Ron DeSantis', 'office': 'Governor', 'party': 'R'},
-      {'name': 'Nikki Haley', 'office': 'Presidential', 'party': 'R'},
-      
-      // Senate Notable
-      {'name': 'Chuck Schumer', 'office': 'Senate Leader', 'party': 'D'},
-      {'name': 'Mitch McConnell', 'office': 'Senate Leader', 'party': 'R'},
-      {'name': 'Elizabeth Warren', 'office': 'Senator MA', 'party': 'D'},
-      {'name': 'Ted Cruz', 'office': 'Senator TX', 'party': 'R'},
-      {'name': 'Bernie Sanders', 'office': 'Senator VT', 'party': 'I'},
-      {'name': 'Marco Rubio', 'office': 'Senator FL', 'party': 'R'},
-      
-      // House Notable
-      {'name': 'Alexandria Ocasio-Cortez', 'office': 'Rep NY-14', 'party': 'D'},
-      {'name': 'Nancy Pelosi', 'office': 'Rep CA-11', 'party': 'D'},
-      {'name': 'Kevin McCarthy', 'office': 'Rep CA-20', 'party': 'R'},
-      {'name': 'Marjorie Taylor Greene', 'office': 'Rep GA-14', 'party': 'R'},
+      ('Donald Trump', 'REP', 'President'),
+      ('Joe Biden', 'DEM', 'President'),
+      ('Elizabeth Warren', 'DEM', 'Senate'),
+      ('Ted Cruz', 'REP', 'Senate'),
+      ('Nikki Haley', 'REP', 'President'),
+      ('Bernie Sanders', 'DEM', 'Senate'),
     ];
 
-    return ListView.separated(
+    return ListView.builder(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: candidates.length,
-      separatorBuilder: (context, index) => const SizedBox(width: 12),
       itemBuilder: (context, index) {
         final candidate = candidates[index];
-        return _buildHorizontalCandidateCard(
-          context,
-          candidate['name'] as String,
-          candidate['office'] as String,
-          candidate['party'] as String,
-        );
+        return _buildCandidateChip(candidate.$1, candidate.$2, candidate.$3);
       },
     );
   }
 
-  Widget _buildHorizontalCandidateCard(BuildContext context, String name, String office, String party) {
-    final partyColor = party == 'D' ? Colors.blue : party == 'R' ? Colors.red : Colors.green;
+  Widget _buildCandidateChip(String name, String party, String office) {
+    final partyColor = party == 'DEM' ? Colors.blue : Colors.red;
     
-    return SizedBox(
-      width: 120,
-      child: Card(
-        elevation: 2,
-        child: InkWell(
-          onTap: () => _searchCandidateByName(name),
+    return GestureDetector(
+      onTap: () => _searchCandidateByName(name),
+      child: Container(
+        width: 120,
+        margin: const EdgeInsets.only(right: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey[300]!),
           borderRadius: BorderRadius.circular(8),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        name,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      name,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                      decoration: BoxDecoration(
-                        color: partyColor.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child: Text(
-                        party,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: partyColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 8,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  office,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[600],
-                    fontSize: 9,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                    decoration: BoxDecoration(
+                      color: partyColor.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    child: Text(
+                      party,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: partyColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 8,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                office,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Colors.grey[600],
+                  fontSize: 9,
                 ),
-              ],
-            ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ],
           ),
         ),
       ),
@@ -181,18 +169,17 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Main search section
+              // Search section
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Search input
                       TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          hintText: 'Search candidate name (e.g., "Elizabeth Warren", "Ted Cruz")',
+                          hintText: 'Search candidate name (e.g., "Nikki Haley", "Elizabeth Warren")',
                           prefixIcon: const Icon(Icons.person_search),
                           suffixIcon: _searchQuery.isNotEmpty
                               ? IconButton(
@@ -212,8 +199,6 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                         onSubmitted: (_) => _searchCandidate(),
                       ),
                       const SizedBox(height: 12),
-                      
-                      // Search button
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
@@ -234,7 +219,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
               ),
               const SizedBox(height: 16),
 
-              // Popular candidates horizontal scroll
+              // Popular candidates
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -255,17 +240,23 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                   ),
                   const SizedBox(height: 8),
                   SizedBox(
-                    height: 80, // Fixed height for horizontal scroll
+                    height: 80,
                     child: _buildPopularCandidatesHorizontalList(context),
                   ),
                 ],
               ),
+              const SizedBox(height: 16),
+
+              // Congress members search
+              CongressMembersSearchWidget(
+                onMemberSelected: _searchCandidateByName,
+              ),
               const SizedBox(height: 24),
 
-              // Results section
+              // Results section with modular widgets
               Consumer<CampaignFinanceProvider>(
                 builder: (context, provider, child) {
-                  if (provider.isLoadingAny) {
+                  if (provider.isLoadingCandidate && !provider.hasData) {
                     return Card(
                       child: Padding(
                         padding: const EdgeInsets.all(32.0),
@@ -275,17 +266,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                               const CircularProgressIndicator(),
                               const SizedBox(height: 16),
                               Text(
-                                provider.currentCandidate != null
-                                    ? 'Loading campaign finance data for ${provider.currentCandidate!.name}...'
-                                    : 'Searching campaign finance data...',
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'This may take a few moments as we fetch data from the FEC.',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: Colors.grey[600],
-                                ),
+                                'Searching for candidate...',
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -295,7 +276,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                     );
                   }
 
-                  if (provider.error != null) {
+                  if (provider.error != null && !provider.hasData) {
                     return Card(
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -358,8 +339,30 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                     );
                   }
 
-                  // Show campaign finance data
-                  return const CampaignFinanceSummaryCard();
+                  // Show candidate data with modular widgets that load independently
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Basic candidate info (always shown first)
+                      CandidateBasicInfoWidget(candidate: provider.currentCandidate!),
+                      const SizedBox(height: 16),
+                      
+                      // Financial summary (loads independently)
+                      const FinanceSummaryWidget(),
+                      const SizedBox(height: 16),
+                      
+                      // Recent contributions (loads independently)
+                      const ContributionsWidget(),
+                      const SizedBox(height: 16),
+                      
+                      // Top contributors (loads independently)
+                      const TopContributorsWidget(),
+                      const SizedBox(height: 16),
+                      
+                      // Expenditures (loads independently)
+                      const ExpendituresWidget(),
+                    ],
+                  );
                 },
               ),
 
@@ -377,7 +380,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                           const Icon(Icons.info_outline, color: Colors.blue),
                           const SizedBox(width: 8),
                           Text(
-                            'About This Data',
+                            'About FEC Data',
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -386,30 +389,8 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Campaign finance data is provided by the Federal Election Commission (FEC) and includes:',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      const SizedBox(height: 8),
-                      
-                      ...[
-                        '• Total contributions received',
-                        '• Campaign expenditures and spending',
-                        '• Individual donor information',
-                        '• Committee and PAC contributions',
-                        '• Financial summary by election cycle',
-                      ].map((item) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2.0),
-                        child: Text(
-                          item,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      )),
-                      
-                      const SizedBox(height: 12),
-                      Text(
-                        'Data is updated nightly from FEC electronic filings.',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontStyle: FontStyle.italic,
+                        'Data provided by the Federal Election Commission (FEC). Campaign finance information includes contributions, expenditures, and committee details for federal candidates.',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.grey[600],
                         ),
                       ),

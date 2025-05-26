@@ -7,6 +7,7 @@ import 'package:govvy/models/enhanced_bill_details.dart';
 import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/screens/representatives/representative_details_screen.dart';
 import 'package:govvy/widgets/bills/bill_history_card.dart';
+import 'package:govvy/widgets/bills/ai_bill_summary_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BillDetailsScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this); // 4 tabs: Info, History, Sponsors, Votes
+    _tabController = TabController(length: 5, vsync: this); // 5 tabs: Info, AI Summary, History, Sponsors, Votes
 
     // Fetch bill details when the screen loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -165,6 +166,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                           controller: _tabController,
                           tabs: const [
                             Tab(text: 'Information'),
+                            Tab(text: 'AI Summary'),
                             Tab(text: 'History'),
                             Tab(text: 'Sponsors'),
                             Tab(text: 'Votes'),
@@ -181,6 +183,11 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                             children: [
                               // Information tab
                               _buildInformationTab(bill, documents, isLoadingDocuments, enhancedDetails),
+                              
+                              // AI Summary tab
+                              SingleChildScrollView(
+                                child: AIBillSummaryWidget(bill: bill),
+                              ),
                               
                               // History tab
                               _buildHistoryTab(bill),
@@ -205,19 +212,19 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
     Color statusColor;
     switch (bill.statusColor) {
       case 'green':
-        statusColor = Colors.green;
+        statusColor = Colors.purple.shade600;
         break;
       case 'red':
-        statusColor = Colors.red;
+        statusColor = Colors.purple.shade700;
         break;
       case 'orange':
-        statusColor = Colors.orange;
+        statusColor = Colors.purple.shade500;
         break;
       case 'blue':
-        statusColor = Colors.blue;
+        statusColor = Colors.purple.shade400;
         break;
       default:
-        statusColor = Colors.grey;
+        statusColor = Colors.purple.shade300;
     }
 
     return Container(
@@ -1394,7 +1401,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -1486,7 +1493,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -1562,7 +1569,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -1641,7 +1648,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -1720,7 +1727,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

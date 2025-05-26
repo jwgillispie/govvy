@@ -10,6 +10,7 @@ import 'package:govvy/models/representative_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:govvy/widgets/representatives/role_info_widget.dart';
 import 'package:govvy/widgets/representatives/email_template_dialog.dart';
+import 'package:govvy/widgets/representatives/ai_representative_analysis_widget.dart';
 import 'package:govvy/widgets/campaign_finance/campaign_finance_summary_card.dart';
 // Removed: import 'package:govvy/providers/csv_representative_provider.dart';
 
@@ -52,7 +53,7 @@ class _RepresentativeDetailsScreenState
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this); // 5 tabs
+    _tabController = TabController(length: 6, vsync: this); // 6 tabs
 
     // Fix: Use addPostFrameCallback to defer API call until after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -230,6 +231,7 @@ class _RepresentativeDetailsScreenState
                             isScrollable: true,
                             tabs: const [
                               Tab(text: 'Profile'),
+                              Tab(text: 'AI Analysis'),
                               Tab(text: 'Role Info'),
                               Tab(text: 'Finance'),
                               Tab(text: 'Sponsored'),
@@ -247,6 +249,16 @@ class _RepresentativeDetailsScreenState
                               controller: _tabController,
                               children: [
                                 _buildProfileTab(rep),
+                                SingleChildScrollView(
+                                  child: AIRepresentativeAnalysisWidget(
+                                    representative: rep,
+                                    votingHistory: rep.sponsoredBills?.map((bill) => {
+                                      'bill_title': bill.title,
+                                      'position': 'Sponsored',
+                                      'date': 'Sponsored Bill'
+                                    }).toList(),
+                                  ),
+                                ),
                                 RoleInfoWidget(
                                   role: rep.chamber,
                                   officeName: rep.office ?? '',

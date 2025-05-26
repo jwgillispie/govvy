@@ -57,10 +57,12 @@ class EnhancedBillCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Header row with bill number and state/type
+        // Header row with bill number, government level, and state
         Row(
           children: [
             _buildBillNumberBadge(context),
+            const SizedBox(width: 8),
+            _buildTypeBadge(context),
             const SizedBox(width: 8),
             if (showStateCode) ...[
               Text(
@@ -847,55 +849,85 @@ class EnhancedBillCard extends StatelessWidget {
     );
   }
   
-  // Helper widget for type badge
+  // Helper widget for type badge with enhanced government level indicators
   Widget _buildTypeBadge(BuildContext context) {
-    // Determine the badge based on bill type and special handling for specific states
-    Color color;
+    // Determine the badge based on bill type with clear visual distinctions
+    Color backgroundColor;
+    Color borderColor;
+    Color textColor;
     String label;
+    IconData icon;
     
-    if (bill.state == 'FL' || bill.state == 'GA') {
-      // Show special badge for FL and GA
-      color = Colors.deepPurple;
-      label = bill.state;
-    } else {
-      switch (bill.type) {
-        case 'federal':
-          color = Colors.indigo;
-          label = 'Federal';
-          break;
-        case 'state':
-          color = Colors.teal;
-          label = 'State';
-          break;
-        case 'local':
-          color = Colors.green;
-          label = 'Local';
-          break;
-        default:
-          color = Colors.grey;
+    switch (bill.type.toLowerCase()) {
+      case 'federal':
+        backgroundColor = Colors.blue.shade100;
+        borderColor = Colors.blue.shade300;
+        textColor = Colors.blue.shade800;
+        label = 'FEDERAL';
+        icon = Icons.account_balance;
+        break;
+      case 'state':
+        backgroundColor = Colors.green.shade100;
+        borderColor = Colors.green.shade300;
+        textColor = Colors.green.shade800;
+        label = 'STATE';
+        icon = Icons.location_city;
+        break;
+      case 'local':
+        backgroundColor = Colors.orange.shade100;
+        borderColor = Colors.orange.shade300;
+        textColor = Colors.orange.shade800;
+        label = 'LOCAL';
+        icon = Icons.location_on;
+        break;
+      default:
+        // For unknown types, try to infer from state or other indicators
+        if (bill.state == 'US' || bill.state == 'USA') {
+          backgroundColor = Colors.blue.shade100;
+          borderColor = Colors.blue.shade300;
+          textColor = Colors.blue.shade800;
+          label = 'FEDERAL';
+          icon = Icons.account_balance;
+        } else {
+          backgroundColor = Colors.grey.shade100;
+          borderColor = Colors.grey.shade300;
+          textColor = Colors.grey.shade700;
           label = bill.type.isNotEmpty 
-              ? bill.type[0].toUpperCase() + bill.type.substring(1) 
-              : 'Unknown';
-      }
+              ? bill.type.toUpperCase() 
+              : 'UNKNOWN';
+          icon = Icons.help_outline;
+        }
     }
     
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: 6,
-        vertical: 2,
+        horizontal: 8,
+        vertical: 4,
       ),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: color.withOpacity(0.5)),
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: borderColor, width: 1.5),
       ),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-          color: color.withOpacity(0.8),
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 12,
+            color: textColor,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              color: textColor,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -922,15 +954,15 @@ class EnhancedBillCard extends StatelessWidget {
   Color _getStatusColor(String statusColor) {
     switch (statusColor) {
       case 'green':
-        return Colors.green.shade600;
+        return Colors.purple.shade600;
       case 'red':
-        return Colors.red.shade600;
+        return Colors.purple.shade700;
       case 'orange':
-        return Colors.orange.shade600;
+        return Colors.purple.shade500;
       case 'blue':
-        return Colors.blue.shade600;
+        return Colors.purple.shade400;
       default:
-        return Colors.grey.shade600;
+        return Colors.purple.shade300;
     }
   }
   
@@ -938,15 +970,15 @@ class EnhancedBillCard extends StatelessWidget {
   Color _getStatusBackgroundColor(String statusColor) {
     switch (statusColor) {
       case 'green':
-        return Colors.green.shade50;
+        return Colors.purple.shade50;
       case 'red':
-        return Colors.red.shade50;
+        return Colors.purple.shade100;
       case 'orange':
-        return Colors.orange.shade50;
+        return Colors.purple.shade50;
       case 'blue':
-        return Colors.blue.shade50;
+        return Colors.purple.shade50;
       default:
-        return Colors.grey.shade50;
+        return Colors.purple.shade50;
     }
   }
   

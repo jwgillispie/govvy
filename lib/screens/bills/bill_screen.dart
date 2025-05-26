@@ -1,12 +1,9 @@
 // lib/screens/bills/bill_list_screen.dart
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/models/bill_model.dart';
-import 'package:govvy/providers/bill_provider.dart';
 import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
-import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
 import 'package:govvy/widgets/bills/bill_card.dart';
 
 class BillListScreen extends StatefulWidget {

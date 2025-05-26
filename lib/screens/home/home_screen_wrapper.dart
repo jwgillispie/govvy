@@ -1,8 +1,8 @@
 // lib/screens/home/home_screen_wrapper.dart
 import 'package:flutter/material.dart';
-import 'package:govvy/screens/bills/bill_screen.dart';
+import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
 import 'package:govvy/screens/representatives/find_representatives_screen.dart';
-import 'package:govvy/screens/campaign_finance/campaign_finance_screen.dart';
+import 'package:govvy/screens/campaign_finance/modular_campaign_finance_screen.dart';
 import 'package:govvy/screens/profile/profile_screen.dart';
 
 class HomeScreenWrapper extends StatefulWidget {
@@ -18,8 +18,8 @@ class _HomeScreenWrapperState extends State<HomeScreenWrapper> {
   // List of screens for the bottom navigation
   final List<Widget> _screens = [
     const FindRepresentativesScreen(),
-    const BillListScreen(),
-    const CampaignFinanceScreen(),
+    const EnhancedBillScreen(),
+    const ModularCampaignFinanceScreen(),
     const ProfileScreen(), // Assuming you have a ProfileScreen
   ];
 

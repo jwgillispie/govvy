@@ -18,19 +18,19 @@ class BillCard extends StatelessWidget {
     Color statusColor;
     switch (bill.statusColor) {
       case 'green':
-        statusColor = Colors.green;
+        statusColor = Colors.purple.shade600;
         break;
       case 'red':
-        statusColor = Colors.red;
+        statusColor = Colors.purple.shade700;
         break;
       case 'orange':
-        statusColor = Colors.orange;
+        statusColor = Colors.purple.shade500;
         break;
       case 'blue':
-        statusColor = Colors.blue;
+        statusColor = Colors.purple.shade400;
         break;
       default:
-        statusColor = Colors.grey;
+        statusColor = Colors.purple.shade300;
     }
 
     // Determine the badge based on bill type and special handling for FL and GA

@@ -1104,6 +1104,7 @@ class EnhancedBillProvider with ChangeNotifier {
     DateTime? startDate,
     DateTime? endDate,
     int? year,
+    String? governmentLevel,
   }) async {
     if (!await _checkNetworkBeforeRequest()) {
       return;
@@ -1163,6 +1164,8 @@ class EnhancedBillProvider with ChangeNotifier {
         }
       }
       
+      // Government level filter is passed as parameter
+      
       // Execute the search with all filters
       List<BillModel> results;
       
@@ -1173,18 +1176,18 @@ class EnhancedBillProvider with ChangeNotifier {
           results = await _legiscanService.getBillsForState(stateCode);
           
           // Apply client-side filtering
-          results = _applyClientSideFilters(results, status, startDate, endDate, year);
+          results = _applyClientSideFilters(results, status, startDate, endDate, year, governmentLevel: governmentLevel);
         } else {
           // Without a state, use a broader search
           results = await _legiscanService.searchBills(
             query: '*', // Wildcard search
             stateCode: stateCode,
             year: year,
-            maxResults: 50
+            maxResults: 40
           );
           
           // Apply client-side filtering
-          results = _applyClientSideFilters(results, status, startDate, endDate, year);
+          results = _applyClientSideFilters(results, status, startDate, endDate, year, governmentLevel: governmentLevel);
         }
       } else {
         // Normal keyword search with filters
@@ -1192,11 +1195,11 @@ class EnhancedBillProvider with ChangeNotifier {
           query: query,
           stateCode: stateCode,
           year: year,
-          maxResults: 50
+          maxResults: 40
         );
         
         // Apply client-side filtering
-        results = _applyClientSideFilters(results, status, startDate, endDate, year);
+        results = _applyClientSideFilters(results, status, startDate, endDate, year, governmentLevel: governmentLevel);
       }
       
       _searchResultBills = results;
@@ -1224,14 +1227,25 @@ class EnhancedBillProvider with ChangeNotifier {
     String? status,
     DateTime? startDate,
     DateTime? endDate,
-    int? year
+    int? year,
+    {String? governmentLevel}
   ) {
     // If no filters, return original list
-    if (status == null && startDate == null && endDate == null && year == null) {
+    if (status == null && startDate == null && endDate == null && year == null && governmentLevel == null) {
       return bills;
     }
     
     return bills.where((bill) {
+      // Filter by government level
+      if (governmentLevel != null) {
+        final billType = bill.type.toLowerCase();
+        final targetLevel = governmentLevel.toLowerCase();
+        
+        if (targetLevel != billType) {
+          return false;
+        }
+      }
+      
       // Filter by status
       if (status != null) {
         final billStatus = bill.status.toLowerCase();

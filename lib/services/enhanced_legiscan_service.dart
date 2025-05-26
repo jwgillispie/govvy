@@ -297,7 +297,7 @@ class EnhancedLegiscanService {
     required String query,
     String? stateCode,
     int? year,
-    int maxResults = 50
+    int maxResults = 40
   }) async {
     if (!hasApiKey) return [];
     
@@ -426,7 +426,7 @@ class EnhancedLegiscanService {
   Future<List<BillModel>> searchBillsWithMultipleYears({
     required String query,
     String? stateCode,
-    int maxResults = 50
+    int maxResults = 40
   }) async {
     final years = [2025, 2024, 2023];
     List<BillModel> allResults = [];
@@ -598,10 +598,10 @@ class EnhancedLegiscanService {
       // Log first bill entry to understand structure
       masterList.forEach((key, value) {
         if (key != 'session' && value is Map) {
-          print('LegiScan: Sample master list bill $key fields: ${(value as Map).keys.toList()}');
-          if ((value as Map).containsKey('bill_number')) {
+          print('LegiScan: Sample master list bill $key fields: ${(value).keys.toList()}');
+          if ((value).containsKey('bill_number')) {
             print('LegiScan: Master list bill number found: ${value['bill_number']}');
-          } else if ((value as Map).containsKey('number')) {
+          } else if ((value).containsKey('number')) {
             print('LegiScan: Master list number found: ${value['number']}');
           } else {
             print('LegiScan: No bill_number or number field found in master list');
@@ -812,8 +812,8 @@ class EnhancedLegiscanService {
     // Enrich with sponsor details
     await _enrichSponsorData(billDetails);
     
-    // Enrich with bill text documents
-    await _enrichBillTextData(billDetails);
+    // Skip bill text enrichment to avoid API errors and improve performance
+    // await _enrichBillTextData(billDetails);
     
     // Enrich with amendments if available
     if (billDetails.amendments != null && billDetails.amendments!.isNotEmpty) {
@@ -1065,8 +1065,8 @@ class EnhancedLegiscanService {
       var billCount = 0;
       searchresult.forEach((key, value) {
         if (key != 'summary' && value is Map && billCount < 2) {
-          print('LegiScan: Sample bill $key fields: ${(value as Map).keys.toList()}');
-          if ((value as Map).containsKey('bill_number')) {
+          print('LegiScan: Sample bill $key fields: ${(value).keys.toList()}');
+          if ((value).containsKey('bill_number')) {
             print('LegiScan: Bill number found: ${value['bill_number']}');
           } else {
             print('LegiScan: No bill_number field found');
@@ -1256,6 +1256,13 @@ class EnhancedLegiscanService {
                     return data;
                   }
                   
+                  // Skip retries for certain error types that won't resolve
+                  if (errorMessage.contains('Unknown bill text id') ||
+                      errorMessage.contains('Unknown bill id') ||
+                      errorMessage.contains('No bill text found')) {
+                    throw LegiscanApiException(errorMessage);
+                  }
+                  
                   throw LegiscanApiException(errorMessage);
                 }
               }
@@ -1299,6 +1306,14 @@ class EnhancedLegiscanService {
         } catch (e) {
           // Handle other errors
           lastError = e is Exception ? e : Exception(e.toString());
+          
+          // Don't retry for certain error types that won't resolve
+          if (e is LegiscanApiException && 
+              (e.message.contains('Unknown bill text id') ||
+               e.message.contains('Unknown bill id') ||
+               e.message.contains('No bill text found'))) {
+            throw e; // Don't retry, just fail fast
+          }
           
           retryCount++;
           

@@ -29,10 +29,41 @@ class FECCandidate {
       office: json['office']?.toString(),
       state: json['state']?.toString(),
       district: json['district']?.toString(),
-      electionYear: json['election_year'],
+      electionYear: json['election_years'] is List && (json['election_years'] as List).isNotEmpty 
+          ? _getMostRelevantElectionYear(json['election_years'] as List)
+          : json['election_year'],
       isIncumbent: json['incumbent_challenge'] == 'I',
       status: json['candidate_status']?.toString(),
     );
+  }
+
+  static int _getMostRelevantElectionYear(List electionYears) {
+    final currentYear = DateTime.now().year;
+    final years = electionYears.cast<int>();
+    
+    // Find the most recent election year that's not too far in the future
+    // Prefer current or recent years over distant future years
+    final sortedYears = years.toList()..sort();
+    
+    // If current year is an election year, use it
+    if (sortedYears.contains(currentYear)) {
+      return currentYear;
+    }
+    
+    // Find the most recent past election year
+    final pastYears = sortedYears.where((year) => year <= currentYear).toList();
+    if (pastYears.isNotEmpty) {
+      return pastYears.last;
+    }
+    
+    // If no past years, find the nearest future year that's reasonable (within 6 years)
+    final nearFutureYears = sortedYears.where((year) => year > currentYear && year <= currentYear + 6).toList();
+    if (nearFutureYears.isNotEmpty) {
+      return nearFutureYears.first;
+    }
+    
+    // Fallback to the first year in the list
+    return sortedYears.first;
   }
 }
 
@@ -150,8 +181,8 @@ class CampaignFinanceSummary {
           : (json['cycle'] ?? 0.0).toDouble().toInt(),
       totalRaised: (json['receipts'] ?? 0.0).toDouble(),
       totalSpent: (json['disbursements'] ?? 0.0).toDouble(),
-      cashOnHand: (json['cash_on_hand_end_period'] ?? 0.0).toDouble(),
-      totalDebt: (json['debts_owed_by_committee'] ?? 0.0).toDouble(),
+      cashOnHand: (json['last_cash_on_hand_end_period'] ?? 0.0).toDouble(),
+      totalDebt: (json['last_debts_owed_by_committee'] ?? 0.0).toDouble(),
       coverageEndDate: json['coverage_end_date'] != null
           ? DateTime.tryParse(json['coverage_end_date'].toString())
           : null,

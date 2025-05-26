@@ -24,6 +24,9 @@ class CampaignFinanceProvider with ChangeNotifier {
   List<CommitteeInfo> _committees = [];
   List<CampaignContribution> _topContributors = [];
   Map<String, double> _expenditureCategorySummary = {};
+  Map<String, double> _contributionsByState = {};
+  Map<String, int> _contributionAmountDistribution = {};
+  Map<String, double> _monthlyFundraisingTrends = {};
 
   // Error handling
   String? _error;
@@ -45,6 +48,9 @@ class CampaignFinanceProvider with ChangeNotifier {
   List<CommitteeInfo> get committees => _committees;
   List<CampaignContribution> get topContributors => _topContributors;
   Map<String, double> get expenditureCategorySummary => _expenditureCategorySummary;
+  Map<String, double> get contributionsByState => _contributionsByState;
+  Map<String, int> get contributionAmountDistribution => _contributionAmountDistribution;
+  Map<String, double> get monthlyFundraisingTrends => _monthlyFundraisingTrends;
   String? get error => _error;
 
   bool get hasData => _currentCandidate != null;
@@ -58,14 +64,29 @@ class CampaignFinanceProvider with ChangeNotifier {
     _committees.clear();
     _topContributors.clear();
     _expenditureCategorySummary.clear();
+    _contributionsByState.clear();
+    _contributionAmountDistribution.clear();
+    _monthlyFundraisingTrends.clear();
     _error = null;
     notifyListeners();
   }
 
   // Load candidate finance data by name
   Future<void> loadCandidateByName(String name, {int? cycle}) async {
-    _isLoadingCandidate = true;
+    // Clear any existing data and set loading state
+    _currentCandidate = null;
+    _financeSummary = null;
+    _contributions.clear();
+    _expenditures.clear();
+    _committees.clear();
+    _topContributors.clear();
+    _expenditureCategorySummary.clear();
+    _contributionsByState.clear();
+    _contributionAmountDistribution.clear();
+    _monthlyFundraisingTrends.clear();
     _error = null;
+    
+    _isLoadingCandidate = true;
     notifyListeners();
 
     try {
@@ -75,13 +96,33 @@ class CampaignFinanceProvider with ChangeNotifier {
         _currentCandidate = candidate;
         notifyListeners();
         
-        // Load additional data for this candidate
-        await _loadAllCandidateData(candidate.candidateId, cycle: cycle);
+        // Load additional data for this candidate with timeout protection
+        try {
+          await _loadAllCandidateData(candidate.candidateId, cycle: cycle ?? 2024)
+              .timeout(
+            const Duration(minutes: 3),
+            onTimeout: () {
+              _error = 'Loading campaign finance data is taking longer than expected. Some data may be unavailable.';
+              notifyListeners();
+            },
+          );
+        } catch (e) {
+          // Log the error but don't override the candidate data
+          if (kDebugMode) {
+            print('Error loading additional candidate data: $e');
+          }
+          // Set a warning message but keep the candidate
+          _error = 'Some campaign finance data may be unavailable due to API issues.';
+        }
       } else {
         _error = 'No campaign finance data found for $name';
       }
     } catch (e) {
-      _error = 'Error loading candidate data: $e';
+      if (e.toString().contains('timeout') || e.toString().contains('TimeoutException')) {
+        _error = 'Request timed out - FEC API may be slow. Please try again.';
+      } else {
+        _error = 'Error loading candidate data: $e';
+      }
     } finally {
       _isLoadingCandidate = false;
       notifyListeners();
@@ -90,15 +131,47 @@ class CampaignFinanceProvider with ChangeNotifier {
 
   // Load all data for a candidate
   Future<void> _loadAllCandidateData(String candidateId, {int? cycle}) async {
-    // Load all data concurrently
-    await Future.wait([
-      _loadFinanceSummary(candidateId, cycle: cycle),
-      _loadContributions(candidateId, cycle: cycle),
-      _loadExpenditures(candidateId, cycle: cycle),
-      _loadCommittees(candidateId),
-      _loadTopContributors(candidateId, cycle: cycle),
-      _loadExpenditureCategorySummary(candidateId, cycle: cycle),
-    ]);
+    try {
+      // Load core data first (most important)
+      await Future.wait([
+        _loadFinanceSummary(candidateId, cycle: cycle),
+        _loadCommittees(candidateId),
+      ]);
+
+      // Load secondary data with small delays to reduce server load
+      await _loadContributions(candidateId, cycle: cycle);
+      await Future.delayed(const Duration(milliseconds: 500));
+      
+      await _loadExpenditures(candidateId, cycle: cycle);
+      await Future.delayed(const Duration(milliseconds: 500));
+      
+      await _loadTopContributors(candidateId, cycle: cycle);
+      await Future.delayed(const Duration(milliseconds: 500));
+      
+      // Load analytical data last (least critical) - don't let these block the UI
+      try {
+        await Future.wait([
+          _loadExpenditureCategorySummary(candidateId, cycle: cycle),
+          _loadContributionsByState(candidateId, cycle: cycle),
+        ]).timeout(const Duration(seconds: 30));
+        
+        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.wait([
+          _loadContributionAmountDistribution(candidateId, cycle: cycle),
+          _loadMonthlyFundraisingTrends(candidateId, cycle: cycle),
+        ]).timeout(const Duration(seconds: 30));
+      } catch (e) {
+        if (kDebugMode) {
+          print('Warning: Some analytical data failed to load: $e');
+        }
+        // Don't fail the whole process for analytical data
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error in _loadAllCandidateData: $e');
+      }
+      rethrow;
+    }
   }
 
   // Load finance summary
@@ -207,6 +280,51 @@ class CampaignFinanceProvider with ChangeNotifier {
     } catch (e) {
       if (kDebugMode) {
         print('Error loading expenditure categories: $e');
+      }
+    }
+  }
+
+  // Load contributions by state
+  Future<void> _loadContributionsByState(String candidateId, {int? cycle}) async {
+    try {
+      _contributionsByState = await _fecService.getContributionsByState(
+        candidateId,
+        cycle: cycle,
+      );
+      notifyListeners();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading contributions by state: $e');
+      }
+    }
+  }
+
+  // Load contribution amount distribution
+  Future<void> _loadContributionAmountDistribution(String candidateId, {int? cycle}) async {
+    try {
+      _contributionAmountDistribution = await _fecService.getContributionAmountDistribution(
+        candidateId,
+        cycle: cycle,
+      );
+      notifyListeners();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading contribution amount distribution: $e');
+      }
+    }
+  }
+
+  // Load monthly fundraising trends
+  Future<void> _loadMonthlyFundraisingTrends(String candidateId, {int? cycle}) async {
+    try {
+      _monthlyFundraisingTrends = await _fecService.getMonthlyFundraisingTrends(
+        candidateId,
+        cycle: cycle,
+      );
+      notifyListeners();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error loading monthly fundraising trends: $e');
       }
     }
   }

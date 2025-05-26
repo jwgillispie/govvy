@@ -47,6 +47,7 @@ class BillHistoryCard extends StatelessWidget {
         SizedBox(
           width: 24,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               // Top connecting line (not for first item)
               if (!isFirst)
@@ -72,11 +73,10 @@ class BillHistoryCard extends StatelessWidget {
               
               // Bottom connecting line (not for last item)
               if (!isLast)
-                Expanded(
-                  child: Container(
-                    width: 2,
-                    color: Colors.grey.shade300,
-                  ),
+                Container(
+                  width: 2,
+                  height: 24,
+                  color: Colors.grey.shade300,
                 ),
             ],
           ),

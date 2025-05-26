@@ -17,8 +17,8 @@ class NetworkService {
   final RemoteConfigService _configService = RemoteConfigService();
 
   // Timeout durations
-  final Duration _connectTimeout = const Duration(seconds: 10);
-  final Duration _receiveTimeout = const Duration(seconds: 30);
+  final Duration _connectTimeout = const Duration(seconds: 15);
+  final Duration _receiveTimeout = const Duration(seconds: 60);
 
   // Request tracking (for debugging)
   int _requestCounter = 0;

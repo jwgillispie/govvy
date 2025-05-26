@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
-import 'package:govvy/screens/campaign_finance/campaign_finance_screen.dart';
+import 'package:govvy/screens/campaign_finance/modular_campaign_finance_screen.dart';
 import 'package:govvy/widgets/debug_access_button.dart';
 import 'package:govvy/widgets/share/share_app_widget.dart.dart';
 import 'package:govvy/widgets/share/share_reminder_widget.dart';
@@ -209,7 +209,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const CampaignFinanceScreen(),
+                          builder: (context) => const ModularCampaignFinanceScreen(),
                         ),
                       );
                     },
