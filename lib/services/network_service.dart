@@ -76,7 +76,6 @@ class NetworkService {
     // Create headers if not provided
     headers ??= {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
     };
 
     // Add API key to URL if specified and available

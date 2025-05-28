@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
-import 'package:govvy/screens/campaign_finance/modular_campaign_finance_screen.dart';
+import 'package:govvy/screens/campaign_finance/enhanced_campaign_finance_screen.dart';
+import 'package:govvy/screens/elections/election_screen.dart';
 import 'package:govvy/widgets/debug_access_button.dart';
 import 'package:govvy/widgets/share/share_app_widget.dart.dart';
 import 'package:govvy/widgets/share/share_reminder_widget.dart';
@@ -188,14 +189,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   _buildFeatureCard(
                     context,
-                    Icons.how_to_vote_outlined,
-                    'Voting Records',
-                    'Track how your representatives vote',
+                    Icons.how_to_vote,
+                    'Elections',
+                    'Find upcoming elections in your area',
                     () {
-                      // Navigate to voting records screen (to be implemented)
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Coming soon!'),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ElectionScreen(),
                         ),
                       );
                     },
@@ -209,18 +210,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ModularCampaignFinanceScreen(),
+                          builder: (context) => const EnhancedCampaignFinanceScreen(),
                         ),
                       );
                     },
                   ),
                   _buildFeatureCard(
                     context,
-                    Icons.notifications_outlined,
-                    'Notifications',
-                    'Stay informed about important votes',
+                    Icons.how_to_vote_outlined,
+                    'Voting Records',
+                    'Track how your representatives vote',
                     () {
-                      // Navigate to notifications screen (to be implemented)
+                      // Navigate to voting records screen (to be implemented)
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Coming soon!'),

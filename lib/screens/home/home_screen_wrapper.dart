@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
 import 'package:govvy/screens/representatives/find_representatives_screen.dart';
 import 'package:govvy/screens/campaign_finance/modular_campaign_finance_screen.dart';
+import 'package:govvy/screens/elections/election_screen.dart';
 import 'package:govvy/screens/profile/profile_screen.dart';
 
 class HomeScreenWrapper extends StatefulWidget {
@@ -19,6 +20,7 @@ class _HomeScreenWrapperState extends State<HomeScreenWrapper> {
   final List<Widget> _screens = [
     const FindRepresentativesScreen(),
     const EnhancedBillScreen(),
+    const ElectionScreen(),
     const ModularCampaignFinanceScreen(),
     const ProfileScreen(), // Assuming you have a ProfileScreen
   ];
@@ -48,6 +50,10 @@ class _HomeScreenWrapperState extends State<HomeScreenWrapper> {
           BottomNavigationBarItem(
             icon: Icon(Icons.description),
             label: 'Bills',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.how_to_vote),
+            label: 'Elections',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_balance_wallet),

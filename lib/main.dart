@@ -2,16 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:govvy/firebase_options.dart';
 import 'package:govvy/providers/bill_provider.dart';
 import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/providers/campaign_finance_provider.dart';
+import 'package:govvy/providers/unified_finance_provider.dart';
+import 'package:govvy/providers/election_provider.dart';
 // Removed: import 'package:govvy/providers/csv_representative_provider.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
 import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
 import 'package:govvy/screens/campaign_finance/modular_campaign_finance_screen.dart';
+import 'package:govvy/screens/elections/election_screen.dart';
 import 'package:govvy/services/bill_service.dart';
 import 'package:govvy/services/enhanced_legiscan_service.dart';
 import 'package:govvy/services/network_service.dart';
@@ -132,6 +136,18 @@ class RepresentativeApp extends StatelessWidget {
           lazy: false,
         ),
 
+        // Unified Finance Provider (multi-source)
+        ChangeNotifierProvider(
+          create: (_) => UnifiedFinanceProvider(),
+          lazy: false,
+        ),
+
+        // Election Provider
+        ChangeNotifierProvider(
+          create: (_) => ElectionProvider(),
+          lazy: false,
+        ),
+
         // Auth Service
         ChangeNotifierProvider(create: (_) => AuthService()),
 
@@ -159,20 +175,20 @@ class RepresentativeApp extends StatelessWidget {
             secondary: const Color(0xFF7E57C2), // Deep Purple 400
             background: Colors.white,
           ),
-          textTheme: const TextTheme(
-            headlineLarge: TextStyle(
+          textTheme: GoogleFonts.notoSansTextTheme().copyWith(
+            headlineLarge: GoogleFonts.notoSans(
               fontSize: 32.0,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF4527A0), // Deep Purple 800
+              color: const Color(0xFF4527A0), // Deep Purple 800
             ),
-            headlineMedium: TextStyle(
+            headlineMedium: GoogleFonts.notoSans(
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF5E35B1), // Deep Purple 600
+              color: const Color(0xFF5E35B1), // Deep Purple 600
             ),
-            bodyLarge: TextStyle(
+            bodyLarge: GoogleFonts.notoSans(
               fontSize: 16.0,
-              color: Color(0xFF424242), // Grey 800
+              color: const Color(0xFF424242), // Grey 800
             ),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
@@ -190,6 +206,7 @@ class RepresentativeApp extends StatelessWidget {
         routes: {
           '/bills': (context) => const EnhancedBillScreen(),
           '/campaign_finance': (context) => const ModularCampaignFinanceScreen(),
+          '/elections': (context) => const ElectionScreen(),
         },
         onGenerateRoute: (settings) {
           if (settings.name == '/bill_details') {

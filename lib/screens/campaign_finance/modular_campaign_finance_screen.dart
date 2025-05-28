@@ -5,8 +5,8 @@ import 'package:govvy/widgets/campaign_finance/candidate_basic_info_widget.dart'
 import 'package:govvy/widgets/campaign_finance/finance_summary_widget.dart';
 import 'package:govvy/widgets/campaign_finance/contributions_widget.dart';
 import 'package:govvy/widgets/campaign_finance/top_contributors_widget.dart';
-import 'package:govvy/widgets/campaign_finance/expenditures_widget.dart';
 import 'package:govvy/widgets/campaign_finance/congress_members_search_widget.dart';
+import 'package:govvy/services/congress_members_service.dart';
 
 class ModularCampaignFinanceScreen extends StatefulWidget {
   const ModularCampaignFinanceScreen({super.key});
@@ -17,12 +17,177 @@ class ModularCampaignFinanceScreen extends StatefulWidget {
 
 class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScreen> {
   final TextEditingController _searchController = TextEditingController();
+  final CongressMembersService _congressService = CongressMembersService();
+  
   String _searchQuery = '';
+  String _selectedState = 'All States';
+  String _selectedMember = 'Select Member';
+  
+  List<CongressMember> _stateMembers = [];
+  bool _loadingMembers = false;
+  List<String> _availableStates = ['All States'];
+  bool _loadingStates = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAvailableStates();
+  }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadAvailableStates() async {
+    setState(() {
+      _loadingStates = true;
+    });
+
+    try {
+      final states = await _congressService.getAvailableStates();
+      setState(() {
+        _availableStates = ['All States', ...states];
+        _loadingStates = false;
+      });
+    } catch (e) {
+      print('Error loading available states: $e');
+      setState(() {
+        _loadingStates = false;
+      });
+    }
+  }
+
+  Future<void> _loadMembersByState(String state) async {
+    if (state == 'All States') {
+      setState(() {
+        _stateMembers = [];
+        _selectedMember = 'Select Member';
+        _loadingMembers = false;
+      });
+      return;
+    }
+
+    setState(() {
+      _loadingMembers = true;
+      _selectedMember = 'Loading...';
+      _stateMembers = []; // Clear existing members while loading
+    });
+
+    try {
+      final members = await _congressService.getMembersByState(state);
+      print('Loaded ${members.length} members for state: $state');
+      if (mounted) { // Check if widget is still mounted
+        setState(() {
+          _stateMembers = members;
+          _selectedMember = _stateMembers.isEmpty ? 'No Members Found' : 'Select Member';
+          _loadingMembers = false;
+        });
+        print('Updated UI with ${_stateMembers.length} members, selectedMember: $_selectedMember');
+      }
+    } catch (e) {
+      if (mounted) { // Check if widget is still mounted
+        setState(() {
+          _stateMembers = [];
+          _selectedMember = 'Error Loading: ${e.toString()}';
+          _loadingMembers = false;
+        });
+      }
+      print('Error loading members for state $state: $e');
+    }
+  }
+
+  List<DropdownMenuItem<String>> _buildMemberDropdownItems() {
+    final items = <DropdownMenuItem<String>>[];
+    final Set<String> addedValues = <String>{}; // Track added values to prevent duplicates
+    
+    // Always add the placeholder item if it's not a member name
+    final isPlaceholder = _selectedMember.startsWith('Select') || 
+                         _selectedMember.startsWith('Loading') ||
+                         _selectedMember.startsWith('No') ||
+                         _selectedMember.startsWith('Error');
+    
+    if (isPlaceholder) {
+      items.add(
+        DropdownMenuItem(
+          value: _selectedMember,
+          enabled: false,
+          child: Text(
+            _selectedMember,
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.grey[600],
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      );
+      addedValues.add(_selectedMember);
+    }
+    
+    // Add all state members, avoiding duplicates
+    for (final member in _stateMembers) {
+      if (!addedValues.contains(member.name)) {
+        items.add(
+          DropdownMenuItem(
+            value: member.name,
+            child: Tooltip(
+              message: '${member.name} - ${member.officeTitle} (${member.party})',
+              child: Text(
+                member.name,
+                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        );
+        addedValues.add(member.name);
+      }
+    }
+    
+    // If we have no items, add a fallback
+    if (items.isEmpty) {
+      final fallbackValue = 'Select Member';
+      items.add(
+        DropdownMenuItem(
+          value: fallbackValue,
+          enabled: false,
+          child: Text(
+            fallbackValue,
+            style: TextStyle(
+              fontSize: 13,
+              color: Colors.grey[600],
+            ),
+          ),
+        ),
+      );
+      // Update _selectedMember if it's not already set to this fallback
+      if (_selectedMember != fallbackValue) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            setState(() {
+              _selectedMember = fallbackValue;
+            });
+          }
+        });
+      }
+    }
+    
+    // Safety check: ensure _selectedMember exists in the items list
+    final hasSelectedMember = items.any((item) => item.value == _selectedMember);
+    if (!hasSelectedMember && items.isNotEmpty) {
+      // If current selected member is not in the list, schedule an update
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() {
+            _selectedMember = items.first.value!;
+          });
+        }
+      });
+    }
+    
+    return items;
   }
 
   Future<void> _searchCandidate() async {
@@ -36,6 +201,9 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
     _searchController.clear();
     setState(() {
       _searchQuery = '';
+      _selectedState = 'All States';
+      _selectedMember = 'Select Member';
+      _stateMembers = [];
     });
     
     final provider = Provider.of<CampaignFinanceProvider>(context, listen: false);
@@ -176,27 +344,204 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextField(
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          hintText: 'Search candidate name (e.g., "Nikki Haley", "Elizabeth Warren")',
-                          prefixIcon: const Icon(Icons.person_search),
-                          suffixIcon: _searchQuery.isNotEmpty
-                              ? IconButton(
-                                  icon: const Icon(Icons.clear),
-                                  onPressed: _clearSearch,
-                                )
-                              : null,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _searchQuery = value;
-                          });
+                      // Three-column search interface - responsive layout
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          final isWide = constraints.maxWidth > 600;
+                          
+                          if (isWide) {
+                            // Wide layout: all in one row
+                            return Row(
+                              children: [
+                                // Name search field
+                                Expanded(
+                                  flex: 3,
+                                  child: TextField(
+                                    controller: _searchController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Search by name...',
+                                      prefixIcon: const Icon(Icons.person_search),
+                                      suffixIcon: _searchQuery.isNotEmpty
+                                          ? IconButton(
+                                              icon: const Icon(Icons.clear),
+                                              onPressed: _clearSearch,
+                                            )
+                                          : null,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _searchQuery = value;
+                                      });
+                                    },
+                                    onSubmitted: (_) => _searchCandidate(),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                
+                                // State dropdown
+                                Expanded(
+                                  flex: 2,
+                                  child: DropdownButtonFormField<String>(
+                                    value: _selectedState,
+                                    isExpanded: true,
+                                    decoration: InputDecoration(
+                                      labelText: 'State',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                    ),
+                                    items: _availableStates.map((state) {
+                                      return DropdownMenuItem(
+                                        value: state,
+                                        child: Text(
+                                          state == 'All States' ? 'All' : state,
+                                          style: const TextStyle(fontSize: 12),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      print('State dropdown changed to: $value');
+                                      setState(() {
+                                        _selectedState = value!;
+                                      });
+                                      _loadMembersByState(value!);
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                
+                                // Congress members dropdown
+                                Expanded(
+                                  flex: 3,
+                                  child: DropdownButtonFormField<String>(
+                                    key: ValueKey('${_selectedState}_${_stateMembers.length}_$_loadingMembers'),
+                                    value: _selectedMember,
+                                    isExpanded: true,
+                                    decoration: InputDecoration(
+                                      labelText: 'Member',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                    ),
+                                    items: _buildMemberDropdownItems(),
+                                    onChanged: _loadingMembers ? null : (value) {
+                                      if (value != null && value != _selectedMember) {
+                                        final isActualMember = _stateMembers.any((m) => m.name == value);
+                                        if (isActualMember) {
+                                          setState(() {
+                                            _selectedMember = value;
+                                          });
+                                          _searchCandidateByName(value);
+                                        }
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            );
+                          } else {
+                            // Narrow layout: stack vertically
+                            return Column(
+                              children: [
+                                // Name search field
+                                TextField(
+                                  controller: _searchController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Search by name...',
+                                    prefixIcon: const Icon(Icons.person_search),
+                                    suffixIcon: _searchQuery.isNotEmpty
+                                        ? IconButton(
+                                            icon: const Icon(Icons.clear),
+                                            onPressed: _clearSearch,
+                                          )
+                                        : null,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _searchQuery = value;
+                                    });
+                                  },
+                                  onSubmitted: (_) => _searchCandidate(),
+                                ),
+                                const SizedBox(height: 12),
+                                
+                                // State and member dropdowns row
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: DropdownButtonFormField<String>(
+                                        value: _selectedState,
+                                        isExpanded: true,
+                                        decoration: InputDecoration(
+                                          labelText: 'State',
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                        ),
+                                        items: _availableStates.map((state) {
+                                          return DropdownMenuItem(
+                                            value: state,
+                                            child: Text(
+                                              state == 'All States' ? 'All States' : state,
+                                              style: const TextStyle(fontSize: 13),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          print('State dropdown (narrow) changed to: $value');
+                                          setState(() {
+                                            _selectedState = value!;
+                                          });
+                                          _loadMembersByState(value!);
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: DropdownButtonFormField<String>(
+                                        key: ValueKey('${_selectedState}_${_stateMembers.length}_$_loadingMembers'),
+                                        value: _selectedMember,
+                                        isExpanded: true,
+                                        decoration: InputDecoration(
+                                          labelText: 'Congress Member',
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                        ),
+                                        items: _buildMemberDropdownItems(),
+                                        onChanged: _loadingMembers ? null : (value) {
+                                          if (value != null && value != _selectedMember) {
+                                            final isActualMember = _stateMembers.any((m) => m.name == value);
+                                            if (isActualMember) {
+                                              setState(() {
+                                                _selectedMember = value;
+                                              });
+                                              _searchCandidateByName(value);
+                                            }
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          }
                         },
-                        onSubmitted: (_) => _searchCandidate(),
                       ),
                       const SizedBox(height: 12),
                       SizedBox(
@@ -245,11 +590,14 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
 
-              // Congress members search
+              // Congress Members Search Widget
               CongressMembersSearchWidget(
-                onMemberSelected: _searchCandidateByName,
+                stateFilter: _selectedState == 'All States' ? null : _selectedState,
+                onMemberSelected: (memberName) {
+                  _searchCandidateByName(memberName);
+                },
               ),
               const SizedBox(height: 24),
 
@@ -357,10 +705,6 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
                       
                       // Top contributors (loads independently)
                       const TopContributorsWidget(),
-                      const SizedBox(height: 16),
-                      
-                      // Expenditures (loads independently)
-                      const ExpendituresWidget(),
                     ],
                   );
                 },

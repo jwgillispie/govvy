@@ -3,10 +3,12 @@ import 'package:govvy/services/congress_members_service.dart';
 
 class CongressMembersSearchWidget extends StatefulWidget {
   final Function(String) onMemberSelected;
+  final String? stateFilter;
 
   const CongressMembersSearchWidget({
     super.key,
     required this.onMemberSelected,
+    this.stateFilter,
   });
 
   @override
@@ -66,9 +68,23 @@ class _CongressMembersSearchWidgetState extends State<CongressMembersSearchWidge
             (_selectedFilter == 'Senate' && member.chamber == 'Senate') ||
             (_selectedFilter == 'House' && member.chamber == 'House');
 
-        return matchesQuery && matchesFilter;
+        // Apply external state filter if provided
+        final matchesStateFilter = widget.stateFilter == null ||
+            widget.stateFilter == 'All States' ||
+            member.state.toLowerCase() == widget.stateFilter!.toLowerCase();
+
+        return matchesQuery && matchesFilter && matchesStateFilter;
       }).toList();
     });
+  }
+
+  @override
+  void didUpdateWidget(CongressMembersSearchWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Re-filter when external state filter changes
+    if (oldWidget.stateFilter != widget.stateFilter) {
+      _filterMembers();
+    }
   }
 
   @override

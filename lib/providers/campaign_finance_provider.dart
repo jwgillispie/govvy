@@ -23,7 +23,6 @@ class CampaignFinanceProvider with ChangeNotifier {
   List<CampaignExpenditure> _expenditures = [];
   List<CommitteeInfo> _committees = [];
   List<CampaignContribution> _topContributors = [];
-  Map<String, double> _expenditureCategorySummary = {};
   Map<String, double> _contributionsByState = {};
   Map<String, int> _contributionAmountDistribution = {};
   Map<String, double> _monthlyFundraisingTrends = {};
@@ -47,7 +46,6 @@ class CampaignFinanceProvider with ChangeNotifier {
   List<CampaignExpenditure> get expenditures => _expenditures;
   List<CommitteeInfo> get committees => _committees;
   List<CampaignContribution> get topContributors => _topContributors;
-  Map<String, double> get expenditureCategorySummary => _expenditureCategorySummary;
   Map<String, double> get contributionsByState => _contributionsByState;
   Map<String, int> get contributionAmountDistribution => _contributionAmountDistribution;
   Map<String, double> get monthlyFundraisingTrends => _monthlyFundraisingTrends;
@@ -63,7 +61,6 @@ class CampaignFinanceProvider with ChangeNotifier {
     _expenditures.clear();
     _committees.clear();
     _topContributors.clear();
-    _expenditureCategorySummary.clear();
     _contributionsByState.clear();
     _contributionAmountDistribution.clear();
     _monthlyFundraisingTrends.clear();
@@ -73,6 +70,8 @@ class CampaignFinanceProvider with ChangeNotifier {
 
   // Load candidate finance data by name
   Future<void> loadCandidateByName(String name, {int? cycle}) async {
+    print('Provider: Loading candidate data for: $name');
+    
     // Clear any existing data and set loading state
     _currentCandidate = null;
     _financeSummary = null;
@@ -80,7 +79,6 @@ class CampaignFinanceProvider with ChangeNotifier {
     _expenditures.clear();
     _committees.clear();
     _topContributors.clear();
-    _expenditureCategorySummary.clear();
     _contributionsByState.clear();
     _contributionAmountDistribution.clear();
     _monthlyFundraisingTrends.clear();
@@ -94,6 +92,7 @@ class CampaignFinanceProvider with ChangeNotifier {
       
       if (candidate != null) {
         _currentCandidate = candidate;
+        print('Provider: Found candidate ${candidate.name} with ID: ${candidate.candidateId}');
         notifyListeners();
         
         // Load additional data for this candidate with timeout protection
@@ -151,7 +150,6 @@ class CampaignFinanceProvider with ChangeNotifier {
       // Load analytical data last (least critical) - don't let these block the UI
       try {
         await Future.wait([
-          _loadExpenditureCategorySummary(candidateId, cycle: cycle),
           _loadContributionsByState(candidateId, cycle: cycle),
         ]).timeout(const Duration(seconds: 30));
         
@@ -269,20 +267,6 @@ class CampaignFinanceProvider with ChangeNotifier {
     }
   }
 
-  // Load expenditure category summary
-  Future<void> _loadExpenditureCategorySummary(String candidateId, {int? cycle}) async {
-    try {
-      _expenditureCategorySummary = await _fecService.getExpenditureCategorySummary(
-        candidateId,
-        cycle: cycle,
-      );
-      notifyListeners();
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error loading expenditure categories: $e');
-      }
-    }
-  }
 
   // Load contributions by state
   Future<void> _loadContributionsByState(String candidateId, {int? cycle}) async {

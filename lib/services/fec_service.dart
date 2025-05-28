@@ -279,6 +279,7 @@ class FECService {
       final url = Uri.parse('$_baseUrl/schedules/schedule_b/')
           .replace(queryParameters: queryParams);
 
+      print('FECService: Expenditures API call for $candidateId: $url');
       final response = await _networkService.get(url);
 
       if (response.statusCode == 200) {
@@ -385,26 +386,6 @@ class FECService {
     }
   }
 
-  Future<Map<String, double>> getExpenditureCategorySummary(
-    String candidateId, {
-    int? cycle,
-  }) async {
-    final expenditures = await getCandidateExpenditures(
-      candidateId,
-      cycle: cycle ?? 2024, // Default to 2024 cycle if not specified
-      perPage: 30, // Reduced for better performance
-    );
-
-    final Map<String, double> categorySums = {};
-
-    for (final expenditure in expenditures) {
-      final rawCategory = expenditure.category ?? 'other';
-      final friendlyCategory = _getFriendlyCategoryName(rawCategory);
-      categorySums[friendlyCategory] = (categorySums[friendlyCategory] ?? 0) + expenditure.amount;
-    }
-
-    return categorySums;
-  }
 
   // New method to get geographic contribution distribution
   Future<Map<String, double>> getContributionsByState(
@@ -551,33 +532,4 @@ class FECService {
   }
 
   // Map FEC category codes to human-readable names
-  String _getFriendlyCategoryName(String categoryCode) {
-    final Map<String, String> categoryMapping = {
-      '001': 'Administrative/Salary/Benefits',
-      '002': 'Travel/Lodging/Meals', 
-      '003': 'Equipment/Office/Technology',
-      '004': 'Communications/Media',
-      '005': 'Fundraising Events',
-      '006': 'Voter Outreach/Mobilization',
-      '007': 'Polling/Research',
-      '008': 'Legal/Accounting/Compliance',
-      '009': 'Rent/Utilities/Office Space',
-      '010': 'Advertising (General)',
-      '011': 'Advertising (Media Buy)',
-      '012': 'Campaign Materials/Literature',
-      '013': 'Postage/Shipping',
-      '014': 'Event Production/Staging',
-      '015': 'Consulting/Strategy',
-      '016': 'Data/Analytics/Technology',
-      '017': 'Security Services',
-      '018': 'Transportation/Vehicle',
-      '019': 'Volunteer Coordination',
-      '020': 'Campaign Merchandise',
-      'other': 'Other Campaign Expenses',
-      'oth': 'Other Campaign Expenses',
-    };
-
-    return categoryMapping[categoryCode.toLowerCase()] ?? 
-           '${categoryCode.toUpperCase()} - Unknown Category';
-  }
 }

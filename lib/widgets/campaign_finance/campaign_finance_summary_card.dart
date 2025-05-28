@@ -155,11 +155,6 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
                   _buildTopContributorsPreview(context, provider),
                 ],
                 
-                // Expenditure categories preview
-                if (provider.expenditureCategorySummary.isNotEmpty) ...[
-                  const Divider(height: 24),
-                  _buildExpenditureCategoriesPreview(context, provider),
-                ],
                 
                 // Enhanced data sections with new FEC insights
                 if (provider.contributionsByState.isNotEmpty) ...[
@@ -546,50 +541,6 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildExpenditureCategoriesPreview(BuildContext context, CampaignFinanceProvider provider) {
-    final sortedCategories = provider.expenditureCategorySummary.entries.toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Top Spending Categories',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        const SizedBox(height: 8),
-        ...sortedCategories.take(3).map((category) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    category.key,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ),
-                Text(
-                  '\$${category.value.toStringAsFixed(0)}',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }),
-        if (sortedCategories.length > 3)
-          Text(
-            '... and ${sortedCategories.length - 3} more categories',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Colors.grey[600],
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-      ],
-    );
-  }
 
   Widget _buildGeographicInsights(BuildContext context, CampaignFinanceProvider provider) {
     final sortedStates = provider.contributionsByState.entries.toList()
