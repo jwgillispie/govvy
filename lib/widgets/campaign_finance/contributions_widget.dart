@@ -127,7 +127,7 @@ class _ContributionsWidgetState extends State<ContributionsWidget> {
                           Text(
                             'Showing 5 of ${provider.contributions.length} contributions',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -149,7 +149,7 @@ class _ContributionsWidgetState extends State<ContributionsWidget> {
                           Text(
                             'Showing ${provider.contributions.length > 30 ? "30" : provider.contributions.length} of ${provider.contributions.length} contributions',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -162,8 +162,8 @@ class _ContributionsWidgetState extends State<ContributionsWidget> {
                             icon: const Icon(Icons.expand_less, size: 18),
                             label: const Text('Show Less'),
                             style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.grey[600],
-                              side: BorderSide(color: Colors.grey[400]!),
+                              foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                              side: BorderSide(color: Theme.of(context).colorScheme.outline!),
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             ),
                           ),
@@ -191,6 +191,7 @@ class _ContributionsWidgetState extends State<ContributionsWidget> {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -202,6 +203,7 @@ class _ContributionsWidgetState extends State<ContributionsWidget> {
                     fontSize: 14,
                   ),
                   overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
               ),
               Text(
@@ -214,33 +216,16 @@ class _ContributionsWidgetState extends State<ContributionsWidget> {
               ),
             ],
           ),
-          const SizedBox(height: 4),
-          if (contribution.contributorEmployer != null) ...[
-            Text(
-              contribution.contributorEmployer!,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
           if (contribution.contributorCity != null && contribution.contributorState != null) ...[
+            const SizedBox(height: 4),
             Text(
               '${contribution.contributorCity}, ${contribution.contributorState}',
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey[600],
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
-            ),
-          ],
-          if (contribution.contributionDate != null) ...[
-            Text(
-              _formatDate(contribution.contributionDate!),
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.grey[500],
-              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
           ],
         ],
@@ -258,7 +243,4 @@ class _ContributionsWidgetState extends State<ContributionsWidget> {
     }
   }
 
-  String _formatDate(DateTime date) {
-    return '${date.month}/${date.day}/${date.year}';
-  }
 }

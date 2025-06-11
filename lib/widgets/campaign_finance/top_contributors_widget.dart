@@ -113,6 +113,7 @@ class TopContributorsWidget extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   contributor.contributorName,
@@ -121,17 +122,8 @@ class TopContributorsWidget extends StatelessWidget {
                     fontSize: 14,
                   ),
                   overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
-                if (contributor.contributorEmployer != null) ...[
-                  Text(
-                    contributor.contributorEmployer!,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
               ],
             ),
           ),

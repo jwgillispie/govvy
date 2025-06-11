@@ -23,7 +23,6 @@ class CiceroService {
   bool get hasApiKey {
     final hasKey = _apiKey != null && _apiKey!.isNotEmpty;
     if (kDebugMode && !hasKey) {
-      print('Using mock data because Cicero API key is not available');
     }
     return hasKey;
   }
@@ -31,7 +30,6 @@ class CiceroService {
   bool get hasGoogleApiKey {
     final hasKey = _googleApiKey != null && _googleApiKey!.isNotEmpty;
     if (kDebugMode && !hasKey) {
-      print('Using mock data because Google API key is not available');
     }
     return hasKey;
   }
@@ -43,14 +41,13 @@ class CiceroService {
   Future<Map<String, double>?> geocodeCityToCoordinates(String city) async {
     try {
       if (kIsWeb) {
-        // Use geocoding proxy for web
+        // Use geocoding proxy for web with US-only restriction
         final url = Uri.parse('$_proxyBaseUrl$_geocodeProxyUrl')
-            .replace(queryParameters: {'address': city});
+            .replace(queryParameters: {
+              'address': '$city, USA',
+              'components': 'country:US'
+            });
 
-        if (kDebugMode) {
-          print('Using proxy to geocode city: $city');
-          print('Proxy URL: $url');
-        }
 
         final response = await http.get(url);
 
@@ -70,19 +67,11 @@ class CiceroService {
         final lat = location['lat'] as double;
         final lng = location['lng'] as double;
 
-        if (kDebugMode) {
-          print(
-              'Successfully geocoded $city to lat: $lat, lng: $lng (via proxy)');
-        }
 
         return {'lat': lat, 'lng': lng};
       } else {
         // Original code for mobile
         if (!hasGoogleApiKey) {
-          if (kDebugMode) {
-            print(
-                'Google Maps API key not found. Using hardcoded coordinates for city.');
-          }
           // Try using hardcoded coordinates first
           final hardcodedCoordinates = _getHardcodedCoordinatesForCity(city);
           if (hardcodedCoordinates != null) {
@@ -106,15 +95,14 @@ class CiceroService {
           }
         }
 
-        if (kDebugMode) {
-          print('Geocoding city: $searchCity');
-        }
 
-        // Call Google's Geocoding API
+        // Call Google's Geocoding API with US restriction
         final url =
             Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
                 .replace(queryParameters: {
           'address': searchCity,
+          'components': 'country:US',
+          'region': 'us',
           'key': _googleApiKey!
         });
 
@@ -135,23 +123,14 @@ class CiceroService {
         final lat = location['lat'] as double;
         final lng = location['lng'] as double;
 
-        if (kDebugMode) {
-          print('Successfully geocoded $searchCity to lat: $lat, lng: $lng');
-        }
 
         return {'lat': lat, 'lng': lng};
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error geocoding city: $e');
-      }
 
       // Fallback to hardcoded coordinates
       final hardcodedCoordinates = _getHardcodedCoordinatesForCity(city);
       if (hardcodedCoordinates != null) {
-        if (kDebugMode) {
-          print('Using hardcoded coordinates for $city: $hardcodedCoordinates');
-        }
         return hardcodedCoordinates;
       }
 
@@ -164,10 +143,6 @@ class CiceroService {
       String city) async {
     try {
       if (kIsWeb) {
-        if (kDebugMode) {
-          print(
-              'Searching for local representatives in city (via proxy): $city');
-        }
 
         // First approach: Try geocoding and then passing coordinates to proxy
         try {
@@ -185,9 +160,6 @@ class CiceroService {
             'lon': coordinates['lng'].toString(),
           });
 
-          if (kDebugMode) {
-            print('Proxy URL (coordinates): $url');
-          }
 
           final response = await http.get(url);
 
@@ -210,9 +182,6 @@ class CiceroService {
           final url = Uri.parse('$_proxyBaseUrl$_ciceroProxyUrl')
               .replace(queryParameters: {'city': city});
 
-          if (kDebugMode) {
-            print('Proxy URL (city): $url');
-          }
 
           final response = await http.get(url);
 
@@ -229,15 +198,9 @@ class CiceroService {
       } else {
         // Original code for mobile
         if (!hasApiKey) {
-          if (kDebugMode) {
-            print('Cicero API key not found. Using mock data for development.');
-          }
           return _getMockLocalRepresentatives(city: city);
         }
 
-        if (kDebugMode) {
-          print('Searching for local representatives in city: $city');
-        }
 
         // UPDATED APPROACH: First geocode the city to get coordinates
         final coordinates = await geocodeCityToCoordinates(city);
@@ -255,10 +218,6 @@ class CiceroService {
           'max': '100',
         });
 
-        if (kDebugMode) {
-          print(
-              'API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-        }
 
         // Use the fetchRepresentatives method to handle the API call
         final representatives = await _fetchRepresentatives(url, city);
@@ -386,18 +345,11 @@ class CiceroService {
       String address) async {
     try {
       if (kIsWeb) {
-        if (kDebugMode) {
-          print(
-              'Searching for local representatives at address (via proxy): $address');
-        }
 
         // Use proxy with address parameter
         final url = Uri.parse('$_proxyBaseUrl$_ciceroProxyUrl')
             .replace(queryParameters: {'address': address});
 
-        if (kDebugMode) {
-          print('Proxy URL: $url');
-        }
 
         final response = await http.get(url);
 
@@ -413,9 +365,6 @@ class CiceroService {
       } else {
         // Original code for mobile
         if (!hasApiKey) {
-          if (kDebugMode) {
-            print('Cicero API key not found. Using mock data for development.');
-          }
           return _getMockLocalRepresentatives();
         }
 
@@ -441,10 +390,6 @@ class CiceroService {
             'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
           });
 
-          if (kDebugMode) {
-            print(
-                'Using coordinates-based API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-          }
 
           return await _fetchRepresentatives(url, null);
         }
@@ -459,11 +404,6 @@ class CiceroService {
           'district_type': 'CITY,COUNTY,PLACE,TOWNSHIP,BOROUGH,TOWN,VILLAGE',
         });
 
-        if (kDebugMode) {
-          print('Calling Cicero API with address: $address');
-          print(
-              'API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-        }
 
         return await _fetchRepresentatives(url, null);
       }
@@ -481,13 +421,13 @@ class CiceroService {
       String address) async {
     try {
       if (kIsWeb) {
-        // Use geocoding proxy for web
+        // Use geocoding proxy for web with US-only restriction
         final url = Uri.parse('$_proxyBaseUrl$_geocodeProxyUrl')
-            .replace(queryParameters: {'address': address});
+            .replace(queryParameters: {
+              'address': '$address, USA',
+              'components': 'country:US'
+            });
 
-        if (kDebugMode) {
-          print('Using proxy to geocode address: $address');
-        }
 
         final response = await http.get(url);
 
@@ -512,15 +452,14 @@ class CiceroService {
           return null;
         }
 
-        if (kDebugMode) {
-          print('Geocoding address: $address');
-        }
 
-        // Call Google's Geocoding API
+        // Call Google's Geocoding API with US restriction
         final url =
             Uri.parse('https://maps.googleapis.com/maps/api/geocode/json')
                 .replace(queryParameters: {
           'address': address,
+          'components': 'country:US',
+          'region': 'us',
           'key': _googleApiKey!
         });
 
@@ -541,9 +480,6 @@ class CiceroService {
         final lat = location['lat'] as double;
         final lng = location['lng'] as double;
 
-        if (kDebugMode) {
-          print('Successfully geocoded address to lat: $lat, lng: $lng');
-        }
 
         return {'lat': lat, 'lng': lng};
       }
@@ -561,11 +497,6 @@ class CiceroService {
     try {
       final response = await http.get(url);
 
-      if (kDebugMode) {
-        print('Cicero API response received. Status: ${response.statusCode}');
-        print(
-            'Response body preview: ${response.body.substring(0, min(200, response.body.length))}...');
-      }
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
@@ -590,10 +521,6 @@ class CiceroService {
       {String? firstName}) async {
     try {
       if (kIsWeb) {
-        if (kDebugMode) {
-          print(
-              'Searching for representatives by name (via proxy): $lastName, $firstName');
-        }
 
         // Build query parameters
         final Map<String, String> queryParams = {
@@ -608,9 +535,6 @@ class CiceroService {
         final url = Uri.parse('$_proxyBaseUrl$_ciceroProxyUrl')
             .replace(queryParameters: queryParams);
 
-        if (kDebugMode) {
-          print('Proxy URL: $url');
-        }
 
         final response = await http.get(url);
 
@@ -626,9 +550,6 @@ class CiceroService {
       } else {
         // Original implementation for mobile
         if (!hasApiKey) {
-          if (kDebugMode) {
-            print('Cicero API key not found. Using mock data for development.');
-          }
           return _getMockLocalRepresentativesByName(lastName, firstName);
         }
 
@@ -649,10 +570,6 @@ class CiceroService {
         final url = Uri.parse('$_baseUrl/official')
             .replace(queryParameters: queryParams);
 
-        if (kDebugMode) {
-          print(
-              'API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-        }
 
         final response = await http.get(url);
 
@@ -979,9 +896,6 @@ class CiceroService {
 Future<List<LocalRepresentative>> getLocalRepresentativesByStateCity(String stateCode, String cityName) async {
   try {
     if (kIsWeb) {
-      if (kDebugMode) {
-        print('Searching for local representatives in $cityName, $stateCode (via proxy)');
-      }
 
       // Use proxy with state and city parameters
       final url = Uri.parse('$_proxyBaseUrl$_ciceroProxyUrl').replace(
@@ -991,9 +905,6 @@ Future<List<LocalRepresentative>> getLocalRepresentativesByStateCity(String stat
         },
       );
 
-      if (kDebugMode) {
-        print('Proxy URL (state+city): $url');
-      }
 
       final response = await http.get(url);
 
@@ -1032,10 +943,6 @@ Future<List<LocalRepresentative>> getLocalRepresentativesByStateCity(String stat
       // URL for the Cicero API with the state and city
       final url = Uri.parse('$_baseUrl/official').replace(queryParameters: queryParams);
 
-      if (kDebugMode) {
-        print('Calling Cicero API with state and city: $stateCode, $cityName');
-        print('API URL: ${url.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-      }
 
       try {
         // Try the direct API call first
@@ -1072,9 +979,6 @@ Future<List<LocalRepresentative>> getLocalRepresentativesByStateCity(String stat
         'max': '100',
       });
 
-      if (kDebugMode) {
-        print('Using coordinates-based API URL for $cityName, $stateCode: ${coordUrl.toString().replaceAll(_apiKey!, '[REDACTED]')}');
-      }
 
       return await _fetchRepresentatives(coordUrl, '$cityName, $stateCode');
     }
@@ -1291,8 +1195,9 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
     ];
   }
   
-  // Default mock data with state-specific variations
+  // Default mock data with state-specific variations (includes state representatives)
   return [
+    // Local officials (city level)
     LocalRepresentative(
       name: 'Mayor of $cityName',
       bioGuideId: 'cicero-mock-${cityName.toLowerCase().replaceAll(' ', '-')}-$stateCode-mayor',
@@ -1321,6 +1226,8 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
       imageUrl: null,
       socialMedia: null,
     ),
+    
+    // County level officials
     LocalRepresentative(
       name: 'Commissioner Jones',
       bioGuideId: 'cicero-mock-${cityName.toLowerCase().replaceAll(' ', '-')}-$stateCode-commissioner',
@@ -1334,6 +1241,36 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
       website: 'https://www.county.gov',
       imageUrl: null,
       socialMedia: null,
+    ),
+    
+    // State level officials (these will be moved to federal list by the provider)
+    LocalRepresentative(
+      name: 'Senator Williams',
+      bioGuideId: 'cicero-mock-${cityName.toLowerCase().replaceAll(' ', '-')}-$stateCode-state-senate',
+      party: stateCode == 'CA' || stateCode == 'NY' || stateCode == 'IL' ? 'Democratic' : 'Republican',
+      level: 'STATE_UPPER',
+      state: stateCode,
+      district: '$stateCode State Senate District 15',
+      office: 'State Senator',
+      phone: '(555) 555-4567',
+      email: 'senator.williams@state.$stateCode.gov',
+      website: 'https://www.legislature.$stateCode.gov/senators/williams',
+      imageUrl: null,
+      socialMedia: ['Twitter: @SenWilliams$stateCode'],
+    ),
+    LocalRepresentative(
+      name: 'Representative Johnson',
+      bioGuideId: 'cicero-mock-${cityName.toLowerCase().replaceAll(' ', '-')}-$stateCode-state-house',
+      party: stateCode == 'CA' || stateCode == 'NY' || stateCode == 'IL' ? 'Democratic' : 'Republican',
+      level: 'STATE_LOWER',
+      state: stateCode,
+      district: '$stateCode State House District 42',
+      office: 'State Representative',
+      phone: '(555) 555-5678',
+      email: 'rep.johnson@state.$stateCode.gov',
+      website: 'https://www.legislature.$stateCode.gov/representatives/johnson',
+      imageUrl: null,
+      socialMedia: ['Twitter: @Rep$stateCode'],
     ),
   ];
 }
@@ -1400,6 +1337,7 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
       'washington dc': {'lat': 38.9072, 'lng': -77.0369},
       'dc': {'lat': 38.9072, 'lng': -77.0369},
       'gainesville': {'lat': 29.6516, 'lng': -82.3248},
+      'lothian': {'lat': 38.7990, 'lng': -76.6391}, // Lothian, MD
     };
 
     // Look for exact match
@@ -1640,6 +1578,7 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
           .join(' ');
 
       return [
+        // Local officials
         LocalRepresentative(
           name: 'Mayor of $cityProperName',
           bioGuideId: 'cicero-mock-${cityName.replaceAll(' ', '-')}-mayor',
@@ -1682,6 +1621,36 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
           website: 'https://www.county.gov',
           imageUrl: null,
           socialMedia: null,
+        ),
+        
+        // State officials (will be moved to federal list by provider)
+        LocalRepresentative(
+          name: 'Senator Davis',
+          bioGuideId: 'cicero-mock-${cityName.replaceAll(' ', '-')}-state-senate',
+          party: stateCode == 'CA' || stateCode == 'NY' || stateCode == 'IL' ? 'Democratic' : 'Republican',
+          level: 'STATE_UPPER',
+          state: stateCode,
+          district: '$stateCode State Senate District 10',
+          office: 'State Senator',
+          phone: '(555) 555-4567',
+          email: 'senator.davis@state.$stateCode.gov',
+          website: 'https://www.legislature.$stateCode.gov/senators/davis',
+          imageUrl: null,
+          socialMedia: ['Twitter: @SenDavis$stateCode'],
+        ),
+        LocalRepresentative(
+          name: 'Representative Martinez',
+          bioGuideId: 'cicero-mock-${cityName.replaceAll(' ', '-')}-state-house',
+          party: stateCode == 'CA' || stateCode == 'NY' || stateCode == 'IL' ? 'Democratic' : 'Republican',
+          level: 'STATE_LOWER',
+          state: stateCode,
+          district: '$stateCode State House District 25',
+          office: 'State Representative',
+          phone: '(555) 555-5678',
+          email: 'rep.martinez@state.$stateCode.gov',
+          website: 'https://www.legislature.$stateCode.gov/representatives/martinez',
+          imageUrl: null,
+          socialMedia: ['Twitter: @Rep$stateCode'],
         ),
       ];
     }
@@ -1924,6 +1893,7 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
       'bronx': 'NY',
       'staten island': 'NY',
       'gainesville': 'FL',
+      'lothian': 'MD',
     };
 
     // Check for city in our map (case insensitive)
@@ -2001,35 +1971,13 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
   }
 
   Future<http.Response> _tracedHttpGet(Uri url, {String? apiKey}) async {
-    final redactedUrl = apiKey != null
-        ? url.toString().replaceAll(apiKey, '[REDACTED]')
-        : url.toString();
-
-    if (kDebugMode) {
-      print('🌐 HTTP Request: GET $redactedUrl');
-    }
-
     final stopwatch = Stopwatch()..start();
     try {
       final response = await http.get(url);
       stopwatch.stop();
-
-      if (kDebugMode) {
-        print(
-            '🌐 HTTP Response: ${response.statusCode} (${stopwatch.elapsedMilliseconds}ms)');
-        print('🌐 Response Size: ${response.body.length} bytes');
-        if (response.statusCode != 200) {
-          print(
-              '🌐 Error Response: ${response.body.substring(0, min(500, response.body.length))}');
-        }
-      }
-
       return response;
     } catch (e) {
       stopwatch.stop();
-      if (kDebugMode) {
-        print('🌐 HTTP Error after ${stopwatch.elapsedMilliseconds}ms: $e');
-      }
       rethrow;
     }
   }

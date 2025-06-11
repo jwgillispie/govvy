@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/providers/campaign_finance_provider.dart';
 import 'package:govvy/models/campaign_finance_model.dart';
+import 'package:govvy/utils/data_source_attribution.dart' as DataSources;
 
 class CampaignFinanceSummaryCard extends StatelessWidget {
   const CampaignFinanceSummaryCard({super.key});
@@ -318,6 +319,14 @@ class CampaignFinanceSummaryCard extends StatelessWidget {
               ),
             ),
           ],
+          
+          // Data source attribution
+          const SizedBox(height: 16),
+          DataSources.DataSourceAttribution.buildSourceAttribution(
+            DataSources.DataSourceAttribution.getFinanceDataSources(provider.currentCandidate),
+            prefix: 'Data from',
+            wrap: true,
+          ),
         ],
       ),
     );

@@ -208,10 +208,10 @@ class _CitySearchInputState extends State<CitySearchInput> {
                   helperText: 'Enter any city name - you can use suggestions or type your own',
                   helperStyle: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey.shade600,
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                   ),
                   filled: true,
-                  fillColor: Colors.grey.shade100,
+                  fillColor: Theme.of(context).colorScheme.surfaceVariant,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -261,7 +261,7 @@ class _CitySearchInputState extends State<CitySearchInput> {
                 child: Material(
                   elevation: 4,
                   borderRadius: BorderRadius.circular(12),
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
                       maxHeight: 250,
@@ -326,7 +326,7 @@ class _CitySearchInputState extends State<CitySearchInput> {
                                     TextSpan(
                                       text: option.contains(',') ? ', ${option.split(',')[1].trim()}' : '',
                                       style: TextStyle(
-                                        color: Colors.grey.shade600,
+                                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                                         fontSize: 14,
                                       ),
                                     ),

@@ -125,7 +125,7 @@ class _CongressMembersSearchWidgetState extends State<CongressMembersSearchWidge
               Text(
                 'Tap to browse ${_allMembers.length} current members of Congress',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
             ],
@@ -182,7 +182,7 @@ class _CongressMembersSearchWidgetState extends State<CongressMembersSearchWidge
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'No members found matching your search.',
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                   ),
                 ),
@@ -193,17 +193,17 @@ class _CongressMembersSearchWidgetState extends State<CongressMembersSearchWidge
                   child: Text(
                     'Showing ${_filteredMembers.length} members',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey[600],
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
                 
                 // Members list (limited height with scrolling)
-                Container(
-                  constraints: const BoxConstraints(maxHeight: 300),
+                SizedBox(
+                  height: 300,
                   child: ListView.builder(
-                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
                     itemCount: _filteredMembers.length,
                     itemBuilder: (context, index) {
                       final member = _filteredMembers[index];
@@ -245,13 +245,13 @@ class _CongressMembersSearchWidgetState extends State<CongressMembersSearchWidge
         '${member.officeTitle} • ${member.state}${member.district != null ? " District ${member.district}" : ""}',
         style: TextStyle(
           fontSize: 12,
-          color: Colors.grey[600],
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
       ),
       trailing: Icon(
         Icons.arrow_forward_ios,
         size: 14,
-        color: Colors.grey[400],
+        color: Theme.of(context).colorScheme.outline,
       ),
       onTap: () {
         widget.onMemberSelected(member.name);

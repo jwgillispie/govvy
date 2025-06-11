@@ -119,25 +119,8 @@ class CongressMembersService {
 
   Future<List<CongressMember>> getMembersByState(String state) async {
     final allMembers = await getCurrentMembers();
-    print('Congress Service: Filtering ${allMembers.length} members for state: $state');
-    
-    // Debug: Print unique states in the data
-    final uniqueStates = allMembers.map((m) => m.state).toSet().toList()..sort();
-    print('Congress Service: Available states in data: $uniqueStates');
-    
     final filtered = allMembers.where((member) => 
         member.state.toLowerCase() == state.toLowerCase()).toList();
-    print('Congress Service: Found ${filtered.length} members for state: $state');
-    
-    if (filtered.isEmpty && state != 'All States') {
-      print('Congress Service: No members found for $state. Checking if state name format matches...');
-      // Try to find similar state names in case of formatting differences
-      final similarStates = allMembers.where((member) => 
-          member.state.toLowerCase().contains(state.toLowerCase().substring(0, 2))).toList();
-      if (similarStates.isNotEmpty) {
-        print('Congress Service: Found similar states: ${similarStates.map((m) => m.state).toSet()}');
-      }
-    }
     
     return filtered;
   }
@@ -151,7 +134,6 @@ class CongressMembersService {
   Future<List<String>> getAvailableStates() async {
     final allMembers = await getCurrentMembers();
     final states = allMembers.map((m) => m.state).toSet().toList()..sort();
-    print('Congress Service: Available states from API: $states');
     return states;
   }
 }

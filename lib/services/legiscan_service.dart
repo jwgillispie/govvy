@@ -88,9 +88,6 @@ class LegiscanService {
     }
 
     try {
-      if (kDebugMode) {
-        print('Searching for $name in state $state');
-      }
 
       // Use direct search for the person - this is more reliable than session people lookup
       final searchParams = {'state': state, 'query': name};
@@ -98,23 +95,14 @@ class LegiscanService {
       final searchResults = await callApi('getSearch', searchParams);
 
       if (searchResults == null) {
-        if (kDebugMode) {
-          print('No search results returned');
-        }
         return null;
       }
 
-      if (kDebugMode) {
-        print('Search results structure: ${searchResults.keys}');
-      }
 
       if (!searchResults.containsKey('results') ||
           searchResults['results'] is! Map ||
           !searchResults['results'].containsKey('people') ||
           searchResults['results']['people'] is! List) {
-        if (kDebugMode) {
-          print('No people found in search results');
-        }
 
         // Try with just the last name as a fallback
         final nameParts = name.split(' ');
@@ -130,17 +118,11 @@ class LegiscanService {
             lastNameResults['results'] is! Map ||
             !lastNameResults['results'].containsKey('people') ||
             lastNameResults['results']['people'] is! List) {
-          if (kDebugMode) {
-            print('No people found in last name search results');
-          }
           return null;
         }
 
         final peopleList = lastNameResults['results']['people'] as List;
         if (peopleList.isEmpty) {
-          if (kDebugMode) {
-            print('Empty people list in last name search results');
-          }
           return null;
         }
 
@@ -158,10 +140,6 @@ class LegiscanService {
             if (fullName.contains(lowercaseName) ||
                 lowercaseName.contains(fullName) ||
                 lastName == lowercaseName.split(' ').last.toLowerCase()) {
-              if (kDebugMode) {
-                print(
-                    'Found person via last name search: ${person['people_id']} - $fullName');
-              }
 
               // Ensure people_id is an integer
               if (person['people_id'] is String) {
@@ -187,9 +165,6 @@ class LegiscanService {
       // Process the people from the search results
       final peopleList = searchResults['results']['people'] as List;
       if (peopleList.isEmpty) {
-        if (kDebugMode) {
-          print('Empty people list in search results');
-        }
         return null;
       }
 
@@ -204,10 +179,6 @@ class LegiscanService {
 
           if (fullName.contains(lowercaseName) ||
               lowercaseName.contains(fullName)) {
-            if (kDebugMode) {
-              print(
-                  'Found person via search: ${person['people_id']} - $fullName');
-            }
 
             // Ensure people_id is an integer
             if (person['people_id'] is String) {
@@ -250,10 +221,6 @@ class LegiscanService {
 
               if (fullName.contains(lowercaseName) ||
                   lowercaseName.contains(fullName)) {
-                if (kDebugMode) {
-                  print(
-                      'Found person via direct search: ${person['people_id']} - $fullName');
-                }
 
                 // Ensure people_id is an integer
                 if (person['people_id'] is String) {
@@ -275,9 +242,6 @@ class LegiscanService {
         }
       }
 
-      if (kDebugMode) {
-        print('No matching person found for: $name in $state');
-      }
       return null;
     } catch (e) {
       if (kDebugMode) {
@@ -293,25 +257,16 @@ class LegiscanService {
     }
 
     try {
-      if (kDebugMode) {
-        print('Getting sponsored bills for person ID: $personId');
-      }
 
       // Get person details including sponsored bills
       final personData =
           await callApi('getPerson', {'id': personId.toString()});
 
       if (personData == null) {
-        if (kDebugMode) {
-          print('No person data returned for ID: $personId');
-        }
         return [];
       }
 
       if (!personData.containsKey('person')) {
-        if (kDebugMode) {
-          print('No person key found in response for ID: $personId');
-        }
         return [];
       }
 
@@ -330,9 +285,6 @@ class LegiscanService {
       }
 
       if (bills.isEmpty) {
-        if (kDebugMode) {
-          print('No sponsored bills found for person ID: $personId');
-        }
 
         // Try direct search as a fallback - using getSearch operation with sponsor ID
         final searchResults = await callApi('getSearch', {
@@ -348,10 +300,6 @@ class LegiscanService {
             searchResults['results']['bills'] is List) {
           bills = searchResults['results']['bills'] as List;
 
-          if (kDebugMode) {
-            print(
-                'Found ${bills.length} bills via search for sponsor:$personId');
-          }
         }
 
         if (bills.isEmpty) {
@@ -435,10 +383,6 @@ class LegiscanService {
 
       final url = Uri.parse(_baseUrl).replace(queryParameters: queryParams);
 
-      if (kDebugMode) {
-        final redactedUrl = url.toString().replaceAll(_apiKey!, '[REDACTED]');
-        print('LegiScan API call: $redactedUrl');
-      }
 
       // Increase timeout for potentially slow operations like getBill
       final Duration timeout = operation == 'getBill' 
@@ -456,9 +400,6 @@ class LegiscanService {
           break; // Exit loop if request succeeds
         } catch (timeoutError) {
           retryCount++;
-          if (kDebugMode) {
-            print('API call attempt $retryCount timed out, ${retryCount <= maxRetries ? "retrying..." : "giving up."}');
-          }
           
           if (retryCount > maxRetries) {
             rethrow; // Re-throw the error after all retries fail
@@ -473,24 +414,12 @@ class LegiscanService {
         final data = json.decode(response.body);
 
         // Debug the response
-        if (kDebugMode) {
-          print('API response status: ${data['status']}');
-          if (data['status'] != 'OK') {
-            print('Response contains error: ${data['alert'] ?? "Unknown error"}');
-          } else if (operation == 'getBill') {
-            // For getBill, print a sample of the response for debugging
-            print(data);
-          }
-        }
 
         // Special handling for FL and GA getMasterList operations
         if (operation == 'getMasterList' && 
             (params['state'] == 'FL' || params['state'] == 'GA') &&
             data['status'] != 'OK') {
           
-          if (kDebugMode) {
-            print('Special handling for ${params['state']} getMasterList');
-          }
           
           // Try a search instead for these states
           final searchParams = {
@@ -504,11 +433,6 @@ class LegiscanService {
           final searchUrl = Uri.parse(_baseUrl)
               .replace(queryParameters: searchParams);
           
-          if (kDebugMode) {
-            final redactedSearchUrl = searchUrl.toString()
-                .replaceAll(_apiKey!, '[REDACTED]');
-            print('Fallback search URL: $redactedSearchUrl');
-          }
           
           // Use a slightly longer timeout for fallback search
           final searchResponse = await http.get(searchUrl)
@@ -516,9 +440,6 @@ class LegiscanService {
           
           if (searchResponse.statusCode == 200) {
             final searchData = json.decode(searchResponse.body);
-            if (kDebugMode) {
-              print('Fallback search status: ${searchData['status']}');
-            }
             return searchData;
           }
         }
@@ -605,10 +526,6 @@ class LegiscanService {
     }
 
     try {
-      if (kDebugMode) {
-        print(
-            'Directly searching for bills for $firstName $lastName in $state');
-      }
 
       // Search for bills with this person's name as sponsor
       final searchParams = {
@@ -758,16 +675,10 @@ class LegiscanService {
   /// Returns a map of state codes to datasets
   Future<Map<String, LegiScanDataset>> getDatasetList({String state = 'ALL'}) async {
     if (!hasApiKey) {
-      if (kDebugMode) {
-        print('No LegiScan API key available for fetching datasets');
-      }
       return {};
     }
     
     try {
-      if (kDebugMode) {
-        print('Fetching dataset list for state: $state');
-      }
       
       // Check network connectivity
       if (!await _networkService.checkConnectivity()) {
@@ -775,25 +686,14 @@ class LegiscanService {
       }
       
       // Call the LegiScan API getDatasetList endpoint
-      final params = <String, String>{
-        'state': state,
-      };
-      
-      final response = await callApi('getDatasetList', params);
+      final response = await callApi('getDatasetList', {'state': state});
       
       if (response == null) {
-        if (kDebugMode) {
-          print('No response from getDatasetList API call');
-        }
         return {};
       }
       
       // Process the response
       if (!response.containsKey('datasetlist')) {
-        if (kDebugMode) {
-          print('Missing datasetlist key in API response');
-          print('Response keys: ${response.keys.join(', ')}');
-        }
         return {};
       }
       
@@ -821,9 +721,6 @@ class LegiscanService {
           final dataset = LegiScanDataset.fromMap(datasetData);
           datasets[dataset.state] = dataset;
           
-          if (kDebugMode) {
-            print('Processed dataset for state: ${dataset.state}, ID: ${dataset.datasetId}');
-          }
         } catch (e) {
           if (kDebugMode) {
             print('Error processing dataset: $e');
@@ -849,16 +746,10 @@ class LegiscanService {
   /// Returns the path to the extracted dataset directory
   Future<String?> getDataset(int datasetId) async {
     if (!hasApiKey) {
-      if (kDebugMode) {
-        print('No LegiScan API key available for downloading dataset');
-      }
       return null;
     }
     
     try {
-      if (kDebugMode) {
-        print('Downloading dataset with ID: $datasetId');
-      }
       
       // Check network connectivity
       if (!await _networkService.checkConnectivity()) {
@@ -866,9 +757,7 @@ class LegiscanService {
       }
       
       // Call the LegiScan API getDataset endpoint
-      final params = <String, String>{
-        'id': datasetId.toString(),
-      };
+      // (params will be used in URL building below)
       
       // Get app's documents directory for storing the dataset
       final appDocDir = await getApplicationDocumentsDirectory();
@@ -891,10 +780,6 @@ class LegiscanService {
       }
       await extractDir.create(recursive: true);
       
-      if (kDebugMode) {
-        print('Will save dataset to: $zipFilePath');
-        print('Will extract to: $extractPath');
-      }
       
       // Build URL for direct download
       final Map<String, String> queryParams = {
@@ -905,10 +790,6 @@ class LegiscanService {
       
       final url = Uri.parse(_baseUrl).replace(queryParameters: queryParams);
       
-      if (kDebugMode) {
-        final redactedUrl = url.toString().replaceAll(_apiKey!, '[REDACTED]');
-        print('LegiScan Dataset download URL: $redactedUrl');
-      }
       
       // Setup a timeout for the download
       final Duration timeout = const Duration(minutes: 5);
@@ -917,18 +798,12 @@ class LegiscanService {
       final response = await http.get(url).timeout(timeout);
       
       if (response.statusCode == 200) {
-        if (kDebugMode) {
-          print('Dataset downloaded successfully, size: ${response.bodyBytes.length} bytes');
-        }
         
         // Save the zip file
         final file = File(zipFilePath);
         await file.writeAsBytes(response.bodyBytes);
         
         // Extract the zip file
-        if (kDebugMode) {
-          print('Extracting dataset...');
-        }
         
         try {
           // Read the zip file
@@ -950,15 +825,9 @@ class LegiscanService {
               // Write the file
               await outFile.writeAsBytes(data);
               
-              if (kDebugMode && fileName.endsWith('.json')) {
-                print('Extracted file: $fileName');
-              }
             }
           }
           
-          if (kDebugMode) {
-            print('Dataset extraction complete');
-          }
           
           // Update the dataset metadata to show this dataset has been fetched
           await _updateDatasetStatus(datasetId, extractPath);
@@ -1021,23 +890,12 @@ class LegiscanService {
             final cachedUpdateTime = DateTime.parse(cachedDataset.lastUpdate.replaceAll(' ', 'T'));
             
             if (currentUpdateTime.isAfter(cachedUpdateTime)) {
-              if (kDebugMode) {
-                print('Found updated dataset for $state: ${currentDataset.datasetId}');
-                print('Current update time: $currentUpdateTime, Cached: $cachedUpdateTime');
-              }
               newDatasets.add(currentDataset);
-            } else if (kDebugMode) {
-              print('Dataset for $state is up to date');
             }
           } else {
             // This is a new state we haven't seen before
-            if (kDebugMode) {
-              print('Found new dataset for $state: ${currentDataset.datasetId}');
-            }
             newDatasets.add(currentDataset);
           }
-        } else if (kDebugMode) {
-          print('No dataset available for state: $state');
         }
       }
       
@@ -1054,9 +912,6 @@ class LegiscanService {
   /// Returns the number of bills processed
   Future<int> processDataset(String datasetPath) async {
     try {
-      if (kDebugMode) {
-        print('Processing dataset at: $datasetPath');
-      }
       
       // Check if the directory exists
       final dir = Directory(datasetPath);
@@ -1073,13 +928,10 @@ class LegiscanService {
       // Read and parse the index
       final indexData = json.decode(await indexFile.readAsString());
       
-      // Extract state code from the dataset
+      // Extract state code from the dataset (for context/debugging)
+      // ignore: unused_local_variable
       final String state = indexData['state'] ?? 'Unknown';
       
-      if (kDebugMode) {
-        print('Dataset state: $state');
-        print('Dataset metadata: ${indexData.keys}');
-      }
       
       // Process bill data from the dataset
       int billsProcessed = 0;
@@ -1094,9 +946,6 @@ class LegiscanService {
           // Count how many bills we have
           final billCount = billsData.keys.where((key) => key != 'state').length;
           
-          if (kDebugMode) {
-            print('Found $billCount bills in dataset');
-          }
           
           billsProcessed = billCount;
         }
@@ -1131,9 +980,6 @@ class LegiscanService {
       // Update last checked timestamp
       await prefs.setInt(_datasetsLastUpdatedKey, DateTime.now().millisecondsSinceEpoch);
       
-      if (kDebugMode) {
-        print('Saved metadata for ${datasets.length} datasets');
-      }
     } catch (e) {
       if (kDebugMode) {
         print('Error saving dataset metadata: $e');
@@ -1151,9 +997,6 @@ class LegiscanService {
       final now = DateTime.now().millisecondsSinceEpoch;
       
       if (now - lastUpdated > _datasetsCacheMaxAge.inMilliseconds) {
-        if (kDebugMode) {
-          print('Dataset cache is too old, returning empty map');
-        }
         return {};
       }
       
@@ -1175,9 +1018,6 @@ class LegiscanService {
         datasets[stateCode] = LegiScanDataset.fromMap(datasetMap);
       }
       
-      if (kDebugMode) {
-        print('Loaded metadata for ${datasets.length} datasets from cache');
-      }
       
       return datasets;
     } catch (e) {
@@ -1220,9 +1060,6 @@ class LegiscanService {
         datasets[targetState] = updatedDataset;
         await _saveDatasetMetadata(datasets);
         
-        if (kDebugMode) {
-          print('Updated status for dataset $datasetId (state: $targetState)');
-        }
       }
     } catch (e) {
       if (kDebugMode) {

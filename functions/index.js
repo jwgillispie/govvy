@@ -14,13 +14,10 @@ exports.ciceroProxy = functions.https.onRequest((request, response) => {
       const lastName = request.query.lastName;
       const firstName = request.query.firstName;
 
-      // Debug logging to see what's available
-      console.log("Environment variables:", process.env);
 
       // API key stored in environment variables directly for v2 functions
       const CICERO_API_KEY = process.env.CICERO_API_KEY;
 
-      console.log("Cicero API Key available:", !!CICERO_API_KEY);
 
       if (!CICERO_API_KEY) {
         throw new Error("Cicero API key not configured");
@@ -60,7 +57,6 @@ exports.ciceroProxy = functions.https.onRequest((request, response) => {
       // Return the data
       response.json(ciceroResponse.data);
     } catch (error) {
-      console.error("Proxy error:", error);
       response.status(500).json({
         error: error.message,
         status: "error",
@@ -79,31 +75,42 @@ exports.geocodeProxy = functions.https.onRequest((request, response) => {
         throw new Error("Address parameter is required");
       }
 
-      // Debug logging
-      console.log("Environment variables:", process.env);
 
       // Access API key directly from environment variables
       const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
-      console.log("Google Maps API Key available:", !!GOOGLE_MAPS_API_KEY);
 
       if (!GOOGLE_MAPS_API_KEY) {
         throw new Error("Google Maps API key not configured");
       }
 
+      // Get additional query parameters for US-only restriction
+      const components = request.query.components;
+      
+      const geocodeParams = {
+        address: address,
+        key: GOOGLE_MAPS_API_KEY,
+        // Add US-only restrictions
+        region: 'us',
+      };
+      
+      // Add components filter if provided (e.g., 'country:US')
+      if (components) {
+        geocodeParams.components = components;
+      } else {
+        // Default to US-only if no components specified
+        geocodeParams.components = 'country:US';
+      }
+
       const geocodeResponse = await axios.get(
           "https://maps.googleapis.com/maps/api/geocode/json",
           {
-            params: {
-              address: address,
-              key: GOOGLE_MAPS_API_KEY,
-            },
+            params: geocodeParams,
           },
       );
 
       response.json(geocodeResponse.data);
     } catch (error) {
-      console.error("Geocode proxy error:", error);
       response.status(500).json({
         error: error.message,
         status: "error",

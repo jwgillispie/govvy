@@ -90,7 +90,7 @@ class _NameSearchInputState extends State<NameSearchInput> {
               labelText: 'Last Name',
               hintText: 'e.g. Smith',
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: Theme.of(context).colorScheme.surfaceVariant,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -136,7 +136,7 @@ class _NameSearchInputState extends State<NameSearchInput> {
               labelText: 'First Name (Optional)',
               hintText: 'e.g. John',
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: Theme.of(context).colorScheme.surfaceVariant,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,

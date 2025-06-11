@@ -55,7 +55,6 @@ class UnifiedFinanceProvider with ChangeNotifier {
     List<OfficeLevel> levels = const [OfficeLevel.federal, OfficeLevel.state, OfficeLevel.local],
     int? cycle,
   }) async {
-    print('UnifiedProvider: Searching for candidates: $name');
     
     _isSearching = true;
     _searchResults.clear();
@@ -91,7 +90,7 @@ class UnifiedFinanceProvider with ChangeNotifier {
             ));
           }
         } catch (e) {
-          print('Error searching FEC candidates: $e');
+          // Error searching FEC candidates - continuing with other sources
         }
       }
 
@@ -130,7 +129,7 @@ class UnifiedFinanceProvider with ChangeNotifier {
             ));
           }
         } catch (e) {
-          print('Error searching Follow the Money candidates: $e');
+          // Error searching Follow the Money candidates - continuing
         }
       }
 
@@ -138,11 +137,9 @@ class UnifiedFinanceProvider with ChangeNotifier {
       results.sort((a, b) => b.relevanceScore.compareTo(a.relevanceScore));
       _searchResults = _removeDuplicates(results);
       
-      print('UnifiedProvider: Found ${_searchResults.length} candidates across all sources');
       
     } catch (e) {
       _error = 'Error searching candidates: $e';
-      print('UnifiedProvider: Search error: $e');
     } finally {
       _isSearching = false;
       notifyListeners();
@@ -151,7 +148,6 @@ class UnifiedFinanceProvider with ChangeNotifier {
 
   // Load finance data for a specific candidate
   Future<void> loadFinanceData(UnifiedCandidate candidate, {int? cycle}) async {
-    print('UnifiedProvider: Loading finance data for ${candidate.name} (${candidate.primarySource.code})');
     
     _isLoadingFinance = true;
     _currentCandidate = candidate;
@@ -178,14 +174,12 @@ class UnifiedFinanceProvider with ChangeNotifier {
 
       if (financeData != null) {
         _currentFinanceData = financeData;
-        print('UnifiedProvider: Loaded finance data: ${financeData.formattedTotalRaised} raised');
       } else {
         _error = 'No finance data available for ${candidate.name}';
       }
 
     } catch (e) {
       _error = 'Error loading finance data: $e';
-      print('UnifiedProvider: Finance data error: $e');
     } finally {
       _isLoadingFinance = false;
       notifyListeners();
@@ -214,7 +208,7 @@ class UnifiedFinanceProvider with ChangeNotifier {
         );
       }
     } catch (e) {
-      print('Error loading FEC finance data: $e');
+      // Error loading FEC finance data
     }
     
     return null;
@@ -232,7 +226,7 @@ class UnifiedFinanceProvider with ChangeNotifier {
         return UnifiedFinanceData.fromFollowTheMoney(ftmFinance);
       }
     } catch (e) {
-      print('Error loading Follow the Money finance data: $e');
+      // Error loading Follow the Money finance data
     }
     
     return null;

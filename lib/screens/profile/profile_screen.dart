@@ -4,6 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:govvy/services/auth_service.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/providers/bill_provider.dart';
+import 'package:govvy/providers/theme_provider.dart';
+import 'package:govvy/widgets/info/about_dialog.dart';
+import 'package:govvy/widgets/info/privacy_policy_dialog.dart';
+import 'package:govvy/widgets/info/terms_of_service_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -13,6 +17,7 @@ class ProfileScreen extends StatelessWidget {
     final authService = Provider.of<AuthService>(context);
     final repProvider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
     final billProvider = Provider.of<BillProvider>(context, listen: false);
+    final themeProvider = Provider.of<ThemeProvider>(context);
     
     return Scaffold(
       appBar: AppBar(
@@ -279,39 +284,22 @@ class ProfileScreen extends StatelessWidget {
                   
                   const Divider(height: 1),
                   
-                  // Theme settings (placeholder)
+                  // Theme settings with functional toggle
                   ListTile(
                     leading: Icon(
-                      Icons.dark_mode,
+                      themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     title: const Text('Display Theme'),
-                    subtitle: const Text('Light mode'),
-                    // Placeholder - would connect to a theme provider
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Theme settings coming soon')),
-                      );
-                    },
-                  ),
-                  
-                  const Divider(height: 1),
-                  
-                  // Notification settings (placeholder)
-                  ListTile(
-                    leading: Icon(
-                      Icons.notifications,
-                      color: Theme.of(context).colorScheme.primary,
+                    subtitle: Text(themeProvider.isDarkMode ? 'Dark mode' : 'Light mode'),
+                    trailing: Switch(
+                      value: themeProvider.isDarkMode,
+                      onChanged: (value) => themeProvider.toggleTheme(),
+                      activeColor: Theme.of(context).colorScheme.primary,
                     ),
-                    title: const Text('Notifications'),
-                    subtitle: const Text('Manage legislative alerts'),
-                    // Placeholder - would connect to notifications settings
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Notification settings coming soon')),
-                      );
-                    },
+                    onTap: () => themeProvider.toggleTheme(),
                   ),
+                  
                 ],
               ),
             ),
@@ -405,14 +393,15 @@ class ProfileScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  // App version info
+                  // About Govvy
                   ListTile(
                     leading: Icon(
-                      Icons.info,
+                      Icons.account_balance,
                       color: Theme.of(context).colorScheme.primary,
                     ),
-                    title: const Text('App Version'),
-                    subtitle: const Text('1.0.0'), // Would normally get from package_info
+                    title: const Text('About Govvy'),
+                    subtitle: const Text('Learn more about the app'),
+                    onTap: () => showAboutGovvyDialog(context),
                   ),
                   
                   const Divider(height: 1),
@@ -424,12 +413,8 @@ class ProfileScreen extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     title: const Text('Privacy Policy'),
-                    onTap: () {
-                      // Would navigate to privacy policy page
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Privacy policy coming soon')),
-                      );
-                    },
+                    subtitle: const Text('How we protect your data'),
+                    onTap: () => showPrivacyPolicyDialog(context),
                   ),
                   
                   const Divider(height: 1),
@@ -441,12 +426,8 @@ class ProfileScreen extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                     title: const Text('Terms of Service'),
-                    onTap: () {
-                      // Would navigate to terms of service page
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Terms of service coming soon')),
-                      );
-                    },
+                    subtitle: const Text('Terms and conditions'),
+                    onTap: () => showTermsOfServiceDialog(context),
                   ),
                 ],
               ),

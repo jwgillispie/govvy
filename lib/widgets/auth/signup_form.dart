@@ -64,9 +64,6 @@ Future<void> _signUp() async {
     // Normalize phone number to E.164 format for Firebase
     String normalizedPhone = normalizePhoneNumber(_phoneController.text);
     
-    // Mark that the user has used the app (to skip landing page next time)
-    await authService.setUserHasUsedApp();
-    
     await authService.registerWithEmailAndPassword(
       email: _emailController.text.trim(),
       password: _passwordController.text,

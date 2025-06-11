@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/widgets/address/city_search_input.dart';
 import 'package:govvy/widgets/representatives/name_search_input.dart';
-import 'package:govvy/widgets/representatives/representative_card.dart';
+import 'package:govvy/widgets/shared/grouped_representative_list.dart';
+import 'package:govvy/widgets/shared/government_level_badge.dart';
+import 'package:govvy/utils/government_level_helper.dart';
 import 'package:govvy/screens/representatives/representative_details_screen.dart';
 import 'package:govvy/services/auth_service.dart';
 
@@ -456,8 +458,14 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
           }
         });
       } else {
-        // Navigate directly to the Local tab after search completes
-        _tabController.animateTo(2); // Local tab
+        // Navigate to the most appropriate tab based on what we found
+        if (provider.localRepresentatives.isNotEmpty) {
+          _tabController.animateTo(2); // Local tab if we have local reps
+        } else if (provider.federalRepresentatives.isNotEmpty) {
+          _tabController.animateTo(1); // Federal/State tab if we only have federal reps
+        } else {
+          _tabController.animateTo(0); // All tab as fallback
+        }
       }
 
       // Scroll to the tab bar to show results
@@ -528,72 +536,6 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     return ambiguousCities.contains(city);
   }
 
-// Show disambiguation dialog when multiple cities with the same name exist
-  void _showCityDisambiguationDialog(String cityName) {
-    // Extract just the city name without state
-    String city = cityName;
-    if (cityName.contains(',')) {
-      city = cityName.split(',')[0].trim();
-    }
-
-    // List of common states where this city exists
-    List<String> possibleStates = [];
-
-    // Check for known cities with duplicates
-    switch (city.toLowerCase()) {
-      case 'portland':
-        possibleStates = ['OR', 'ME', 'TX', 'IN', 'MI'];
-        break;
-      case 'springfield':
-        possibleStates = ['IL', 'MA', 'MO', 'OH', 'OR'];
-        break;
-      case 'gainesville':
-        possibleStates = ['FL', 'GA', 'TX', 'VA'];
-        break;
-      case 'charleston':
-        possibleStates = ['SC', 'WV', 'IL', 'MO'];
-        break;
-      case 'columbus':
-        possibleStates = ['OH', 'GA', 'IN', 'MS', 'NE'];
-        break;
-      default:
-        // For cities we don't have specific data for, show a general message
-        setState(() {
-          _validationError =
-              'Try adding a state code (e.g., "$city, NY") to refine your search';
-        });
-        return;
-    }
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Multiple cities named "$city"'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Which $city did you mean?'),
-            const SizedBox(height: 16),
-            ...possibleStates.map((state) => ListTile(
-                  title: Text('$city, $state'),
-                  leading: const Icon(Icons.location_city),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    _fetchLocalRepresentativesByCity('$city, $state');
-                  },
-                )),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
-          ),
-        ],
-      ),
-    );
-  }
 
   // Fetch representatives by name
   Future<void> _fetchRepresentativesByName(
@@ -726,23 +668,52 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                     ),
                   ),
 
-                  // Tab bar
+                  // Tab bar with level indicators
                   TabBar(
                     controller: _tabController,
                     isScrollable: true, // Make tabs scrollable to fit all
-                    tabs: const [
-                      Tab(text: 'All'),
-                      Tab(text: 'Federal/State'),
-                      Tab(text: 'Local'),
-                      Tab(text: 'Name Results'),
+                    tabs: [
+                      const Tab(text: 'All'),
+                      Tab(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            GovernmentLevelDot(
+                              level: GovernmentLevel.federal,
+                              size: 8,
+                            ),
+                            const SizedBox(width: 4),
+                            GovernmentLevelDot(
+                              level: GovernmentLevel.state,
+                              size: 8,
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('Federal/State'),
+                          ],
+                        ),
+                      ),
+                      Tab(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            GovernmentLevelDot(
+                              level: GovernmentLevel.local,
+                              size: 8,
+                            ),
+                            const SizedBox(width: 8),
+                            const Text('Local'),
+                          ],
+                        ),
+                      ),
+                      const Tab(text: 'Name Results'),
                     ],
                     labelColor: Theme.of(context).colorScheme.primary,
                     unselectedLabelColor: Colors.grey,
                     indicatorColor: Theme.of(context).colorScheme.primary,
                   ),
 
-                  // Error message if any
-                  if (_validationError != null || provider.errorMessage != null)
+                  // Error message if any (only show validation errors here, not provider errors)
+                  if (_validationError != null)
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
@@ -753,7 +724,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                           border: Border.all(color: Colors.red.shade200),
                         ),
                         child: Text(
-                          _validationError ?? provider.errorMessage ?? '',
+                          _validationError!,
                           style: TextStyle(color: Colors.red.shade700),
                         ),
                       ),
@@ -796,23 +767,29 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                                       ? 'Select a state to find your representatives'
                                       : _searchTypeIndex == 1
                                           ? 'Enter a city to find your representatives'
-                                          : 'Search by name to find representatives'),
+                                          : 'Search by name to find representatives',
+                                  forceTabIndex: 0),
       
                               // Federal/State representatives tab
                               _buildRepresentativesList(
                                   provider.federalRepresentatives,
-                                  'Select a state to find your federal and state representatives'),
+                                  _searchTypeIndex == 1
+                                      ? 'No federal or state representatives found for this city'
+                                      : 'Select a state to find your federal and state representatives',
+                                  forceTabIndex: 1),
       
                               // Local representatives tab
                               _buildRepresentativesList(
                                   provider.localRepresentatives,
                                   _searchTypeIndex == 1
                                       ? 'Enter a city to find your local representatives'
-                                      : 'Select a state to find your local representatives'),
+                                      : 'Select a state to find your local representatives',
+                                  forceTabIndex: 2),
       
                               // Name search results tab
                               _buildRepresentativesList(provider.allRepresentatives,
-                                  'Search for representatives by name to see results here'),
+                                  'Search for representatives by name to see results here',
+                                  forceTabIndex: 3),
                             ],
                           ),
                         ),
@@ -838,7 +815,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
             decoration: InputDecoration(
               labelText: 'State',
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: Theme.of(context).colorScheme.surfaceVariant,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -960,7 +937,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                       // Ensure we call search with a slight delay to allow state to update
                       Future.microtask(() => _fetchRepresentativesByState());
                     },
-              backgroundColor: Colors.grey.shade100,
+              backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -970,7 +947,26 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
 
   // Build representatives list
   Widget _buildRepresentativesList(
-      List<Representative> representatives, String emptyMessage) {
+      List<Representative> representatives, String emptyMessage, {int? forceTabIndex}) {
+    final provider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
+    
+    // Use forced tab index if provided, otherwise use controller index
+    final currentTabIndex = forceTabIndex ?? _tabController.index;
+    
+    // Check for tab-specific errors
+    String? tabSpecificError;
+    if (representatives.isEmpty) {
+      if (currentTabIndex == 1) { // Federal/State tab
+        if (provider.errorMessageFederal != null) {
+          tabSpecificError = provider.errorMessageFederal;
+        }
+      } else if (currentTabIndex == 2) { // Local tab
+        if (provider.errorMessageLocal != null) {
+          tabSpecificError = provider.errorMessageLocal;
+        }
+      }
+    }
+    
     if (representatives.isEmpty) {
       return Center(
         child: Padding(
@@ -988,8 +984,30 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
                 color: Colors.grey.shade400,
               ),
               const SizedBox(height: 16),
+              
+              // Show tab-specific error if available, otherwise show empty message
+              if (tabSpecificError != null) ...[
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade50,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.red.shade200),
+                  ),
+                  child: Text(
+                    tabSpecificError,
+                    style: TextStyle(
+                      color: Colors.red.shade700,
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+              
               Text(
-                emptyMessage,
+                tabSpecificError != null ? 'Unable to load representatives' : emptyMessage,
                 style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
@@ -1005,7 +1023,7 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
     List<Representative> filteredReps = representatives;
 
     // If we're on the "Local" tab (index 2), apply additional filtering
-    if (_tabController.index == 2) {
+    if (currentTabIndex == 2) {
       filteredReps =
           representatives.where((rep) => _isLocalRepresentative(rep)).toList();
 
@@ -1061,26 +1079,23 @@ class _FindRepresentativesScreenState extends State<FindRepresentativesScreen>
       }
     }
 
-    // Sort representatives by name for consistency
-    final sortedReps = List<Representative>.from(filteredReps)
-      ..sort((a, b) => a.name.compareTo(b.name));
+    // For the "All" tab (index 0), show grouped representatives
+    // For other tabs, show simple list
+    final shouldGroup = currentTabIndex == 0;
 
-    return ListView.builder(
-      itemCount: sortedReps.length,
-      itemBuilder: (context, index) {
-        final rep = sortedReps[index];
-        return RepresentativeCard(
-          representative: rep,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RepresentativeDetailsScreen(
-                  bioGuideId: rep.bioGuideId,
-                ),
-              ),
-            );
-          },
+    return GroupedRepresentativeList(
+      representatives: filteredReps,
+      groupByLevel: shouldGroup,
+      showLevelHeaders: shouldGroup,
+      collapsible: false, // Set to true if you want collapsible sections
+      onRepresentativeTap: (rep) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RepresentativeDetailsScreen(
+              bioGuideId: rep.bioGuideId,
+            ),
+          ),
         );
       },
     );

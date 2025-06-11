@@ -1,6 +1,8 @@
 // lib/widgets/bills/enhanced_bill_card.dart
 import 'package:flutter/material.dart';
 import 'package:govvy/models/bill_model.dart';
+import 'package:govvy/widgets/shared/government_level_badge.dart';
+import 'package:govvy/utils/data_source_attribution.dart' as DataSources;
 import 'package:intl/intl.dart';
 
 enum BillCardMode {
@@ -377,6 +379,13 @@ class EnhancedBillCard extends StatelessWidget {
                 ],
               ),
           ],
+        ),
+        
+        // Data source attribution
+        const SizedBox(height: 8),
+        DataSources.DataSourceAttribution.buildSourceAttribution(
+          [DataSources.DataSourceAttribution.detectSourceFromBillData(bill)],
+          prefix: 'Data from',
         ),
       ],
     );
@@ -823,6 +832,12 @@ class EnhancedBillCard extends StatelessWidget {
             ),
           ),
         ],
+        
+        // Data source attribution
+        const SizedBox(height: 16),
+        DataSources.DataSourceAttribution.buildDetailedSourceInfo(
+          DataSources.DataSourceAttribution.detectSourceFromBillData(bill),
+        ),
       ],
     );
   }
@@ -849,86 +864,12 @@ class EnhancedBillCard extends StatelessWidget {
     );
   }
   
-  // Helper widget for type badge with enhanced government level indicators
+  // Helper widget for type badge using the new government level badge system
   Widget _buildTypeBadge(BuildContext context) {
-    // Determine the badge based on bill type with clear visual distinctions
-    Color backgroundColor;
-    Color borderColor;
-    Color textColor;
-    String label;
-    IconData icon;
-    
-    switch (bill.type.toLowerCase()) {
-      case 'federal':
-        backgroundColor = Colors.blue.shade100;
-        borderColor = Colors.blue.shade300;
-        textColor = Colors.blue.shade800;
-        label = 'FEDERAL';
-        icon = Icons.account_balance;
-        break;
-      case 'state':
-        backgroundColor = Colors.green.shade100;
-        borderColor = Colors.green.shade300;
-        textColor = Colors.green.shade800;
-        label = 'STATE';
-        icon = Icons.location_city;
-        break;
-      case 'local':
-        backgroundColor = Colors.orange.shade100;
-        borderColor = Colors.orange.shade300;
-        textColor = Colors.orange.shade800;
-        label = 'LOCAL';
-        icon = Icons.location_on;
-        break;
-      default:
-        // For unknown types, try to infer from state or other indicators
-        if (bill.state == 'US' || bill.state == 'USA') {
-          backgroundColor = Colors.blue.shade100;
-          borderColor = Colors.blue.shade300;
-          textColor = Colors.blue.shade800;
-          label = 'FEDERAL';
-          icon = Icons.account_balance;
-        } else {
-          backgroundColor = Colors.grey.shade100;
-          borderColor = Colors.grey.shade300;
-          textColor = Colors.grey.shade700;
-          label = bill.type.isNotEmpty 
-              ? bill.type.toUpperCase() 
-              : 'UNKNOWN';
-          icon = Icons.help_outline;
-        }
-    }
-    
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 4,
-      ),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: borderColor, width: 1.5),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            size: 12,
-            color: textColor,
-          ),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.bold,
-              color: textColor,
-              letterSpacing: 0.5,
-            ),
-          ),
-        ],
-      ),
+    return GovernmentLevelBadge.fromBillType(
+      billType: bill.type,
+      size: mode == BillCardMode.compact ? BadgeSize.small : BadgeSize.medium,
+      compact: mode == BillCardMode.compact,
     );
   }
   

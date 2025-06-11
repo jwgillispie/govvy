@@ -32,9 +32,6 @@ class CSVRepresentativeProvider with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       
-      if (kDebugMode) {
-        print('CSV Representative Provider initialized successfully');
-      }
     } catch (e) {
       _errorMessage = 'Failed to initialize CSV data: ${e.toString()}';
       _isLoading = false;
@@ -72,13 +69,6 @@ class CSVRepresentativeProvider with ChangeNotifier {
         // Add the bills to the representative
         representative.addLegiscanBills(bills);
         
-        if (kDebugMode) {
-          print('Added ${bills.length} CSV bills to ${representative.name}');
-        }
-      } else {
-        if (kDebugMode) {
-          print('No CSV bills found for ${representative.name}');
-        }
       }
       
       _isLoading = false;

@@ -54,7 +54,9 @@ class BillHistoryCard extends StatelessWidget {
                 Container(
                   width: 2,
                   height: 12,
-                  color: Colors.grey.shade300,
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? Colors.grey.shade600
+                      : Colors.grey.shade300,
                 ),
                 
               // Timeline dot
@@ -65,7 +67,7 @@ class BillHistoryCard extends StatelessWidget {
                   color: chamberColor,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     width: 2,
                   ),
                 ),
@@ -76,7 +78,9 @@ class BillHistoryCard extends StatelessWidget {
                 Container(
                   width: 2,
                   height: 24,
-                  color: Colors.grey.shade300,
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? Colors.grey.shade600
+                      : Colors.grey.shade300,
                 ),
             ],
           ),
@@ -89,10 +93,14 @@ class BillHistoryCard extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.grey.shade50,
+              color: Theme.of(context).brightness == Brightness.dark 
+                  ? Colors.grey.shade800.withOpacity(0.3)
+                  : Colors.grey.shade50,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: Colors.grey.shade200,
+                color: Theme.of(context).brightness == Brightness.dark 
+                    ? Colors.grey.shade600
+                    : Colors.grey.shade200,
               ),
             ),
             child: Column(
@@ -103,7 +111,9 @@ class BillHistoryCard extends StatelessWidget {
                   _formatDate(action.date),
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey.shade600,
+                    color: Theme.of(context).brightness == Brightness.dark 
+                        ? Colors.grey.shade400
+                        : Colors.grey.shade600,
                   ),
                 ),
                 

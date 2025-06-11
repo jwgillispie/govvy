@@ -1,6 +1,7 @@
 // lib/widgets/bills/bill_card.dart
 import 'package:flutter/material.dart';
 import 'package:govvy/models/bill_model.dart';
+import 'package:govvy/widgets/shared/government_level_badge.dart';
 
 class BillCard extends StatelessWidget {
   final BillModel bill;
@@ -33,26 +34,12 @@ class BillCard extends StatelessWidget {
         statusColor = Colors.purple.shade300;
     }
 
-    // Determine the badge based on bill type and special handling for FL and GA
-    Widget typeBadge;
-    if (bill.state == 'FL' || bill.state == 'GA') {
-      // Show special badge for FL and GA
-      typeBadge = _buildBadge(bill.state, Colors.deepPurple);
-    } else {
-      switch (bill.type) {
-        case 'federal':
-          typeBadge = _buildBadge('Federal', Colors.indigo);
-          break;
-        case 'state':
-          typeBadge = _buildBadge('State', Colors.teal);
-          break;
-        case 'local':
-          typeBadge = _buildBadge('Local', Colors.green);
-          break;
-        default:
-          typeBadge = _buildBadge(bill.type, Colors.grey);
-      }
-    }
+    // Use the new government level badge
+    Widget typeBadge = GovernmentLevelBadge.fromBillType(
+      billType: bill.type,
+      size: BadgeSize.small,
+      compact: true,
+    );
 
     // Check if bill has a description
     final hasDescription = bill.description != null && bill.description!.isNotEmpty;
@@ -228,26 +215,4 @@ class BillCard extends StatelessWidget {
     );
   }
 
-  // Helper to build badge widgets
-  Widget _buildBadge(String text, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 6,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: color.withOpacity(0.5)),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.bold,
-          color: Colors.black26,
-        ),
-      ),
-    );
-  }
 }

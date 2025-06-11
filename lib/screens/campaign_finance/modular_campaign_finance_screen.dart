@@ -7,6 +7,7 @@ import 'package:govvy/widgets/campaign_finance/contributions_widget.dart';
 import 'package:govvy/widgets/campaign_finance/top_contributors_widget.dart';
 import 'package:govvy/widgets/campaign_finance/congress_members_search_widget.dart';
 import 'package:govvy/services/congress_members_service.dart';
+import 'package:govvy/screens/campaign_finance/comprehensive_contributions_search_screen.dart';
 
 class ModularCampaignFinanceScreen extends StatefulWidget {
   const ModularCampaignFinanceScreen({super.key});
@@ -117,7 +118,7 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
             _selectedMember,
             style: TextStyle(
               fontSize: 13,
-              color: Colors.grey[600],
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
             overflow: TextOverflow.ellipsis,
           ),
@@ -157,7 +158,7 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
             fallbackValue,
             style: TextStyle(
               fontSize: 13,
-              color: Colors.grey[600],
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ),
@@ -250,8 +251,8 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
         width: 120,
         margin: const EdgeInsets.only(right: 8),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.grey[300]!),
+          color: Theme.of(context).colorScheme.surface,
+          border: Border.all(color: Theme.of(context).colorScheme.outline.withOpacity(0.3)),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
@@ -294,7 +295,7 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
               Text(
                 office,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontSize: 9,
                 ),
                 overflow: TextOverflow.ellipsis,
@@ -314,6 +315,20 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
         title: const Text('Campaign Finance'),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.attach_money),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ComprehensiveContributionsSearchScreen(),
+                ),
+              );
+            },
+            tooltip: 'Search All Contributions',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -332,7 +347,7 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
               Text(
                 'View campaign finance data from the Federal Election Commission.',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 16),
@@ -666,7 +681,7 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
                             Icon(
                               Icons.account_balance_wallet_outlined,
                               size: 64,
-                              color: Colors.grey[400],
+                              color: Theme.of(context).colorScheme.outline,
                             ),
                             const SizedBox(height: 16),
                             Text(
@@ -678,7 +693,7 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
                               'Search for a federal candidate to view their campaign finance information.',
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey[600],
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ],
@@ -688,6 +703,36 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
                   }
 
                   // Show candidate data with modular widgets that load independently
+                  if (provider.currentCandidate == null) {
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(32.0),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.person_search,
+                              size: 64,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'No Candidate Selected',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Please search for a candidate first.',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -735,7 +780,7 @@ class _ModularCampaignFinanceScreenState extends State<ModularCampaignFinanceScr
                       Text(
                         'Data provided by the Federal Election Commission (FEC). Campaign finance information includes contributions, expenditures, and committee details for federal candidates.',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[600],
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],

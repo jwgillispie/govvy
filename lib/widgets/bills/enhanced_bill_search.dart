@@ -194,15 +194,6 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
   ];
   
   void _submitSearch() {
-    print('🔍 _submitSearch called');
-    print('📊 Search parameters:');
-    print('  - Query: "${_searchController.text.trim()}"');
-    print('  - Search Type: $_searchType');
-    print('  - Selected State: $_selectedState');
-    print('  - Filter By State: $_filterByState');
-    print('  - Status Filter: $_statusFilter');
-    print('  - Date Range Filter: $_dateRangeFilter');
-    print('  - Year Filter: $_yearFilter');
     
     // For state searches, we only need to validate that a state is selected
     bool canProceed = false;
@@ -220,8 +211,6 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
       final query = _searchController.text.trim();
       final stateCode = _filterByState ? _selectedState : 
                         (_searchType == BillSearchType.state || _searchType == BillSearchType.localImpact ? _selectedState : null);
-      
-      print('  - Final State Code: $stateCode');
       
       // Build the filters map based on selected options
       Map<String, dynamic>? filters;
@@ -275,7 +264,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
           // Tabs for different search types
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey.shade100,
+              color: Theme.of(context).colorScheme.surfaceVariant,
               borderRadius: BorderRadius.circular(8),
             ),
             child: TabBar(
@@ -354,7 +343,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
                 const Tab(text: 'Advanced'),
               ],
               labelColor: Theme.of(context).colorScheme.primary,
-              unselectedLabelColor: Colors.grey.shade600,
+              unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
               indicatorColor: Theme.of(context).colorScheme.primary,
               indicatorSize: TabBarIndicatorSize.tab,
               labelStyle: const TextStyle(fontWeight: FontWeight.bold),
@@ -447,7 +436,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             labelText: 'Search Federal Bills',
             hintText: 'Enter keywords to search federal legislation',
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -594,7 +583,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             labelText: 'Search Bills Affecting Local Communities',
             hintText: 'Enter keywords like zoning, municipal, county, city services',
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -645,7 +634,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             labelText: 'State',
             hintText: 'Select a state to see bills affecting local communities',
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -798,7 +787,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             labelText: 'State',
             hintText: 'Select a state',
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -937,7 +926,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             labelText: 'Subject',
             hintText: 'Enter a legislative subject (e.g., Education)',
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -1018,7 +1007,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
                 vertical: 8,
               ),
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: Theme.of(context).colorScheme.surfaceVariant,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
@@ -1139,7 +1128,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             labelText: 'Keyword',
             hintText: 'Enter a keyword to search in bill text',
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -1220,7 +1209,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
                 vertical: 8,
               ),
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: Theme.of(context).colorScheme.surfaceVariant,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
@@ -1341,7 +1330,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             labelText: 'Sponsor',
             hintText: 'Enter a sponsor name (e.g., Smith)',
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -1422,7 +1411,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
                 vertical: 8,
               ),
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: Theme.of(context).colorScheme.surfaceVariant,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
@@ -1544,7 +1533,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             labelText: 'Keyword',
             hintText: 'Enter bill keywords (optional)',
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -1590,7 +1579,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             isDense: true,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide.none,
@@ -1631,7 +1620,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             isDense: true,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide.none,
@@ -1672,7 +1661,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
             isDense: true,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide.none,
@@ -1750,7 +1739,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: Theme.of(context).colorScheme.surfaceVariant,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
@@ -1836,7 +1825,7 @@ class _EnhancedBillSearchState extends State<EnhancedBillSearch> with SingleTick
     return ActionChip(
       label: Text(label),
       onPressed: widget.isLoading ? null : onPressed,
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),

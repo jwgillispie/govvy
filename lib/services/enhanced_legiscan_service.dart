@@ -30,7 +30,6 @@ class EnhancedLegiscanService {
   bool get hasApiKey {
     final hasKey = _apiKey != null && _apiKey!.isNotEmpty;
     if (kDebugMode && !hasKey) {
-      print('Enhanced LegiScan service: API key is not available');
     }
     return hasKey;
   }
@@ -44,7 +43,6 @@ class EnhancedLegiscanService {
   Future<void> initialize() async {
     if (!hasApiKey) {
       if (kDebugMode) {
-        print('No LegiScan API key available');
       }
       return;
     }
@@ -64,7 +62,6 @@ class EnhancedLegiscanService {
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error initializing enhanced LegiScan service: $e');
       }
     }
   }
@@ -89,8 +86,7 @@ class EnhancedLegiscanService {
                 _sessionsCache[session.sessionId.toString()] = session;
               } catch (e) {
                 if (kDebugMode) {
-                  print('Error loading cached session: $e');
-                }
+                  }
               }
             }
           }
@@ -103,18 +99,15 @@ class EnhancedLegiscanService {
             _sessionsCache[session.sessionId.toString()] = session;
           } catch (e) {
             if (kDebugMode) {
-              print('Error loading cached session: $e');
-            }
+              }
           }
         }
       }
       
       if (kDebugMode) {
-        print('Loaded ${_sessionsCache.length} sessions from cache');
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error loading sessions from cache: $e');
       }
     }
   }
@@ -171,8 +164,7 @@ class EnhancedLegiscanService {
               }
             } catch (e) {
               if (kDebugMode) {
-                print('Error parsing session data: $e');
-              }
+                }
             }
           }
         }
@@ -188,7 +180,6 @@ class EnhancedLegiscanService {
       return stateSessionsMap;
     } catch (e) {
       if (kDebugMode) {
-        print('Error refreshing session data: $e');
       }
       return {};
     }
@@ -216,7 +207,6 @@ class EnhancedLegiscanService {
       
       if (sessionId == null) {
         if (kDebugMode) {
-          print('No active session found for state: $stateCode');
         }
         return [];
       }
@@ -242,7 +232,6 @@ class EnhancedLegiscanService {
       return _fallbackToSearch(stateCode);
     } catch (e) {
       if (kDebugMode) {
-        print('Error getting bills for state: $e');
       }
       return [];
     }
@@ -286,7 +275,6 @@ class EnhancedLegiscanService {
       return [];
     } catch (e) {
       if (kDebugMode) {
-        print('Error in fallback search: $e');
       }
       return [];
     }
@@ -383,7 +371,6 @@ class EnhancedLegiscanService {
       return limitedBills;
     } catch (e) {
       if (kDebugMode) {
-        print('Error searching bills: $e');
       }
       return [];
     }
@@ -522,7 +509,6 @@ class EnhancedLegiscanService {
       return enhancedDetails;
     } catch (e) {
       if (kDebugMode) {
-        print('Error getting bill details: $e');
       }
       if (e is BillNotFoundException) {
         rethrow;
@@ -580,7 +566,6 @@ class EnhancedLegiscanService {
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error getting active session: $e');
       }
       return null;
     }
@@ -592,20 +577,10 @@ class EnhancedLegiscanService {
 
     // Debug logging to understand the structure
     if (kDebugMode) {
-      print('LegiScan: Processing master list for state $stateCode');
-      print('LegiScan: Master list keys: ${masterList.keys.take(10).toList()}'); // First 10 keys
       
       // Log first bill entry to understand structure
       masterList.forEach((key, value) {
         if (key != 'session' && value is Map) {
-          print('LegiScan: Sample master list bill $key fields: ${(value).keys.toList()}');
-          if ((value).containsKey('bill_number')) {
-            print('LegiScan: Master list bill number found: ${value['bill_number']}');
-          } else if ((value).containsKey('number')) {
-            print('LegiScan: Master list number found: ${value['number']}');
-          } else {
-            print('LegiScan: No bill_number or number field found in master list');
-          }
           return; // Only log first bill
         }
       });
@@ -638,8 +613,7 @@ class EnhancedLegiscanService {
         bills.add(BillModel.fromMap(billData));
       } catch (e) {
         if (kDebugMode) {
-          print('Error processing bill from masterlist: $e');
-        }
+          }
       }
     });
 
@@ -668,8 +642,7 @@ class EnhancedLegiscanService {
           bills.add(BillModel.fromMap(billData));
         } catch (e) {
           if (kDebugMode) {
-            print('Error processing bill from results: $e');
-          }
+            }
           continue;
         }
       }
@@ -714,7 +687,6 @@ class EnhancedLegiscanService {
       return rollCallData['roll_call'];
     } catch (e) {
       if (kDebugMode) {
-        print('Error getting roll call details: $e');
       }
       return null;
     }
@@ -756,7 +728,6 @@ class EnhancedLegiscanService {
       return amendmentData['amendment'];
     } catch (e) {
       if (kDebugMode) {
-        print('Error getting amendment details: $e');
       }
       return null;
     }
@@ -798,7 +769,6 @@ class EnhancedLegiscanService {
       return supplementData['supplement'];
     } catch (e) {
       if (kDebugMode) {
-        print('Error getting supplement details: $e');
       }
       return null;
     }
@@ -845,7 +815,6 @@ class EnhancedLegiscanService {
         }
       } catch (e) {
         if (kDebugMode) {
-          print('Error enriching roll call ${vote.rollCallId}: $e');
         }
       }
     }
@@ -873,7 +842,6 @@ class EnhancedLegiscanService {
         }
       } catch (e) {
         if (kDebugMode) {
-          print('Error enriching sponsor ${sponsor.peopleId}: $e');
         }
       }
     }
@@ -901,7 +869,6 @@ class EnhancedLegiscanService {
         }
       } catch (e) {
         if (kDebugMode) {
-          print('Error enriching bill text ${document.documentId}: $e');
         }
       }
     }
@@ -929,7 +896,6 @@ class EnhancedLegiscanService {
         }
       } catch (e) {
         if (kDebugMode) {
-          print('Error enriching amendment ${amendment.amendmentId}: $e');
         }
       }
     }
@@ -957,7 +923,6 @@ class EnhancedLegiscanService {
         }
       } catch (e) {
         if (kDebugMode) {
-          print('Error enriching supplement ${supplement.supplementId}: $e');
         }
       }
     }
@@ -1004,7 +969,6 @@ class EnhancedLegiscanService {
       return personData['person'];
     } catch (e) {
       if (kDebugMode) {
-        print('Error getting person details: $e');
       }
       return null;
     }
@@ -1046,7 +1010,6 @@ class EnhancedLegiscanService {
       return textData['text'];
     } catch (e) {
       if (kDebugMode) {
-        print('Error getting bill text details: $e');
       }
       return null;
     }
@@ -1058,19 +1021,11 @@ class EnhancedLegiscanService {
     
     // Debug logging to understand the structure
     if (kDebugMode) {
-      print('LegiScan: Processing search result for state $stateCode');
-      print('LegiScan: Search result keys: ${searchresult.keys.toList()}');
       
       // Log first few bill entries to understand structure
       var billCount = 0;
       searchresult.forEach((key, value) {
         if (key != 'summary' && value is Map && billCount < 2) {
-          print('LegiScan: Sample bill $key fields: ${(value).keys.toList()}');
-          if ((value).containsKey('bill_number')) {
-            print('LegiScan: Bill number found: ${value['bill_number']}');
-          } else {
-            print('LegiScan: No bill_number field found');
-          }
           billCount++;
         }
       });
@@ -1102,8 +1057,70 @@ class EnhancedLegiscanService {
           billData['state'] = stateCode;
         }
 
-        // Add bill type
-        billData['type'] = 'state';
+        // Detect bill type (federal vs state)
+        String billType = 'state';
+        
+        // Check if this is a federal bill based on state code
+        if (stateCode == 'US' || stateCode == 'CONGRESS') {
+          billType = 'federal';
+        }
+        
+        // Also check the state field in the bill data
+        if (billData.containsKey('state') && 
+            (billData['state'] == 'US' || billData['state'] == 'CONGRESS')) {
+          billType = 'federal';
+        }
+        
+        // Check bill number patterns that indicate federal bills
+        // Check multiple possible field names for bill number
+        String? billNumberToCheck;
+        for (final fieldName in ['bill_number', 'number', 'bill_num', 'bill_no']) {
+          if (billData.containsKey(fieldName) && billData[fieldName] != null) {
+            billNumberToCheck = billData[fieldName].toString();
+            break;
+          }
+        }
+        
+        if (billNumberToCheck != null) {
+          final billNum = billNumberToCheck.toUpperCase();
+          
+          
+          // Check for various federal bill number patterns
+          // Use regex to be more precise about federal bill numbers
+          final federalPatterns = [
+            RegExp(r'^HR\d+'), // HR followed by numbers (like HR10)
+            RegExp(r'^H\.R\.\d+'), // H.R. followed by numbers
+            RegExp(r'^S\d+'), // S followed by numbers (like S123)
+            RegExp(r'^S\.\d+'), // S. followed by numbers  
+            RegExp(r'^HRES\d+'), // House resolutions
+            RegExp(r'^H\.RES\.\d+'),
+            RegExp(r'^SRES\d+'), // Senate resolutions
+            RegExp(r'^S\.RES\.\d+'),
+            RegExp(r'^HJRES\d+'), // House joint resolutions
+            RegExp(r'^H\.J\.RES\.\d+'),
+            RegExp(r'^SJRES\d+'), // Senate joint resolutions
+            RegExp(r'^S\.J\.RES\.\d+'),
+            RegExp(r'^SJR\d+'), // Senate joint resolutions (short form)
+            RegExp(r'^HJR\d+'), // House joint resolutions (short form)
+            RegExp(r'^HCRES\d+'), // House concurrent resolutions
+            RegExp(r'^H\.CON\.RES\.\d+'),
+            RegExp(r'^SCRES\d+'), // Senate concurrent resolutions
+            RegExp(r'^S\.CON\.RES\.\d+'),
+          ];
+          
+          bool isFederal = federalPatterns.any((pattern) => pattern.hasMatch(billNum));
+          
+          if (isFederal) {
+            billType = 'federal';
+            
+          } else {
+          }
+        } else {
+        }
+        
+        billData['type'] = billType;
+        
+        // Debug logging for federal bill detection
 
         // For status_desc field - copy from status if it exists
         if (!billData.containsKey('status_desc') && billData.containsKey('last_action')) {
@@ -1145,10 +1162,6 @@ class EnhancedLegiscanService {
         }
         
         // Debug logging to help identify the issue
-        if (kDebugMode && billNumber == 'Unknown') {
-          print('LegiScan: Could not find bill number in search result. Available fields: ${billData.keys.toList()}');
-          print('LegiScan: Sample data: ${billData.toString().substring(0, min(200, billData.toString().length))}...');
-        }
         
         // Create standardized bill model fields
         final mappedBillData = {
@@ -1161,7 +1174,7 @@ class EnhancedLegiscanService {
           'last_action_date': billData['last_action_date'],
           'last_action': billData['last_action'],
           'committee': null, // Not provided in search results
-          'type': 'state',
+          'type': billType,
           'state': billData['state'],
           'url': billData['url'] ?? billData['text_url'] ?? '',
         };
@@ -1170,10 +1183,13 @@ class EnhancedLegiscanService {
         bills.add(BillModel.fromMap(mappedBillData));
       } catch (e) {
         if (kDebugMode) {
-          print('Error processing bill from searchresult: $e');
-        }
+          }
       }
     });
+
+    // Debug summary of bill types
+    if (kDebugMode) {
+    }
 
     return bills;
   }
@@ -1221,8 +1237,6 @@ class EnhancedLegiscanService {
       final url = Uri.parse(_baseUrl).replace(queryParameters: queryParams);
       
       if (kDebugMode) {
-        final redactedUrl = url.toString().replaceAll(_apiKey!, '[REDACTED]');
-        print('LegiScan API call: $redactedUrl');
       }
       
       // Configure timeout based on operation
@@ -1277,9 +1291,6 @@ class EnhancedLegiscanService {
                 statusCode: response.statusCode);
             retryCount++;
             
-            if (kDebugMode) {
-              print('Retry $retryCount after server error (${response.statusCode})');
-            }
             
             await Future.delayed(Duration(seconds: retryCount * 2));
             continue;
@@ -1295,9 +1306,6 @@ class EnhancedLegiscanService {
           
           retryCount++;
           
-          if (kDebugMode) {
-            print('Retry $retryCount after timeout (${timeout.inSeconds}s)');
-          }
           
           if (retryCount >= maxRetries) break;
           
@@ -1317,9 +1325,6 @@ class EnhancedLegiscanService {
           
           retryCount++;
           
-          if (kDebugMode) {
-            print('Retry $retryCount after error: $e');
-          }
           
           if (retryCount >= maxRetries) break;
           
@@ -1332,7 +1337,6 @@ class EnhancedLegiscanService {
       throw lastError ?? Exception('API call failed after $maxRetries retries');
     } catch (e) {
       if (kDebugMode) {
-        print('Error in LegiScan API call: $e');
       }
       
       if (e is ApiErrorException) {

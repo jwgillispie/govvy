@@ -35,8 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final authService = Provider.of<AuthService>(context, listen: false);
-      // Mark that the user has used the app (to skip landing page next time)
-      await authService.setUserHasUsedApp();
       
       final userCredential = await authService.signInWithEmailAndPassword(
         email: _emailController.text.trim(),

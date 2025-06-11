@@ -92,6 +92,42 @@ class CombinedRepresentativeProvider with ChangeNotifier {
 
   CombinedRepresentativeProvider(this._federalService);
 
+  // Helper method to separate state representatives from local representatives
+  void _separateStateFromLocalRepresentatives(List<LocalRepresentative> allReps) {
+    final List<LocalRepresentative> trulyLocalReps = [];
+    final List<Representative> stateReps = [];
+    
+    for (final rep in allReps) {
+      final level = rep.level.toUpperCase();
+      
+      // Check if this is a state-level representative
+      if (level == 'STATE_UPPER' || 
+          level == 'STATE_LOWER' || 
+          level == 'STATE' ||
+          level.contains('STATE SENATE') ||
+          level.contains('STATE HOUSE') ||
+          level.contains('STATE ASSEMBLY') ||
+          rep.office.toUpperCase().contains('STATE SENATOR') ||
+          rep.office.toUpperCase().contains('STATE REPRESENTATIVE') ||
+          rep.office.toUpperCase().contains('STATE ASSEMBLYMEMBER')) {
+        
+        // Convert to Representative and add to federal list
+        stateReps.add(rep.toRepresentative());
+        
+      } else {
+        // Keep as local representative
+        trulyLocalReps.add(rep);
+        
+      }
+    }
+    
+    // Update the lists
+    _localRepresentativesRaw = trulyLocalReps;
+    
+    // Add state representatives to the federal list (don't replace, add to existing)
+    _federalRepresentatives.addAll(stateReps);
+  }
+
   // Check network status before performing API calls
   Future<bool> _checkNetworkBeforeRequest() async {
     try {
@@ -105,9 +141,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
 
       return isConnected;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error checking network: $e');
-      }
       return true; // Assume connected if check fails
     }
   }
@@ -150,9 +183,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
 
       return hasRequiredKeys;
     } catch (e) {
-      if (kDebugMode) {
-        print('Error verifying API keys: $e');
-      }
       return true; // Continue anyway
     }
   }
@@ -167,9 +197,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
 
       // Skip if LegiScan API key is not available
       if (!_legiscanService.hasApiKey) {
-        if (kDebugMode) {
-          print('LegiScan API key not available. Using mock data.');
-        }
         _isLoadingLegiscan = false;
         notifyListeners();
         return await _legiscanService.getMockSponsoredBills();
@@ -178,9 +205,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       // Check if we already have a LegiScan ID for this representative
       if (_repToLegiscanIdMap.containsKey(rep.bioGuideId)) {
         final legiscanId = _repToLegiscanIdMap[rep.bioGuideId]!;
-        if (kDebugMode) {
-          print('Using cached LegiScan ID: $legiscanId for ${rep.name}');
-        }
 
         final bills = await _legiscanService.getSponsoredBills(legiscanId);
         _isLoadingLegiscan = false;
@@ -193,10 +217,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
           await _legiscanService.findPersonByName(rep.name, rep.state);
 
       if (person == null) {
-        if (kDebugMode) {
-          print(
-              'Could not find ${rep.name} in LegiScan API. Trying direct bill search...');
-        }
 
         // Parse name into first and last name
         final nameParts = rep.name.split(' ');
@@ -208,10 +228,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
             firstName, lastName, rep.state);
 
         if (bills.isNotEmpty) {
-          if (kDebugMode) {
-            print(
-                'Found ${bills.length} bills for ${rep.name} using direct bill search');
-          }
           _isLoadingLegiscan = false;
           notifyListeners();
           return bills;
@@ -222,9 +238,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       notifyListeners();
       return [];
     } catch (e) {
-      if (kDebugMode) {
-        print('Error fetching LegiScan bills: $e');
-      }
       _errorMessageLegiscan =
           'Error fetching bills from LegiScan: ${e.toString()}';
       _isLoadingLegiscan = false;
@@ -256,8 +269,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       // Also clear local representatives to avoid confusion
       _localRepresentativesRaw = [];
 
-      // Add a small delay to make loading state visible
-      await Future.delayed(const Duration(milliseconds: 300));
+      // Removed artificial delay for better performance
 
       // Fetch federal representatives from the service
       _federalRepresentatives = await _federalService
@@ -284,9 +296,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     } catch (e) {
       _isLoadingFederal = false;
       _errorMessageFederal = 'Error loading representatives: ${e.toString()}';
-      if (kDebugMode) {
-        print(_errorMessageFederal);
-      }
       notifyListeners();
     }
   }
@@ -315,16 +324,13 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     } catch (e) {
       _isLoadingLocal = false;
       // Don't show error message for this complementary search
-      if (kDebugMode) {
-        print('Error loading complementary local representatives: $e');
-      }
       notifyListeners();
     }
   }
 
   // Add this enhanced method to your lib/providers/combined_representative_provider.dart file
 
-// Enhanced method to fetch local representatives by city with state support
+// Enhanced method to fetch both local AND state/federal representatives by city
   Future<void> fetchLocalRepresentativesByCity(String city) async {
     try {
       // Check network connectivity
@@ -336,7 +342,9 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       await _verifyApiKeys(); // Continue even if keys are missing (will use mock data)
 
       _isLoadingLocal = true;
+      _isLoadingFederal = true;
       _errorMessageLocal = null;
+      _errorMessageFederal = null;
 
       // Parse city and state if provided (e.g., "Gainesville, FL")
       String searchCity = city;
@@ -359,41 +367,103 @@ class CombinedRepresentativeProvider with ChangeNotifier {
 
       notifyListeners();
 
-      // Clear existing local representatives
+      // Clear existing representatives
       _localRepresentativesRaw = [];
-      // Also clear federal representatives to avoid confusion
       _federalRepresentatives = [];
 
-      // Add a small delay to make loading state visible
-      await Future.delayed(const Duration(milliseconds: 300));
+      // Removed artificial delay for better performance
+
+      // Start both searches in parallel for better performance
+      late Future<void> localSearch;
+      late Future<void> federalSearch;
 
       // Using refined search with state code if available
       if (stateCode != null) {
         if (kDebugMode) {
-          print('Searching for representatives in $searchCity, $stateCode');
         }
 
-        // If state code is available, use a more specific search
-        // First try with specific state filter
-        _localRepresentativesRaw = await _localService
-            .getLocalRepresentativesByStateCity(stateCode, searchCity);
+        // Search for local representatives with specific state filter
+        localSearch = () async {
+          try {
+            final allCiceroReps = await _localService
+                .getLocalRepresentativesByStateCity(stateCode!, searchCity);
+            
+            // Separate state representatives from truly local representatives
+            _separateStateFromLocalRepresentatives(allCiceroReps);
+          } catch (e) {
+            if (kDebugMode) {
+            }
+            _errorMessageLocal = 'Error loading local representatives: ${e.toString()}';
+          }
+        }();
+
+        // Search for federal representatives by city address (gets specific district)
+        federalSearch = () async {
+          try {
+            // Use address-based search to get only the representatives for this city's district
+            _federalRepresentatives = await _federalService
+                .getRepresentativesByAddress('$searchCity, $stateCode');
+          } catch (e) {
+            if (kDebugMode) {
+            }
+            _errorMessageFederal = 'Error loading federal representatives: ${e.toString()}';
+          }
+        }();
       } else {
         // Regular city search without state specification
-        if (kDebugMode) {
-          print(
-              'Searching for representatives in $searchCity (no state specified)');
-        }
 
-        _localRepresentativesRaw =
-            await _localService.getLocalRepresentativesByCity(searchCity);
+        localSearch = () async {
+          try {
+            final allCiceroReps =
+                await _localService.getLocalRepresentativesByCity(searchCity);
+            
+            // Separate state representatives from truly local representatives
+            _separateStateFromLocalRepresentatives(allCiceroReps);
+          } catch (e) {
+            if (kDebugMode) {
+            }
+            _errorMessageLocal = 'Error loading local representatives: ${e.toString()}';
+          }
+        }();
+
+        // For city-only searches, try to get the state from the first local result
+        // and then fetch federal representatives for that specific city
+        federalSearch = localSearch.then((_) async {
+          try {
+            if (_localRepresentativesRaw.isNotEmpty) {
+              final firstLocalRep = _localRepresentativesRaw.first;
+              if (firstLocalRep.state.isNotEmpty) {
+                final detectedState = firstLocalRep.state;
+                if (kDebugMode) {
+                }
+                _lastSearchedState = detectedState;
+                // Use address-based search to get only the representatives for this city's district
+                _federalRepresentatives = await _federalService
+                    .getRepresentativesByAddress('$searchCity, $detectedState');
+              }
+            }
+          } catch (e) {
+            if (kDebugMode) {
+            }
+            // Don't set error message for this secondary search
+          }
+        });
       }
 
-      if (_localRepresentativesRaw.isEmpty) {
-        _errorMessageLocal =
-            'No local representatives found for $city. Please check the city name and try again.';
+      // Wait for both searches to complete
+      await Future.wait([localSearch, federalSearch]);
+
+      // Check if we found any representatives
+      if (_localRepresentativesRaw.isEmpty && _federalRepresentatives.isEmpty) {
+        _errorMessageLocal = 'No representatives found for $city. Please check the city name and try again.';
+      } else if (_localRepresentativesRaw.isEmpty) {
+        _errorMessageLocal = 'No local representatives found for $city, but state representatives are available.';
+      } else if (_federalRepresentatives.isEmpty && stateCode != null) {
+        _errorMessageFederal = 'No state representatives found for $stateCode.';
       }
 
       _isLoadingLocal = false;
+      _isLoadingFederal = false;
 
       // Save to cache
       _saveLocalCityToCache();
@@ -401,11 +471,9 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _isLoadingLocal = false;
+      _isLoadingFederal = false;
       _errorMessageLocal =
-          'Error loading local representatives: ${e.toString()}';
-      if (kDebugMode) {
-        print(_errorMessageLocal);
-      }
+          'Error loading representatives: ${e.toString()}';
       notifyListeners();
     }
   }
@@ -443,8 +511,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       // Clear existing federal representatives
       _federalRepresentatives = [];
 
-      // Add a small delay to make loading state visible
-      await Future.delayed(const Duration(milliseconds: 300));
+      // Removed artificial delay for better performance
 
       // Fetch from RepresentativeService
       _federalRepresentatives =
@@ -472,9 +539,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       _isLoadingFederal = false;
       _errorMessageFederal =
           'Error loading federal representatives: ${e.toString()}';
-      if (kDebugMode) {
-        print(_errorMessageFederal);
-      }
       notifyListeners();
     }
   }
@@ -497,8 +561,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       // Clear existing local representatives
       _localRepresentativesRaw = [];
 
-      // Add a small delay to make loading state visible
-      await Future.delayed(const Duration(milliseconds: 300));
+      // Removed artificial delay for better performance
 
       // Fetch from CiceroService
       _localRepresentativesRaw =
@@ -516,7 +579,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       _errorMessageLocal =
           'Error loading local representatives: ${e.toString()}';
       if (kDebugMode) {
-        print(_errorMessageLocal);
       }
       notifyListeners();
     }
@@ -575,10 +637,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
             chamber != 'SENATE' &&
             chamber != 'HOUSE' &&
             chamber != 'CONGRESS') {
-          if (kDebugMode) {
-            print(
-                'Searching for bills in LegiScan for local rep: ${localRep.name}');
-          }
 
           try {
             // Fetch but don't wait for completion
@@ -594,14 +652,12 @@ class CombinedRepresentativeProvider with ChangeNotifier {
               }
             }).catchError((e) {
               if (kDebugMode) {
-                print('Error fetching LegiScan bills for local rep: $e');
               }
               _isLoadingLegiscan = false;
               notifyListeners();
             });
           } catch (e) {
             if (kDebugMode) {
-              print('Error initiating LegiScan search: $e');
             }
             _isLoadingLegiscan = false;
           }
@@ -625,10 +681,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
               chamber == 'STATE SENATE' ||
               chamber == 'STATE HOUSE' ||
               chamber == 'STATE ASSEMBLY') {
-            if (kDebugMode) {
-              print(
-                  'Searching for bills in LegiScan for state rep: ${_selectedRepresentative!.name}');
-            }
 
             try {
               // Create a Representative object from the details
@@ -654,15 +706,13 @@ class CombinedRepresentativeProvider with ChangeNotifier {
                 }
               }).catchError((e) {
                 if (kDebugMode) {
-                  print('Error fetching LegiScan bills for state rep: $e');
                 }
                 _isLoadingLegiscan = false;
                 notifyListeners();
               });
             } catch (e) {
               if (kDebugMode) {
-                print('Error initiating LegiScan search: $e');
-              }
+                }
               _isLoadingLegiscan = false;
             }
           }
@@ -675,9 +725,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       _isLoadingDetails = false;
       _errorMessageFederal =
           'Error loading representative details: ${e.toString()}';
-      if (kDebugMode) {
-        print(_errorMessageFederal);
-      }
       notifyListeners();
     }
   }
@@ -702,13 +749,8 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       _federalRepresentatives = [];
       _localRepresentativesRaw = [];
 
-      // Add a small delay to make loading state visible
-      await Future.delayed(const Duration(milliseconds: 300));
+      // Removed artificial delay for better performance
 
-      if (kDebugMode) {
-        print(
-            'Searching for representatives with last name: $lastName, first name: $firstName');
-      }
 
       // Use the CiceroService to search by name
       _localRepresentativesRaw = await _localService
@@ -726,7 +768,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       _errorMessageLocal =
           'Error searching for representatives: ${e.toString()}';
       if (kDebugMode) {
-        print(_errorMessageLocal);
       }
       notifyListeners();
     }
@@ -765,7 +806,6 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error saving state cache: $e');
       }
     }
   }
@@ -806,12 +846,11 @@ class CombinedRepresentativeProvider with ChangeNotifier {
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error saving cache: $e');
       }
     }
   }
 
-  // Cache city search results
+  // Cache city search results (now includes both local and federal representatives)
   Future<void> _saveLocalCityToCache() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -822,6 +861,11 @@ class CombinedRepresentativeProvider with ChangeNotifier {
         await prefs.setInt(
             'last_city_search_time', DateTime.now().millisecondsSinceEpoch);
 
+        // Save state if available
+        if (_lastSearchedState != null) {
+          await prefs.setString('last_city_state', _lastSearchedState!);
+        }
+
         // Save local representatives
         if (_localRepresentativesRaw.isNotEmpty) {
           final localData =
@@ -829,10 +873,16 @@ class CombinedRepresentativeProvider with ChangeNotifier {
           await prefs.setString(
               'local_city_reps_cache', json.encode(localData));
         }
+
+        // Save federal/state representatives from city search
+        if (_federalRepresentatives.isNotEmpty) {
+          final fedData =
+              _federalRepresentatives.map((rep) => rep.toMap()).toList();
+          await prefs.setString('federal_city_reps_cache', json.encode(fedData));
+        }
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error saving city cache: $e');
       }
     }
   }
@@ -912,6 +962,7 @@ class CombinedRepresentativeProvider with ChangeNotifier {
 
       if (lastCity != null && (currentTime - lastCitySearchTime) < 86400000) {
         _lastSearchedCity = lastCity;
+        _lastSearchedState = prefs.getString('last_city_state');
 
         // Load local representatives from city search
         final localCityCache = prefs.getString('local_city_reps_cache');
@@ -921,16 +972,25 @@ class CombinedRepresentativeProvider with ChangeNotifier {
               .map((item) =>
                   LocalRepresentative.fromMap(Map<String, dynamic>.from(item)))
               .toList();
-
-          notifyListeners();
-          return true;
         }
+
+        // Load federal/state representatives from city search
+        final federalCityCache = prefs.getString('federal_city_reps_cache');
+        if (federalCityCache != null) {
+          final fedData = json.decode(federalCityCache) as List<dynamic>;
+          _federalRepresentatives = fedData
+              .map((item) =>
+                  Representative.fromMap('', Map<String, dynamic>.from(item)))
+              .toList();
+        }
+
+        notifyListeners();
+        return true;
       }
 
       return false;
     } catch (e) {
       if (kDebugMode) {
-        print('Error loading cache: $e');
       }
       return false;
     }

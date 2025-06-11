@@ -10,6 +10,7 @@ import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/providers/campaign_finance_provider.dart';
 import 'package:govvy/providers/unified_finance_provider.dart';
 import 'package:govvy/providers/election_provider.dart';
+import 'package:govvy/providers/theme_provider.dart';
 // Removed: import 'package:govvy/providers/csv_representative_provider.dart';
 import 'package:govvy/screens/auth/auth_wrapper.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
@@ -151,6 +152,9 @@ class RepresentativeApp extends StatelessWidget {
         // Auth Service
         ChangeNotifierProvider(create: (_) => AuthService()),
 
+        // Theme Provider
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+
         // Representative Services
         Provider(create: (_) => RepresentativeService()),
 
@@ -163,62 +167,68 @@ class RepresentativeApp extends StatelessWidget {
               previous ?? CombinedRepresentativeProvider(service),
         ),
       ],
-      child: MaterialApp(
-        title: 'govvy',
-        debugShowCheckedModeBanner:
-            kDebugMode, // Only show debug banner in debug mode
-        theme: ThemeData(
-          primaryColor: const Color(0xFF5E35B1), // Deep Purple 600
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFF5E35B1),
-            primary: const Color(0xFF5E35B1),
-            secondary: const Color(0xFF7E57C2), // Deep Purple 400
-            background: Colors.white,
-          ),
-          textTheme: GoogleFonts.notoSansTextTheme().copyWith(
-            headlineLarge: GoogleFonts.notoSans(
-              fontSize: 32.0,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF4527A0), // Deep Purple 800
-            ),
-            headlineMedium: GoogleFonts.notoSans(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFF5E35B1), // Deep Purple 600
-            ),
-            bodyLarge: GoogleFonts.notoSans(
-              fontSize: 16.0,
-              color: const Color(0xFF424242), // Grey 800
-            ),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF5E35B1),
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp(
+            title: 'govvy',
+            debugShowCheckedModeBanner:
+                kDebugMode, // Only show debug banner in debug mode
+            theme: themeProvider.lightTheme.copyWith(
+              textTheme: GoogleFonts.notoSansTextTheme(themeProvider.lightTheme.textTheme).copyWith(
+                headlineLarge: GoogleFonts.notoSans(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF4527A0), // Deep Purple 800
+                ),
+                headlineMedium: GoogleFonts.notoSans(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF5E35B1), // Deep Purple 600
+                ),
+                bodyLarge: GoogleFonts.notoSans(
+                  fontSize: 16.0,
+                  color: const Color(0xFF424242), // Grey 800
+                ),
               ),
             ),
-          ),
-        ),
-        home: const AuthWrapper(),
-        routes: {
+            darkTheme: themeProvider.darkTheme.copyWith(
+              textTheme: GoogleFonts.notoSansTextTheme(themeProvider.darkTheme.textTheme).copyWith(
+                headlineLarge: GoogleFonts.notoSans(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF9575CD), // Deep Purple 300
+                ),
+                headlineMedium: GoogleFonts.notoSans(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                  color: const Color(0xFF7E57C2), // Deep Purple 400
+                ),
+                bodyLarge: GoogleFonts.notoSans(
+                  fontSize: 16.0,
+                  color: const Color(0xFFE0E0E0), // Light Grey
+                ),
+              ),
+            ),
+            themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            home: const AuthWrapper(),
+            routes: {
           '/bills': (context) => const EnhancedBillScreen(),
           '/campaign_finance': (context) => const ModularCampaignFinanceScreen(),
-          '/elections': (context) => const ElectionScreen(),
-        },
-        onGenerateRoute: (settings) {
-          if (settings.name == '/bill_details') {
-            final args = settings.arguments as Map<String, dynamic>;
-            return MaterialPageRoute(
-              builder: (context) => BillDetailsScreen(
-                billId: args['billId'],
-                stateCode: args['stateCode'],
-              ),
-            );
-          }
-          return null;
+              '/elections': (context) => const ElectionScreen(),
+            },
+            onGenerateRoute: (settings) {
+              if (settings.name == '/bill_details') {
+                final args = settings.arguments as Map<String, dynamic>;
+                return MaterialPageRoute(
+                  builder: (context) => BillDetailsScreen(
+                    billId: args['billId'],
+                    stateCode: args['stateCode'],
+                  ),
+                );
+              }
+              return null;
+            },
+          );
         },
       ),
     );

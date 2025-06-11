@@ -51,7 +51,7 @@ class CampaignFinanceProvider with ChangeNotifier {
   Map<String, double> get monthlyFundraisingTrends => _monthlyFundraisingTrends;
   String? get error => _error;
 
-  bool get hasData => _currentCandidate != null;
+  bool get hasData => _currentCandidate != null || _contributions.isNotEmpty;
 
   // Clear all data
   void clearData() {
@@ -70,7 +70,6 @@ class CampaignFinanceProvider with ChangeNotifier {
 
   // Load candidate finance data by name
   Future<void> loadCandidateByName(String name, {int? cycle}) async {
-    print('Provider: Loading candidate data for: $name');
     
     // Clear any existing data and set loading state
     _currentCandidate = null;
@@ -92,7 +91,6 @@ class CampaignFinanceProvider with ChangeNotifier {
       
       if (candidate != null) {
         _currentCandidate = candidate;
-        print('Provider: Found candidate ${candidate.name} with ID: ${candidate.candidateId}');
         notifyListeners();
         
         // Load additional data for this candidate with timeout protection
@@ -349,5 +347,90 @@ class CampaignFinanceProvider with ChangeNotifier {
   bool get hasSignificantActivity {
     if (_financeSummary == null) return false;
     return _financeSummary!.totalRaised > 1000 || _financeSummary!.totalSpent > 1000;
+  }
+
+  // Search contributions by contributor name
+  Future<void> searchContributionsByContributor(
+    String contributorName, {
+    int? cycle,
+    double? minAmount,
+    double? maxAmount,
+  }) async {
+    
+    // Clear existing data
+    _contributions.clear();
+    _error = null;
+    _isLoadingContributions = true;
+    notifyListeners();
+
+    try {
+      final results = await _fecService.searchContributionsByContributor(
+        contributorName,
+        cycle: cycle,
+        minAmount: minAmount,
+        maxAmount: maxAmount,
+        perPage: 50,
+      );
+      
+      _contributions = results;
+      
+      if (results.isEmpty) {
+        _error = 'No contributions found for "$contributorName"';
+      }
+    } catch (e) {
+      _error = 'Error searching contributions: $e';
+    } finally {
+      _isLoadingContributions = false;
+      notifyListeners();
+    }
+  }
+
+  // Comprehensive search with multiple filters
+  Future<void> searchContributions({
+    String? contributorName,
+    String? candidateName,
+    int? cycle,
+    double? minAmount,
+    double? maxAmount,
+  }) async {
+    
+    // Clear existing data
+    _contributions.clear();
+    _currentCandidate = null;
+    _financeSummary = null;
+    _error = null;
+    _isLoadingContributions = true;
+    notifyListeners();
+
+    try {
+      // If we have a contributor name, search by that
+      if (contributorName != null && contributorName.trim().isNotEmpty) {
+        final results = await _fecService.searchContributionsByContributor(
+          contributorName.trim(),
+          cycle: cycle,
+          minAmount: minAmount,
+          maxAmount: maxAmount,
+          perPage: 50,
+        );
+        
+        _contributions = results;
+        
+        if (results.isEmpty) {
+          _error = 'No contributions found for "$contributorName"';
+        }
+      }
+      // If we have a candidate name, search candidate and their contributions
+      else if (candidateName != null && candidateName.trim().isNotEmpty) {
+        await loadCandidateByName(candidateName.trim(), cycle: cycle);
+      }
+      else {
+        _error = 'Please provide either a contributor name or candidate name to search';
+      }
+    } catch (e) {
+      _error = 'Error performing search: $e';
+    } finally {
+      _isLoadingContributions = false;
+      notifyListeners();
+    }
   }
 }

@@ -78,6 +78,10 @@ class CampaignContribution {
   final String? contributorZip;
   final String? imageNumber;
   final String? receiptType;
+  final String? committeeName;
+  final String? candidateName;
+  final String? candidateId;
+  final String? committeeId;
 
   CampaignContribution({
     required this.contributorName,
@@ -90,9 +94,30 @@ class CampaignContribution {
     this.contributorZip,
     this.imageNumber,
     this.receiptType,
+    this.committeeName,
+    this.candidateName,
+    this.candidateId,
+    this.committeeId,
   });
 
   factory CampaignContribution.fromJson(Map<String, dynamic> json) {
+    // Extract committee information
+    final committee = json['committee'] as Map<String, dynamic>?;
+    final committeeName = committee?['name']?.toString() ?? json['committee_name']?.toString();
+    final committeeId = json['committee_id']?.toString();
+    
+    // Extract candidate information - prioritize direct candidate data, then committee candidate_ids
+    String? candidateName = json['candidate_name']?.toString();
+    String? candidateId = json['candidate_id']?.toString();
+    
+    // If no direct candidate info, try to get from committee
+    if ((candidateName == null || candidateName.isEmpty) && committee != null) {
+      final candidateIds = committee['candidate_ids'] as List?;
+      if (candidateIds != null && candidateIds.isNotEmpty) {
+        candidateId = candidateIds.first?.toString();
+      }
+    }
+    
     return CampaignContribution(
       contributorName: json['contributor_name']?.toString() ?? '',
       contributorEmployer: json['contributor_employer']?.toString(),
@@ -106,6 +131,10 @@ class CampaignContribution {
       contributorZip: json['contributor_zip']?.toString(),
       imageNumber: json['image_number']?.toString(),
       receiptType: json['receipt_type']?.toString(),
+      committeeName: committeeName,
+      candidateName: candidateName,
+      candidateId: candidateId,
+      committeeId: committeeId,
     );
   }
 }
@@ -261,4 +290,156 @@ class FECSearchResponse<T> {
       perPage: json['pagination']?['per_page'] ?? 20,
     );
   }
+}
+
+class FECCalendarEvent {
+  final int eventId;
+  final String summary;
+  final String description;
+  final DateTime startDate;
+  final DateTime? endDate;
+  final bool allDay;
+  final int? categoryId;
+  final String? category;
+  final String? location;
+  final List<String>? states;
+  final String? url;
+
+  FECCalendarEvent({
+    required this.eventId,
+    required this.summary,
+    required this.description,
+    required this.startDate,
+    this.endDate,
+    required this.allDay,
+    this.categoryId,
+    this.category,
+    this.location,
+    this.states,
+    this.url,
+  });
+
+  factory FECCalendarEvent.fromJson(Map<String, dynamic> json) {
+    return FECCalendarEvent(
+      eventId: json['event_id'] ?? 0,
+      summary: json['summary']?.toString() ?? '',
+      description: json['description']?.toString() ?? '',
+      startDate: DateTime.parse(json['start_date']),
+      endDate: json['end_date'] != null ? DateTime.parse(json['end_date']) : null,
+      allDay: json['all_day'] ?? false,
+      categoryId: json['calendar_category_id'],
+      category: json['category']?.toString(),
+      location: json['location']?.toString(),
+      states: json['state'] != null ? List<String>.from(json['state']) : null,
+      url: json['url']?.toString(),
+    );
+  }
+
+  String get categoryDisplayName {
+    switch (categoryId) {
+      case 36:
+        return 'Election Date';
+      case 21:
+        return 'Reporting Deadline';
+      case 20:
+        return 'Commission Meeting';
+      case 32:
+        return 'Open Meeting';
+      case 39:
+        return 'Executive Session';
+      case 40:
+        return 'Public Hearing';
+      case 37:
+        return 'Federal Holiday';
+      case 38:
+        return 'FEA Period';
+      case 27:
+        return 'Pre/Post-Election';
+      case 28:
+        return 'EC Period';
+      case 29:
+        return 'IE Period';
+      default:
+        return category ?? 'Event';
+    }
+  }
+
+  bool get isElectionDate => categoryId == 36;
+  bool get isReportingDeadline => categoryId == 21;
+  bool get isCommissionMeeting => categoryId == 20;
+}
+
+class FECElection {
+  final String electionId;
+  final String state;
+  final String? district;
+  final String? office;
+  final String? electionType;
+  final DateTime? electionDate;
+  final int? cycle;
+  final bool? primaryGeneral;
+  final String? updateDate;
+
+  FECElection({
+    required this.electionId,
+    required this.state,
+    this.district,
+    this.office,
+    this.electionType,
+    this.electionDate,
+    this.cycle,
+    this.primaryGeneral,
+    this.updateDate,
+  });
+
+  factory FECElection.fromJson(Map<String, dynamic> json) {
+    return FECElection(
+      electionId: json['election_id']?.toString() ?? '',
+      state: json['state']?.toString() ?? '',
+      district: json['district']?.toString(),
+      office: json['office']?.toString(),
+      electionType: json['election_type']?.toString(),
+      electionDate: json['election_date'] != null 
+          ? DateTime.tryParse(json['election_date'].toString())
+          : null,
+      cycle: json['cycle'],
+      primaryGeneral: json['primary_general'],
+      updateDate: json['update_date']?.toString(),
+    );
+  }
+
+  String get officeName {
+    switch (office) {
+      case 'P':
+        return 'President';
+      case 'S':
+        return 'Senate';
+      case 'H':
+        return 'House';
+      default:
+        return office ?? 'Unknown Office';
+    }
+  }
+
+  String get electionTypeName {
+    switch (electionType) {
+      case 'G':
+        return 'General';
+      case 'P':
+        return 'Primary';
+      case 'R':
+        return 'Runoff';
+      case 'S':
+        return 'Special';
+      default:
+        return electionType ?? 'Unknown';
+    }
+  }
+
+  bool get isUpcoming => electionDate?.isAfter(DateTime.now()) ?? false;
+  bool get isPast => electionDate?.isBefore(DateTime.now()) ?? false;
+  bool get isToday => electionDate != null && 
+      electionDate!.year == DateTime.now().year &&
+      electionDate!.month == DateTime.now().month &&
+      electionDate!.day == DateTime.now().day;
 }

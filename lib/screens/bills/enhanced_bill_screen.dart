@@ -6,6 +6,7 @@ import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
 import 'package:govvy/widgets/bills/enhanced_bill_card.dart';
 import 'package:govvy/widgets/bills/enhanced_bill_search.dart';
+import 'package:govvy/widgets/bills/bill_filters.dart';
 
 class EnhancedBillScreen extends StatefulWidget {
   const EnhancedBillScreen({Key? key}) : super(key: key);
@@ -20,6 +21,10 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
   BillSearchType _searchType = BillSearchType.state;
   String? _currentStateCode;
   String _lastQuery = '';
+  
+  // Filtered bill lists
+  List<BillModel> _filteredResults = [];
+  List<BillModel> _filteredRecent = [];
   
   @override
   void initState() {
@@ -65,6 +70,9 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
             break;
         }
       }
+      
+      // Initialize filtered lists
+      _updateFilteredLists();
     });
   }
   
@@ -93,14 +101,18 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
           query: query.isNotEmpty ? query : null,
           stateCode: null, // Federal bills don't have state codes
           governmentLevel: 'federal',
-        );
+        ).then((_) {
+          _updateFilteredLists();
+        });
         _tabController.animateTo(0);
         _scrollToTop();
         break;
         
       case BillSearchType.state:
         if (stateCode != null) {
-          provider.fetchBillsByState(stateCode);
+          provider.fetchBillsByState(stateCode).then((_) {
+            _updateFilteredLists();
+          });
           // Set tab to results and scroll to top
           _tabController.animateTo(0);
           _scrollToTop();
@@ -114,25 +126,33 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
           query: searchQuery,
           stateCode: stateCode,
           governmentLevel: 'state',
-        );
+        ).then((_) {
+          _updateFilteredLists();
+        });
         _tabController.animateTo(0);
         _scrollToTop();
         break;
         
       case BillSearchType.subject:
-        provider.searchBillsBySubject(query, stateCode: stateCode);
+        provider.searchBillsBySubject(query, stateCode: stateCode).then((_) {
+          _updateFilteredLists();
+        });
         _tabController.animateTo(0);
         _scrollToTop();
         break;
         
       case BillSearchType.keyword:
-        provider.searchBillsByKeyword(query, stateCode: stateCode);
+        provider.searchBillsByKeyword(query, stateCode: stateCode).then((_) {
+          _updateFilteredLists();
+        });
         _tabController.animateTo(0);
         _scrollToTop();
         break;
         
       case BillSearchType.sponsor:
-        provider.searchBillsBySponsor(query, stateCode: stateCode);
+        provider.searchBillsBySponsor(query, stateCode: stateCode).then((_) {
+          _updateFilteredLists();
+        });
         _tabController.animateTo(0);
         _scrollToTop();
         break;
@@ -191,7 +211,9 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
       endDate: endDate,
       year: year,
       governmentLevel: governmentLevel,
-    );
+    ).then((_) {
+      _updateFilteredLists();
+    });
   }
   
   // Navigate to bill details
@@ -210,6 +232,35 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
   
   
   
+  // Update filtered lists from provider data
+  void _updateFilteredLists() {
+    final provider = Provider.of<EnhancedBillProvider>(context, listen: false);
+    
+    setState(() {
+      // Set filtered results based on search type
+      if (_searchType == BillSearchType.state) {
+        _filteredResults = List.from(provider.stateBills);
+      } else {
+        _filteredResults = List.from(provider.searchResultBills);
+      }
+      _filteredRecent = List.from(provider.recentBills);
+    });
+  }
+  
+  // Handle result filtering with config
+  void _onResultsFiltered(List<BillModel> filtered, BillFilterConfig config) {
+    setState(() {
+      _filteredResults = filtered;
+    });
+  }
+  
+  // Handle recent bills filtering with config
+  void _onRecentFiltered(List<BillModel> filtered, BillFilterConfig config) {
+    setState(() {
+      _filteredRecent = filtered;
+    });
+  }
+
   // Scroll to top of list
   void _scrollToTop() {
     if (_scrollController.hasClients) {
@@ -227,15 +278,17 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
       builder: (context, provider, _) {
         final isLoading = provider.isLoading;
         final hasError = provider.errorMessage != null;
-        final stateBills = provider.stateBills;
-        final searchResults = provider.searchResultBills;
-        final recentBills = provider.recentBills;
+        
+        // Update filtered lists when provider data changes
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!isLoading) {
+            _updateFilteredLists();
+          }
+        });
         
         // Determine which bills to show based on active tab
         final List<BillModel> billsToShow = 
-            _tabController.index == 0 ? 
-              (_searchType == BillSearchType.state ? stateBills : searchResults) : 
-              recentBills;
+            _tabController.index == 0 ? _filteredResults : _filteredRecent;
         
         // Build search result title based on search type
         String searchResultTitle = '';
@@ -291,19 +344,19 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
               
               // Results/Recent tabs
               Container(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 child: TabBar(
                   controller: _tabController,
                   tabs: [
                     Tab(
-                      text: 'Results${billsToShow.isNotEmpty && _tabController.index == 0 ? ' (${billsToShow.length})' : ''}',
+                      text: 'Results${_filteredResults.isNotEmpty && _tabController.index == 0 ? ' (${_filteredResults.length})' : ''}',
                     ),
                     Tab(
-                      text: 'Recent${recentBills.isNotEmpty ? ' (${recentBills.length})' : ''}',
+                      text: 'Recent${_filteredRecent.isNotEmpty ? ' (${_filteredRecent.length})' : ''}',
                     ),
                   ],
                   labelColor: Theme.of(context).colorScheme.primary,
-                  unselectedLabelColor: Colors.grey,
+                  unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                   indicatorColor: Theme.of(context).colorScheme.primary,
                 ),
               ),
@@ -324,7 +377,7 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
                     ),
                     
                     // Recent bills tab
-                    _buildRecentBillsList(recentBills),
+                    _buildRecentBillsList(_filteredRecent),
                   ],
                 ),
               ),
@@ -472,6 +525,10 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
   }
   
   Widget _buildBillsList(List<BillModel> bills, String title) {
+    // Get original bills from provider for filtering
+    final provider = Provider.of<EnhancedBillProvider>(context, listen: false);
+    final originalBills = _searchType == BillSearchType.state ? provider.stateBills : provider.searchResultBills;
+    
     return Column(
       children: [
         if (title.isNotEmpty) ...[
@@ -490,6 +547,13 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
             ),
           ),
         ],
+        
+        // Add filter widget if there are bills to filter
+        if (originalBills.isNotEmpty)
+          BillFilters(
+            allBills: originalBills,
+            onFiltered: _onResultsFiltered,
+          ),
         
         Expanded(
           child: ListView.builder(
@@ -513,7 +577,10 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
   }
   
   Widget _buildRecentBillsList(List<BillModel> bills) {
-    if (bills.isEmpty) {
+    final provider = Provider.of<EnhancedBillProvider>(context, listen: false);
+    final originalRecentBills = provider.recentBills;
+    
+    if (originalRecentBills.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -543,34 +610,47 @@ class _EnhancedBillScreenState extends State<EnhancedBillScreen> with SingleTick
       );
     }
     
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: bills.length + 1, // +1 for the header
-      itemBuilder: (context, index) {
-        if (index == 0) {
-          // Header
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              'Recently Viewed Bills',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-          );
-        }
+    return Column(
+      children: [
+        // Add filter widget for recent bills
+        if (originalRecentBills.isNotEmpty)
+          BillFilters(
+            allBills: originalRecentBills,
+            onFiltered: _onRecentFiltered,
+          ),
         
-        final bill = bills[index - 1];
-        
-        return EnhancedBillCard(
-          bill: bill,
-          mode: BillCardMode.compact,
-          showStateCode: true,
-          onTap: () => _navigateToBillDetails(bill),
-        );
-      },
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: bills.length + 1, // +1 for the header
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                // Header
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    'Recently Viewed Bills',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                );
+              }
+              
+              final bill = bills[index - 1];
+              
+              return EnhancedBillCard(
+                bill: bill,
+                mode: BillCardMode.compact,
+                showStateCode: true,
+                onTap: () => _navigateToBillDetails(bill),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

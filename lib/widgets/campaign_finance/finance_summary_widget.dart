@@ -161,6 +161,7 @@ class FinanceSummaryWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
@@ -179,7 +180,7 @@ class FinanceSummaryWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 2),
+          const SizedBox(height: 1),
           Text(
             value,
             style: TextStyle(
@@ -187,6 +188,7 @@ class FinanceSummaryWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: color,
             ),
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

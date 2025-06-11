@@ -5,6 +5,7 @@ import 'package:govvy/models/bill_model.dart';
 import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
 import 'package:govvy/widgets/bills/bill_card.dart';
+import 'package:govvy/widgets/bills/bill_filters.dart';
 
 class BillListScreen extends StatefulWidget {
   const BillListScreen({Key? key}) : super(key: key);
@@ -13,31 +14,6 @@ class BillListScreen extends StatefulWidget {
   State<BillListScreen> createState() => _BillListScreenState();
 }
 
-// Delegate for sticky tab bar
-class _StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
-  final TabBar tabBar;
-
-  _StickyTabBarDelegate(this.tabBar);
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: Colors.white, // Background color for the tabBar
-      child: tabBar,
-    );
-  }
-
-  @override
-  double get maxExtent => tabBar.preferredSize.height;
-
-  @override
-  double get minExtent => tabBar.preferredSize.height;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
-  }
-}
 
 class _BillListScreenState extends State<BillListScreen>
     with SingleTickerProviderStateMixin {
@@ -45,6 +21,11 @@ class _BillListScreenState extends State<BillListScreen>
   final ScrollController _scrollController = ScrollController();
   int _searchTypeIndex = 0; // 0 = By State, 1 = By Subject
   String? _selectedState;
+  
+  // Filtered bill lists for each tab
+  List<BillModel> _filteredStateBills = [];
+  List<BillModel> _filteredSearchResults = [];
+  List<BillModel> _filteredRecentBills = [];
 
   // US States mapping for dropdown
   final List<Map<String, String>> _usStates = [
@@ -120,6 +101,9 @@ class _BillListScreenState extends State<BillListScreen>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _fetchBillsByState();
     });
+    
+    // Initialize filtered lists
+    _updateFilteredLists();
   }
 
   @override
@@ -139,6 +123,33 @@ class _BillListScreenState extends State<BillListScreen>
       );
     }
   }
+  
+  void _updateFilteredLists() {
+    final provider = Provider.of<EnhancedBillProvider>(context, listen: false);
+    setState(() {
+      _filteredStateBills = List.from(provider.stateBills);
+      _filteredSearchResults = List.from(provider.searchResultBills);
+      _filteredRecentBills = List.from(provider.recentBills);
+    });
+  }
+  
+  void _onStateBillsFiltered(List<BillModel> filtered, BillFilterConfig config) {
+    setState(() {
+      _filteredStateBills = filtered;
+    });
+  }
+  
+  void _onSearchResultsFiltered(List<BillModel> filtered, BillFilterConfig config) {
+    setState(() {
+      _filteredSearchResults = filtered;
+    });
+  }
+  
+  void _onRecentBillsFiltered(List<BillModel> filtered, BillFilterConfig config) {
+    setState(() {
+      _filteredRecentBills = filtered;
+    });
+  }
 
   void _fetchBillsByState() {
     if (_selectedState == null || _selectedState!.isEmpty) {
@@ -149,7 +160,9 @@ class _BillListScreenState extends State<BillListScreen>
     }
 
     final provider = Provider.of<EnhancedBillProvider>(context, listen: false);
-    provider.fetchBillsByState(_selectedState!);
+    provider.fetchBillsByState(_selectedState!).then((_) {
+      _updateFilteredLists();
+    });
 
     // Switch to the first tab
     _tabController.animateTo(0);
@@ -167,7 +180,9 @@ class _BillListScreenState extends State<BillListScreen>
     }
 
     final provider = Provider.of<EnhancedBillProvider>(context, listen: false);
-    provider.searchBillsBySubject(subject, stateCode: _selectedState);
+    provider.searchBillsBySubject(subject, stateCode: _selectedState).then((_) {
+      _updateFilteredLists();
+    });
 
     // Switch to the search tab
     _tabController.animateTo(1);
@@ -183,9 +198,8 @@ class _BillListScreenState extends State<BillListScreen>
             backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Colors.white,
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
+          body: Column(
+            children: [
                 // Search form section
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -227,7 +241,7 @@ class _BillListScreenState extends State<BillListScreen>
 
                 // Tab bar (sticky)
                 Container(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   child: TabBar(
                     controller: _tabController,
                     tabs: const [
@@ -236,7 +250,7 @@ class _BillListScreenState extends State<BillListScreen>
                       Tab(text: 'Recent'),
                     ],
                     labelColor: Theme.of(context).colorScheme.primary,
-                    unselectedLabelColor: Colors.grey,
+                    unselectedLabelColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                     indicatorColor: Theme.of(context).colorScheme.primary,
                     labelPadding: const EdgeInsets.symmetric(vertical: 8.0),
                   ),
@@ -278,26 +292,39 @@ class _BillListScreenState extends State<BillListScreen>
                     ),
                   ),
 
-                // Tab content - Use SizedBox with fixed height
-                SizedBox(
-                  height: 500, // Fixed height for the bill list area
+                // Tab content - Use Expanded to fill remaining space
+                Expanded(
                   child: TabBarView(
                     controller: _tabController,
                     children: [
                       // State Bills tab
-                      _buildBillList(provider.stateBills, 'No bills found for this state. Try selecting a different state.'),
+                      _buildFilteredBillTab(
+                        provider.stateBills, 
+                        _filteredStateBills,
+                        _onStateBillsFiltered,
+                        'No bills found for this state. Try selecting a different state.'
+                      ),
                       
                       // Search Results tab
-                      _buildBillList(provider.searchResultBills, 'No bills found matching your search criteria.'),
+                      _buildFilteredBillTab(
+                        provider.searchResultBills,
+                        _filteredSearchResults,
+                        _onSearchResultsFiltered,
+                        'No bills found matching your search criteria.'
+                      ),
                       
                       // Recent Bills tab
-                      _buildBillList(provider.recentBills, 'No recently viewed bills. Browse bills to see them here.'),
+                      _buildFilteredBillTab(
+                        provider.recentBills,
+                        _filteredRecentBills,
+                        _onRecentBillsFiltered,
+                        'No recently viewed bills. Browse bills to see them here.'
+                      ),
                     ],
                   ),
                 ),
               ],
-            ),
-          ),
+            )
         );
       },
     );
@@ -314,7 +341,7 @@ class _BillListScreenState extends State<BillListScreen>
             decoration: InputDecoration(
               labelText: 'State',
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: Theme.of(context).colorScheme.surfaceVariant,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide.none,
@@ -420,7 +447,7 @@ class _BillListScreenState extends State<BillListScreen>
             labelText: 'Subject',
             hintText: 'Enter a legislative subject (e.g., Education)',
             filled: true,
-            fillColor: Colors.grey.shade100,
+            fillColor: Theme.of(context).colorScheme.surfaceVariant,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -527,7 +554,7 @@ class _BillListScreenState extends State<BillListScreen>
                 });
                 _fetchBillsByState();
               },
-              backgroundColor: Colors.grey.shade100,
+              backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -545,10 +572,35 @@ class _BillListScreenState extends State<BillListScreen>
         _subjectController.text = subject;
         _searchBillsBySubject();
       },
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
+    );
+  }
+
+  // Helper to build filtered bill tab with filters and bill list
+  Widget _buildFilteredBillTab(
+    List<BillModel> allBills,
+    List<BillModel> filteredBills,
+    Function(List<BillModel>, BillFilterConfig) onFiltered,
+    String emptyMessage,
+  ) {
+    return Column(
+      children: [
+        // Show filters only if there are bills to filter
+        if (allBills.isNotEmpty)
+          BillFilters(
+            allBills: allBills,
+            onFiltered: onFiltered,
+            autoApply: false, // Use manual apply mode for better performance
+          ),
+        
+        // Bill list
+        Expanded(
+          child: _buildBillList(filteredBills, emptyMessage),
+        ),
+      ],
     );
   }
 
@@ -580,13 +632,10 @@ class _BillListScreenState extends State<BillListScreen>
 
     // Use a regular ListView with scrolling enabled within the TabView
     return ListView.builder(
-      controller: _scrollController, // Use the scroll controller for scrolling within tabs
       padding: const EdgeInsets.all(16),
       itemCount: bills.length,
       // Allow scrolling within the tab view
       physics: const AlwaysScrollableScrollPhysics(),
-      // Don't shrink wrap since we want to be able to scroll
-      shrinkWrap: false,
       itemBuilder: (context, index) {
         final bill = bills[index];
         return BillCard(

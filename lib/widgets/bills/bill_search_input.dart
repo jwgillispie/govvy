@@ -365,7 +365,7 @@ class _BillSearchInputState extends State<BillSearchInput> {
               _searchController.text = keyword;
               _submitSearch();
             },
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -384,7 +384,7 @@ class _BillSearchInputState extends State<BillSearchInput> {
               });
               _submitSearch();
             },
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),

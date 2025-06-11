@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // For clipboard functionality
 import 'package:govvy/utils/district_type_formatter.dart';
+import 'package:govvy/utils/government_level_helper.dart';
+import 'package:govvy/widgets/shared/government_level_badge.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
 import 'package:govvy/providers/campaign_finance_provider.dart';
@@ -12,6 +14,7 @@ import 'package:govvy/widgets/representatives/role_info_widget.dart';
 import 'package:govvy/widgets/representatives/email_template_dialog.dart';
 import 'package:govvy/widgets/representatives/ai_representative_analysis_widget.dart';
 import 'package:govvy/widgets/campaign_finance/campaign_finance_summary_card.dart';
+import 'package:govvy/utils/data_source_attribution.dart' as DataSources;
 // Removed: import 'package:govvy/providers/csv_representative_provider.dart';
 
 // Extension methods for RepresentativeDetails to add additional functionality
@@ -199,10 +202,28 @@ class _RepresentativeDetailsScreenState
         final rep = provider.selectedRepresentative;
         final isLoadingLegiscan = provider.isLoadingLegiscan;
 
+        final level = rep != null 
+            ? GovernmentLevelHelper.getLevelFromRepresentative(rep)
+            : GovernmentLevel.local;
+
         return Scaffold(
           appBar: AppBar(
-            title: Text(rep?.name ?? 'Representative Details'),
-            backgroundColor: Theme.of(context).colorScheme.primary,
+            title: Row(
+              children: [
+                Expanded(
+                  child: Text(rep?.name ?? 'Representative Details'),
+                ),
+                if (rep != null) ...[
+                  const SizedBox(width: 8),
+                  GovernmentLevelBadge(
+                    level: level,
+                    size: BadgeSize.small,
+                    compact: true,
+                  ),
+                ],
+              ],
+            ),
+            backgroundColor: GovernmentLevelHelper.getLevelColor(level),
             foregroundColor: Colors.white,
           ),
           body: isLoading
@@ -215,10 +236,22 @@ class _RepresentativeDetailsScreenState
                         textAlign: TextAlign.center,
                       ),
                     )
-                  : SingleChildScrollView(  // Make entire page scrollable
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                  : Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            GovernmentLevelHelper.getLevelColor(level).withOpacity(0.05),
+                            Colors.transparent,
+                          ],
+                          stops: const [0.0, 0.3],
+                        ),
+                      ),
+                      child: SingleChildScrollView(  // Make entire page scrollable
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                           // Representative header section
                           _buildRepresentativeHeader(rep),
 
@@ -278,10 +311,11 @@ class _RepresentativeDetailsScreenState
                               ],
                             ),
                           ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-        );
+        ));
+        
       },
     );
   }
@@ -365,6 +399,11 @@ class _RepresentativeDetailsScreenState
                   _getFormattedRoleTitle(rep),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
+                const SizedBox(height: 8),
+                DataSources.DataSourceAttribution.buildSourceAttribution(
+                  [DataSources.DataSourceAttribution.detectSourceFromBioGuideId(rep.bioGuideId)],
+                  prefix: 'Data from',
+                ),
               ],
             ),
           ),
@@ -413,7 +452,7 @@ class _RepresentativeDetailsScreenState
 
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Colors.white,
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,  // Use min to prevent expansion
@@ -421,6 +460,7 @@ class _RepresentativeDetailsScreenState
           // Direct contact information section
           Card(
             margin: EdgeInsets.zero,
+            color: Theme.of(context).cardColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -454,7 +494,7 @@ class _RepresentativeDetailsScreenState
                             const Spacer(),
                             Icon(
                               isExpanded ? Icons.expand_less : Icons.expand_more,
-                              color: Colors.grey,
+                              color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
                             ),
                           ],
                         ),
@@ -480,6 +520,7 @@ class _RepresentativeDetailsScreenState
             const SizedBox(height: 16),
             Card(
               margin: EdgeInsets.zero,
+              color: Theme.of(context).cardColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -515,13 +556,13 @@ class _RepresentativeDetailsScreenState
                                 '${rep.socialMedia?.length ?? 0} accounts',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Colors.grey,
+                                  color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
                                 ),
                               ),
                               const SizedBox(width: 8),
                               Icon(
                                 isExpanded ? Icons.expand_less : Icons.expand_more,
-                                color: Colors.grey,
+                                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
                               ),
                             ],
                           ),
@@ -554,18 +595,34 @@ class _RepresentativeDetailsScreenState
       return Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.red.shade50,
+          color: Theme.of(context).brightness == Brightness.dark 
+              ? Colors.red.shade900.withOpacity(0.2)
+              : Colors.red.shade50,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.red.shade200),
+          border: Border.all(
+            color: Theme.of(context).brightness == Brightness.dark 
+                ? Colors.red.shade700
+                : Colors.red.shade200,
+          ),
         ),
         child: Row(
           children: [
-            Icon(Icons.error_outline, color: Colors.red.shade800, size: 20),
+            Icon(
+              Icons.error_outline, 
+              color: Theme.of(context).brightness == Brightness.dark 
+                  ? Colors.red.shade400
+                  : Colors.red.shade800, 
+              size: 20,
+            ),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
                 'No direct contact information available for this representative.',
-                style: TextStyle(color: Colors.red.shade900),
+                style: TextStyle(
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? Colors.red.shade300
+                      : Colors.red.shade900,
+                ),
               ),
             ),
           ],
@@ -798,7 +855,9 @@ class _RepresentativeDetailsScreenState
                           child: Text(
                             account,
                             style: TextStyle(
-                              color: url != null ? Theme.of(context).colorScheme.primary : Colors.black,
+                              color: url != null 
+                                  ? Theme.of(context).colorScheme.primary 
+                                  : Theme.of(context).textTheme.bodyMedium?.color,
                               fontSize: 14,
                             ),
                           ),
@@ -857,9 +916,9 @@ class _RepresentativeDetailsScreenState
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey,
+                      color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
                     ),
                   ),
                   Text(
@@ -868,7 +927,7 @@ class _RepresentativeDetailsScreenState
                       fontSize: 14,
                       color: onTap != null
                           ? Theme.of(context).colorScheme.primary
-                          : Colors.black,
+                          : Theme.of(context).textTheme.bodyMedium?.color,
                     ),
                   ),
                 ],

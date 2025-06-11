@@ -412,16 +412,10 @@ class EnhancedBillProvider with ChangeNotifier {
             bill.state.isNotEmpty).toList();
         
         if (_recentBills.isNotEmpty) {
-          if (kDebugMode) {
-            print('Loaded ${_recentBills.length} recent bills from cache');
-          }
           notifyListeners();
         }
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error loading recent bills from cache: $e');
-      }
       // Clear on error
       _recentBills.clear();
     }
@@ -798,9 +792,6 @@ class EnhancedBillProvider with ChangeNotifier {
       }
     } catch (e) {
       // Silently fail as this is just an attempt at recovery
-      if (kDebugMode) {
-        print('Fallback search failed: $e');
-      }
     }
   }
   
@@ -919,9 +910,6 @@ class EnhancedBillProvider with ChangeNotifier {
       }
     } catch (e) {
       // Silently fail as this is just an attempt at recovery
-      if (kDebugMode) {
-        print('Failed to load from cache: $e');
-      }
     }
   }
   
@@ -1169,18 +1157,44 @@ class EnhancedBillProvider with ChangeNotifier {
       // Execute the search with all filters
       List<BillModel> results;
       
-      // For empty queries with only filters, use special handling
-      if (query == null || query.isEmpty) {
-        if (stateCode != null) {
-          // If we have a state, start with state bills
-          results = await _legiscanService.getBillsForState(stateCode);
-          
-          // Apply client-side filtering
-          results = _applyClientSideFilters(results, status, startDate, endDate, year, governmentLevel: governmentLevel);
+      // For federal bills, use special handling
+      if (governmentLevel == 'federal') {
+        // For federal bills, search with US as state code and use appropriate query
+        final federalQuery = query?.isNotEmpty == true ? query : 'congress OR house OR senate';
+        results = await _legiscanService.searchBills(
+          query: federalQuery!,
+          stateCode: 'US', // Use US state code for federal bills
+          year: year,
+          maxResults: 40
+        );
+        
+        // Apply additional client-side filtering
+        results = _applyClientSideFilters(results, status, startDate, endDate, year, governmentLevel: governmentLevel);
+      } else {
+        // For empty queries with only filters, use special handling
+        if (query == null || query.isEmpty) {
+          if (stateCode != null) {
+            // If we have a state, start with state bills
+            results = await _legiscanService.getBillsForState(stateCode);
+            
+            // Apply client-side filtering
+            results = _applyClientSideFilters(results, status, startDate, endDate, year, governmentLevel: governmentLevel);
+          } else {
+            // Without a state, use a broader search
+            results = await _legiscanService.searchBills(
+              query: '*', // Wildcard search
+              stateCode: stateCode,
+              year: year,
+              maxResults: 40
+            );
+            
+            // Apply client-side filtering
+            results = _applyClientSideFilters(results, status, startDate, endDate, year, governmentLevel: governmentLevel);
+          }
         } else {
-          // Without a state, use a broader search
+          // Normal keyword search with filters
           results = await _legiscanService.searchBills(
-            query: '*', // Wildcard search
+            query: query,
             stateCode: stateCode,
             year: year,
             maxResults: 40
@@ -1189,17 +1203,6 @@ class EnhancedBillProvider with ChangeNotifier {
           // Apply client-side filtering
           results = _applyClientSideFilters(results, status, startDate, endDate, year, governmentLevel: governmentLevel);
         }
-      } else {
-        // Normal keyword search with filters
-        results = await _legiscanService.searchBills(
-          query: query,
-          stateCode: stateCode,
-          year: year,
-          maxResults: 40
-        );
-        
-        // Apply client-side filtering
-        results = _applyClientSideFilters(results, status, startDate, endDate, year, governmentLevel: governmentLevel);
       }
       
       _searchResultBills = results;
@@ -1215,9 +1218,6 @@ class EnhancedBillProvider with ChangeNotifier {
       _errorMessage = _formatErrorMessage(e);
       notifyListeners();
       
-      if (kDebugMode) {
-        print('Error in searchBillsWithFilters: $e');
-      }
     }
   }
   
@@ -1240,6 +1240,7 @@ class EnhancedBillProvider with ChangeNotifier {
       if (governmentLevel != null) {
         final billType = bill.type.toLowerCase();
         final targetLevel = governmentLevel.toLowerCase();
+        
         
         if (targetLevel != billType) {
           return false;

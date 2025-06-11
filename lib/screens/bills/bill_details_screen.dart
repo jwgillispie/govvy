@@ -8,6 +8,7 @@ import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/screens/representatives/representative_details_screen.dart';
 import 'package:govvy/widgets/bills/bill_history_card.dart';
 import 'package:govvy/widgets/bills/ai_bill_summary_widget.dart';
+import 'package:govvy/utils/data_source_attribution.dart' as DataSources;
 import 'package:url_launcher/url_launcher.dart';
 
 class BillDetailsScreen extends StatefulWidget {
@@ -280,9 +281,10 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
               const Spacer(),
               Text(
                 bill.state,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
               ),
             ],
@@ -317,7 +319,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                   'Status: ${bill.status}',
                   style: TextStyle(
                     fontSize: 14,
-                    color: _getColorShade(Colors.grey, 800),
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                 ),
               ),
@@ -331,7 +333,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
               'Last Action: ${bill.lastActionDate}',
               style: TextStyle(
                 fontSize: 14,
-                color: _getColorShade(Colors.grey, 700),
+                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.8),
               ),
             ),
           ],
@@ -343,10 +345,17 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
               'Introduced: ${bill.introducedDate}',
               style: TextStyle(
                 fontSize: 14,
-                color: _getColorShade(Colors.grey, 700),
+                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.8),
               ),
             ),
           ],
+          
+          // Data source attribution
+          const SizedBox(height: 12),
+          DataSources.DataSourceAttribution.buildSourceAttribution(
+            [DataSources.DataSourceAttribution.detectSourceFromBillData(bill)],
+            prefix: 'Data from',
+          ),
         ],
       ),
     );
@@ -367,9 +376,15 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: _getColorShade(Colors.deepPurple, 50),
+                color: Theme.of(context).brightness == Brightness.dark 
+                    ? Colors.deepPurple.shade800.withOpacity(0.3)
+                    : Colors.deepPurple.shade50,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: _getColorShade(Colors.deepPurple, 200)),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? Colors.deepPurple.shade600
+                      : Colors.deepPurple.shade200,
+                ),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -377,7 +392,9 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                   Icon(
                     Icons.check_circle,
                     size: 16,
-                    color: _getColorShade(Colors.deepPurple, 700),
+                    color: Theme.of(context).brightness == Brightness.dark 
+                        ? Colors.deepPurple.shade300
+                        : Colors.deepPurple.shade700,
                   ),
                   const SizedBox(width: 6),
                   Text(
@@ -385,7 +402,9 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: _getColorShade(Colors.deepPurple, 700),
+                      color: Theme.of(context).brightness == Brightness.dark 
+                          ? Colors.deepPurple.shade300
+                          : Colors.deepPurple.shade700,
                     ),
                   ),
                 ],
@@ -407,9 +426,15 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: _getColorShade(Colors.grey, 50),
+                color: Theme.of(context).brightness == Brightness.dark 
+                    ? Colors.grey.shade800.withOpacity(0.3)
+                    : Colors.grey.shade50,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: _getColorShade(Colors.grey, 200)),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? Colors.grey.shade600
+                      : Colors.grey.shade200,
+                ),
               ),
               child: Text(
                 bill.description!,
@@ -432,9 +457,15 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: _getColorShade(Colors.grey, 100),
+                color: Theme.of(context).brightness == Brightness.dark 
+                    ? Colors.grey.shade800.withOpacity(0.4)
+                    : Colors.grey.shade100,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: _getColorShade(Colors.grey, 300)),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark 
+                      ? Colors.grey.shade600
+                      : Colors.grey.shade300,
+                ),
               ),
               child: Row(
                 children: [

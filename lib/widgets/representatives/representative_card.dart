@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:govvy/models/representative_model.dart';
 import 'package:govvy/utils/district_type_formatter.dart';
 import 'package:govvy/services/network_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:govvy/widgets/shared/government_level_badge.dart';
+import 'package:govvy/utils/data_source_attribution.dart' as DataSources;
 import 'package:provider/provider.dart';
 
 class RepresentativeCard extends StatelessWidget {
@@ -33,28 +34,12 @@ class RepresentativeCard extends StatelessWidget {
     return false;
   }
 
-  Widget _buildLocalBadge(Representative representative) {
-    // Only show the local badge if it's a local representative
-    if (_isLocalRepresentative(representative)) {
-      return Container(
-        margin: const EdgeInsets.only(left: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-        decoration: BoxDecoration(
-          color: Colors.teal.shade100,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          'LOCAL',
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-            color: Colors.teal.shade800,
-          ),
-        ),
-      );
-    }
-    
-    return const SizedBox.shrink(); // No badge for federal/state reps
+  Widget _buildGovernmentLevelBadge(Representative representative) {
+    return GovernmentLevelBadge.fromRepresentative(
+      representative: representative,
+      size: BadgeSize.small,
+      compact: true,
+    );
   }
 
   @override
@@ -88,6 +73,7 @@ class RepresentativeCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 2,
+      color: Theme.of(context).cardColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -102,7 +88,9 @@ class RepresentativeCard extends StatelessWidget {
               // Representative image - handle image loading with CORS proxy for web
 CircleAvatar(
   radius: 32,
-  backgroundColor: Colors.grey.shade200,
+  backgroundColor: Theme.of(context).brightness == Brightness.dark 
+      ? Colors.grey.shade800 
+      : Colors.grey.shade200,
   child: (representative.imageUrl != null && representative.imageUrl!.isNotEmpty) 
       ? FutureBuilder<String>(
           // Use the NetworkService for proxying
@@ -127,13 +115,14 @@ CircleAvatar(
                 height: 64,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
-                  // Log the error for debugging
-                  if (kDebugMode) {
-                    print('Error loading image: $error');
-                    print('URL: $imageUrl');
-                  }
                   // Return a fallback icon
-                  return Icon(Icons.person, size: 32, color: Colors.grey.shade400);
+                  return Icon(
+                    Icons.person, 
+                    size: 32, 
+                    color: Theme.of(context).brightness == Brightness.dark 
+                        ? Colors.grey.shade600 
+                        : Colors.grey.shade400
+                  );
                 },
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -151,7 +140,13 @@ CircleAvatar(
             );
           },
         )
-      : Icon(Icons.person, size: 32, color: Colors.grey.shade400),
+      : Icon(
+          Icons.person, 
+          size: 32, 
+          color: Theme.of(context).brightness == Brightness.dark 
+              ? Colors.grey.shade600 
+              : Colors.grey.shade400
+        ),
 ),
               const SizedBox(width: 12),
 
@@ -177,19 +172,20 @@ CircleAvatar(
                           partyName,
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey.shade700,
+                            color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.8),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        _buildLocalBadge(representative),
+                        _buildGovernmentLevelBadge(representative),
                       ],
                     ),
                     const SizedBox(height: 4),
                     Text(
                       representative.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).textTheme.titleMedium?.color,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -199,7 +195,7 @@ CircleAvatar(
                       _buildPositionText(representative),
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey.shade800,
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -226,6 +222,12 @@ CircleAvatar(
                         ],
                       ),
                     ],
+                    const SizedBox(height: 8),
+                    // Data source attribution
+                    DataSources.DataSourceAttribution.buildSourceAttribution(
+                      [DataSources.DataSourceAttribution.detectSourceFromBioGuideId(representative.bioGuideId)],
+                      prefix: 'Data from',
+                    ),
                   ],
                 ),
               ),
@@ -234,7 +236,9 @@ CircleAvatar(
               Icon(
                 Icons.arrow_forward_ios,
                 size: 16,
-                color: Colors.grey.shade400,
+                color: Theme.of(context).brightness == Brightness.dark 
+                    ? Colors.grey.shade600 
+                    : Colors.grey.shade400,
               ),
             ],
           ),

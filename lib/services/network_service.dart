@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:govvy/services/remote_service_config.dart';
@@ -20,14 +19,6 @@ class NetworkService {
   final Duration _connectTimeout = const Duration(seconds: 15);
   final Duration _receiveTimeout = const Duration(seconds: 60);
 
-  // Request tracking (for debugging)
-  int _requestCounter = 0;
-  bool _loggingEnabled = kDebugMode;
-
-  // Enable more detailed logging in development
-  void setLoggingEnabled(bool enabled) {
-    _loggingEnabled = enabled;
-  }
 
   Future<bool> checkConnectivity() async {
     try {
@@ -70,8 +61,6 @@ class NetworkService {
     String? apiKeyParam,
     String? apiKey,
   }) async {
-    // Add request tracking ID
-    final int requestId = ++_requestCounter;
 
     // Create headers if not provided
     headers ??= {
@@ -85,15 +74,6 @@ class NetworkService {
       url = url.replace(queryParameters: queryParams);
     }
 
-    // Log request for debugging
-    if (_loggingEnabled) {
-      String redactedUrl = url.toString();
-      if (apiKey != null) {
-        redactedUrl = redactedUrl.replaceAll(apiKey, '[REDACTED]');
-      }
-      print('🌐 [$requestId] HTTP GET Request: $redactedUrl');
-      print('🌐 [$requestId] Headers: $headers');
-    }
 
     final stopwatch = Stopwatch()..start();
 
@@ -107,45 +87,16 @@ class NetworkService {
 
       stopwatch.stop();
 
-      if (_loggingEnabled) {
-        final duration = stopwatch.elapsedMilliseconds;
-        print(
-            '🌐 [$requestId] Response: ${response.statusCode} (${duration}ms)');
-        print(
-            '🌐 [$requestId] Response Size: ${response.contentLength ?? response.body.length} bytes');
-
-        if (response.statusCode != 200) {
-          print(
-              '🌐 [$requestId] Error Response: ${response.body.substring(0, min(500, response.body.length))}');
-        } else {
-          // Print a snippet of successful response for debugging
-          print(
-              '🌐 [$requestId] Response Preview: ${response.body.substring(0, min(100, response.body.length))}...');
-        }
-      }
 
       return response;
-    } on SocketException catch (e) {
-      if (_loggingEnabled) {
-        print('🌐 [$requestId] Socket Exception: $e');
-      }
+    } on SocketException {
       throw Exception('Network error - please check your internet connection.');
     } on http.ClientException catch (e) {
-      if (_loggingEnabled) {
-        print('🌐 [$requestId] HTTP Client Exception: $e');
-      }
       throw Exception('HTTP client error: ${e.message}');
-    } on TimeoutException catch (e) {
-      if (_loggingEnabled) {
-        print('🌐 [$requestId] Timeout Exception: $e');
-      }
+    } on TimeoutException {
       throw Exception('Request timed out. Please try again.');
     } catch (e) {
       stopwatch.stop();
-      if (_loggingEnabled) {
-        print(
-            '🌐 [$requestId] Exception after ${stopwatch.elapsedMilliseconds}ms: $e');
-      }
       rethrow;
     }
   }
@@ -254,9 +205,6 @@ class NetworkService {
         'lng': location['lng'],
       };
     } catch (e) {
-      if (_loggingEnabled) {
-        print('Geocoding error: $e');
-      }
       return null;
     }
   }
@@ -291,9 +239,6 @@ class NetworkService {
           (domain) => originalUrl.toLowerCase().contains(domain.toLowerCase()));
 
       if (needsProxy) {
-        if (_loggingEnabled) {
-          print('Proxying image URL: $originalUrl');
-        }
 
         // Try multiple proxy services in case one doesn't work
         // Option 1: corsproxy.io (main)
@@ -310,9 +255,6 @@ class NetworkService {
       // For non-restricted domains, return original URL
       return originalUrl;
     } catch (e) {
-      if (_loggingEnabled) {
-        print('Error proxying URL: $e, returning original URL');
-      }
       return originalUrl;
     }
   }

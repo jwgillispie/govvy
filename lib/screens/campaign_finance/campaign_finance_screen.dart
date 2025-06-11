@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/providers/campaign_finance_provider.dart';
 import 'package:govvy/widgets/campaign_finance/campaign_finance_summary_card.dart';
+import 'package:govvy/screens/campaign_finance/comprehensive_contributions_search_screen.dart';
 
 class CampaignFinanceScreen extends StatefulWidget {
   const CampaignFinanceScreen({super.key});
@@ -137,7 +138,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                 Text(
                   office,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[600],
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                     fontSize: 9,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -158,6 +159,20 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
         title: const Text('Campaign Finance'),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.attach_money),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ComprehensiveContributionsSearchScreen(),
+                ),
+              );
+            },
+            tooltip: 'Search All Contributions',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -176,7 +191,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
               Text(
                 'View campaign finance data from the Federal Election Commission.',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.grey[600],
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 16),
@@ -284,7 +299,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                               Text(
                                 'This may take a few moments as we fetch data from the FEC.',
                                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: Colors.grey[600],
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -337,7 +352,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                             Icon(
                               Icons.account_balance_wallet_outlined,
                               size: 64,
-                              color: Colors.grey[400],
+                              color: Theme.of(context).colorScheme.outline,
                             ),
                             const SizedBox(height: 16),
                             Text(
@@ -349,7 +364,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                               'Search for a federal candidate to view their campaign finance information.',
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey[600],
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
                               ),
                             ),
                           ],
@@ -410,7 +425,7 @@ class _CampaignFinanceScreenState extends State<CampaignFinanceScreen> {
                         'Data is updated nightly from FEC electronic filings.',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontStyle: FontStyle.italic,
-                          color: Colors.grey[600],
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
