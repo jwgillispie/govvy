@@ -4,6 +4,7 @@ import 'package:govvy/screens/bills/enhanced_bill_screen.dart';
 import 'package:govvy/screens/representatives/representative_details_screen.dart';
 import 'package:govvy/screens/bills/bill_details_screen.dart';
 import 'package:govvy/screens/representatives/find_representatives_screen.dart';
+import 'package:govvy/screens/candidates/candidate_profile_screen.dart';
 import 'package:govvy/providers/bill_provider.dart';
 import 'package:govvy/providers/enhanced_bill_provider.dart';
 import 'package:govvy/providers/combined_representative_provider.dart';
@@ -75,7 +76,7 @@ class NavigationHelper {
     repProvider.fetchRepresentativeDetails(bioGuideId).then((_) {
       final representative = repProvider.selectedRepresentative;
       
-      if (representative != null) {
+      if (representative != null && context.mounted) {
         final enhancedBillProvider = Provider.of<EnhancedBillProvider>(context, listen: false);
         
         // Our enhanced provider now supports both types directly
@@ -90,6 +91,33 @@ class NavigationHelper {
         );
       }
     });
+  }
+  
+  /// Navigate to a candidate profile screen
+  static void navigateToCandidateProfile(
+    BuildContext context, 
+    String candidateName, {
+    String? candidateId,
+    String? office,
+    String? party,
+    String? state,
+    String? district,
+    int? cycle,
+  }) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CandidateProfileScreen(
+          candidateName: candidateName,
+          candidateId: candidateId,
+          office: office,
+          party: party,
+          state: state,
+          district: district,
+          cycle: cycle,
+        ),
+      ),
+    );
   }
   
   /// Navigate to representatives who sponsored a bill
@@ -112,22 +140,26 @@ class NavigationHelper {
         
         if (sponsor.bioGuideId != null) {
           // Navigate to the representative details
-          navigateToRepresentativeDetails(context, sponsor.bioGuideId!);
+          if (context.mounted) {
+            navigateToRepresentativeDetails(context, sponsor.bioGuideId!);
+          }
         } else {
           // If no bioGuideId available, search by name
-          final repProvider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
-          repProvider.fetchRepresentativesByName(
-            sponsor.name.split(' ').last, // Use last name
-            firstName: sponsor.name.split(' ').first, // Use first name
-          );
-          
-          // Navigate to find representatives screen
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const FindRepresentativesScreen(),
-            ),
-          );
+          if (context.mounted) {
+            final repProvider = Provider.of<CombinedRepresentativeProvider>(context, listen: false);
+            repProvider.fetchRepresentativesByName(
+              sponsor.name.split(' ').last, // Use last name
+              firstName: sponsor.name.split(' ').first, // Use first name
+            );
+            
+            // Navigate to find representatives screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const FindRepresentativesScreen(),
+              ),
+            );
+          }
         }
       }
     });

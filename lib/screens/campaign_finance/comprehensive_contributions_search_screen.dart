@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:govvy/providers/campaign_finance_provider.dart';
 import 'package:govvy/models/campaign_finance_model.dart';
+import 'package:govvy/utils/navigation_helper.dart';
 
 class ComprehensiveContributionsSearchScreen extends StatefulWidget {
   const ComprehensiveContributionsSearchScreen({super.key});
@@ -328,22 +329,48 @@ class _ComprehensiveContributionsSearchScreenState extends State<ComprehensiveCo
                   }
                 }
                 
-                return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: badgeColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    '→ $candidateName',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: textColor,
+                // Check if this candidate name is navigable to a representative
+                final isNavigable = candidateName.isNotEmpty && 
+                    !candidateName.toLowerCase().contains('various') &&
+                    !candidateName.toLowerCase().contains('unknown') &&
+                    !candidateName.toLowerCase().contains('party') &&
+                    !candidateName.toLowerCase().contains('committee') &&
+                    candidateName.split(' ').length >= 2;
+
+                return GestureDetector(
+                  onTap: isNavigable ? () => _navigateToCandidate(candidateName, contribution) : null,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: badgeColor,
+                      borderRadius: BorderRadius.circular(8),
+                      border: isNavigable ? Border.all(color: textColor.withOpacity(0.3)) : null,
                     ),
-                    textAlign: TextAlign.end,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            '→ $candidateName',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: textColor,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        if (isNavigable) ...[
+                          const SizedBox(width: 4),
+                          Icon(
+                            Icons.person,
+                            size: 12,
+                            color: textColor,
+                          ),
+                        ],
+                      ],
+                    ),
                   ),
                 );
               },
@@ -483,6 +510,36 @@ class _ComprehensiveContributionsSearchScreenState extends State<ComprehensiveCo
           ),
         ),
         actions: [
+          // Add representative navigation button if we can extract a meaningful candidate name
+          Builder(
+            builder: (context) {
+              final extractedCandidate = _extractCandidateFromCommittee(
+                contribution.committeeName, 
+                contribution.candidateName
+              );
+              
+              // Only show the button if we have a meaningful candidate name
+              // (not for generic committees or "Various" recipients)
+              final showRepButton = extractedCandidate.isNotEmpty && 
+                  !extractedCandidate.toLowerCase().contains('various') &&
+                  !extractedCandidate.toLowerCase().contains('unknown') &&
+                  !extractedCandidate.toLowerCase().contains('party') &&
+                  !extractedCandidate.toLowerCase().contains('committee') &&
+                  extractedCandidate.split(' ').length >= 2; // At least first and last name
+              
+              if (showRepButton) {
+                return TextButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close dialog first
+                    _navigateToCandidate(extractedCandidate, contribution);
+                  },
+                  icon: const Icon(Icons.person),
+                  label: const Text('View Candidate Profile'),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Close'),
@@ -623,6 +680,31 @@ class _ComprehensiveContributionsSearchScreenState extends State<ComprehensiveCo
       if (word.isEmpty) return word;
       return '${word[0].toUpperCase()}${word.substring(1).toLowerCase()}';
     }).join(' ');
+  }
+
+  void _navigateToCandidate(String candidateName, CampaignContribution contribution) {
+    // Extract office information from committee name
+    String? office;
+    if (contribution.committeeName != null) {
+      final committee = contribution.committeeName!.toUpperCase();
+      if (committee.contains('PRESIDENT')) {
+        office = 'President';
+      } else if (committee.contains('SENATE')) {
+        office = 'Senate';
+      } else if (committee.contains('HOUSE') || committee.contains('CONGRESS')) {
+        office = 'House of Representatives';
+      } else if (committee.contains('GOVERNOR')) {
+        office = 'Governor';
+      }
+    }
+    
+    // Navigate to the new candidate profile
+    NavigationHelper.navigateToCandidateProfile(
+      context,
+      candidateName,
+      candidateId: contribution.candidateId,
+      office: office,
+    );
   }
 
 
