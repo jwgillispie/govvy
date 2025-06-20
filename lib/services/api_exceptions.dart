@@ -74,3 +74,13 @@ class RateLimitException extends ApiErrorException {
   @override
   String toString() => 'RateLimitException: $message${retryAfterSeconds != null ? ' (Retry after: ${retryAfterSeconds}s)' : ''}';
 }
+
+/// General API exception with status code
+class ApiException extends ApiErrorException {
+  final int? statusCode;
+  
+  ApiException(String message, {this.statusCode}) : super(message);
+  
+  @override
+  String toString() => 'ApiException: $message${statusCode != null ? ' (Status: $statusCode)' : ''}';
+}
