@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:govvy/services/vertex_ai_service.dart';
 import 'package:govvy/models/bill_model.dart';
+import 'package:govvy/utils/text_formatter.dart';
 
 class AIBillSummaryWidget extends StatefulWidget {
   final BillModel bill;
@@ -173,9 +174,10 @@ class _AIBillSummaryWidgetState extends State<AIBillSummaryWidget> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    Text(
+                    TextFormatter.formatMarkdownText(
                       _aiSummary!,
                       style: const TextStyle(height: 1.5),
+                      context: context,
                     ),
                   ],
                 ),

@@ -519,6 +519,14 @@ class CiceroService {
   // Get representatives by name - updated for proxy
   Future<List<LocalRepresentative>> getRepresentativesByName(String lastName,
       {String? firstName}) async {
+    // Easter egg: Check for Josh Robinson
+    final fullName = firstName != null ? '$firstName $lastName' : lastName;
+    if (fullName.toLowerCase().contains('josh robinson') || 
+        lastName.toLowerCase().contains('josh robinson') ||
+        (firstName?.toLowerCase() == 'josh' && lastName.toLowerCase() == 'robinson')) {
+      return _getJoshRobinsonMockData();
+    }
+    
     try {
       if (kIsWeb) {
 
@@ -1911,6 +1919,14 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
   // Mock data for name search
   List<LocalRepresentative> _getMockLocalRepresentativesByName(String lastName,
       [String? firstName]) {
+    // Easter egg: Check for Josh Robinson
+    final fullName = firstName != null ? '$firstName $lastName' : lastName;
+    if (fullName.toLowerCase().contains('josh robinson') || 
+        lastName.toLowerCase().contains('josh robinson') ||
+        (firstName?.toLowerCase() == 'josh' && lastName.toLowerCase() == 'robinson')) {
+      return _getJoshRobinsonMockData();
+    }
+    
     // Determine a more accurate name filter if firstName is provided
     final nameFilter = firstName != null ? '$firstName $lastName' : lastName;
 
@@ -1966,6 +1982,34 @@ List<LocalRepresentative> _getMockLocalRepresentativesByStateCity(String stateCo
         website: 'https://www.miami.gov/council/district3',
         imageUrl: null,
         socialMedia: null,
+      ),
+    ];
+  }
+
+  // Easter egg: Josh Robinson mock data
+  List<LocalRepresentative> _getJoshRobinsonMockData() {
+    return [
+      LocalRepresentative(
+        name: 'Josh "Money God" Robinson',
+        bioGuideId: 'cicero-josh-robinson-easter-egg',
+        party: 'Ultra Capitalist Money Empire Party',
+        level: 'FEDERAL_UPPER',
+        state: 'WA',
+        district: 'District of Infinite Wealth Generation & Dollar Dynasty',
+        office: 'Supreme Overlord of Monetary Accumulation & Chief Wealth Multiplication Officer',
+        phone: '(💰💰💰) BILLIONS',
+        email: 'billionaire@goldpalace.money',
+        website: 'https://www.joshmillionairemindset.money',
+        imageUrl: 'assets/images/josh_robinson.JPG',
+        socialMedia: [
+          'Twitter: @JoshTrillionaire',
+          'Instagram: @MoneyRainsMaster',
+          'LinkedIn: Josh "The Money Printing Machine" Robinson',
+          'TikTok: @CashKingJosh',
+          'OnlyFans: @WealthPorn',
+          'YouTube: JoshMoneyEmpireBillionaire',
+          'Twitch: MoneyStreamJosh'
+        ],
       ),
     ];
   }

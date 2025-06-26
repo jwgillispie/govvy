@@ -862,8 +862,11 @@ class _BillDetailsScreenState extends State<BillDetailsScreen>
               CircleAvatar(
                 radius: 24,
                 backgroundColor: _getColorShade(Colors.grey, 200),
-                backgroundImage:
-                    sponsor.imageUrl != null ? NetworkImage(sponsor.imageUrl!) : null,
+                backgroundImage: sponsor.imageUrl != null 
+                    ? (sponsor.imageUrl!.startsWith('assets/') 
+                        ? AssetImage(sponsor.imageUrl!) as ImageProvider
+                        : NetworkImage(sponsor.imageUrl!))
+                    : null,
                 child: sponsor.imageUrl == null
                     ? Icon(Icons.person, size: 24, color: _getColorShade(Colors.grey, 400))
                     : null,

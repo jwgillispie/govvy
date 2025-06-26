@@ -115,7 +115,7 @@ class _ContributionsWidgetState extends State<ContributionsWidget> {
                     ? provider.contributions.take(30)
                     : provider.contributions.take(5)
                 ).map((contribution) => 
-                  _buildContributionItem(contribution)
+                  _buildContributionItem(context, contribution)
                 ),
                 
                 if (provider.contributions.length > 5) ...[
@@ -180,14 +180,17 @@ class _ContributionsWidgetState extends State<ContributionsWidget> {
     );
   }
 
-  Widget _buildContributionItem(CampaignContribution contribution) {
+  Widget _buildContributionItem(BuildContext context, CampaignContribution contribution) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        color: isDark ? Colors.grey.shade800.withOpacity(0.3) : Colors.grey[50],
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey[200]!),
+        border: Border.all(
+          color: isDark ? Colors.grey.shade600 : Colors.grey[200]!,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

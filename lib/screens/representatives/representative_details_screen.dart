@@ -296,6 +296,8 @@ class _RepresentativeDetailsScreenState
                                   role: rep.chamber,
                                   officeName: rep.office ?? '',
                                   district: rep.district,
+                                  bioGuideId: rep.bioGuideId,
+                                  representativeName: rep.name,
                                 ),
                                 _buildFinanceTab(),
                                 _buildBillsTab(
@@ -357,8 +359,11 @@ class _RepresentativeDetailsScreenState
           CircleAvatar(
             radius: 40,
             backgroundColor: Colors.grey.shade200,
-            backgroundImage:
-                rep.imageUrl != null ? NetworkImage(rep.imageUrl!) : null,
+            backgroundImage: rep.imageUrl != null 
+                ? (rep.imageUrl!.startsWith('assets/') 
+                    ? AssetImage(rep.imageUrl!) as ImageProvider
+                    : NetworkImage(rep.imageUrl!))
+                : null,
             child: rep.imageUrl == null
                 ? Icon(Icons.person, size: 40, color: Colors.grey.shade400)
                 : null,
@@ -1288,9 +1293,329 @@ class _RepresentativeDetailsScreenState
   }
 
   Widget _buildFinanceTab() {
-    return const SingleChildScrollView(
-      padding: EdgeInsets.all(16),
-      child: CampaignFinanceSummaryCard(),
+    return Consumer<CombinedRepresentativeProvider>(
+      builder: (context, provider, child) {
+        final rep = provider.selectedRepresentative;
+        
+        // Easter egg: Special finance tab for Josh Robinson
+        if (rep != null && (rep.bioGuideId == 'cicero-josh-robinson-easter-egg' || 
+            rep.name.toLowerCase().contains('josh robinson'))) {
+          return _buildJoshRobinsonFinanceTab();
+        }
+        
+        return const SingleChildScrollView(
+          padding: EdgeInsets.all(16),
+          child: CampaignFinanceSummaryCard(),
+        );
+      },
+    );
+  }
+  
+  Widget _buildJoshRobinsonFinanceTab() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Main finance card
+          Card(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: Theme.of(context).brightness == Brightness.dark
+                      ? [Colors.amber.shade900.withOpacity(0.3), Colors.yellow.shade900.withOpacity(0.3)]
+                      : [Colors.amber.shade50, Colors.yellow.shade50],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.amber.shade700
+                      : Colors.amber.shade200
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.monetization_on, 
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.amber[400]
+                            : Colors.amber[700], 
+                        size: 24),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          'Josh Robinson Money Empire 💰',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? Colors.amber[300]
+                                : Colors.amber[800],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  
+                  // Financial stats
+                  GridView.count(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    childAspectRatio: 2.0,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    children: [
+                      _buildJoshFinanceStat(
+                        'Total Raised',
+                        '\$999 Trillion',
+                        Icons.trending_up,
+                        Colors.green,
+                      ),
+                      _buildJoshFinanceStat(
+                        'Money Printed',
+                        '\$1.5 Quadrillion',
+                        Icons.print,
+                        Colors.blue,
+                      ),
+                      _buildJoshFinanceStat(
+                        'Gold Reserves',
+                        '50 Billion Tons',
+                        Icons.star,
+                        Colors.amber,
+                      ),
+                      _buildJoshFinanceStat(
+                        'Yacht Collection',
+                        '15,000 Yachts',
+                        Icons.sailing,
+                        Colors.indigo,
+                      ),
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 20),
+                  
+                  // Top contributors section
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.amber.shade900.withOpacity(0.2)
+                          : Colors.amber.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.amber.shade600
+                            : Colors.amber.shade300
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.people, 
+                              color: Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.amber[400]
+                                  : Colors.amber[700]),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Top Contributors to Money Empire',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.amber[300]
+                                    : Colors.amber[800],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        
+                        // Contributors list
+                        ...[
+                          ('Josh Robinson Himself', '\$500 Billion'),
+                          ('Gold Palace LLC', '\$200 Billion'),
+                          ('Money Printing Co.', '\$150 Billion'),
+                          ('Yacht Manufacturing Empire', '\$100 Billion'),
+                          ('Diamond Mining Consortium', '\$75 Billion'),
+                        ].map((contributor) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  contributor.$1,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                contributor.$2,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).brightness == Brightness.dark
+                                      ? Colors.green[400]
+                                      : Colors.green[700],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+                      ],
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Expenses section
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.red.shade900.withOpacity(0.2)
+                          : Colors.red.shade50,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.red.shade600
+                            : Colors.red.shade200
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.shopping_cart, 
+                              color: Theme.of(context).brightness == Brightness.dark
+                                  ? Colors.red[400]
+                                  : Colors.red[700]),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Campaign Expenses',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.red[300]
+                                    : Colors.red[800],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        
+                        // Expenses list
+                        ...[
+                          ('Gold Plated Campaign Buses', '\$50 Billion'),
+                          ('Diamond-Encrusted Rally Stages', '\$25 Billion'),
+                          ('Private Money Printing Equipment', '\$30 Billion'),
+                          ('Solid Gold Campaign Buttons', '\$10 Billion'),
+                          ('Yacht-Based Campaign Events', '\$15 Billion'),
+                        ].map((expense) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  expense.$1,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                expense.$2,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).brightness == Brightness.dark
+                                      ? Colors.red[400]
+                                      : Colors.red[700],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  
+  Widget _buildJoshFinanceStat(String label, String value, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).brightness == Brightness.dark
+            ? color.withOpacity(0.2)
+            : color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? color.withOpacity(0.5)
+              : color.withOpacity(0.3)
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Icon(icon, 
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? color.withOpacity(0.8)
+                    : color, 
+                size: 16),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? color.withOpacity(0.9)
+                        : color.withOpacity(0.8),
+                    fontWeight: FontWeight.w600,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? color.withOpacity(0.9)
+                  : color,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }

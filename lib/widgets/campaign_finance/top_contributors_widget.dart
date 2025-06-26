@@ -70,7 +70,7 @@ class TopContributorsWidget extends StatelessWidget {
                 ...provider.topContributors.asMap().entries.map((entry) {
                   final index = entry.key;
                   final contributor = entry.value;
-                  return _buildContributorItem(index + 1, contributor);
+                  return _buildContributorItem(context, index + 1, contributor);
                 }),
               ],
             ),
@@ -80,14 +80,17 @@ class TopContributorsWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildContributorItem(int rank, CampaignContribution contributor) {
+  Widget _buildContributorItem(BuildContext context, int rank, CampaignContribution contributor) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.orange[50],
+        color: isDark ? Colors.orange.shade900.withOpacity(0.2) : Colors.orange[50],
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.orange[200]!),
+        border: Border.all(
+          color: isDark ? Colors.orange.shade700 : Colors.orange[200]!,
+        ),
       ),
       child: Row(
         children: [

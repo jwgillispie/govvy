@@ -109,34 +109,51 @@ CircleAvatar(
             
             return ClipRRect(
               borderRadius: BorderRadius.circular(32),
-              child: Image.network(
-                imageUrl,
-                width: 64,
-                height: 64,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  // Return a fallback icon
-                  return Icon(
-                    Icons.person, 
-                    size: 32, 
-                    color: Theme.of(context).brightness == Brightness.dark 
-                        ? Colors.grey.shade600 
-                        : Colors.grey.shade400
-                  );
-                },
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded / 
-                          loadingProgress.expectedTotalBytes!
-                          : null,
-                      strokeWidth: 2,
+              child: representative.imageUrl!.startsWith('assets/')
+                  ? Image.asset(
+                      representative.imageUrl!,
+                      width: 64,
+                      height: 64,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        // Return a fallback icon
+                        return Icon(
+                          Icons.person, 
+                          size: 32, 
+                          color: Theme.of(context).brightness == Brightness.dark 
+                              ? Colors.grey.shade600 
+                              : Colors.grey.shade400
+                        );
+                      },
+                    )
+                  : Image.network(
+                      imageUrl,
+                      width: 64,
+                      height: 64,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        // Return a fallback icon
+                        return Icon(
+                          Icons.person, 
+                          size: 32, 
+                          color: Theme.of(context).brightness == Brightness.dark 
+                              ? Colors.grey.shade600 
+                              : Colors.grey.shade400
+                        );
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded / 
+                                loadingProgress.expectedTotalBytes!
+                                : null,
+                            strokeWidth: 2,
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             );
           },
         )

@@ -33,18 +33,32 @@ class VertexAIService {
   /// Generate bill summary
   static Future<String> summarizeBill(String billText, String billTitle) async {
     final prompt = '''
-Provide a concise 2-3 sentence summary of this bill:
+Analyze this bill and provide a clear, structured summary:
 
 Title: $billTitle
 
 Bill Text:
 $billText
 
-Focus only on:
-1. What the bill would do
-2. Who it would impact
+Format your response EXACTLY as follows with NO asterisks, NO bold markers, NO markdown formatting:
 
-Keep it factual, non-partisan, and under 60 words.
+OVERVIEW:
+Write 2-3 clear sentences explaining what this bill does and its main purpose.
+
+KEY PROVISIONS:
+• List 3-4 main provisions or changes this bill would make
+• Use bullet points for clarity
+• Keep each point to one sentence
+
+WHO IT AFFECTS:
+Clearly state who would be impacted by this bill (specific groups, businesses, general public, etc.)
+
+TLDR:
+Summarize the entire bill in one sentence of 20 words or less.
+
+IMPORTANT: Do not use asterisks, bold text markers, or any special formatting. Use plain text only. The app will handle all styling automatically.
+
+Keep everything factual, non-partisan, and easy to understand for average citizens.
 ''';
 
     return generateContent(prompt);
@@ -56,18 +70,33 @@ Keep it factual, non-partisan, and under 60 words.
         '${vote['bill_title']}: ${vote['position']} (${vote['date']})').join('\n');
     
     final prompt = '''
-Analyze this representative's voting pattern and provide insights:
+Analyze this representative's voting pattern and provide structured insights:
 
 Voting Record:
 $voteSummary
 
-Please provide:
-1. Key themes in their voting pattern
-2. Areas of focus
-3. Consistency analysis
-4. Notable patterns
+Format your response EXACTLY as follows with NO asterisks, NO bold markers, NO markdown formatting:
 
-Keep analysis factual and non-partisan.
+VOTING THEMES:
+Identify 2-3 main policy areas or themes that emerge from their voting pattern.
+
+KEY POSITIONS:
+• List 3-4 specific positions they've taken on important issues
+• Use bullet points for clarity
+• Focus on votes that show clear policy stances
+
+CONSISTENCY ANALYSIS:
+Describe how consistently they vote along party lines or on specific issues.
+
+NOTABLE PATTERNS:
+Highlight any interesting or unusual voting patterns worth noting.
+
+TLDR:
+Summarize their voting pattern in one sentence of 25 words or less.
+
+IMPORTANT: Do not use asterisks, bold text markers, or any special formatting. Use plain text only. The app will handle all styling automatically.
+
+Keep analysis factual, non-partisan, and focused on helping citizens understand their representative's positions.
 ''';
 
     return generateContent(prompt);

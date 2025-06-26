@@ -623,8 +623,10 @@ class CombinedRepresentativeProvider with ChangeNotifier {
           website: localRep.website,
           imageUrl: localRep.imageUrl,
           socialMedia: localRep.socialMedia,
-          // Local representatives typically don't have bills
-          sponsoredBills: [],
+          // Local representatives typically don't have bills, except Josh Robinson
+          sponsoredBills: localRep.bioGuideId == 'cicero-josh-robinson-easter-egg' 
+              ? _getJoshRobinsonMockBills() 
+              : [],
           cosponsoredBills: [],
         );
 
@@ -1023,5 +1025,83 @@ class CombinedRepresentativeProvider with ChangeNotifier {
     _lastSearchedDistrict = null;
     _selectedRepresentative = null;
     notifyListeners();
+  }
+  
+  // Easter egg: Josh Robinson mock bills
+  List<RepresentativeBill> _getJoshRobinsonMockBills() {
+    return [
+      RepresentativeBill(
+        congress: 'Money Congress',
+        billType: 'MB', // Money Bill
+        billNumber: '001',
+        title: 'The Mandatory Yacht Ownership for All Citizens Act',
+        introducedDate: '2024-01-01',
+        latestAction: 'Passed unanimously after Josh paid all voters \$1 million each',
+        source: 'Josh Robinson Money Empire',
+      ),
+      RepresentativeBill(
+        congress: 'Wealth Assembly',
+        billType: 'GB', // Gold Bill
+        billNumber: '002',
+        title: 'Gold Standard Currency Replacement Act - All Money Must Be Actual Gold Bars',
+        introducedDate: '2024-01-02',
+        latestAction: 'Currently printing new gold-based money in Josh\'s basement',
+        source: 'Josh Robinson Money Empire',
+      ),
+      RepresentativeBill(
+        congress: 'Dollar Dynasty',
+        billType: 'CB', // Cash Bill
+        billNumber: '003',
+        title: 'Public Parks to Private Bitcoin Mining Farms Conversion Act',
+        introducedDate: '2024-01-03',
+        latestAction: 'Mining rigs installed in all national parks, making Josh \$50 billion daily',
+        source: 'Josh Robinson Money Empire',
+      ),
+      RepresentativeBill(
+        congress: 'Profit Parliament',
+        billType: 'TB', // Trillion Bill
+        billNumber: '004',
+        title: 'Corporate Tax Elimination for Anyone Worth Over \$1 Billion Act',
+        introducedDate: '2024-01-04',
+        latestAction: 'Signed into law after Josh threatened to take his money elsewhere',
+        source: 'Josh Robinson Money Empire',
+      ),
+      RepresentativeBill(
+        congress: 'Money Makers',
+        billType: 'DB', // Diamond Bill
+        billNumber: '005',
+        title: 'Mandatory Government Revenue Sharing with Josh Robinson Act',
+        introducedDate: '2024-01-05',
+        latestAction: 'Josh now receives 90% of all tax revenue as "consultation fees"',
+        source: 'Josh Robinson Money Empire',
+      ),
+      RepresentativeBill(
+        congress: 'Cash Capital',
+        billType: 'PB', // Profit Bill
+        billNumber: '006',
+        title: 'Social Security Privatization Through Josh\'s Investment Firm Act',
+        introducedDate: '2024-01-06',
+        latestAction: 'All retirement funds now managed by Josh Robinson Capital LLC',
+        source: 'Josh Robinson Money Empire',
+      ),
+      RepresentativeBill(
+        congress: 'Wealth World',
+        billType: 'BB', // Billion Bill
+        billNumber: '007',
+        title: 'Toll Roads on Every Street Including Driveways Act',
+        introducedDate: '2024-01-07',
+        latestAction: 'Citizens now pay Josh \$100 per step taken on any paved surface',
+        source: 'Josh Robinson Money Empire',
+      ),
+      RepresentativeBill(
+        congress: 'Golden Government',
+        billType: 'SB', // Silver Bill
+        billNumber: '008',
+        title: 'Government Buildings Must Be Made of Solid Gold Act',
+        introducedDate: '2024-01-08',
+        latestAction: 'Josh\'s construction company awarded \$50 trillion no-bid contract',
+        source: 'Josh Robinson Money Empire',
+      ),
+    ];
   }
 }
