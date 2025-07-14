@@ -391,6 +391,21 @@ class RepresentativeService {
     String? website;
     String party = '';
 
+    // Extract state from the top-level field first
+    if (member.containsKey('state') && member['state'] != null) {
+      state = member['state'].toString();
+    }
+    
+    // Extract district from the top-level field first
+    if (member.containsKey('district') && member['district'] != null) {
+      district = member['district'].toString();
+    }
+    
+    // Extract party from the top-level field first
+    if (member.containsKey('partyName') && member['partyName'] != null) {
+      party = member['partyName'].toString();
+    }
+
     // Extract the most recent term information
     if (member.containsKey('terms') && member['terms'] != null) {
       final terms = member['terms'];
@@ -400,13 +415,25 @@ class RepresentativeService {
         final Map<String, dynamic> term =
             Map<String, dynamic>.from(terms[0] as Map);
         chamber = term['chamber']?.toString() ?? '';
-        state = term['state']?.toString() ?? '';
-        district =
-            term['district']?.toString(); // Handle district as int or string
+        
+        // Only override state if not already set from top-level
+        if (state.isEmpty) {
+          state = term['state']?.toString() ?? '';
+        }
+        
+        // Only override district if not already set from top-level
+        if (district == null) {
+          district = term['district']?.toString();
+        }
+        
         office = term['office']?.toString();
         phone = term['phone']?.toString();
         website = term['website']?.toString();
-        party = term['party']?.toString() ?? '';
+        
+        // Only override party if not already set from top-level
+        if (party.isEmpty) {
+          party = term['party']?.toString() ?? '';
+        }
       } else if (terms is Map && terms.containsKey('item')) {
         final items = terms['item'];
         if (items is List && items.isNotEmpty) {
@@ -414,13 +441,25 @@ class RepresentativeService {
           final Map<String, dynamic> term =
               Map<String, dynamic>.from(items[0] as Map);
           chamber = term['chamber']?.toString() ?? '';
-          state = term['state']?.toString() ?? '';
-          district =
-              term['district']?.toString(); // Handle district as int or string
+          
+          // Only override state if not already set from top-level
+          if (state.isEmpty) {
+            state = term['state']?.toString() ?? '';
+          }
+          
+          // Only override district if not already set from top-level
+          if (district == null) {
+            district = term['district']?.toString();
+          }
+          
           office = term['office']?.toString();
           phone = term['phone']?.toString();
           website = term['website']?.toString();
-          party = term['party']?.toString() ?? '';
+          
+          // Only override party if not already set from top-level
+          if (party.isEmpty) {
+            party = term['party']?.toString() ?? '';
+          }
         }
       }
     }
