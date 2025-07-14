@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:govvy/services/fec_service.dart';
 import 'package:govvy/services/follow_the_money_service.dart';
-import 'package:govvy/models/campaign_finance_model.dart';
 import 'package:govvy/models/unified_candidate_model.dart';
 
 class UnifiedFinanceProvider with ChangeNotifier {

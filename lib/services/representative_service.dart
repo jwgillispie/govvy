@@ -15,6 +15,9 @@ class RepresentativeService {
   // Check if API keys are available with improved logging
   bool get hasCongressApiKey {
     final hasKey = _apiKey != null && _apiKey!.isNotEmpty;
+    if (!hasKey) {
+      print('DEBUG: Congress API key not found. Key value: ${_apiKey?.substring(0, 10)}...');
+    }
     return hasKey;
   }
 
@@ -170,6 +173,7 @@ class RepresentativeService {
       }
 
       if (!hasCongressApiKey) {
+        print('DEBUG: No Congress API key detected, using mock data');
         return _getMockRepresentatives(state, district);
       }
 

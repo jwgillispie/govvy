@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:govvy/models/election_model.dart';
 import 'package:govvy/models/campaign_finance_model.dart';
 import 'package:govvy/services/network_service.dart';
-import 'package:govvy/services/remote_service_config.dart';
 import 'package:govvy/services/fec_service.dart';
 
 class ElectionService {
@@ -469,7 +467,9 @@ class ElectionService {
             city: city,
           );
           enrichedElections.addAll(localElections);
-        } catch (e) {}
+        } catch (e) {
+          // Failed to load local elections - continue with federal only
+        }
       }
 
       // Convert federal election events to Election objects
@@ -501,7 +501,9 @@ class ElectionService {
               enrichedElections.add(election);
             }
           }
-        } catch (e) {}
+        } catch (e) {
+          // Failed to load FEC elections - continue with calendar events
+        }
 
         // Also get calendar events for additional context - include current year and next year
         List<FECCalendarEvent> federalEvents = [];

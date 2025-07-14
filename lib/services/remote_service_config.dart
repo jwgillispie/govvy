@@ -67,18 +67,14 @@ class RemoteConfigService {
       _initialized = true;
 
       // Always try to load local config as well (in development)
-      if (!kIsWeb) {
-        await _loadLocalConfig();
-      }
+      await _loadLocalConfig();
 
       // Log the available keys
       _logKeyStatus();
     } catch (e) {
       // Fall back to .env file in development
-      if (!kIsWeb) {
-        await _loadLocalConfig();
-        _logKeyStatus();
-      }
+      await _loadLocalConfig();
+      _logKeyStatus();
     }
   }
 
@@ -86,6 +82,7 @@ class RemoteConfigService {
   Future<void> _loadLocalConfig() async {
     try {
       await dotenv.load(fileName: "assets/.env");
+      print('DEBUG: Loaded .env from assets/.env');
 
       // Track which values came from .env
       if (_keySource[congressApiKey] == null && dotenv.env[congressApiKey] != null) {
@@ -104,7 +101,13 @@ class RemoteConfigService {
         _keySource[fecApiKey] = '.env';
       }
     } catch (e) {
-      // Error loading .env file handled silently
+      // Also try root .env as fallback
+      try {
+        await dotenv.load(fileName: ".env");
+        print('DEBUG: Loaded .env from root .env');
+      } catch (e2) {
+        print('DEBUG: Failed to load .env from both assets and root: $e2');
+      }
     }
   }
 
@@ -150,7 +153,14 @@ class RemoteConfigService {
     }
     
     // Fall back to .env
-    return dotenv.env[congressApiKey];
+    final envKey = dotenv.env[congressApiKey];
+    if (envKey != null && envKey.isNotEmpty) {
+      return envKey;
+    }
+    
+    // Debug logging
+    print('DEBUG: No Congress API key found in either Remote Config or .env');
+    return null;
   }
 
   String? get getGoogleMapsApiKey {
@@ -182,7 +192,14 @@ class RemoteConfigService {
     }
     
     // Fall back to .env
-    return dotenv.env[ciceroApiKey];
+    final envKey = dotenv.env[ciceroApiKey];
+    if (envKey != null && envKey.isNotEmpty) {
+      return envKey;
+    }
+    
+    // Debug logging
+    print('DEBUG: No Cicero API key found in either Remote Config or .env');
+    return null;
   }
   
   // Added getter for LegiScan API key

@@ -58,13 +58,7 @@ Future<void> _initializeServices() async {
     await remoteConfig.initialize();
 
     // Validate API keys
-    final keyStatus = await remoteConfig.validateApiKeys();
-
-    // Debug all API keys
-    final congressKey = remoteConfig.getCongressApiKey;
-    final googleMapsKey = remoteConfig.getGoogleMapsApiKey;
-    final ciceroKey = remoteConfig.getCiceroApiKey;
-    final fecKey = remoteConfig.getFecApiKey;
+    await remoteConfig.validateApiKeys();
 
 
   } catch (e) {
@@ -86,13 +80,6 @@ Future<void> _initializeEnhancedServices() async {
   }
 }
 
-// Helper to mask API key for logging
-String _maskApiKey(String key) {
-  if (key.length <= 8) {
-    return '****';
-  }
-  return '${key.substring(0, 4)}...${key.substring(key.length - 4)}';
-}
 
 // Helper function to safely take a substring
 int min(int a, int b) => a < b ? a : b;

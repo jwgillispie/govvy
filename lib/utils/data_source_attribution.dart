@@ -327,10 +327,12 @@ class DataSourceAttribution {
   static List<DataSource> getFinanceDataSources(dynamic candidate) {
     final sources = <DataSource>[];
     
-    if (candidate?.fecId != null) {
+    // Check for FEC candidate ID (the actual property name)
+    if (candidate?.candidateId != null && candidate.candidateId.isNotEmpty) {
       sources.add(DataSource.fec);
     }
     
+    // Check for Follow the Money ID (if it exists in the future)
     if (candidate?.followTheMoneyId != null) {
       sources.add(DataSource.followTheMoney);
     }

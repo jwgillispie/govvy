@@ -13,6 +13,7 @@ void main() async {
   try {
     await dotenv.load(fileName: "assets/.env");
   } catch (e) {
+    // .env file not found - continue with Firebase Remote Config
   }
   
   // Initialize remote config to load API keys
