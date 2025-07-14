@@ -37,6 +37,46 @@ class RepresentativeService {
     return value.toString();
   }
 
+  // Helper method to match state codes and state names
+  bool _isMatchingState(String apiState, String requestedState) {
+    // Map of state codes to state names
+    const stateMap = {
+      'AL': 'Alabama', 'AK': 'Alaska', 'AZ': 'Arizona', 'AR': 'Arkansas', 'CA': 'California',
+      'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware', 'FL': 'Florida', 'GA': 'Georgia',
+      'HI': 'Hawaii', 'ID': 'Idaho', 'IL': 'Illinois', 'IN': 'Indiana', 'IA': 'Iowa',
+      'KS': 'Kansas', 'KY': 'Kentucky', 'LA': 'Louisiana', 'ME': 'Maine', 'MD': 'Maryland',
+      'MA': 'Massachusetts', 'MI': 'Michigan', 'MN': 'Minnesota', 'MS': 'Mississippi', 'MO': 'Missouri',
+      'MT': 'Montana', 'NE': 'Nebraska', 'NV': 'Nevada', 'NH': 'New Hampshire', 'NJ': 'New Jersey',
+      'NM': 'New Mexico', 'NY': 'New York', 'NC': 'North Carolina', 'ND': 'North Dakota', 'OH': 'Ohio',
+      'OK': 'Oklahoma', 'OR': 'Oregon', 'PA': 'Pennsylvania', 'RI': 'Rhode Island', 'SC': 'South Carolina',
+      'SD': 'South Dakota', 'TN': 'Tennessee', 'TX': 'Texas', 'UT': 'Utah', 'VT': 'Vermont',
+      'VA': 'Virginia', 'WA': 'Washington', 'WV': 'West Virginia', 'WI': 'Wisconsin', 'WY': 'Wyoming',
+      'DC': 'District of Columbia'
+    };
+
+    final apiStateUpper = apiState.toUpperCase();
+    final requestedStateUpper = requestedState.toUpperCase();
+
+    // Direct match (both codes or both names)
+    if (apiStateUpper == requestedStateUpper) {
+      return true;
+    }
+
+    // Check if requested state is a code and API state is a name
+    if (stateMap.containsKey(requestedStateUpper) && 
+        stateMap[requestedStateUpper]!.toUpperCase() == apiStateUpper) {
+      return true;
+    }
+
+    // Check if requested state is a name and API state is a code
+    if (stateMap.containsValue(requestedStateUpper) && 
+        stateMap.entries.any((entry) => entry.value.toUpperCase() == requestedStateUpper && entry.key == apiStateUpper)) {
+      return true;
+    }
+
+    return false;
+  }
+
   // Get congressional district from address using Google's Geocoding API and Civic Information API
   Future<Map<String, dynamic>> getDistrictFromAddress(String address) async {
     try {
@@ -223,7 +263,7 @@ class RepresentativeService {
               final representative = _processMember(member);
               
               // Filter by state to ensure we only get representatives from the requested state
-              if (representative.state.toUpperCase() == state.toUpperCase()) {
+              if (_isMatchingState(representative.state, state)) {
                 representatives.add(representative);
               }
             }
@@ -246,7 +286,7 @@ class RepresentativeService {
               final representative = _processMember(item);
               
               // Filter by state to ensure we only get representatives from the requested state
-              if (representative.state.toUpperCase() == state.toUpperCase()) {
+              if (_isMatchingState(representative.state, state)) {
                 representatives.add(representative);
               }
             }
@@ -256,7 +296,7 @@ class RepresentativeService {
             final representative = _processMember(member);
             
             // Filter by state to ensure we only get representatives from the requested state
-            if (representative.state.toUpperCase() == state.toUpperCase()) {
+            if (_isMatchingState(representative.state, state)) {
               representatives.add(representative);
             }
           }
@@ -335,7 +375,7 @@ class RepresentativeService {
             final representative = _processMember(member);
             
             // Filter by state to ensure we only get representatives from the requested state
-            if (representative.state.toUpperCase() == state.toUpperCase()) {
+            if (_isMatchingState(representative.state, state)) {
               representatives.add(representative);
             }
           }
@@ -347,7 +387,7 @@ class RepresentativeService {
               final representative = _processMember(item);
               
               // Filter by state to ensure we only get representatives from the requested state
-              if (representative.state.toUpperCase() == state.toUpperCase()) {
+              if (_isMatchingState(representative.state, state)) {
                 representatives.add(representative);
               }
             }
@@ -356,7 +396,7 @@ class RepresentativeService {
             final representative = _processMember(item);
             
             // Filter by state to ensure we only get representatives from the requested state
-            if (representative.state.toUpperCase() == state.toUpperCase()) {
+            if (_isMatchingState(representative.state, state)) {
               representatives.add(representative);
             }
           }
@@ -365,7 +405,7 @@ class RepresentativeService {
           final representative = _processMember(member);
           
           // Filter by state to ensure we only get representatives from the requested state
-          if (representative.state.toUpperCase() == state.toUpperCase()) {
+          if (_isMatchingState(representative.state, state)) {
             representatives.add(representative);
           }
         }
