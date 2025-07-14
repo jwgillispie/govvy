@@ -59,3 +59,14 @@ app.*.map.json
 .env.*
 .firebaserc
 
+# Temporary and debug files
+*.txt
+*.log
+*.tmp
+pglite-debug.log
+
+# API documentation and testing files
+api.txt
+fec_api.txt
+fec_endpoints.txt
+
