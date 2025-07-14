@@ -207,8 +207,11 @@ class RepresentativeService {
   Future<List<Representative>> getRepresentativesByStateDistrict(String state,
       [String? district]) async {
     try {
+      print('DEBUG: Starting representative search for state: $state, district: $district');
+      
       // Fast-track fallback for MD district 5 to avoid slow API timeouts
       if (state.toUpperCase() == 'MD' && district == '5') {
+        print('DEBUG: Using fast-track MD district 5 mock data');
         return _getMockRepresentatives(state, district);
       }
 
@@ -217,7 +220,7 @@ class RepresentativeService {
         return _getMockRepresentatives(state, district);
       }
 
-
+      print('DEBUG: Congress API key detected, making API call');
       List<Representative> representatives = [];
 
       // Use the general member endpoint which properly supports state filtering
@@ -251,6 +254,7 @@ class RepresentativeService {
       if (response.statusCode == 200) {
 
         final Map<String, dynamic> data = json.decode(response.body);
+        print('DEBUG: API returned ${data['members']?.length ?? 0} total members');
 
         // Process members based on API response structure
         if (data.containsKey('members')) {
@@ -265,6 +269,9 @@ class RepresentativeService {
               // Filter by state to ensure we only get representatives from the requested state
               if (_isMatchingState(representative.state, state)) {
                 representatives.add(representative);
+                print('DEBUG: Added representative: ${representative.name} (${representative.state})');
+              } else {
+                print('DEBUG: Filtered out representative: ${representative.name} (${representative.state})');
               }
             }
           } else if (members is Map && members.containsKey('item')) {
@@ -307,11 +314,12 @@ class RepresentativeService {
       }
 
       if (representatives.isEmpty) {
+        print('DEBUG: No representatives found after filtering, trying alternative method');
         // Fall back to query parameter method if needed
         return await _getRepresentativesByQueryParams(state, district);
       }
 
-
+      print('DEBUG: Found ${representatives.length} representatives for $state');
       return representatives;
     } catch (e) {
       // Try alternative method before falling back to mock data
