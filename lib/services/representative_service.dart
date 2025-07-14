@@ -180,25 +180,28 @@ class RepresentativeService {
 
       List<Representative> representatives = [];
 
-      // CORRECTED: Use proper Congress API format /member/congress/{congress}/{state}/{district}
+      // Use the general member endpoint which properly supports state filtering
       final Uri url;
-      final int currentCongress = 118; // Current Congress (2023-2025)
       
       if (district != null) {
-        // Endpoint specifically for members by congress, state and district
-        url = Uri.parse('$_baseUrl/member/congress/$currentCongress/$state/$district')
-            .replace(queryParameters: {
-              'format': 'json', 
-              'currentMember': 'true',
-              'api_key': _apiKey!
-            });
-      } else {
-        // For state-only search, use congress endpoint with state filter
-        url = Uri.parse('$_baseUrl/member/congress/$currentCongress')
+        // For specific district, use state and district parameters
+        url = Uri.parse('$_baseUrl/member')
             .replace(queryParameters: {
               'format': 'json',
               'currentMember': 'true',
               'state': state,
+              'district': district,
+              'limit': '100',
+              'api_key': _apiKey!
+            });
+      } else {
+        // For state-only search, use member endpoint with state filter
+        url = Uri.parse('$_baseUrl/member')
+            .replace(queryParameters: {
+              'format': 'json',
+              'currentMember': 'true',
+              'state': state,
+              'limit': '100',
               'api_key': _apiKey!
             });
       }
@@ -217,7 +220,12 @@ class RepresentativeService {
             // Process direct list of members
             for (var memberRaw in members) {
               final member = Map<String, dynamic>.from(memberRaw);
-              representatives.add(_processMember(member));
+              final representative = _processMember(member);
+              
+              // Filter by state to ensure we only get representatives from the requested state
+              if (representative.state.toUpperCase() == state.toUpperCase()) {
+                representatives.add(representative);
+              }
             }
           } else if (members is Map && members.containsKey('item')) {
             // Process members inside 'item' array
@@ -225,17 +233,32 @@ class RepresentativeService {
             if (items is List) {
               for (var itemRaw in items) {
                 final item = Map<String, dynamic>.from(itemRaw);
-                representatives.add(_processMember(item));
+                final representative = _processMember(item);
+                
+                // Filter by state to ensure we only get representatives from the requested state
+                if (representative.state.toUpperCase() == state.toUpperCase()) {
+                  representatives.add(representative);
+                }
               }
             } else if (items is Map) {
               // Single item
               final item = Map<String, dynamic>.from(items);
-              representatives.add(_processMember(item));
+              final representative = _processMember(item);
+              
+              // Filter by state to ensure we only get representatives from the requested state
+              if (representative.state.toUpperCase() == state.toUpperCase()) {
+                representatives.add(representative);
+              }
             }
           } else if (members is Map) {
             // Single member object
             final member = Map<String, dynamic>.from(members);
-            representatives.add(_processMember(member));
+            final representative = _processMember(member);
+            
+            // Filter by state to ensure we only get representatives from the requested state
+            if (representative.state.toUpperCase() == state.toUpperCase()) {
+              representatives.add(representative);
+            }
           }
         }
       } else {
@@ -269,7 +292,6 @@ class RepresentativeService {
       }
 
       List<Representative> representatives = [];
-      final int currentCongress = 118; // Current Congress (2023-2025)
 
       // Build query parameters
       Map<String, String> queryParams = {
@@ -279,16 +301,18 @@ class RepresentativeService {
         'api_key': _apiKey!
       };
 
-      // Use the proper Congress endpoint structure
+      // Use the general member endpoint which properly supports state filtering
       final Uri url;
       if (district != null) {
-        // Try the specific congress/state/district endpoint first
-        url = Uri.parse('$_baseUrl/member/congress/$currentCongress/$state/$district')
+        // For specific district, use state and district parameters
+        queryParams['state'] = state;
+        queryParams['district'] = district;
+        url = Uri.parse('$_baseUrl/member')
             .replace(queryParameters: queryParams);
       } else {
-        // For state-only, use congress endpoint with state filter
+        // For state-only, use member endpoint with state filter
         queryParams['state'] = state;
-        url = Uri.parse('$_baseUrl/member/congress/$currentCongress')
+        url = Uri.parse('$_baseUrl/member')
             .replace(queryParameters: queryParams);
       }
 
@@ -308,22 +332,42 @@ class RepresentativeService {
         if (members is List) {
           for (var memberRaw in members) {
             final member = Map<String, dynamic>.from(memberRaw);
-            representatives.add(_processMember(member));
+            final representative = _processMember(member);
+            
+            // Filter by state to ensure we only get representatives from the requested state
+            if (representative.state.toUpperCase() == state.toUpperCase()) {
+              representatives.add(representative);
+            }
           }
         } else if (members is Map && members.containsKey('item')) {
           final items = members['item'];
           if (items is List) {
             for (var itemRaw in items) {
               final item = Map<String, dynamic>.from(itemRaw);
-              representatives.add(_processMember(item));
+              final representative = _processMember(item);
+              
+              // Filter by state to ensure we only get representatives from the requested state
+              if (representative.state.toUpperCase() == state.toUpperCase()) {
+                representatives.add(representative);
+              }
             }
           } else if (items is Map) {
             final item = Map<String, dynamic>.from(items);
-            representatives.add(_processMember(item));
+            final representative = _processMember(item);
+            
+            // Filter by state to ensure we only get representatives from the requested state
+            if (representative.state.toUpperCase() == state.toUpperCase()) {
+              representatives.add(representative);
+            }
           }
         } else if (members is Map) {
           final member = Map<String, dynamic>.from(members);
-          representatives.add(_processMember(member));
+          final representative = _processMember(member);
+          
+          // Filter by state to ensure we only get representatives from the requested state
+          if (representative.state.toUpperCase() == state.toUpperCase()) {
+            representatives.add(representative);
+          }
         }
       }
 
